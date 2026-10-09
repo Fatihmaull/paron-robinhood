@@ -37,7 +37,11 @@ export function Markets({ headline = false }: { headline?: boolean }) {
       <div style={{ height: 16 }} />
       <Panel title="Series">
         {query.isError ? <p className="bad">{query.error instanceof Error ? query.error.message : "Couldn't load markets. Check your connection and retry."}</p> : null}
-        {query.isLoading ? <p className="muted">Loading series…</p> : null}
+        {query.isLoading ? (
+          <div role="status" aria-label="Loading series" data-testid="series-skeleton">
+            {[0, 1, 2].map((i) => <div key={i} className="skeleton row-sk" />)}
+          </div>
+        ) : null}
         <div className="table-scroll">
         <table>
           <thead>

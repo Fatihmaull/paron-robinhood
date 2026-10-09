@@ -32,7 +32,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
   return (
     <div>
       <p className="kicker">Series {seriesId}</p>
-      <h1>{detail?.symbol ?? (series.isLoading ? "Loading…" : "Series not found")}</h1>
+      {detail ? <h1>{detail.symbol}</h1> : series.isLoading ? <div className="skeleton title-sk" role="status" aria-label="Loading series" data-testid="series-skeleton" /> : <h1>Series not found</h1>}
       {series.isError ? <p className="bad">{series.error instanceof Error ? series.error.message : "Couldn't load this series."}</p> : null}
       {detail ? (
         <p className="lede">

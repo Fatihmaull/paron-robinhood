@@ -414,3 +414,13 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
   .chip-wide { display: none; }
   .chip-narrow { display: inline; }
 }
+
+.skeleton {
+  background: linear-gradient(90deg, var(--skeleton-bg) 0%, var(--skeleton-shine) 50%, var(--skeleton-bg) 100%);
+  background-size: 200% 100%;
+  animation: skeleton-shine var(--skeleton-duration) linear infinite;
+  border-radius: var(--radius-sm);
+}
+.skeleton.row-sk { height: var(--table-row-height); margin-bottom: 4px; }
+.skeleton.title-sk { height: 32px; width: 280px; max-width: 100%; margin: 4px 0 12px; }
+@keyframes skeleton-shine { to { background-position: -200% 0; } }
