@@ -64,6 +64,20 @@ export async function loadSnapshot(): Promise<Snapshot> {
     if (event.ts > indexedAt) indexedAt = event.ts;
   }
 
+  // Ponder's own progress (GET /status). Events only exist where the contracts emitted, so on an
+  // idle testnet the newest event block trails head forever and the API would stay "syncing".
+  try {
+    const res = await fetch(`http://127.0.0.1:${process.env.PORT || 42069}/status`, { signal: AbortSignal.timeout(2000) });
+    if (res.ok) {
+      const status = (await res.json()) as Record<string, { block?: { number?: number; timestamp?: number } }>;
+      const block = status[deployment.chainKey]?.block;
+      if (block?.number && BigInt(block.number) > indexedBlock) indexedBlock = BigInt(block.number);
+      if (block?.timestamp && BigInt(block.timestamp) > indexedAt) indexedAt = BigInt(block.timestamp);
+    }
+  } catch {
+    // fall back to the newest event block
+  }
+
   let headBlock: bigint | null = null;
   try {
     const clients = publicClients as unknown as Record<string, { getBlockNumber: () => Promise<bigint> }>;

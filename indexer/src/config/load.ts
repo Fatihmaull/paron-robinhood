@@ -79,14 +79,21 @@ function contractAddress(raw: unknown): Hex | null {
 }
 
 export function loadDeployment(): Deployment {
-  const file = readJson<Record<string, ChainFile>>(chainsPath());
+  // Root config/chains.json nests chains under "chains"; indexer/config/chains.json is flat.
+  const raw = readJson<Record<string, unknown>>(chainsPath());
+  const file = (raw && typeof raw.chains === "object" && raw.chains ? raw.chains : raw) as Record<string, ChainFile> | null;
   const chainKey = process.env.CHAIN || "robinhoodTestnet";
   const chain = file?.[chainKey];
   if (!chain) throw new Error(`Unknown CHAIN "${chainKey}" in ${chainsPath()}`);
 
   const label = process.env.DEPLOY_LABEL || "stage-1";
-  const manifestPath = resolve(repoRoot, "deployments", String(chain.chainId), `${label}.json`);
-  const infraPath = resolve(repoRoot, "deployments", String(chain.chainId), "infra.json");
+  // Repo root first (monorepo checkout), then indexer/deployments (Railway root dir = indexer).
+  const deployFile = (file: string) => {
+    const rootCopy = resolve(repoRoot, "deployments", String(chain.chainId), file);
+    return existsSync(rootCopy) ? rootCopy : resolve(packageRoot, "deployments", String(chain.chainId), file);
+  };
+  const manifestPath = deployFile(`${label}.json`);
+  const infraPath = deployFile("infra.json");
   const manifest = readJson<Record<string, unknown>>(manifestPath);
   const infra = readJson<Record<string, unknown>>(infraPath);
 

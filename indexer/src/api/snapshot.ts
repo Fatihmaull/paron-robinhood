@@ -348,7 +348,9 @@ export const DEMO_INDEX_PARAMS: IndexParamsRow = {
 };
 
 /** Head is unknown when the RPC call fails. Indexed progress still counts as synced (local dev). */
-export const SYNC_LAG_BLOCKS = 5n;
+// Robinhood Chain Testnet makes ~4 blocks per second, so a handful of blocks is not "behind".
+// 240 blocks is about a minute. Override with SYNC_LAG_BLOCKS.
+export const SYNC_LAG_BLOCKS = BigInt(process.env.SYNC_LAG_BLOCKS || 240);
 
 export function syncOf(indexedBlock: bigint, headBlock: bigint | null): boolean {
   if (headBlock === null) return indexedBlock > 0n;
