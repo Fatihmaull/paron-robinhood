@@ -159,18 +159,27 @@ export function loadHoldings(snap: Snap, source: "mock" | "live", client?: Publi
   }, client);
 }
 
-export const DEMO_PROVIDER = "0x1111111111111111111111111111111111111111";
-
 /** Which redemptions to list: one provider's queue, one holder's, or every open default/final/ruling (keepers). */
 export type QueueScope = { provider: string } | { holder: string } | "keepers";
 
 export function queuePath(scope: QueueScope): string {
-  if (scope === "keepers") return "/redemptions?state=DEFAULTABLE,DELIVERED,DISPUTED&limit=100";
+  if (scope === "keepers") return "/redemptions?actionable=CLAIM_DEFAULT&limit=100";
   if ("provider" in scope) return `/redemptions?provider=${scope.provider}&limit=100`;
   return `/redemptions?holder=${scope.holder}&limit=100`;
 }
 
+const KEEPER_ACTIONS = ["CLAIM_DEFAULT", "FINALIZE", "RESOLVE_NO_RULING"];
+
 export function loadProviderRedemptions(snap: Snap, source: "mock" | "live", client?: PublicClient, scope: QueueScope = "keepers") {
+  if (source === "live" && scope === "keepers") {
+    // The API needs a filter, so ask for each keeper action and merge.
+    return Promise.all(KEEPER_ACTIONS.map((a) => liveGet<Redemption[]>(`/redemptions?actionable=${a}&limit=100`))).then((envs) => ({
+      data: envs.flatMap((env) => env.data),
+      meta: envs[0].meta,
+      next_cursor: null,
+      origin: "live" as const,
+    }));
+  }
   if (source === "live" && typeof scope === "object" && !("provider" in scope ? scope.provider : scope.holder)) {
     return Promise.resolve<LoadResult<Redemption[]>>({ data: [], meta: localMeta(), origin: "live" });
   }
@@ -186,10 +195,27 @@ export function loadProviderRedemptions(snap: Snap, source: "mock" | "live", cli
   );
 }
 
-export function loadProvider(snap: Snap, source: "mock" | "live", client?: PublicClient, address: string = DEMO_PROVIDER) {
-  return withFallback(snap, source, () => providerAccount(snap), `/providers/${address}`, async () => {
+export function loadProvider(snap: Snap, source: "mock" | "live", client?: PublicClient, address?: string) {
+  const unavailable = async () => {
     throw new OnchainUnavailable("Provider totals need the Paron API.");
-  }, client);
+  };
+  if (source === "mock") return withFallback(snap, source, () => providerAccount(snap), "", unavailable, client);
+  // Live: the connected wallet if it is a provider, otherwise the first active provider (the demo has no fixed address).
+  const firstActive = async () => {
+    const list = await liveGet<Array<{ address: string }>>("/providers?status=ACTIVE&limit=1");
+    const first = list.data[0]?.address;
+    if (!first) throw new ApiError("NOT_FOUND", "No active provider yet.");
+    return liveGet<unknown>(`/providers/${first}`);
+  };
+  return (async () => {
+    try {
+      const env = address ? await liveGet<unknown>(`/providers/${address}`).catch(firstActive) : await firstActive();
+      return { ...env, origin: "live" as const } as LoadResult<NonNullable<ReturnType<typeof providerAccount>>["data"]>;
+    } catch (error) {
+      if (!client) throw error;
+      return unavailable();
+    }
+  })();
 }
 
 export function loadIndex(snap: Snap, source: "mock" | "live", client?: PublicClient) {
