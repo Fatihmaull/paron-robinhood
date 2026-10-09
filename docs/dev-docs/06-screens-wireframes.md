@@ -121,7 +121,7 @@ Diselaraskan dengan `paron-sitemap.md` **(sitemap §x)** pada Kamis 8 Okt 2026, 
 | `/onboarding/kyb`, `/onboarding/provider` | target link M-KYB (§1.4): form pengajuan + "Register as provider" | wallet / KYB | sitemap: MVP-27h | penyimpanan pengajuan [D-41]; form belum di-wireframe 06 |
 | `/connect` | M-WALLET (§1.2) | semua | MUST | route membuka modal yang sama |
 | `/faucet` | komponen faucet menu wallet (§1.2) sebagai halaman | wallet | MUST | |
-| `/index`, `/index/{gpu}` | S6 bagian indeks (§8.1) | publik | NICE (design §7.2); sitemap: `/index` MVP-27h Tier 2 | dulu `/prints` |
+| `/h100-index` | S6 bagian indeks (§8.1) | publik | NICE (design §7.2); sitemap: index page MVP-27h Tier 2 | dulu `/prints` |
 | `/data` | S6 bagian tabel prints + CSV + contoh `curl` (§8.1) | publik, analis | NICE (design §7.2); sitemap: MVP-27h Tier 2 | dulu `/prints` |
 | `/transparency` | S6 bagian delivery record (§8.1) | publik | NICE (design §7.2); sitemap: MVP-27h Tier 2 | dulu `/prints` |
 | `/arbiter`, `/arbiter/cases/{reqId}`, `/arbiter/history` | S7 Arbitration view (§8.2) | panel; publik read-only | NICE (design §7.2); sitemap: MVP-27h Tier 1 | dulu `/arbitration`; pengumpulan tanda tangan [D-43] |
@@ -190,7 +190,7 @@ Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe �
 ```
 
 - Strip indeks di bawah nav tampil di semua halaman (design §7.2 S1 "PrintIndex vs reference strip"; dipakai juga sebagai bukti "PrintIndex ticks" di S3). Isi: satu GPU yang relevan (S1 = H100 default, S3 = GPU series itu). Data E2 `status`, `value`, `participants`, `eligible_volume_cu`; referensi E15 `value` + label. Fallback onchain: `PrintIndex.statusOf` + `latestRoundData`, `ReferenceFeed.latestRoundData` + `label()`.
-- Menu nav mengikuti area sitemap §3 (route di §0.5): Markets → `/markets`, Buy → `/buy`, Trade → `/trade`, Portfolio → `/portfolio`, Provider → `/provider`, Index → `/index`, Data → `/data`, Demo → `/demo`. Faucet ada di menu wallet (§1.2) dan di `/faucet`. "List capacity" menjadi tombol di S1 dan S5 → `/provider/series/new`. Link ke `/verifier`, `/arbiter`, `/admin`, `/ops/keepers` ada di menu wallet dan utility bar (halaman ber-role tetap bisa dilihat read-only, sitemap §2.1).
+- Menu nav mengikuti area sitemap §3 (route di §0.5): Markets → `/markets`, Buy → `/buy`, Trade → `/trade`, Portfolio → `/portfolio`, Provider → `/provider`, Index → `/h100-index`, Data → `/data`, Demo → `/demo`. Faucet ada di menu wallet (§1.2) dan di `/faucet`. "List capacity" menjadi tombol di S1 dan S5 → `/provider/series/new`. Link ke `/verifier`, `/arbiter`, `/admin`, `/ops/keepers` ada di menu wallet dan utility bar (halaman ber-role tetap bisa dilihat read-only, sitemap §2.1).
 - Menu "Provider" hanya tampil kalau wallet terhubung adalah provider terdaftar (E12 200) atau punya role 1 (E13 `role.code` = 1) [D-24].
 
 **Copy strip indeks**
@@ -1117,7 +1117,7 @@ Sumber E9 `/v1/accounts/{addr}/statement` (urut lama → baru, P3-20): baris `ts
 
 ### 8.1 S6 Prints & data (index/prints view)
 
-**Tujuan.** Data pasar terbuka: chart PrintIndex vs referensi sintetis, tabel print dengan flag eligible, statistik default, dan ekspor (design §7.2 S6, §10.5; PK §6.3, §6.4). Layarnya NICE; **data API-nya MUST** (PK §6 peta layar). **Aktor:** publik, trader, analis. **Demo:** naskah memakai terminal `curl …/v1/prints?gpu=H100&limit=3` (1:20–1:35), bukan S6. Kalau S6 tidak dibangun, strip indeks (§1.1) + tape S3 + `curl` sudah menutupi adegan. **Route (sitemap §4.1):** kartu indeks → `/index` (chart → `/index/{gpu}`), tabel prints + CSV + contoh `curl` → `/data`, delivery record → `/transparency`. Satu wireframe di bawah boleh dipecah menjadi tiga halaman itu tanpa mengubah copy.
+**Tujuan.** Data pasar terbuka: chart PrintIndex vs referensi sintetis, tabel print dengan flag eligible, statistik default, dan ekspor (design §7.2 S6, §10.5; PK §6.3, §6.4). Layarnya NICE; **data API-nya MUST** (PK §6 peta layar). **Aktor:** publik, trader, analis. **Demo:** naskah memakai terminal `curl …/v1/prints?gpu=H100&limit=3` (1:20–1:35), bukan S6. Kalau S6 tidak dibangun, strip indeks (§1.1) + tape S3 + `curl` sudah menutupi adegan. **Route (sitemap §4.1):** kartu indeks → `/h100-index`, tabel prints + CSV + contoh `curl` → `/data`, delivery record → `/transparency`. Satu wireframe di bawah boleh dipecah menjadi tiga halaman itu tanpa mengubah copy.
 
 ```text
 +------------------------------------------------------------------------------------------------+

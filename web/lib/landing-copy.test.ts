@@ -35,6 +35,14 @@ function pageExists(href: string): boolean {
   return existsSync(join(process.cwd(), "app", ...parts, "page.tsx"));
 }
 
+test("the H100 index page is not the app root route", () => {
+  const shell = readFileSync(new URL("../components/shell.tsx", import.meta.url), "utf8");
+  assert.match(shell, /\["\/h100-index", "Index"\]/);
+  assert.equal(shell.includes('["/index", "Index"]'), false);
+  assert.equal(existsSync(join(process.cwd(), "app", "h100-index", "page.tsx")), true);
+  assert.equal(existsSync(join(process.cwd(), "app", "index", "page.tsx")), false);
+});
+
 test("landing links point at routes that exist", () => {
   const hrefs = [
     ...landingNav.map((item) => item.href),
