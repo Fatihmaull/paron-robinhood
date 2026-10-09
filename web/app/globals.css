@@ -137,7 +137,14 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: var(--text-2xs);
 }
 .utilbar { justify-content: space-between; }
-.utilbar a { color: var(--color-text-secondary); text-decoration: none; }
+.utilbar a {
+  color: var(--color-text-secondary);
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  min-height: 44px;
+  padding: 10px 8px;
+}
 .utilbar a:hover { color: var(--color-text-primary); }
 .utilbar-note { margin-left: var(--space-4); }
 .chip-narrow { display: none; }
@@ -428,7 +435,9 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
   .strip { display: none; }
   .main { width: min(100% - 32px, var(--size-content-max)); }
   .clock { font-size: var(--countdown-size-hero); text-align: center; }
+  .btn { min-height: 44px; height: auto; }
   .btn.danger { min-height: 56px; width: 100%; }
+  input, select, textarea { min-height: 44px; }
   .hero { font-size: 28px; }
   .utilbar { padding: var(--space-2) var(--space-4); }
   .chip-wide { display: none; }

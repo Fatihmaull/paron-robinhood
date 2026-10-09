@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { formatCoverage, formatCu, formatFactor, formatUsd, shortId } from "@/lib/format";
+import { canonicalAddress, formatCoverage, formatCu, formatFactor, formatUsd, shortId } from "@/lib/format";
 import { useSeriesList } from "@/lib/hooks";
 import { marketsNotice, showSeriesCount } from "@/lib/markets-state";
 import type { SeriesRow } from "@/lib/types";
 import { Panel } from "./ui";
 
-export function Markets({ headline = false }: { headline?: boolean }) {
+export function Markets({ headline = false, heading = true }: { headline?: boolean; heading?: boolean }) {
   const query = useSeriesList();
   const rows = query.data?.data ?? [];
   const router = useRouter();
@@ -28,7 +28,7 @@ export function Markets({ headline = false }: { headline?: boolean }) {
             <Link className="btn ghost" href="/provider/series/new">List capacity</Link>
           </div>
         </>
-      ) : (
+      ) : heading ? (
         <div className="page-head">
           <div>
             <h1>Markets</h1>
@@ -36,8 +36,8 @@ export function Markets({ headline = false }: { headline?: boolean }) {
           </div>
           <Link className="btn" href="/provider/series/new">List capacity</Link>
         </div>
-      )}
-      <div style={{ height: 16 }} />
+      ) : null}
+      {headline || heading ? <div style={{ height: 16 }} /> : null}
       <Panel title="Series">
         {notice?.kind === "error" ? <p className="bad">{notice.text}</p> : null}
         {syncing ? <p role="status" data-testid="markets-syncing" style={{ color: "var(--color-info)" }}>{notice.text}</p> : null}
@@ -80,7 +80,7 @@ export function Markets({ headline = false }: { headline?: boolean }) {
                 </td>
                 <td>
                   {row.provider.verified ? <span className="ok">✓ </span> : null}
-                  <span className="num">{shortId(row.provider.address)}</span>
+                  <span className="num" title={canonicalAddress(row.provider.address)}>{shortId(row.provider.address)}</span>
                   {row.provider.status.toUpperCase() === "ACTIVE" ? null : <span className="pill danger">{row.provider.status}</span>}
                 </td>
                 <td>

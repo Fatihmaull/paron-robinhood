@@ -1,6 +1,7 @@
 "use client";
 
 import { contractAddress, contractsConfigured, type ContractKey } from "@/lib/config";
+import { canonicalAddress } from "@/lib/format";
 
 const KEYS: ContractKey[] = [
   "usdc",
@@ -36,7 +37,7 @@ export default function ContractsPage() {
           {KEYS.map((key) => (
             <tr key={key}>
               <td>{key}</td>
-              <td>{contractAddress(key)}</td>
+              <td className="num">{canonicalAddress(contractAddress(key))}</td>
             </tr>
           ))}
         </tbody>
