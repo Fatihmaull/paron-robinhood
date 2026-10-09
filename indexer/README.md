@@ -80,6 +80,8 @@ Chain metadata is read from `config/chains.json` at the repo root when that file
 - A series with no reference of its own uses the H100 reference (coverage is in H100-equivalent units).
 - The offchain headline is a trailing `window_secs` VWAP. With alpha unset, winsorized VWAP equals VWAP. `IndexUpdated` does not carry a tumbling `windowStart`, so a true onchain tumbling window is not reconstructed. One eligible print makes both readings match.
 - Timelock rows are stored as `operationId-index` because one batch has several indexes and the table primary key cannot be `operation_id` alone. The API field `operation_id` is the `CallScheduled` id.
+- D-45 through D-58 are applied as the proposed text. `OrderPlaced` is only the resting remainder (D-51). `declineAndPay` actions disappear once `now_s > deadline` (D-47). A same-transaction `RedemptionReopened` removes the refund's `REDEMPTION_UNLOCK` (D-46). `Defaulted.caller` is stored as emitted, which is the arbitrator address when `via_dispute` is true (D-56). `GET /v1/health` includes `index_update_failures`, the count of `IndexUpdateFailed` logs (D-53).
+- E10 `state` and `actions` use the contract's strict `now_s > deadline`. The extra 2 seconds before the client enables Claim default is a UI rule on top of `meta.server_now_ms` (D-48). The approved DEFAULTABLE example is only 1 second past the deadline and already lists `CLAIM_DEFAULT`.
 - `event_log` stays on so redemption timelines work.
 - Error bodies have no `meta`. Every success envelope includes `meta.server_now_ms`.
 - Sync lag threshold is 5 blocks until T4-03 is measured.

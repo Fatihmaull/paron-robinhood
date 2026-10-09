@@ -113,6 +113,7 @@ export function createApp(options: CreateAppOptions) {
         lag_blocks: lag,
         indexed_at_ms: tsMs(snap.indexedAt),
         api_version: "v1",
+        index_update_failures: snap.configChanges.filter((row) => row.event === "IndexUpdateFailed").length,
       }),
     );
   };

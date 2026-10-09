@@ -1,10 +1,12 @@
 import { describe, expect, it } from "vitest";
 import { createApp, resolveNow } from "../src/api/create-app.js";
 import type { Snapshot } from "../src/api/snapshot.js";
+import { applyLog } from "../src/handlers/apply.js";
 import { MemoryStore } from "../src/store/memory.js";
 import {
   APPROVAL_UID,
   APPLICANT,
+  ARBITRATOR,
   BUY,
   BUY2,
   CHAIN_ID,
@@ -13,18 +15,22 @@ import {
   DEMO_NOW,
   E_KYB,
   EXPLORER,
+  H100,
   INDEXED_AT,
   INDEXED_BLOCK,
   JUDGE,
   JKT,
   KYB_UID,
   OP_ID,
+  RM,
   TRADER,
+  ctx,
   kybApproved,
   kybPending,
   replay,
   timelock,
 } from "./demo-replay.js";
+import type { Hex } from "viem";
 
 const TRADE = `0x${"c5".repeat(32)}`;
 const PRIMARY10 = `0x${"c3".repeat(32)}`;
@@ -93,6 +99,7 @@ describe("API-01 health", () => {
     expect(body.data.chain).toBe("robinhoodTestnet");
     expect(body.data.indexed_block).toBeGreaterThanOrEqual(130100390);
     expect(body.data.api_version).toBe("v1");
+    expect(body.data.index_update_failures).toBe(0);
     expect(body.meta.server_now_ms).toBe(Number(DEMO_NOW) * 1000);
   });
 
@@ -419,6 +426,139 @@ describe("API-16 kyb", () => {
     expect(approved.body.data[0].approval.attestation_uid).toBe(APPROVAL_UID);
     const queue = await get(approvedStore, "/v1/kyb/applications?status=PENDING");
     expect(queue.body.data).toEqual([]);
+  });
+});
+
+describe("D-46 reopen", () => {
+  it("drops the refund unlock when the same transaction reopens the request", async () => {
+    const store = await replay("end");
+    const tx = `0x${"ee".repeat(32)}` as Hex;
+    const ts = 1791602000n;
+    await applyLog(store, ctx, {
+      address: RM,
+      eventName: "RedemptionRequested",
+      contractName: "RedemptionManager",
+      args: { reqId: 8n, seriesId: 4n, holder: BUY, amount: 10n ** 18n, deliveryRef: `0x${"d8".repeat(32)}`, ackDeadline: ts + 60n },
+      blockNumber: 130100500n,
+      blockTimestamp: ts,
+      txHash: `0x${"e8".repeat(32)}` as Hex,
+      txFrom: BUY,
+      txTo: RM,
+      logIndex: 1,
+    });
+    await applyLog(store, ctx, {
+      address: RM,
+      eventName: "Refunded",
+      contractName: "RedemptionManager",
+      args: { reqId: 8n, seriesId: 4n, disputeBondReturned: 1_000_000n },
+      blockNumber: 130100510n,
+      blockTimestamp: ts + 10n,
+      txHash: tx,
+      txFrom: BUY,
+      txTo: RM,
+      logIndex: 1,
+    });
+    await applyLog(store, ctx, {
+      address: RM,
+      eventName: "RedemptionRequested",
+      contractName: "RedemptionManager",
+      args: { reqId: 9n, seriesId: 4n, holder: BUY, amount: 10n ** 18n, deliveryRef: `0x${"d8".repeat(32)}`, ackDeadline: ts + 70n },
+      blockNumber: 130100510n,
+      blockTimestamp: ts + 10n,
+      txHash: tx,
+      txFrom: BUY,
+      txTo: RM,
+      logIndex: 2,
+    });
+    await applyLog(store, ctx, {
+      address: RM,
+      eventName: "RedemptionReopened",
+      contractName: "RedemptionManager",
+      args: { oldReqId: 8n, newReqId: 9n, seriesId: 4n, ackDeadline: ts + 70n },
+      blockNumber: 130100510n,
+      blockTimestamp: ts + 10n,
+      txHash: tx,
+      txFrom: BUY,
+      txTo: RM,
+      logIndex: 3,
+    });
+    const { body } = await get(store, "/v1/redemptions/9");
+    expect(body.data.reopened_from_req_id).toBe("8");
+    const old = await get(store, "/v1/redemptions/8");
+    expect(old.body.data.reopened_to_req_id).toBe("9");
+    expect(old.body.data.state).toBe("REFUNDED");
+    const statement = await get(store, `/v1/accounts/${BUY}/statement`);
+    const unlocks = statement.body.data.filter(
+      (row: { kind: string; req_id: string | null }) => row.kind === "REDEMPTION_UNLOCK" && row.req_id === "8",
+    );
+    expect(unlocks).toEqual([]);
+    const returned = statement.body.data.filter(
+      (row: { kind: string; req_id: string | null }) => row.kind === "DISPUTE_BOND_RETURNED" && row.req_id === "8",
+    );
+    expect(returned).toHaveLength(1);
+  });
+});
+
+describe("D-47 declineAndPay", () => {
+  it("offers decline only until the deadline, then only claim default", async () => {
+    const store = await replay("beforeDefault");
+    const atDeadline = await get(store, `/v1/redemptions?holder=${BUY}&series=4`, 1791601440n);
+    const open = atDeadline.body.data.find((row: { req_id: string }) => row.req_id === "2");
+    expect(open.state).toBe("REQUESTED");
+    expect(open.actions).toEqual(["ACK", "DECLINE_AND_PAY"]);
+    const past = await get(store, `/v1/redemptions?holder=${BUY}&state=DEFAULTABLE`, 1791601441n);
+    expect(past.body.data[0].actions).toEqual(["CLAIM_DEFAULT"]);
+    expect(past.body.data[0].actions).not.toContain("DECLINE_AND_PAY");
+  });
+});
+
+describe("D-53 index failures", () => {
+  it("counts IndexUpdateFailed on health", async () => {
+    const store = await replay("end");
+    await applyLog(store, ctx, {
+      address: RM,
+      eventName: "IndexUpdateFailed",
+      contractName: "RedemptionManager",
+      args: { gpuModel: H100, seriesId: 4n, refId: 2n },
+      blockNumber: 130100450n,
+      blockTimestamp: DEMO_NOW,
+      txHash: `0x${"1f".repeat(32)}` as Hex,
+      txFrom: BUY,
+      txTo: RM,
+      logIndex: 9,
+    });
+    const { body } = await get(store, "/v1/health");
+    expect(body.data.index_update_failures).toBe(1);
+  });
+});
+
+describe("D-56 default caller", () => {
+  it("stores the arbitrator address when the default comes from a ruling", async () => {
+    const store = await replay("beforeDefault");
+    await applyLog(store, ctx, {
+      address: RM,
+      eventName: "Defaulted",
+      contractName: "RedemptionManager",
+      args: {
+        reqId: 2n,
+        seriesId: 4n,
+        holder: BUY,
+        amount: 10n * 10n ** 18n,
+        payout: 45n * 1_000_000n,
+        voluntary: false,
+        viaDispute: true,
+        caller: ARBITRATOR,
+      },
+      blockNumber: 130100390n,
+      blockTimestamp: 1791601441n,
+      txHash: `0x${"cb".repeat(32)}` as Hex,
+      txFrom: ARBITRATOR,
+      txTo: RM,
+      logIndex: 1,
+    });
+    const { body } = await get(store, "/v1/redemptions/2");
+    expect(body.data.via_dispute).toBe(true);
+    expect(body.data.default_caller).toBe(ARBITRATOR);
   });
 });
 
