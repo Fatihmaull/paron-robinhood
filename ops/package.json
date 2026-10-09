@@ -1,0 +1,22 @@
+{
+  "name": "@paron/ops",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Paron ops: chain go/no-go, seed, and deployment manifests. Testnet only.",
+  "engines": {
+    "node": "24.21.0"
+  },
+  "scripts": {
+    "test": "node --test test/verdict.test.mjs test/seed-plan.test.mjs test/manifest.test.mjs test/chains.test.mjs test/key.test.mjs test/deploy-plan.test.mjs",
+    "deploy": "node scripts/deploy.mjs",
+    "verify-deployment": "node scripts/verify-deployment.mjs",
+    "go-nogo": "node scripts/go-nogo.mjs",
+    "seed": "node scripts/seed.mjs",
+    "smoke": "node scripts/smoke.mjs",
+    "deployments": "node scripts/render-deployments.mjs"
+  },
+  "dependencies": {
+    "viem": "2.57.3"
+  }
+}

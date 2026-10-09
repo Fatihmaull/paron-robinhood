@@ -1,47 +1,155 @@
 {
-  "schemaVersion": 1,
+  "active": "robinhoodTestnet",
+  "goNoGo": {
+    "verdict": "go",
+    "chainKey": "robinhoodTestnet",
+    "measuredAtUtc": "2026-10-09T04:26:15.171Z",
+    "deadlineWib": "2026-10-09T11:59:00+07:00",
+    "evidence": "deployments/46630/go-nogo.json",
+    "choice": "Read-only chain health passed, so Robinhood Chain Testnet stays the active chain. Checks that need a signature or a deployed contract are scripts, not a chain outage. See README."
+  },
   "chains": {
-    "robinhood": {
+    "robinhoodTestnet": {
+      "key": "robinhoodTestnet",
+      "role": "primary",
       "chainId": 46630,
-      "name": "Robinhood Chain Testnet",
-      "rpc": ["https://rpc.testnet.chain.robinhood.com"],
-      "explorer": "https://explorer.testnet.chain.robinhood.com",
-      "native": { "name": "Ether", "symbol": "ETH", "decimals": 18 },
-      "usdc": null,
-      "eas": null,
-      "schemaRegistry": null,
-      "multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11",
-      "create2Deployer": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
-      "safeSingleton": "0x41675C099F32341bf84BFc5382aF534df5C7461a",
-      "safeProxyFactory": "0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67",
-      "safeFallbackHandler": "0xfd0732Dc9E303f09fCEf3a7388Ad10A83459Ec99",
-      "verify": { "verifier": "etherscan", "api": "https://explorer.testnet.chain.robinhood.com/api" }
+      "chainIdHex": "0xb626",
+      "viemChain": "robinhoodTestnet",
+      "nativeCurrency": "ETH",
+      "parentChain": "Ethereum Sepolia",
+      "rpc": {
+        "public": "https://rpc.testnet.chain.robinhood.com",
+        "primaryEnv": "RH_TESTNET_RPC",
+        "backupEnv": "RH_TESTNET_RPC_BACKUP",
+        "notes": "Public RPC is rate-limited. Do not run the demo indexer on it. Indexed demo traffic uses RH_TESTNET_RPC (Alchemy) or RH_TESTNET_RPC_BACKUP (Goldsky Edge)."
+      },
+      "explorer": {
+        "url": "https://explorer.testnet.chain.robinhood.com",
+        "mirror": null
+      },
+      "verify": {
+        "verifier": "blockscout",
+        "verifierUrl": "https://explorer.testnet.chain.robinhood.com/api/",
+        "apiKeyEnv": null
+      },
+      "faucets": [
+        "https://faucet.testnet.chain.robinhood.com",
+        "https://www.alchemy.com/faucets/robinhood-testnet",
+        "https://faucet.quicknode.com/robinhood/testnet",
+        "https://faucet.chainstack.com/robinhood-chain-testnet-faucet"
+      ],
+      "bridge": "https://portal.arbitrum.io/bridge?sourceChain=sepolia&destinationChain=robinhood-chain-testnet",
+      "eas": {
+        "mode": "self-deploy",
+        "address": "self-deploy",
+        "schemaRegistry": "self-deploy",
+        "eip712Proxy": null,
+        "version": "1.4.0",
+        "domainVersionHardcode": false,
+        "easscan": null
+      },
+      "safe": {
+        "mode": "ui",
+        "version": "1.4.1",
+        "singletonL2": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "proxyFactory": "0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67",
+        "fallbackHandler": "0xfd0732Dc9E303f09fCEf3a7388Ad10A83459Ec99",
+        "multiSend": "0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526",
+        "multiSendCallOnly": "0x9641d764fc13c8B624c04430C7356C1C7C8102e2",
+        "signMessageLib": "0xd53cd0aB83D845Ac265BE939c57F53AD838012c9",
+        "createCall": "0x9b35Af71d77eaf8d7e40252370304687390A1A52",
+        "simulateTxAccessor": "0x3d4BA2E0884aa488718476ca2FB8Efc291A46199",
+        "txService": true
+      },
+      "infra": {
+        "multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11",
+        "create2Deployer": "0x4e59b44847b379578588920cA78FbF26c0B4956C"
+      },
+      "tokens": {
+        "reference": {
+          "symbol": "USDG",
+          "address": "0x7E955252E15c84f5768B83c41a71F9eba181802F",
+          "usedForSettlement": false
+        }
+      },
+      "settlement": "MockUSDC",
+      "confirmations": null,
+      "gasSnapshotGwei": 0.01,
+      "gasSnapshotWei": "10000000",
+      "gasSnapshotMeasuredAtUtc": "2026-10-09T04:26:15.171Z",
+      "arbOsVersion": 116,
+      "readmeChainLine": "Deployed on Robinhood Chain Testnet (46630). Explorer: https://explorer.testnet.chain.robinhood.com"
     },
     "arbitrumSepolia": {
+      "key": "arbitrumSepolia",
+      "role": "fallback",
       "chainId": 421614,
-      "name": "Arbitrum Sepolia",
-      "rpc": ["https://sepolia-rollup.arbitrum.io/rpc"],
-      "explorer": "https://sepolia.arbiscan.io",
-      "native": { "name": "Ether", "symbol": "ETH", "decimals": 18 },
-      "usdc": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",
-      "eas": "0x2521021fc8BF070473E1e1801D3c7B4aB701E1dE",
-      "schemaRegistry": "0x45CB6Fa0870a8Af06796Ac15915619a0f22cd475",
-      "multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11",
-      "create2Deployer": "0x4e59b44847b379578588920cA78FbF26c0B4956C",
-      "verify": { "verifier": "etherscan", "api": "https://api-sepolia.arbiscan.io/api" }
-    },
-    "anvil": {
-      "chainId": 31337,
-      "name": "Anvil",
-      "rpc": ["http://127.0.0.1:8545"],
-      "explorer": null,
-      "native": { "name": "Ether", "symbol": "ETH", "decimals": 18 },
-      "usdc": null,
-      "eas": null,
-      "schemaRegistry": null,
-      "multicall3": null,
-      "create2Deployer": null,
-      "verify": null
+      "chainIdHex": "0x66eee",
+      "viemChain": "arbitrumSepolia",
+      "nativeCurrency": "ETH",
+      "parentChain": "Ethereum Sepolia",
+      "rpc": {
+        "public": "https://sepolia-rollup.arbitrum.io/rpc",
+        "primaryEnv": "ARB_SEPOLIA_RPC",
+        "backupEnv": "ARB_SEPOLIA_RPC_BACKUP",
+        "notes": "Fallback only. Switch config.active to arbitrumSepolia if a later signed check hard-fails on Robinhood."
+      },
+      "explorer": {
+        "url": "https://sepolia.arbiscan.io",
+        "mirror": "https://arbitrum-sepolia.blockscout.com"
+      },
+      "verify": {
+        "verifier": "etherscan",
+        "verifierUrl": null,
+        "apiKeyEnv": "ETHERSCAN_API_KEY",
+        "keylessVerifierUrl": "https://arbitrum-sepolia.blockscout.com/api/"
+      },
+      "faucets": [
+        "https://faucets.chain.link/arbitrum-sepolia",
+        "https://faucet.quicknode.com/arbitrum/sepolia",
+        "https://www.alchemy.com/faucets/arbitrum-sepolia"
+      ],
+      "bridge": "https://bridge.arbitrum.io",
+      "eas": {
+        "mode": "existing",
+        "address": "0x2521021fc8BF070473E1e1801D3c7B4aB701E1dE",
+        "schemaRegistry": "0x45CB6Fa0870a8Af06796Ac15915619a0f22cd475",
+        "eip712Proxy": "0x8E807011c16E538B2dEEf1dc652EFe7724E09397",
+        "version": "1.3.0",
+        "domainVersionHardcode": false,
+        "easscan": null
+      },
+      "safe": {
+        "mode": "allowlist",
+        "version": "1.4.1",
+        "singletonL2": "0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "proxyFactory": "0x4e1DCf7AD4e460CfD30791CCC4F9c8a4f820ec67",
+        "fallbackHandler": "0xfd0732Dc9E303f09fCEf3a7388Ad10A83459Ec99",
+        "multiSend": "0x38869bf66a61cF6bDB996A6aE40D5853Fd43B526",
+        "multiSendCallOnly": "0x9641d764fc13c8B624c04430C7356C1C7C8102e2",
+        "signMessageLib": "0xd53cd0aB83D845Ac265BE939c57F53AD838012c9",
+        "createCall": "0x9b35Af71d77eaf8d7e40252370304687390A1A52",
+        "simulateTxAccessor": "0x3d4BA2E0884aa488718476ca2FB8Efc291A46199",
+        "txService": false
+      },
+      "infra": {
+        "multicall3": "0xcA11bde05977b3631167028862bE2a173976CA11",
+        "create2Deployer": "0x4e59b44847b379578588920cA78FbF26c0B4956C"
+      },
+      "tokens": {
+        "reference": {
+          "symbol": "USDC",
+          "address": "0x75faf114eafb1BDbe2F0316DF893fd58CE46AA4d",
+          "usedForSettlement": false
+        }
+      },
+      "settlement": "MockUSDC",
+      "confirmations": null,
+      "gasSnapshotGwei": 0.073154,
+      "gasSnapshotWei": "73154000",
+      "gasSnapshotMeasuredAtUtc": "2026-10-09T04:26:18.996Z",
+      "arbOsVersion": 116,
+      "readmeChainLine": "Deployed on Arbitrum Sepolia (421614). Explorer: https://sepolia.arbiscan.io"
     }
   }
 }
