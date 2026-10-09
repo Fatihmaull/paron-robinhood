@@ -27,7 +27,7 @@ Run in this order. Each line is one step. Timelock is deployed in the roles step
 5. `PARON_BROADCAST=1 node ops/scripts/deploy.mjs seed`
    Seed. Writes `deployments/<chainId>/<label>.json → seed`.
 
-Before step 4, create the 2-of-3 Safe in Safe{Wallet} and export `SAFE_ADDRESS`. If that soft-fails, set `PARON_SAFE_MODE=allowlist` instead. Set `MAX_FILLS_PER_TX` before step 3 (01 T-02). Seed signers other than the deployer use `KEY_W_VERIFIER`, `KEY_W_P_JKT`, `KEY_W_P_BTM`, `KEY_W_P_SGP`, plus `KEY_W_BUY2` or `KEY_W_FEED` when that action is in the plan.
+Before step 4, create the 2-of-3 Safe in Safe{Wallet} and export `SAFE_ADDRESS`. If that soft-fails, set `PARON_SAFE_MODE=allowlist` instead. `maxFillsPerTx` is read from `config/params`. `MAX_FILLS_PER_TX` overrides it. Seed signers other than the deployer use `KEY_W_VERIFIER`, `KEY_W_P_JKT`, `KEY_W_P_BTM`, `KEY_W_P_SGP`, `KEY_W_BUY`, `KEY_W_TRD`, plus `KEY_W_BUY2` or `KEY_W_FEED` when that action is in the plan.
 
 Then, read-only, no key: `node ops/scripts/verify-deployment.mjs`
 

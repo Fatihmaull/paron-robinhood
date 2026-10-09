@@ -43,7 +43,7 @@ Attach a Railway Postgres plugin. It injects `DATABASE_URL` at deploy time. Do n
 
 Ponder writes its tables into the Postgres schema named by `DATABASE_SCHEMA`. Set it on the Railway service to a fixed value, for example `paron`, and keep that value for every redeploy of the same service.
 
-If the variable is missing while `DATABASE_URL` is set, this package refuses to boot. If the value changes, Ponder backfills into a different schema and the API looks empty until that finishes. Do not rotate it as part of a normal deploy.
+`ponder start` itself exits with "Database schema required" when no schema is set (Railway then shows 502 "Application failed to respond"). The Dockerfile, the `start` script and `ponder.config.ts` default it to `paron`, so a missing variable no longer crashes the service. If the value changes, Ponder backfills into a different schema and the API looks empty until that finishes. Do not rotate it as part of a normal deploy.
 
 The schema has to stay stable per deployment. One Railway service, one schema name.
 
@@ -74,7 +74,7 @@ Chain metadata is read from `config/chains.json` at the repo root when that file
 
 - Add `indexer` to the root `pnpm-workspace.yaml`.
 - `config/chains.json` and `deployments/` belong to L1/L4. This package ships a chain file and reads the root copies when they exist.
-- Replace `src/abi/temporary-event-abis.ts` with L1's `shared/abi` export. The temporary file is derived from dev doc 01.
+- `src/abi/temporary-event-abis.ts` loads the JSON copied from `shared/abi` into `src/abi/shared`. Railway's root directory is this package, so the copy is what the image builds. `node script/sync-shared-abi.mjs` refreshes it from the repo-root `shared/abi`. EAS and the timelock are not Paron contracts and stay as fragments in that module.
 - `fixtures/v1/` at the repo root is the frontend mock (dev doc 03 §4). API tests live in `indexer/test`.
 - `METHODOLOGY.md` at the repo root is where the winsorization alpha belongs (T3-04). The API reports `alpha: null` and `methodology: "METHODOLOGY.md"`.
 

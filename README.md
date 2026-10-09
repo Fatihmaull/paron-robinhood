@@ -99,7 +99,9 @@ Copy `ops/.env.example` to `ops/.env` and `agents/.env.example` to `agents/.env`
 
 `node ops/scripts/deploy.mjs seed` prints phases 1–2 only. It refuses `SEED_MODE=rehearsal` when `DEPLOY_LABEL` starts with `stage-`. Phase 3 (the live 2610 series, the default, the claim) is not seeded onto the stage deployment.
 
-Broadcast installs `viem@2.57.3` inside `ops/` (`npm install`). The deployer key is `PARON_DEPLOYER_PK` in the environment, 64 hex characters, with or without `0x`. It is not written to the manifest. Signing still waits until `contracts/out` contains the contract artifacts. The contracts lane owns that Solidity.
+Broadcast installs `viem@2.57.3` inside `ops/` (`npm install`). The deployer key is `PARON_DEPLOYER_PK` in the environment, 64 hex characters, with or without `0x`. It is not written to the manifest.
+
+Contract artifacts are `contracts/out/<Contract>.sol/<Contract>.json`. From `contracts/`, run `forge build`. That does not need `npm ci`: OpenZeppelin and the EAS contracts are vendored in `contracts/lib` (see `contracts/lib/VENDOR.md` and `contracts/README.md`). Signing waits until those artifacts exist.
 
 ## Tests
 

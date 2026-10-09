@@ -61,7 +61,7 @@ const CONTRACTS: Record<string, readonly string[]> = {
   ],
   ProviderRegistry: ["ProviderRegistered", "ProviderStatusChanged", "ReputationUpdated", "RoleGranted", "RoleRevoked"],
   ConversionTable: ["FactorSet", "RoleGranted", "RoleRevoked"],
-  BondVault: ["BondDeposited", "BondReleased", "BondSlashed", "BondFinalized", "BondWithdrawn", "RoleGranted", "RoleRevoked"],
+  BondVault: ["BondDeposited", "BondReleased", "BondSlashed", "BondFinalized", "BondWithdrawn"],
   PrimarySale: ["PrimaryBuy", "TreasuryUpdated", "PrimaryFeeUpdated", "GateUpdated", "RoleGranted", "RoleRevoked"],
   OrderBook: ["OrderPlaced", "OrderCancelled", "Trade", "TakerFeeUpdated", "GateUpdated", "IndexUpdateFailed", "RoleGranted", "RoleRevoked"],
   RedemptionManager: [
@@ -75,8 +75,6 @@ const CONTRACTS: Record<string, readonly string[]> = {
     "Ruled",
     "RedemptionReopened",
     "IndexUpdateFailed",
-    "RoleGranted",
-    "RoleRevoked",
   ],
   PanelArbitrator: ["DisputeReceived", "RulingSubmitted", "PanelUpdated", "RoleGranted", "RoleRevoked"],
   PrintIndex: [

@@ -1,8 +1,8 @@
 import assert from "node:assert/strict";
 import test from "node:test";
 import { actionsFor, assertConstructor, assertParamSet, DEPLOY_STEPS } from "../src/deploy-plan.mjs";
-import { buildKnown, resolveArg } from "../src/encode-step.mjs";
-import { runDeployStep } from "../src/deploy-run.mjs";
+import { buildKnown, resolveArg, resolveArgs } from "../src/encode-step.mjs";
+import { loadArtifact, loadParams, runDeployStep } from "../src/deploy-run.mjs";
 import { applyReceipts } from "../src/manifest-store.mjs";
 import { emptyInfra, emptyLabel, renderDeploymentsMarkdown } from "../src/manifest.mjs";
 import { manifestProblems } from "../src/verify-deployment.mjs";
@@ -107,7 +107,7 @@ test("core broadcast refuses to overwrite a label", async () => {
     accountFromKey: async () => ({ address: "0x00000000000000000000000000000000000000a1" }),
     store: {
       loadState() {
-        return { infra: emptyInfra(46630), label: emptyLabel({ chainId: 46630, chainKey: "robinhoodTestnet", label: "stage-1" }), labelExisted: true };
+        return { infra: emptyInfra(46630), label: emptyLabel({ chainId: 46630, chainKey: "robinhoodTestnet", label: "stage-1" }), labelExisted: true, label: { ...emptyLabel({ chainId: 46630, chainKey: "robinhoodTestnet", label: "stage-1" }), contracts: { SeriesFactory: { address: "0x00000000000000000000000000000000000000b1" } } } };
       },
       saveState() { throw new Error("saved"); },
     },
@@ -160,6 +160,76 @@ test("manifest problems stay empty only when L2 and L3 can read addresses", () =
   label.contracts.SeriesFactory = { address: "0x00000000000000000000000000000000000000b3" };
   label.roles.timelock = "0x00000000000000000000000000000000000000b4";
   assert.deepEqual(manifestProblems(infra, label), []);
+});
+
+test("compiled artifacts accept the plan calldata", async () => {
+  if (!loadArtifact("MockUSDC") || !loadArtifact("EAS") || !loadArtifact("TimelockController")) return;
+  const viem = await import("viem");
+  const { params } = loadParams({ PARAM_SET: "demo" });
+  const env = {
+    W_VERIFIER: "0x00000000000000000000000000000000000000c1",
+    SAFE_ADDRESS: "0x00000000000000000000000000000000000000d1",
+    W_ADMIN: "0x00000000000000000000000000000000000000d2",
+    TREASURY_ADDRESS: "0x00000000000000000000000000000000000000d3",
+    W_ARB_1: "0x00000000000000000000000000000000000000a1",
+    W_ARB_2: "0x00000000000000000000000000000000000000a2",
+    W_ARB_3: "0x00000000000000000000000000000000000000a3",
+    W_FEED: "0x00000000000000000000000000000000000000f1",
+    TEAM_EOA_1: "0x00000000000000000000000000000000000000e1",
+    TEAM_EOA_2: "0x00000000000000000000000000000000000000e2",
+    REFERENCE_FEED: "1",
+    PARON_SAFE_MODE: "allowlist",
+  };
+  const from = "0x00000000000000000000000000000000000000b1";
+  for (const step of ["mock-usdc", "eas-schema", "core", "roles"]) {
+    const actions = actionsFor(step, { chain, env });
+    const known = buildKnown({
+      actions,
+      from,
+      nonce: 3,
+      predict: (_from, nonce) => `0x${(0x1000 + nonce).toString(16).padStart(40, "0")}`,
+      env,
+      params,
+      infra: {
+        mockUsdc: { address: "0x0000000000000000000000000000000000000011" },
+        eas: { address: "0x0000000000000000000000000000000000000012" },
+        schemas: {},
+      },
+      chain,
+    });
+    for (const action of actions) {
+      if (action.kind !== "deploy" && action.kind !== "call") continue;
+      const artifact = loadArtifact(action.contract);
+      assert.ok(artifact, action.contract);
+      if (action.kind === "deploy") {
+        assertConstructor(action.contract, artifact.abi, action.args);
+        const data = viem.encodeDeployData({
+          abi: artifact.abi,
+          bytecode: artifact.bytecode,
+          args: resolveArgs(action.args, known),
+        });
+        assert.match(data, /^0x/);
+      }
+      if (action.kind === "call") {
+        const data = viem.encodeFunctionData({
+          abi: artifact.abi,
+          functionName: action.method,
+          args: resolveArgs(action.args, known),
+        });
+        assert.match(data, /^0x/);
+      }
+    }
+  }
+});
+
+test("schema uid matches viem encodePacked", async () => {
+  const { encodePacked, keccak256 } = await import("viem");
+  const { schemaUid } = await import("../src/schema-uid.mjs");
+  const { SCHEMA_PARTICIPANT, SCHEMA_KYB } = await import("../src/deploy-plan.mjs");
+  const zero = "0x0000000000000000000000000000000000000000";
+  for (const schema of [SCHEMA_PARTICIPANT, SCHEMA_KYB]) {
+    assert.equal(schemaUid(schema), keccak256(encodePacked(["string", "address", "bool"], [schema, zero, true])));
+  }
 });
 
 test("applyReceipts records the eas schema uid for the indexer", () => {

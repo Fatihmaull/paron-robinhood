@@ -13,6 +13,8 @@ RUN pnpm install --frozen-lockfile
 COPY . .
 
 ENV PORT=42069
+# `ponder start` exits without a schema name. Override in Railway only if you must; keep it stable.
+ENV DATABASE_SCHEMA=paron
 EXPOSE 42069
 
 # `pnpm start` runs `ponder start` and binds $PORT (Railway injects PORT).

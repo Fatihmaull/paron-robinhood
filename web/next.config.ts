@@ -1,8 +1,15 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { NextConfig } from "next";
+import { loadManifestAddresses } from "./lib/manifest";
 
-const dataSource = process.env.NEXT_PUBLIC_DATA_SOURCE ?? "mock";
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+for (const [key, value] of Object.entries(loadManifestAddresses(repoRoot, process.env))) {
+  process.env[key] = value;
+}
 
-if (process.env.VERCEL === "1" && dataSource === "mock") {
+// Only an explicit mock request is refused on Vercel. Unset resolves to live (see lib/config.ts).
+if (process.env.VERCEL === "1" && process.env.NEXT_PUBLIC_DATA_SOURCE === "mock") {
   throw new Error(
     "Refusing to build: NEXT_PUBLIC_DATA_SOURCE=mock is not allowed when VERCEL=1.",
   );

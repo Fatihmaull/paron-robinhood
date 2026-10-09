@@ -594,7 +594,7 @@ export async function applyLog(store: Store, ctx: ApplyContext, log: IndexedLog)
       if (row) {
         await store.put("dispute", reqId.toString(), {
           ...row,
-          ruling: rulingName(num(args.outcome)),
+          ruling: rulingName(num(args.ruling)),
           signers,
           ruledAt: ts,
         });

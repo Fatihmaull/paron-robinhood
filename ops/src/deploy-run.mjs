@@ -3,14 +3,16 @@ import { resolve } from "node:path";
 import { activeChain, loadChains, publicRpc, repoRoot } from "./chains.mjs";
 import {
   DEPLOY_STEPS,
-  DEMO_PARAMS,
   actionsFor,
   assertConstructor,
   assertParamSet,
+  normalizeParams,
 } from "./deploy-plan.mjs";
 import { buildKnown, resolveArgs } from "./encode-step.mjs";
 import { missingSeedKeys, readDeployerKey, redact } from "./key.mjs";
 import { applyReceipts, loadState, saveState } from "./manifest-store.mjs";
+import { schemaUid } from "./schema-uid.mjs";
+import { seedArtifactNames } from "./seed-calls.mjs";
 
 export function modeOf(env = process.env) {
   const broadcast = env.PARON_BROADCAST === "1";
@@ -32,9 +34,13 @@ export function loadArtifact(contract, root = repoRoot()) {
   return { abi: json.abi || [], bytecode };
 }
 
-function paramsFrom(env) {
+export function loadParams(env, root = repoRoot()) {
   const paramSet = env.PARAM_SET || "demo";
-  const params = structuredClone(DEMO_PARAMS);
+  if (paramSet !== "demo" && paramSet !== "prod") {
+    throw new Error("PARAM_SET must be demo or prod");
+  }
+  const path = resolve(root, "config/params", `${paramSet}.json`);
+  const params = normalizeParams(JSON.parse(readFileSync(path, "utf8")));
   if (env.MAX_FILLS_PER_TX) params.maxFillsPerTx = Number(env.MAX_FILLS_PER_TX);
   assertParamSet(paramSet, params);
   return { paramSet, params };
@@ -60,7 +66,7 @@ export function describeStep(stepId, { chain, env }) {
     "key: PARON_DEPLOYER_PK from the environment only (64 hex chars; a leading 0x is accepted). It is not printed.",
   ];
   if (stepId === "seed") {
-    lines.push("Other seed signers use KEY_W_VERIFIER, KEY_W_P_JKT, KEY_W_P_BTM, KEY_W_P_SGP, and KEY_W_BUY2 or KEY_W_FEED when that step is in the plan. W-DEP uses PARON_DEPLOYER_PK.");
+    lines.push("Other seed signers use KEY_W_VERIFIER, KEY_W_P_JKT, KEY_W_P_BTM, KEY_W_P_SGP, KEY_W_BUY, KEY_W_TRD, and KEY_W_BUY2 or KEY_W_FEED when that step is in the plan. W-DEP uses PARON_DEPLOYER_PK.");
   }
   for (const action of actions) lines.push(formatAction(action));
   return lines;
@@ -71,7 +77,33 @@ function requiredArtifacts(actions) {
   for (const action of actions) {
     if (action.kind === "deploy" || action.kind === "call") names.add(action.contract);
   }
+  if (actions.some((action) => action.kind === "seed")) {
+    for (const name of seedArtifactNames(actions)) names.add(name);
+  }
   return [...names];
+}
+
+const ACCESS_CONTROL = new Set([
+  "EASGate",
+  "RegistryGate",
+  "ConversionTable",
+  "ProviderRegistry",
+  "PrintIndex",
+  "SeriesFactory",
+  "PrimarySale",
+  "OrderBook",
+  "PanelArbitrator",
+  "ReferenceFeed",
+]);
+
+function secretsIn(env, deployerKey) {
+  const secrets = [];
+  if (deployerKey) secrets.push(deployerKey);
+  for (const [name, value] of Object.entries(env)) {
+    if (!value) continue;
+    if (name === "PARON_DEPLOYER_PK" || name.startsWith("KEY_")) secrets.push(value);
+  }
+  return secrets;
 }
 
 export async function runDeployStep(stepId, deps) {
@@ -100,13 +132,21 @@ export async function runDeployStep(stepId, deps) {
     return { exitCode: 2, mode, lines, send: false, wrote: false };
   }
 
-  const { paramSet, params } = paramsFrom(env);
-  if (stepId === "core" && params.maxFillsPerTx == null) {
-    lines.push("Refusing to sign. Set MAX_FILLS_PER_TX after the 01 T-02 forge snapshot.");
+  const { paramSet, params } = loadParams(env);
+  if (stepId === "core" && (params.maxFillsPerTx == null || Number(params.maxFillsPerTx) <= 0)) {
+    lines.push("Refusing to sign. Set maxFillsPerTx in the param file, or MAX_FILLS_PER_TX.");
     return { exitCode: 2, mode, lines, send: false, wrote: false };
   }
   if (stepId === "roles" && env.PARON_SAFE_MODE !== "allowlist" && !env.SAFE_ADDRESS) {
     lines.push("Refusing to sign. Set SAFE_ADDRESS, or PARON_SAFE_MODE=allowlist after the Safe soft-fail.");
+    return { exitCode: 2, mode, lines, send: false, wrote: false };
+  }
+  if (stepId === "roles" && env.PARON_SAFE_MODE === "allowlist" && (!env.W_ADMIN || !env.TEAM_EOA_1 || !env.TEAM_EOA_2)) {
+    lines.push("Refusing to sign. Allowlist mode needs W_ADMIN, TEAM_EOA_1, and TEAM_EOA_2.");
+    return { exitCode: 2, mode, lines, send: false, wrote: false };
+  }
+  if (stepId === "roles" && env.PARON_SAFE_MODE !== "allowlist" && !env.W_ADMIN) {
+    lines.push("Refusing to sign. Set W_ADMIN. Timelock proposers are the Safe and W-ADMIN.");
     return { exitCode: 2, mode, lines, send: false, wrote: false };
   }
 
@@ -117,7 +157,9 @@ export async function runDeployStep(stepId, deps) {
     lines.push(`mockUsdc already recorded at ${state.infra.mockUsdc.address}. Nothing sent.`);
     return { exitCode: 0, mode, lines, send: false, wrote: false };
   }
-  if (stepId === "core" && state.labelExisted) {
+  // mock-usdc and eas-schema create the label file first, so existence alone is not "core done".
+  const coreDone = Object.keys(state.label?.contracts || {}).length > 0;
+  if (stepId === "core" && coreDone) {
     lines.push(`Refusing to overwrite deployments/${chain.chainId}/${labelName}.json.`);
     return { exitCode: 2, mode, lines, send: false, wrote: false };
   }
@@ -129,12 +171,24 @@ export async function runDeployStep(stepId, deps) {
   const actions = actionsFor(stepId, { chain, env });
   const loader = deps.loadArtifact || loadArtifact;
   const missing = requiredArtifacts(actions).filter((name) => !loader(name));
-  if (stepId === "seed" || missing.length) {
-    const why = stepId === "seed"
-      ? "Seed calldata waits for contracts/out from the contracts lane."
-      : `Missing bytecode for ${missing.join(", ")}.`;
-    lines.push(`Refusing to ${mode}. ${why} Re-run the same command when the artifacts exist. No transaction was signed.`);
+  if (missing.length) {
+    lines.push(`Refusing to ${mode}. Missing bytecode for ${missing.join(", ")}. Re-run the same command when the artifacts exist. No transaction was signed.`);
     return { exitCode: 2, mode, lines, send: false, wrote: false };
+  }
+  if (stepId === "core") {
+    if (!env.TREASURY_ADDRESS && !env.SAFE_ADDRESS) {
+      lines.push("Refusing to sign. Set TREASURY_ADDRESS or SAFE_ADDRESS.");
+      return { exitCode: 2, mode, lines, send: false, wrote: false };
+    }
+    if (env.GATE_KIND !== "registry" && !env.W_VERIFIER) {
+      lines.push("Refusing to sign. Set W_VERIFIER. That account is the EAS attester.");
+      return { exitCode: 2, mode, lines, send: false, wrote: false };
+    }
+    const panel = [env.W_ARB_1, env.W_ARB_2, env.W_ARB_3].filter(Boolean);
+    if (panel.length < 2) {
+      lines.push("Refusing to sign. Set at least two of W_ARB_1, W_ARB_2, and W_ARB_3.");
+      return { exitCode: 2, mode, lines, send: false, wrote: false };
+    }
   }
 
   for (const action of actions) {
@@ -195,7 +249,7 @@ export async function runDeployStep(stepId, deps) {
     lines.push(`Wrote deployments/${chain.chainId}/infra.json and deployments/${chain.chainId}/${labelName}.json.`);
     return { exitCode: 0, mode, lines, send: true, wrote: true, receipts };
   } catch (err) {
-    lines.push(redact(err.message || String(err), [key]));
+    lines.push(redact(err.message || String(err), secretsIn(env, key)));
     return { exitCode: 2, mode, lines, send: false, wrote: false };
   }
 }
@@ -257,7 +311,7 @@ const ROLES = {
 };
 
 async function liveSender(rpc) {
-  const prepared = async (viem, account, actions, loader, env, params, infra, label) => {
+  const prepared = async (viem, account, actions, loader, env, params, infra, label, chain) => {
     const client = viem.createPublicClient({ transport: viem.http(rpc) });
     const nonce = await client.getTransactionCount({ address: account.address });
     const known = buildKnown({
@@ -268,6 +322,7 @@ async function liveSender(rpc) {
       env,
       params,
       infra,
+      chain,
     });
     const encoded = [];
     for (const action of actions) {
@@ -297,9 +352,27 @@ async function liveSender(rpc) {
   };
 
   return {
-    async simulate({ account, actions, loader, env, params, infra, label }) {
+    async simulate({ account, actions, loader, env, params, infra, label, chain }) {
       const viem = await import("viem");
-      const { client, encoded } = await prepared(viem, account, actions, loader, env, params, infra, label);
+      if (actions.some((action) => action.kind === "seed")) {
+        const { privateKeyToAccount } = await import("viem/accounts");
+        const { runSeed } = await import("./seed-calls.mjs");
+        const client = viem.createPublicClient({ transport: viem.http(rpc) });
+        return runSeed({
+          mode: "simulate",
+          viem,
+          privateKeyToAccount,
+          client,
+          wallet: null,
+          deployerAccount: account,
+          actions,
+          env,
+          loader,
+          infra,
+          label,
+        });
+      }
+      const { client, encoded } = await prepared(viem, account, actions, loader, env, params, infra, label, chain);
       const estimates = [];
       for (const row of encoded) {
         const gas = await client.estimateGas({ account: account.address, to: row.to || undefined, data: row.data });
@@ -307,14 +380,34 @@ async function liveSender(rpc) {
       }
       return estimates;
     },
-    async broadcast({ account, actions, loader, env, params, infra, label }) {
+    async broadcast({ account, actions, loader, env, params, infra, label, chain }) {
       const viem = await import("viem");
-      const { client, encoded } = await prepared(viem, account, actions, loader, env, params, infra, label);
+      if (actions.some((action) => action.kind === "seed")) {
+        const { privateKeyToAccount } = await import("viem/accounts");
+        const { runSeed } = await import("./seed-calls.mjs");
+        const client = viem.createPublicClient({ transport: viem.http(rpc) });
+        const wallet = viem.createWalletClient({ transport: viem.http(rpc) });
+        return runSeed({
+          mode: "broadcast",
+          viem,
+          privateKeyToAccount,
+          client,
+          wallet,
+          deployerAccount: account,
+          actions,
+          env,
+          loader,
+          infra,
+          label,
+        });
+      }
+      const { client, encoded, known } = await prepared(viem, account, actions, loader, env, params, infra, label, chain);
       const wallet = viem.createWalletClient({ account, transport: viem.http(rpc) });
       const receipts = [];
       for (const row of encoded) {
-        const hash = await wallet.sendTransaction({ to: row.to, data: row.data });
+        const hash = await wallet.sendTransaction({ to: row.to || undefined, data: row.data });
         const receipt = await client.waitForTransactionReceipt({ hash });
+        const schema = row.action.args?.find((arg) => arg.name === "schema")?.value;
         receipts.push({
           kind: row.action.kind,
           contract: row.action.contract,
@@ -324,7 +417,9 @@ async function liveSender(rpc) {
           from: account.address,
           status: receipt.status,
           schemaName: schemaName(row),
-          schema: row.action.args?.find((arg) => arg.name === "schema")?.value,
+          schema,
+          uid: schema ? schemaUid(schema) : undefined,
+          schemaRegistry: row.action.contract === "EAS" ? known.SchemaRegistry : undefined,
         });
       }
       return receipts;
@@ -352,9 +447,14 @@ function roleCalls(viem, deployer, known, env, label) {
     });
   };
   for (const [name, row] of targets) {
+    if (!ACCESS_CONTROL.has(name)) continue;
     callRole(row.address, name, "grantRole", ROLES.DEFAULT_ADMIN_ROLE, timelock);
-    callRole(row.address, name, "grantRole", ROLES.ADMIN_ROLE, admin);
-    callRole(row.address, name, "grantRole", ROLES.PAUSER_ROLE, admin);
+    if (name === "ProviderRegistry" || name === "PrintIndex") {
+      callRole(row.address, name, "grantRole", ROLES.ADMIN_ROLE, admin);
+    }
+    if (name === "SeriesFactory") {
+      callRole(row.address, name, "grantRole", ROLES.PAUSER_ROLE, admin);
+    }
     if (name === "RegistryGate" && env.W_VERIFIER) {
       callRole(row.address, name, "grantRole", ROLES.VERIFIER_ROLE, env.W_VERIFIER);
     }

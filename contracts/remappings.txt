@@ -1,4 +1,4 @@
 forge-std/=lib/forge-std/src/
-@openzeppelin/contracts/=node_modules/@openzeppelin/contracts/
-@openzeppelin/contracts-upgradeable/=node_modules/@openzeppelin/contracts-upgradeable/
-@ethereum-attestation-service/eas-contracts/=node_modules/@ethereum-attestation-service/eas-contracts/contracts/
+@openzeppelin/contracts/=lib/openzeppelin-contracts/
+@openzeppelin/contracts-upgradeable/=lib/openzeppelin-contracts-upgradeable/
+@ethereum-attestation-service/eas-contracts/=lib/eas-contracts/contracts/

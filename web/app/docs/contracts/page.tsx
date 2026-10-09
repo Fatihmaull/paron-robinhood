@@ -17,6 +17,7 @@ const KEYS: ContractKey[] = [
   "timelock",
   "panel",
   "gate",
+  "easSchema",
 ];
 
 export default function ContractsPage() {
@@ -25,7 +26,7 @@ export default function ContractsPage() {
       <h1>Contracts</h1>
       <p className="lede">
         {contractsConfigured()
-          ? "Addresses from this build's environment."
+          ? "Addresses from this build. A deploy manifest fills any that were left empty."
           : "Addresses load from the deploy manifest. None are configured in this build."}
       </p>
       <table>
