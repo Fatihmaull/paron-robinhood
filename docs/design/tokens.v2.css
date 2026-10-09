@@ -1,0 +1,384 @@
+/* =====================================================================
+   Paron design tokens v2 (v1 + targeted changes; see audit/tokens-v2-diff.md)  ·  "Forged graphite + ember"
+   Paron Product Designer · Fri 9 Oct 2026
+   Dark theme is the default (trading UI). Light theme: <html data-theme="light">.
+   Pure CSS custom properties: no build step, works with Tailwind v4 (see theme.css).
+   Contrast ratios: contrast-report.md (all text tokens >= 4.5:1).
+   ===================================================================== */
+
+:root {
+  color-scheme: dark;
+
+  /* ---------- 1. Primitives (do not use directly in components) ---------- */
+  /* Graphite: cool forged-iron neutrals */
+  --p-graphite-950: #0A0C0F;
+  --p-graphite-900: #101317;
+  --p-graphite-850: #161A21;
+  --p-graphite-800: #1B2029;
+  --p-graphite-750: #222833;
+  --p-graphite-700: #2A313C;
+  --p-graphite-600: #3A4250;
+  --p-graphite-500: #646E7E;
+  --p-steel-400:    #838C9B;
+  --p-steel-300:    #A3ABB8;
+  --p-steel-100:    #E6E9EE;
+  --p-steel-50:     #F5F6F8;
+  /* Ember: hot metal on the anvil (brand accent; actions only) */
+  --p-ember-300: #FFA567;
+  --p-ember-400: #FF8F45;
+  --p-ember-450: #F28A45; /* ember as text on dark */
+  --p-ember-500: #F07A2A; /* brand */
+  --p-ember-600: #D2621A;
+  --p-ember-700: #B4500F;
+  --p-ember-ink: #1A0D04;
+  /* Semantic hues */
+  --p-green-400: #3CC68A;  /* bid / up / ok. Calm teal-green, NOT lime */
+  --p-green-900: #0F2A1F;
+  --p-red-400:   #F2646A;  /* ask / down */
+  --p-red-450:   #F2575C;  /* danger text */
+  --p-red-600:   #D93036;  /* danger fill (Claim default) */
+  --p-red-900:   #33161A;
+  --p-amber-400: #E8B64C;  /* warn / THIN / review */
+  --p-amber-900: #2E2410;
+  --p-blue-400:  #6AA8F5;  /* info / in progress / links */
+  --p-blue-900:  #122338;
+  --p-violet-400:#B09CFB;  /* dispute / arbitration */
+  --p-violet-900:#221C3A;
+
+  /* ---------- 2. Semantic: surfaces, text, borders ---------- */
+  --color-bg-canvas:   var(--p-graphite-950); /* page */
+  --color-bg-surface:  var(--p-graphite-900); /* panels, cards, tables */
+  --color-bg-raised:   var(--p-graphite-850); /* modals, popovers, sticky header */
+  --color-bg-sunken:   #0D1013;               /* inputs, code, strip */
+  --color-bg-hover:    var(--p-graphite-800);
+  --color-bg-selected: var(--p-graphite-750);
+
+  --color-text-primary:   var(--p-steel-100);
+  --color-text-secondary: var(--p-steel-300);
+  --color-text-tertiary:  var(--p-steel-400); /* captions, column headers */
+  --color-text-disabled:  #6B7380;
+  --color-text-inverse:   var(--p-graphite-950);
+  --color-text-link:      var(--p-blue-400);
+
+  --color-border-subtle:  #1F252E; /* row dividers */
+  --color-border-default: var(--p-graphite-700); /* panel edges */
+  --color-border-strong:  var(--p-graphite-600);
+  --color-border-input:   var(--p-graphite-500); /* >= 3:1 vs surface */
+  --color-focus-ring:     var(--p-ember-500);
+
+  /* ---------- 3. Semantic: brand + state ---------- */
+  --color-accent:        var(--p-ember-500);
+  --color-accent-hover:  var(--p-ember-400);
+  --color-accent-press:  var(--p-ember-600);
+  --color-accent-text:   var(--p-ember-450);
+  --color-accent-ink:    var(--p-ember-ink);
+  --color-accent-subtle: rgba(240, 122, 42, 0.12);
+
+  --color-bid:        var(--p-green-400);
+  --color-bid-subtle: rgba(60, 198, 138, 0.10);  /* depth bar */
+  --color-ask:        var(--p-red-400);
+  --color-ask-subtle: rgba(242, 100, 106, 0.10);
+  --color-up:   var(--color-bid);
+  --color-down: var(--color-ask);
+
+  --color-ok:      var(--p-green-400);  --color-ok-subtle:      var(--p-green-900);
+  --color-warn:    var(--p-amber-400);  --color-warn-subtle:    var(--p-amber-900);
+  --color-danger:  var(--p-red-450);    --color-danger-subtle:  var(--p-red-900);
+  --color-danger-fill: var(--p-red-600);
+  --color-info:    var(--p-blue-400);   --color-info-subtle:    var(--p-blue-900);
+  --color-dispute: var(--p-violet-400); --color-dispute-subtle: var(--p-violet-900);
+  --color-neutral: var(--p-steel-300);  --color-neutral-subtle: var(--p-graphite-800);
+
+  /* PrintIndex status (strip, S1, S3, S6) */
+  --index-ok-fg: var(--color-ok);          --index-ok-bg: var(--color-ok-subtle);
+  --index-thin-fg: var(--color-warn);      --index-thin-bg: var(--color-warn-subtle);
+  --index-disrupted-fg: var(--color-danger); --index-disrupted-bg: var(--color-danger-subtle);
+
+  /* Redemption states (06 §5.4 badges) */
+  --state-requested-fg: var(--color-info);    --state-requested-bg: var(--color-info-subtle);    /* Waiting for provider ack */
+  --state-acknowledged-fg: var(--color-info); --state-acknowledged-bg: var(--color-info-subtle); /* Provider acknowledged */
+  --state-delivered-fg: var(--color-warn);    --state-delivered-bg: var(--color-warn-subtle);    /* Delivered · review */
+  --state-defaultable-fg: var(--color-danger);--state-defaultable-bg: var(--color-danger-subtle);/* Deadline missed */
+  --state-disputed-fg: var(--color-dispute);  --state-disputed-bg: var(--color-dispute-subtle);  /* In dispute */
+  --state-defaulted-fg: var(--color-accent-text); --state-defaulted-bg: var(--color-accent-subtle); /* Defaulted · paid (bond did its job) */
+  --state-finalized-fg: var(--color-ok);      --state-finalized-bg: var(--color-ok-subtle);      /* Completed */
+  --state-refunded-fg: var(--color-neutral);  --state-refunded-bg: var(--color-neutral-subtle);  /* Refunded · CU returned */
+
+  /* ---------- 4. Typography ---------- */
+  /* next/font sets --font-plex-sans / --font-plex-mono; fallbacks keep it working without it */
+  --font-sans: var(--font-plex-sans, "IBM Plex Sans"), ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  --font-mono: var(--font-plex-mono, "IBM Plex Mono"), ui-monospace, SFMono-Regular, Menlo, Consolas, monospace;
+  --font-numeric-features: "tnum" 1; /* tabular figures */
+
+  /* Scale (px at 16px root). 13px is the data default; trading UIs are dense. */
+  --text-2xs: 0.6875rem; /* 11  legal footer, overline */
+  --text-xs:  0.75rem;   /* 12  column headers, captions, pills */
+  --text-sm:  0.8125rem; /* 13  table cells, body-dense (default) */
+  --text-md:  0.875rem;  /* 14  body, inputs, buttons */
+  --text-lg:  1rem;      /* 16  panel titles */
+  --text-xl:  1.25rem;   /* 20  series symbol in header */
+  --text-2xl: 1.625rem;  /* 26  page title */
+  --text-3xl: 2.25rem;   /* 36  hero numbers (bond balance) */
+  --text-countdown: 3.5rem; /* 56  mobile S4-R countdown (spec: >= 48px) */
+
+  --leading-tight: 1.2;
+  --leading-snug: 1.35;
+  --leading-normal: 1.5;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --tracking-tight: -0.015em;
+  --tracking-normal: 0;
+  --tracking-overline: 0.06em; /* v2: was 0.08em. Uppercase panel labels only; anti-slop R-06 flags wide-tracked caps */
+  --tracking-wordmark: 0.22em;
+
+  /* ---------- 5. Space, size, radius, border ---------- */
+  --space-0: 0;
+  --space-1: 0.25rem; /* 4 */
+  --space-2: 0.5rem;  /* 8 */
+  --space-3: 0.75rem; /* 12 */
+  --space-4: 1rem;    /* 16 */
+  --space-5: 1.25rem; /* 20 */
+  --space-6: 1.5rem;  /* 24 */
+  --space-8: 2rem;    /* 32 */
+  --space-10: 2.5rem; /* 40 */
+  --space-12: 3rem;   /* 48 */
+  --space-16: 4rem;   /* 64 */
+
+  --size-control-sm: 1.75rem; /* 28 */
+  --size-control-md: 2.25rem; /* 36 */
+  --size-control-lg: 2.75rem; /* 44 */
+  --size-control-touch: 3.5rem; /* 56: mobile Claim default */
+  --size-header: 3.5rem;
+  --size-strip: 2rem;
+  --size-content-max: 90rem; /* 1440 */
+
+  --radius-none: 0;
+  --radius-xs: 2px;  /* pills inside tables, bars */
+  --radius-sm: 4px;  /* buttons, inputs */
+  --radius-md: 6px;  /* panels, cards */
+  --radius-lg: 10px; /* modals, sheets */
+  --radius-full: 999px; /* status dot only. Pills are squared (institutional, not bubbly) */
+
+  --border-width: 1px;
+  --border-width-strong: 2px;
+
+  /* ---------- 6. Elevation (dark UIs use borders + slight lift, not big shadows) ---------- */
+  --shadow-0: none;
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.45);   /* popovers, drawers */
+  --shadow-3: 0 16px 48px rgba(0, 0, 0, 0.55);  /* modals */
+  --shadow-focus: 0 0 0 2px var(--color-bg-canvas), 0 0 0 4px var(--color-focus-ring);
+
+  /* ---------- 7. Motion ---------- */
+  --duration-instant: 80ms;
+  --duration-fast: 140ms;   /* hover, press */
+  --duration-base: 220ms;   /* modal, drawer */
+  --duration-slow: 600ms;   /* bond bar animate old -> new */
+  --duration-print-flash: 2000ms; /* new print highlight (06 §4.5) */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* ---------- 8. Z-index ---------- */
+  --z-base: 0;
+  --z-sticky: 20;    /* header, strip, table heads */
+  --z-banner: 25;
+  --z-dropdown: 30;
+  --z-drawer: 40;    /* attestation drawer */
+  --z-modal: 50;
+  --z-toast: 60;
+  --z-overlay: 70;   /* demo stopwatch */
+
+  /* ---------- 9. Component tokens ---------- */
+  /* Table */
+  --table-row-height: 2rem;         /* v2: 32 (was 36). Benchmarks run 24-32px rows */
+  --table-row-height-dense: 1.5rem; /* v2: 24 (was 28). Order book, tape */
+  --table-cell-px: var(--space-3);
+  --table-header-fg: var(--color-text-tertiary);
+  --table-header-bg: var(--color-bg-surface);
+  --table-row-border: var(--color-border-subtle);
+  --table-row-hover: var(--color-bg-hover);
+  --table-row-new: var(--color-accent-subtle); /* print flash */
+
+  /* Order book */
+  --book-bid-fg: var(--color-bid);
+  --book-ask-fg: var(--color-ask);
+  --book-bid-depth: var(--color-bid-subtle);
+  --book-ask-depth: var(--color-ask-subtle);
+  --book-spread-fg: var(--color-text-tertiary);
+  --book-own-dot: var(--color-accent);
+
+  /* Status pill */
+  --pill-height: 1.25rem;
+  --pill-px: 0.4375rem;
+  --pill-radius: var(--radius-xs);
+  --pill-font-size: var(--text-xs);
+  --pill-weight: var(--weight-medium);
+  --pill-tracking: 0.02em;
+
+  /* Bond health bar */
+  --bond-bar-height: 0.5rem;
+  --bond-bar-radius: var(--radius-xs);
+  --bond-bar-track: var(--p-graphite-800);
+  --bond-bar-fill: var(--color-ok);               /* covered */
+  --bond-bar-fill-under: var(--color-danger);     /* under-covered (should never happen, D-18) */
+  --bond-bar-released: var(--p-graphite-600);     /* released to provider */
+  --bond-bar-slashed: var(--color-accent);        /* paid to holders */
+
+  /* Countdown */
+  --countdown-font: var(--font-mono);
+  --countdown-fg: var(--color-text-primary);
+  --countdown-warn-fg: var(--color-warn);    /* <= 10 s */
+  --countdown-overdue-fg: var(--color-danger);
+  --countdown-size-inline: var(--text-md);
+  --countdown-size-hero: var(--text-countdown);
+
+  /* Buttons */
+  --btn-radius: var(--radius-sm);
+  --btn-height: var(--size-control-md);
+  --btn-px: var(--space-4);
+  --btn-font-size: var(--text-md);
+  --btn-weight: var(--weight-semibold);
+  --btn-primary-bg: var(--color-accent);
+  --btn-primary-bg-hover: var(--color-accent-hover);
+  --btn-primary-bg-press: var(--color-accent-press);
+  --btn-primary-fg: var(--color-accent-ink);
+  --btn-secondary-bg: transparent;
+  --btn-secondary-bg-hover: var(--color-bg-hover);
+  --btn-secondary-fg: var(--color-text-primary);
+  --btn-secondary-border: var(--color-border-strong);
+  --btn-danger-bg: var(--color-danger-fill);
+  --btn-danger-bg-hover: #C9282E; /* darkens on hover: keeps white text >= 4.5:1 */
+  --btn-danger-fg: #FFFFFF;
+  --btn-buy-bg: var(--color-bid);     /* order form Buy tab active */
+  --btn-buy-fg: #04140D;
+  --btn-sell-bg: var(--color-ask);
+  --btn-sell-fg: #1F0507;
+  --btn-disabled-bg: var(--p-graphite-800);
+  --btn-disabled-fg: var(--color-text-disabled);
+
+  /* Inputs */
+  --input-height: var(--size-control-md);
+  --input-bg: var(--color-bg-sunken);
+  --input-fg: var(--color-text-primary);
+  --input-border: var(--color-border-input);
+  --input-border-hover: var(--p-steel-400);
+  --input-border-focus: var(--color-focus-ring);
+  --input-border-invalid: var(--color-danger);
+  --input-placeholder: var(--color-text-tertiary);
+  --input-radius: var(--radius-sm);
+  --input-suffix-fg: var(--color-text-tertiary); /* "CU", "USDC" */
+
+  /* Cards / panels */
+  --card-bg: var(--color-bg-surface);
+  --card-border: var(--color-border-default);
+  --card-radius: var(--radius-md);
+  --card-pad: var(--space-4);
+  --card-title-fg: var(--color-text-tertiary); /* uppercase overline titles */
+  --card-shadow: var(--shadow-1);
+
+  /* Shell */
+  --header-bg: rgba(10, 12, 15, 0.92);
+  --strip-bg: var(--color-bg-sunken);
+  --footer-bg: var(--color-bg-canvas);
+  --footer-fg: var(--color-text-tertiary);
+
+  /* ---------- v2 additions ---------- */
+  /* Charts: JS libs (lightweight-charts, recharts) cannot read Tailwind classes; read these with getComputedStyle once on mount. */
+  --chart-bg: var(--color-bg-surface);
+  --chart-text: var(--color-text-secondary);
+  --chart-axis: var(--color-text-tertiary);
+  --chart-grid: var(--color-border-subtle);
+  --chart-line: var(--color-accent);          /* single series: last price */
+  --chart-ref: var(--color-text-tertiary);    /* dashed reference line */
+  --chart-up: var(--color-bid);
+  --chart-down: var(--color-ask);
+  --chart-bar: var(--color-ok);
+
+  /* Header chrome: the global Connect-wallet button is a secondary button so the page keeps exactly one ember primary */
+  --btn-chrome-bg: transparent;
+  --btn-chrome-fg: var(--color-text-primary);
+  --btn-chrome-border: var(--color-border-strong);
+
+  /* Page-bottom utility bar (replaces DisclaimerFooter; no legal copy) */
+  --utilbar-bg: var(--color-bg-canvas);
+  --utilbar-fg: var(--color-text-tertiary);
+
+  /* Skeleton loading */
+  --skeleton-bg: var(--p-graphite-800);
+  --skeleton-shine: var(--p-graphite-750);
+  --skeleton-duration: 1200ms;
+
+  /* Book / tape row text */
+  --text-book: var(--text-xs);   /* 12px mono, tabular */
+
+  /* ---------- 10. Legacy aliases for the L2 scaffold (PR #2 web/app/globals.css) ----------
+     Lets L2 adopt v1 by importing this file BEFORE their rules and deleting their :root block.
+     Remove once components read the semantic names directly. */
+  --bg: var(--color-bg-canvas);
+  --panel: var(--color-bg-surface);
+  --panel-2: var(--color-bg-raised);
+  --line: var(--color-border-default);
+  --text: var(--color-text-primary);
+  --muted: var(--color-text-secondary);
+  --accent: var(--color-accent);
+  --accent-ink: var(--color-accent-ink);
+  --danger: var(--color-danger);
+  --warn: var(--color-warn);
+  --ok: var(--color-ok);
+  --shadow: var(--shadow-1);
+}
+
+/* ---------- Light theme (optional; slides, printouts, daylight judging) ---------- */
+[data-theme="light"] {
+  color-scheme: light;
+  --color-bg-canvas: #F5F6F8;
+  --color-bg-surface: #FFFFFF;
+  --color-bg-raised: #FFFFFF;
+  --color-bg-sunken: #F0F2F5;
+  --color-bg-hover: #EEF0F3;
+  --color-bg-selected: #E6E9EE;
+  --color-text-primary: #12161C;
+  --color-text-secondary: #4A5260;
+  --color-text-tertiary: #5F6875;
+  --color-text-disabled: #8D95A1;
+  --color-text-inverse: #FFFFFF;
+  --color-text-link: #1D63C4;
+  --color-border-subtle: #EBEDF0;
+  --color-border-default: #DDE1E6;
+  --color-border-strong: #C5CBD3;
+  --color-border-input: #8D95A1;
+  --color-focus-ring: #B4500F;
+  --color-accent: #B4500F;
+  --color-accent-hover: #9A430B;
+  --color-accent-press: #833808;
+  --color-accent-text: #B4500F;
+  --color-accent-ink: #FFFFFF;
+  --color-accent-subtle: #FCEEE4;
+  --color-bid: #0B7F55;  --color-bid-subtle: rgba(11, 127, 85, 0.08);
+  --color-ask: #C02E37;  --color-ask-subtle: rgba(192, 46, 55, 0.08);
+  --color-ok: #0B7F55;   --color-ok-subtle: #E3F4EC;
+  --color-warn: #8A5B00; --color-warn-subtle: #FBF1DC;
+  --color-danger: #C42B30; --color-danger-subtle: #FBE7E8; --color-danger-fill: #C42B30;
+  --color-info: #1D63C4; --color-info-subtle: #E5EEFB;
+  --color-dispute: #6A47D6; --color-dispute-subtle: #EEEAFB;
+  --color-neutral: #4A5260; --color-neutral-subtle: #EEF0F3;
+  --bond-bar-track: #E6E9EE;
+  --bond-bar-released: #C5CBD3;
+  --btn-danger-bg-hover: #A82328;
+  --btn-buy-fg: #FFFFFF;
+  --btn-sell-fg: #FFFFFF;
+  --btn-disabled-bg: #EEF0F3;
+  --input-border-hover: #5F6875;
+  --header-bg: rgba(255, 255, 255, 0.92);
+  --shadow-1: 0 1px 2px rgba(16, 19, 23, 0.06);
+  --shadow-2: 0 8px 24px rgba(16, 19, 23, 0.12);
+  --shadow-3: 0 16px 48px rgba(16, 19, 23, 0.18);
+}
+
+/* Numbers: always tabular */
+.tnum, [data-num] { font-variant-numeric: tabular-nums; font-feature-settings: var(--font-numeric-features); }
+
+@media (prefers-reduced-motion: reduce) {
+  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; --duration-print-flash: 600ms; --skeleton-duration: 0ms; }
+}

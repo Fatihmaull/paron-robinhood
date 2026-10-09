@@ -24,7 +24,7 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P6-xx disetujui Fatih (
 
 ## Daftar isi
 
-0. Keputusan global (bahasa, disclaimer, format angka, waktu, route)
+0. Keputusan global (bahasa, disclaimer, format angka, waktu, route, penyesuaian UI Designer §0.6)
 1. Shell global: header, utility bar, wallet connect, jaringan, faucet, KYB gate, attestation drawer, banner sync
 2. S1 Market (+ strip indeks vs referensi)
 3. S2 List capacity (wizard forge 3 langkah)
@@ -133,6 +133,24 @@ Diselaraskan dengan `paron-sitemap.md` **(sitemap §x)** pada Kamis 8 Okt 2026, 
 **[APPROVED D-54, Jum 9 Okt ~11:05 WIB, hackathon saja]** `/verifier` (terbit/cabut KYB live) ditandatangani `W-VERIFIER` (EOA) dengan label "Paron demo verifier (team-operated)"; `/admin` menjadwalkan `setFactor` dari `W-ADMIN` (atau Safe) dan tombol Execute boleh ditekan wallet mana pun (executor Timelock terbuka). Tidak ada integrasi Safe protocol-kit di frontend. **PG-2 DITOLAK (Fatih, Jum 9 Okt ~11:05 WIB):** `/demo` tidak punya jalur sandbox; isinya hanya naskah adegan + tautan ke layar live.
 
 Layar admin, verifier, dan keeper **ada** di produk: sitemap §1 prinsip 1 ("setiap aksi setiap aktor punya UI") dan §8 checklist anti-mock menggantikan catatan lama 06 "aksi admin lewat Safe/script". Script tetap boleh sebagai otomasi tambahan. Auditor memakai `/statements` dan `/data` (PK §6.6).
+
+
+### 0.6 Penyesuaian UI Designer [APPROVED D-67..D-74, Jum 9 Okt 2026 14:40 WIB, Fatih]
+
+Visual dan layout saja; alur, route, dan perilaku kontrak/API tidak berubah. Sumber teknis: `/workspace/paron-design/approved-ui-changes.md`, `audit/04-actions.md`, `tokens.v2.css`, `design.md` terbaru. Wireframe ASCII di bawah tetap dipakai sebagai urutan isi; tata letak akhir mengikuti daftar ini.
+
+| Layar | Aturan akhir | D-xx |
+|---|---|---|
+| S3 `/markets/{seriesId}` (§4.1, §4.4, §4.5, §4.9) | Terminal satu viewport: header + stats ribbon; grid 12 kolom (chart + tape 1-6, book 7-9, ticket 10-12); tab Bond, Terms, Redemptions, Reputation di bawah; <1280 px: ticket, chart, book, tab; <860 px satu kolom; tanpa celah kosong; metadata "ID {id} · window {yyyy-mm}" (token ID hilang kalau id kosong); pill Verified `nowrap`; link Redeem ember atau netral, tidak biru; book kosong "No orders. Place the first bid."; tape kosong "No prints yet." | D-67 |
+| S4-R detail redemption (§5.7) | Kartu ringkasan: jumlah state 36 px mono, fakta kunci (CU, holder, provider, deadline), satu baris aksi (Claim default berisi merah, 56 px di mobile); timeline kanan tetap; "Default paid. $45.00 sent to 0x2222...2222." = teks terbesar | D-68 |
+| Header (§1.1, §12) | "Connect wallet" sekunder (`--btn-chrome-*`); ember hanya untuk satu aksi primer per halaman; pemilih snapshot netral | D-69 |
+| `/`, `/markets`, `/markets/{seriesId}` mobile (§2.3, §4.9) | Tabel dalam `.table-scroll`; tanpa scroll horizontal halaman di 390 px; tombol Menu tidak tampil >860 px | D-70 |
+| Banner dev (§1.6, §11.3) | Banner mock + pemilih snapshot hanya saat `NEXT_PUBLIC_DATA_SOURCE=mock` dan bukan build produksi | D-71 |
+| Teks kecil (semua layar) | Tidak ada opacity pada teks; minimum `--color-text-tertiary`; kontras ≥ 4.5:1 untuk teks ≤ 13 px | D-72 |
+| S5 tab (§6.1, §6.5) | "Requests", "Series", "Bond", "Agent": Title Case, 13 px medium, aktif bergaris bawah ember, target 44 px di mobile | D-73 |
+| Token (§0.2, §2.2) | `tokens.v2.css`; baris tabel Markets 32 px dengan pill sebaris; `<title>` per route; skip link | D-74 |
+
+Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe §6.1 adalah tata letak lama; teks di UI memakai Title Case (D-73).
 
 ---
 

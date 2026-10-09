@@ -80,7 +80,7 @@ Catatan jujur: hanya 06 dan 07 yang menyebut D-66 secara eksplisit; 01-05, 08, 0
 
 #### 1.2.a Paron Principal Engineer (agent id c031279a-8599-4ad6-b9ba-4719cdb2800d)
 
-**Identity and jobdesk.** Owns all Paron code. Integrates 4 cloud-agent lanes: L1 contracts `bc-5a38d2cf-2b76-5f3f-811a-83733027dcbe`, L2 frontend `bc-89e8fbe8-e0b3-55cc-aa68-6a2c38bee038`, L3 indexer/API `bc-0d91ea75-c507-5cb9-947f-24d7191cb1e9`, L4 ops/deploy `bc-85f43bb6-7246-56c0-a646-9338d514f87d`. Deploys contracts from the box using env `PARON_DEPLOYER_PK` (cloud agents cannot receive secrets; executors have no CloudAgent tool, so lane steering goes through the parent). Role keys live outside the repo on the build machine (never commit or paste).
+**Identity and jobdesk.** Owns all Paron code. Integrates 4 cloud-agent lanes: L1 contracts `bc-5a38d2cf-2b76-5f3f-811a-83733027dcbe`, L2 frontend `bc-89e8fbe8-e0b3-55cc-aa68-6a2c38bee038`, L3 indexer/API `bc-0d91ea75-c507-5cb9-947f-24d7191cb1e9`, L4 ops/deploy `bc-85f43bb6-7246-56c0-a646-9338d514f87d`. Deploys contracts from the box using env `PARON_DEPLOYER_PK` (cloud agents cannot receive secrets; executors have no CloudAgent tool, so lane steering goes through the parent). Role keys live in `<secrets-path-redacted>` on the box (never commit or paste).
 - Standing permissions from Fatih: merge Paron PRs when tests are green; fix incidents directly and report after; ask only for real decisions.
 - Commits authored as `Fatih Maulana <fatihmaulanamail@gmail.com>`, no co-author trailers. README says built with help of Grok Bot.
 - Spec conflicts go to Paron Spec Writer; product questions go to Hackathon Scout.
@@ -145,6 +145,7 @@ Penomoran B: temuan review UI live (di chat, saya beri label LR-1 sampai LR-8):
 - LR-5 layout detail series `/markets/1` (celah kosong besar antara Prints/Book dan Market/Bond, metadata "ID · window 2026-11" tanpa nilai ID, teks "Verified by Paron demo verifier" wrap jelek, link Redeem berwarna biru bukan ember): PENDING Fatih. Nomor ini beririsan dengan #9 (series page satu viewport); disarankan digabung.
 - LR-6 kontras teks kecil (footer, label "Spot reference", header tabel, helper text) tampak sekitar 3:1 atau kurang: PENDING Fatih, belum diukur. Target minimal 4.5:1 lewat token tersier.
 - LR-8 label tab Provider (`requests`, `series`, `bond`, `agent`) huruf kecil tanpa styling: PENDING Fatih.
+**UPDATE 14:40 WIB:** Fatih menyetujui SEMUA item di atas (#9-#13, LR-5, LR-6, LR-8). Spec final: `/workspace/paron-design/approved-ui-changes.md`. Peta keputusan: #9+LR-5=D-67, #10=D-68, #11=D-69, #12=D-70, #13=D-71, LR-6=D-72, LR-8=D-73, tambahan (tokens.v2, title, skip link, grep guard)=D-74 (07 §15). Principal Engineer sedang menerapkan; verifikasi live oleh Designer masih menunggu. Tugas 1 di bawah sudah selesai; mulai dari tugas 2 dan 3.
 Cara memilih: Fatih cukup menyebut nomor, misalnya "setuju #9-#13" atau "setuju LR-5,6,8". Setelah dipilih, Spec Writer mencatat sebagai D-67 dan seterusnya.
 
 **Blocker dan hal yang belum kuverifikasi:** (1) rasio kontras live belum diukur (hanya perkiraan mata). (2) Skeleton D-66 belum diverifikasi visual (butuh throttle jaringan atau menangkap saat 503). (3) Pemakaian `tokens.v2.css` di repo belum dicek. (4) Tidak ada akses tulis ke repo dari sisi Designer; semua perubahan UI lewat Principal Engineer.

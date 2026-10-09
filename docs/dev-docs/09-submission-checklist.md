@@ -337,6 +337,16 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 **Hari demo: reachability RPC (catatan ~14:15 WIB)**
 - [ ] Cek RPC publik `https://rpc.testnet.chain.robinhood.com` bisa dijangkau dari browser dan wifi yang dipakai demo (intermiten untuk sebagian koneksi, `ERR_SSL_UNRECOGNIZED_NAME_ALERT`; lihat 04 §4.2). Siapkan RPC cadangan (`INDEXER_RPC_URL_BACKUP`, PENDING keputusan Fatih) atau rekaman video backup (§4.5) sebagai fallback.
 
+**Penyesuaian UI Designer (D-67..D-74, APPROVED 14:40 WIB; cek di URL Vercel produksi setelah freeze UI 09:00)**
+- [ ] `/markets/1`: series page muat satu viewport di 1280 px, tanpa celah kosong; judul tidak menampilkan "ID" kosong; pill Verified tidak wrap di tengah teks; tidak ada link biru browser (D-67).
+- [ ] Detail redemption: jumlah state 36 px mono, baris aksi tunggal, "Default paid. $45.00 sent to 0x2222...2222." teks terbesar (D-68).
+- [ ] Header: "Connect wallet" sekunder; satu aksi ember per halaman (D-69).
+- [ ] 390 px di `/`, `/markets`, `/markets/1`: `scrollWidth <= innerWidth`; tombol Menu tidak tampil di desktop (D-70).
+- [ ] Build produksi tidak menampilkan banner mock maupun pemilih snapshot (D-71).
+- [ ] Kontras teks ≤ 13 px ≥ 4.5:1; tidak ada teks ber-opacity (D-72).
+- [ ] Tab Provider: "Requests", "Series", "Bond", "Agent", aktif bergaris bawah ember (D-73).
+- [ ] `tokens.v2.css` terpasang; `<title>` per route; skip link; grep guard `affiliated|endorsed by` hijau (D-74).
+
 **Kontrak dan deployment**
 - [ ] Semua kontrak inti di `stage-1.json` ber-`verified: true` (atau dicatat alasannya, mis. EAS self-deploy, 04 §6.4).
 - [ ] `DEPLOYMENTS.md` dibangkitkan ulang dari manifest terakhir dan sama dengan tabel README.

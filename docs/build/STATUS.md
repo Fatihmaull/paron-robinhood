@@ -18,4 +18,4 @@
 - 12:20 PR #2 (L2 web, tokens adopted, shared/abi, not-affiliated footer) merged 840f6b2; next build green locally; frozen-lockfile warning sent to L2. Scout asked to create Vercel project (root web).
 - 12:57 PR #7 (web vercel pnpm, 3221488) + PR #10 (indexer start schema/port, 7fa48f0) merged. Relayed to Scout/group. PR #8 (web deploy manifests) may need rebase.
 - 13:05 PR #12 (web live default, syncing banner) c8b7e9a + PR #8 (deploy manifests) b18b3d4 merged. Scout to redeploy Vercel. Waiting L1 DeployAll.
-- 13:25 DEPLOYED stage-1 on 46630 (core start 131496617), seeded 3 series, verify OK. PRs 9,11,13,14,15,16,17,18 merged (main 1ffd49f). Relayed to group: Railway needs DEPLOY_LABEL=stage-1 + INDEXER_RPC_URL + redeploy; Vercel redeploy. Deployer holds all roles (testnet). Role keys are held outside the repo (never committed).
+- 13:25 DEPLOYED stage-1 on 46630 (core start 131496617), seeded 3 series, verify OK. PRs 9,11,13,14,15,16,17,18 merged (main 1ffd49f). Relayed to group: Railway needs DEPLOY_LABEL=stage-1 + INDEXER_RPC_URL + redeploy; Vercel redeploy. Deployer holds all roles (testnet). Role keys in <secrets-path-redacted>
