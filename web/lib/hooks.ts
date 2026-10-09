@@ -4,7 +4,6 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
 import {
-  DEMO_PROVIDER,
   type QueueScope,
   queuePath,
   loadBook,
@@ -67,7 +66,10 @@ function useQueue(scope: QueueScope, enabled = true) {
 /** The connected provider's queue (demo provider when no wallet is connected). */
 export function useProviderQueue() {
   const { address } = useAccount();
-  return useQueue({ provider: address ?? DEMO_PROVIDER });
+  const account = useProviderAccount();
+  const provider = account.data?.data.address ?? address ?? "";
+  const { source } = useData();
+  return useQueue({ provider }, source !== "live" || Boolean(provider));
 }
 
 /** Open defaults, deliveries and rulings across all providers (keepers, claim list). */
@@ -85,7 +87,7 @@ export function useHolderQueue() {
 export function useProviderAccount() {
   const { snap, source, client } = useData();
   const { address } = useAccount();
-  return useNoted(["provider", snap, source, address ?? null], () => loadProvider(snap, source, client, address ?? DEMO_PROVIDER));
+  return useNoted(["provider", snap, source, address ?? null], () => loadProvider(snap, source, client, address));
 }
 
 export function useIndex() {
