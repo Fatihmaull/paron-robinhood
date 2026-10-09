@@ -437,3 +437,8 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
 
 @media (max-width: 860px) { .tabs a, .tabs button { min-height: 44px; display: inline-flex; align-items: center; } }
 .lede .pill { white-space: nowrap; vertical-align: middle; }
+
+@media (max-width: 860px) {
+  .tabs { flex-wrap: nowrap; overflow-x: auto; gap: var(--space-5); scrollbar-width: none; }
+  .tabs a, .tabs button { flex: 0 0 auto; white-space: nowrap; }
+}
