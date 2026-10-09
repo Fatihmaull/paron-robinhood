@@ -87,17 +87,19 @@ Prerequisites the contracts and web lanes install: Foundry v1.8.5, Node 24.21.0,
 ```bash
 node --test ops/test/*.mjs agents/test/*.mjs
 node ops/scripts/go-nogo.mjs
-node ops/scripts/seed.mjs
-node ops/scripts/smoke.mjs
+node ops/scripts/deploy.mjs mock-usdc
+node ops/scripts/verify-deployment.mjs
 node agents/src/keeper/run.mjs
 node agents/src/trader-bot/run.mjs
 ```
 
+The five signing commands, in order, are in `DEPLOYMENTS.md`. Dry-run is the default. `PARON_SIMULATE=1` does not broadcast. `PARON_BROADCAST=1` signs on the integrator machine.
+
 Copy `ops/.env.example` to `ops/.env` and `agents/.env.example` to `agents/.env` when keys exist. Neither `.env` is committed. `PARON_BROADCAST` defaults off. `KEEPER_DRY_RUN` defaults on. The trader bot defaults to `auto` (P5-26). Pass `--manual` on the bot for the one-shot fallback. It uses the same three transactions and the same one-shot check.
 
-`node ops/scripts/seed.mjs` prints phases 1–2 only. It refuses `SEED_MODE=rehearsal` when `DEPLOY_LABEL` starts with `stage-`. Phase 3 (the live 2610 series, the default, the claim) is not seeded onto the stage deployment.
+`node ops/scripts/deploy.mjs seed` prints phases 1–2 only. It refuses `SEED_MODE=rehearsal` when `DEPLOY_LABEL` starts with `stage-`. Phase 3 (the live 2610 series, the default, the claim) is not seeded onto the stage deployment.
 
-Broadcast installs `viem@2.57.3` inside `ops/` and `agents/` (`npm install` in each package). It still refuses to send until `DeployAll` has written a manifest. The contracts lane owns that Forge script.
+Broadcast installs `viem@2.57.3` inside `ops/` (`npm install`). The deployer key is `PARON_DEPLOYER_PK` in the environment, 64 hex characters, with or without `0x`. It is not written to the manifest. Signing still waits until `contracts/out` contains the contract artifacts. The contracts lane owns that Solidity.
 
 ## Tests
 
@@ -125,7 +127,7 @@ Product code in this repository is written during ETHJKT 2026, starting Friday 9
 
 Nothing below has been signed. No private key is in git.
 
-1. **Deployer key.** Send `W-DEP` to the private channel as a Foundry keystore named `paron-deployer`, or as `DEPLOYER_PRIVATE_KEY` in the host secret store. The ops scripts read it from the environment at broadcast time.
+1. **Deployer key, on the integrator machine only.** Export `PARON_DEPLOYER_PK` there (64 hex characters, no `0x` required). Do not send it to this agent. The commands in `DEPLOYMENTS.md` read that variable and nothing else.
 2. **Distribute testnet ETH** from the two Robinhood accounts that already have a balance to `W-DEP` and the demo wallets in dev doc 05 §1 (`W-P-JKT`, `W-P-BTM`, `W-P-SGP`, `W-BUY`, `W-BUY2`, `W-TRD`, `W-JUDGE`, `W-VERIFIER`, `W-ADMIN`, `W-ARB-1..3`, `W-KEEP`, `W-FEED`). Script step A-1 in `ops/scripts/seed.mjs`. The official faucet is behind a browser check.
 3. **Smoke deploy and verify** (go/no-go check 2). `forge script` `DeployAll` with scope `smoke`, `--broadcast --verify`, Blockscout URL `https://explorer.testnet.chain.robinhood.com/api/`. This script is the contracts lane's file. It deploys MockUSDC, SchemaRegistry, and EAS.
 4. **Schema and one attestation** (check 3). `W-VERIFIER` signs EAS `multiAttest` for `ParticipantVerified`, then anyone calls `linkAttestation`. Soft fail: `GATE_KIND=registry` and stay on Robinhood.

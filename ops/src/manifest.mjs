@@ -1,3 +1,5 @@
+import { DEPLOY_STEPS, VERIFY_COMMAND } from "./deploy-plan.mjs";
+
 export const SCHEMA_VERSION = "paron-deployments/v1";
 
 export function emptyInfra(chainId) {
@@ -74,13 +76,34 @@ export function renderDeploymentsMarkdown({ active, evidence, labels = [] }) {
     "",
     `Go/no-go: **${evidence.verdict.toUpperCase()}** on ${evidence.measuredAtUtc} (read-only). Evidence: \`${evidence.path}\`.`,
     "",
-    "No stage or rehearsal deployment is in this repository yet. Contract addresses appear here after `DeployAll` (contracts lane) and `ops/scripts/seed.mjs` run with a testnet key.",
+    "No stage deployment has been written yet. The integrator runs the commands below from a trusted machine. This agent does not receive the deployer key.",
+    "",
+    "## Commands",
+    "",
+    "Set `PARON_DEPLOYER_PK` in the environment of that machine (64 hex characters, no `0x` prefix; a leading `0x` is accepted). Do not put the key on the command line. The scripts read it only from the environment and never print it.",
+    "",
+    "The same command with `PARON_BROADCAST` unset is a dry run (no key read, nothing signed). Replace `PARON_BROADCAST=1` with `PARON_SIMULATE=1` to estimate gas and not broadcast.",
+    "",
+    "Run in this order. Each line is one step. Timelock is deployed in the roles step, immediately before the grants, because no core constructor takes its address. `setArbitratorAllowed` stays in the core step, while the deployer is still admin.",
+    "",
+  ];
+  DEPLOY_STEPS.forEach((step, index) => {
+    lines.push(`${index + 1}. \`${step.command}\``);
+    lines.push(`   ${step.title}. Writes \`${step.writes}\`.`);
+  });
+  lines.push(
+    "",
+    "Before step 4, create the 2-of-3 Safe in Safe{Wallet} and export `SAFE_ADDRESS`. If that soft-fails, set `PARON_SAFE_MODE=allowlist` instead. Set `MAX_FILLS_PER_TX` before step 3 (01 T-02). Seed signers other than the deployer use `KEY_W_VERIFIER`, `KEY_W_P_JKT`, `KEY_W_P_BTM`, `KEY_W_P_SGP`, plus `KEY_W_BUY2` or `KEY_W_FEED` when that action is in the plan.",
+    "",
+    `Then, read-only, no key: \`${VERIFY_COMMAND}\``,
+    "",
+    "L2 and L3 read `deployments/<chainId>/infra.json` and `deployments/<chainId>/<label>.json` (`paron-deployments/v1`).",
     "",
     "## Address table",
     "",
     "| Chain | Label | Contract | Address | Verified | Explorer |",
     "|---|---|---|---|---|---|",
-  ];
+  );
   if (labels.length === 0) {
     lines.push(`| ${active.chainId} | — | — | pending deploy | — | ${active.explorer.url} |`);
   }
