@@ -9,7 +9,7 @@ export default function IndexPage() {
   return (
     <div>
       <h1>H100 index</h1>
-      <p className="lede">Spot reference (synthetic demo data)</p>
+      <p className="lede">Reference price (demo data)</p>
       {row ? (
         <section className="panel">
           <div className="row"><span>Status</span><span>{row.status}</span></div>

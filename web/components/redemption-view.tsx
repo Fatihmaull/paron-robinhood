@@ -49,8 +49,8 @@ export function RedemptionView({ reqId }: { reqId: string }) {
   if (!row) {
     return (
       <div>
-        <h1>Request not found</h1>
-        <p>Request not found</p>
+        <h1>Request not found.</h1>
+        <p>Request not found.</p>
       </div>
     );
   }

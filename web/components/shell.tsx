@@ -119,7 +119,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </span>
         <span className="strip-ref">
           <span className="sep" />
-          Spot reference (synthetic demo data)
+          Reference price (demo data)
           <span className="num" style={{ color: "var(--color-text-primary)" }}>{ref ? formatUsd(ref) : ""}</span>
         </span>
       </div>
