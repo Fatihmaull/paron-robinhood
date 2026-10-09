@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { formatCoverage, formatCu, formatFactor, formatUsd, shortId } from "@/lib/format";
 import { useSeriesList } from "@/lib/hooks";
+import { marketsNotice, showSeriesCount } from "@/lib/markets-state";
 import type { SeriesRow } from "@/lib/types";
 import { Panel } from "./ui";
 
@@ -11,6 +12,8 @@ export function Markets({ headline = false }: { headline?: boolean }) {
   const query = useSeriesList();
   const rows = query.data?.data ?? [];
   const router = useRouter();
+  const notice = marketsNotice(query.error);
+  const syncing = notice?.kind === "syncing";
   return (
     <div>
       {headline ? (
@@ -36,8 +39,9 @@ export function Markets({ headline = false }: { headline?: boolean }) {
       )}
       <div style={{ height: 16 }} />
       <Panel title="Series">
-        {query.isError ? <p className="bad">{query.error instanceof Error ? query.error.message : "Couldn't load markets. Check your connection and retry."}</p> : null}
-        {query.isLoading ? (
+        {notice?.kind === "error" ? <p className="bad">{notice.text}</p> : null}
+        {syncing ? <p role="status" data-testid="markets-syncing" style={{ color: "var(--color-info)" }}>{notice.text}</p> : null}
+        {query.isLoading || syncing ? (
           <div role="status" aria-label="Loading series" data-testid="series-skeleton">
             {[0, 1, 2].map((i) => <div key={i} className="skeleton row-sk" />)}
           </div>
@@ -105,7 +109,7 @@ export function Markets({ headline = false }: { headline?: boolean }) {
           </tbody>
         </table>
         </div>
-        <p className="help">Record = delivered CU / defaulted CU / voluntary defaults, counted across the provider. {rows.length} series.</p>
+        <p className="help">Record = delivered CU / defaulted CU / voluntary defaults, counted across the provider. {showSeriesCount(notice) ? ` ${rows.length} series.` : null}</p>
       </Panel>
     </div>
   );
