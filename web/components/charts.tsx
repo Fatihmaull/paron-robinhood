@@ -46,7 +46,7 @@ export function BondChart({ balance, released, slashed }: { balance: string; rel
     { name: "Slashed", value: Number(slashed) },
   ];
   return (
-    <div style={{ height: 140 }}>
+    <div style={{ height: 100 }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
           <XAxis dataKey="name" stroke="var(--chart-axis)" />
