@@ -72,7 +72,7 @@ export function Markets({ headline = false }: { headline?: boolean }) {
                 <td>
                   {row.provider.verified ? <span className="ok">✓ </span> : null}
                   <span className="num">{shortId(row.provider.address)}</span>
-                  {row.provider.status !== "Active" ? <span className="pill danger">{row.provider.status}</span> : null}
+                  {row.provider.status.toUpperCase() === "ACTIVE" ? null : <span className="pill danger">{row.provider.status}</span>}
                 </td>
                 <td>
                   {row.gpu} <span className="num muted">{formatFactor(row.factor)}</span>
