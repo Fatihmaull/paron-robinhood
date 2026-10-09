@@ -147,6 +147,8 @@ Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); 
 | 05:30–06:00 | Persiapan freeze: semua test Foundry dijalankan; test MUST yang masih merah dicatat sebagai known limitation di README [usulan 08]; diff terakhir di-review | Daftar test hijau/merah | Tidak ada perubahan kontrak tanpa test |
 | **06:00** | **Freeze kontrak**: tag `freeze-contracts`. Setelah ini kontrak tidak diubah | Tag | Tag ada di remote |
 
+**Penyesuaian UI Designer [APPROVED D-67..D-74, Jum 9 Okt 2026 14:40 WIB, Fatih]:** PE mengerjakan semuanya dalam **satu PR kecil** (L2 frontend) sebelum freeze UI Sab 09:00 WIB; PR terpisah dari PR `docs/`. Isi: series page terminal satu viewport (D-67), kartu redemption (D-68), Connect wallet sekunder (D-69), tabel mobile + Menu (D-70), banner dev-only (D-71), kontras (D-72), tab Provider (D-73), `tokens.v2.css` + `<title>` + skip link (D-74). Urutan kalau waktu sempit: D-70, D-71, D-72, D-69, D-73, D-68, lalu D-67 (fallback D-67: hanya `align-items:start` dan Buy/Place order di samping Market). Designer memverifikasi ulang di live setelah deploy (07 §15). Tidak mengubah daftar never-cut (3 butir).
+
 ### 2.2 Panggung, video, README, freeze UI (06:00 → 10:00)
 
 | Blok | Kerja | Deliverable | Done-check |

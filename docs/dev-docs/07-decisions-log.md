@@ -851,7 +851,7 @@ Fatih membalas di grup: "oke 1-4, footer not affiliated hapus itu, lanjutkan" (d
 **Catatan:**
 - D-64 menggantikan aturan footer wajib di 06 §0.2 (lama), 08 (butir never-cut ke-4 dan X8-8), 09 (blok disclaimer README, dua footnote kata per kata, cek footer) dan membatalkan X6-13 / X9-8 untuk produk. Pada slide, footnote tetap dipakai kalau slide menyebut pihak lain (09, 05).
 - Status KYB di `/verifier` tetap: Pending, Approved, Expired, Revoked, Withdrawn (03 E20; tanpa "Rejected" di MVP).
-- Usulan Designer #5 (status pills) sudah selesai sebelumnya; usulan #6-#13 **belum** disetujui kecuali bagian penghapusan footer (D-64). Penggantian chip jadi "Testnet · 46630" (usulan #8) hanya dipakai sebagai varian ruang sempit D-60.
+- Usulan Designer #5 (status pills) sudah selesai sebelumnya; usulan #9-#13 disetujui kemudian di §15 (D-67..D-71); #6-#8 sudah tercakup D-64/D-60. Penggantian chip jadi "Testnet · 46630" (usulan #8) hanya dipakai sebagai varian ruang sempit D-60.
 
 ---
 
@@ -864,7 +864,7 @@ Fatih menjawab: "utility bar pake aja itu" (13:35 WIB). Ini menyetujui `UtilityB
 | D-65 | **`UtilityBar` tipis APPROVED** sebagai pengganti footer: kiri link "Docs · API · GitHub", catatan testnet ("Deployed on Robinhood Chain Testnet. Testnet demo: tokens have no monetary value." saat `NEXT_PUBLIC_CHAIN_ID` = 46630), kanan "Build · Chain · Block". **Tanpa teks disclaimer** (D-64 tetap). Bukan lagi syarat tertunda: wajib ada di semua halaman, desktop dan mobile. Tidak mengubah daftar never-cut (tetap 3 butir) | 06 §0.2, §1.1, §14; 08 §4; 09 §3, §5 |
 
 **Catatan:**
-- Usulan Designer #5-#13 selain bagian yang sudah tercakup D-60..D-64 tetap **belum** disetujui; D-65 hanya mencakup `UtilityBar`.
+- Usulan Designer #9-#13 disetujui kemudian di §15 (D-67..D-71); D-65 sendiri hanya mencakup `UtilityBar`.
 
 ---
 
@@ -877,3 +877,37 @@ Fatih menjawab: "utility bar pake aja itu" (13:35 WIB). Ini menyetujui `UtilityB
 | D-66 | **APPROVED (Fatih di grup, Jum 9 Okt 2026 ~14:01 WIB: "setuju d-66").** Keadaan syncing di `/markets`: (a) ganti teks merah "indexer is still backfilling" dengan teks netral (warna sama seperti info banner): "Indexer is syncing. Series will appear shortly." dan tabel menampilkan 3 baris skeleton; (b) kalimat "0 series." disembunyikan selama syncing, tampil hanya kalau indexer sudah synced dan memang kosong; (c) merah hanya untuk kegagalan nyata, yaitu error `/v1/*` selain `503 INDEXER_SYNCING`. | APPROVED. Diterapkan di 06 §1.6 (B-DATA) dan §2 (state S1 `/markets`) pada 14:0x WIB; cadangan `.bak-2026-10-09-pre-1402b/`. Teks merah lama "indexer is still backfilling" dicabut. |
 
 **Catatan Jum 9 Okt 2026 ~14:15 WIB (bukan keputusan, tanpa nomor D; PE dan Designer di grup ~14:13 WIB; cadangan `.bak-2026-10-09-pre-1415/`):** RPC publik Robinhood Chain Testnet intermiten untuk sebagian koneksi browser (`ERR_SSL_UNRECOGNIZED_NAME_ALERT`); PE menguatkan web (retry, backoff, tanpa error merah untuk gagal RPC). `INDEXER_RPC_URL_BACKUP` opsional, PENDING RPC provider kedua dari Fatih. Dicatat di 04 (tabel env + risiko) dan 09 §7.
+
+---
+
+## 15. Approval ketujuh: Jum 9 Okt 2026 14:40 WIB (Fatih): semua item Designer yang tersisa
+
+Fatih di grup (14:40 WIB): "setujui semua, sesuai rekomendasi kalian, sinkronkan, dan arsipkan semuanya". Ini menyetujui butir #9 sampai #13 di `/workspace/paron-design/spec-change-requests.md` dan temuan review live LR-5, LR-6, LR-8 (label LR dari Designer, tercatat di `SESSION_HANDOFF_HACKATHON.md`). Spesifikasi akhir **hanya** dari teks rekomendasi Designer di `/workspace/paron-design/approved-ui-changes.md` dan `audit/04-actions.md` ("Key component specs"); tidak ada yang ditambahkan Spec Writer. Cakupan: visual dan layout saja, tanpa perubahan alur, route, kontrak, atau perilaku API. Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-d67/`.
+
+**Tabel pemetaan nomor → D-xx**
+
+| Nomor sumber | Isi singkat | D-xx |
+|---|---|---|
+| #9 + LR-5 | Series page satu viewport (terminal), perbaikan celah kosong, metadata ID, pill Verified, warna link | **D-67** |
+| #10 | Redemption detail: kartu ringkasan + baris aksi | **D-68** |
+| #11 | "Connect wallet" bergaya sekunder | **D-69** |
+| #12 | Tabel mobile tanpa scroll horizontal halaman; tombol Menu tidak tampil di desktop | **D-70** |
+| #13 | Banner dev-only tidak muncul di build produksi | **D-71** |
+| LR-6 | Kontras teks kecil ≥ 4.5:1 | **D-72** |
+| LR-8 | Tab Provider console | **D-73** |
+| "Also adopt" di `approved-ui-changes.md` | `tokens.v2.css`, `<title>` per route, skip link, grep guard | **D-74** |
+
+Catatan pemetaan: LR-5 beririsan penuh dengan #9 sehingga digabung (satu D). LR-6 **bukan** bagian #12 (petunjuk awal Designer "mirip #12" tidak dipakai; #12 adalah tabel mobile, LR-6 adalah kontras). #5 (status pills) sudah selesai sebelumnya; #1-#4 = D-60..D-63; #6-#8 = D-64/D-65/D-60.
+
+| ID | Keputusan (APPROVED Fatih, 14:40 WIB) | Diterapkan di |
+|---|---|---|
+| D-67 | **Series page `/markets/{seriesId}` sebagai terminal satu viewport (#9 + LR-5).** Header: simbol (20/28 mono), pill status, pill verified, stats ribbon (Last, 24h vol, Bond/CU, Coverage, Record). Grid 12 kolom, gap 16, `align-items:start`: chart + tape kolom 1-6, order book kolom 7-9, ticket kolom 10-12 (tab Buy primary, Place order); tab Bond, Terms, Redemptions, Reputation di bawah selebar penuh. Di bawah 1280 px: ticket, chart, book, tab. Di bawah 860 px: satu kolom. Hilangkan celah kosong antara Prints/Book dan Market/Bond (panel `align-self:start`, tanpa tinggi dipaksa). Metadata judul: "ID {id} · window {yyyy-mm}"; kalau id tidak ada, seluruh token "ID" dihilangkan (jangan pernah "ID" kosong). Pill Verified: tanpa wrap di tengah teks (`white-space:nowrap`); di lebar sempit pindah ke baris berikut sebagai pill sendiri. Link Redeem dan semua teks link/aksi in-app: warna aksen ember (`--color-accent-text`) atau netral (`--color-text-primary`), tanpa biru bawaan browser; `--color-text-link` hanya untuk link docs eksternal. Book kosong: "No orders. Place the first bid." dengan tab Place order sebagai aksi; tape kosong: "No prints yet." | 06 §4.1, §4.4, §4.5, §4.9 |
+| D-68 | **Redemption detail (#10).** Kartu kiri: jumlah state 36 px mono (ember kalau Defaulted, hijau ok kalau Completed), baris fakta kunci (CU, holder, provider, deadline), satu baris aksi (Confirm / Dispute / Claim default berisi merah, tinggi 56 px di mobile). Kartu kanan: timeline tidak berubah. Tinggi kartu = isi, tanpa ruang kosong. Baris "Default paid. $45.00 sent to 0x2222...2222." harus teks terbesar di halaman | 06 §5.7 |
+| D-69 | **"Connect wallet" di header bergaya sekunder (#11)**: outlined gelap (`--btn-chrome-*`). Ember hanya untuk satu aksi primer per halaman. Pemilih snapshot memakai state terpilih netral, bukan ember | 06 §1.1, §12 |
+| D-70 | **Tabel mobile (#12), viewport 390 px, `/`, `/markets`, `/markets/{seriesId}`:** setiap `<table>` dibungkus `.table-scroll{overflow-x:auto}`, anak grid `min-width:0`. Acceptance: `document.documentElement.scrollWidth <= innerWidth` di 390 px. Tombol "Menu" tidak tampil di atas 860 px (`.btn.menu-toggle{display:none}`) | 06 §2.3, §4.9 |
+| D-71 | **Banner dev-only (#13):** banner mock dan pemilih snapshot hanya dirender kalau `NEXT_PUBLIC_DATA_SOURCE=mock` **dan** bukan build produksi. Vercel produksi tidak menampilkan keduanya | 06 §1.6, §11.3 |
+| D-72 | **Kontras teks kecil (LR-6).** Nilai token sudah lolos (`contrast-report.md`: tertiary `#838C9B` di `#0A0C0F` ≥ 4.5:1); tampilan live lebih redup karena ada override. Ganti warna hard-coded atau teks ber-opacity (utility bar, "Spot reference (synthetic demo data)", header tabel, helper text) dengan `--color-text-tertiary` (minimum) atau `--color-text-secondary`; tidak ada `opacity` di bawah 1 pada teks; `--color-text-disabled` tidak dipakai untuk teks yang harus terbaca. Acceptance: kontras warna terhitung vs latar terhitung ≥ 4.5:1 untuk semua teks ≤ 13 px | 06 §0.2, §12 |
+| D-73 | **Tab Provider console (LR-8).** Label Title Case ("Requests", "Series", "Bond", "Agent"), 13 px, weight medium; tab aktif bergaris bawah ember dengan teks primer, tab tidak aktif teks sekunder; ring fokus keyboard sesuai token; target minimal 44 px di mobile | 06 §6.1, §6.5 |
+| D-74 | **Adopsi tambahan berisiko rendah dari audit Designer:** impor `tokens.v2.css` (dan `theme.v2.css`) menggantikan `tokens.css` (alias lama tetap, tanpa rename); tinggi baris tabel Markets 32 px dengan pill status sebaris; `<title>` per route dan skip link (`<a class="skip" href="#main">`); grep guard CI `affiliated|endorsed by` tetap. Sumber visual terbaru: `design.md` terbaru di `/workspace/paron-design/` | 06 §0.2, §2.2, §12; 08 §2.2 |
+
+**Catatan:** PE menerapkan D-67..D-74 dalam satu PR kecil sebelum freeze UI Sab 09:00 WIB (08 §2.2). Verifikasi akhir: Designer memotret ulang live pada 1280 dan 390 px untuk `/`, `/markets`, `/markets/1`, `/portfolio`, `/provider`, dan detail redemption (tanpa scroll horizontal di 390, tanpa link biru, kontras ≥ 4.5:1). Tidak ada item ini yang mengubah daftar never-cut (tetap 3 butir, D-64).

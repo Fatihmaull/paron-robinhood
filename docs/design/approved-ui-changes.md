@@ -1,0 +1,46 @@
+# Approved UI changes for Principal Engineer (Fatih approved 9 Oct 2026 14:40 WIB, "setujui semua sesuai rekomendasi")
+Scope: visual and layout only. No change to flows, routes, or contract/API behavior. Copy changes are listed explicitly. Tokens: `tokens.v2.css` / `theme.v2.css` (additive, no renames). Full component specs: `audit/04-actions.md` ("Key component specs"). Latest `design.md` is in the same folder.
+
+Map: spec-change-requests.md #9-#13 and live-review LR-5, LR-6, LR-8.
+
+## #9 + LR-5  Series page `/markets/[id]` as one-viewport terminal
+- Layout per `audit/04-actions.md` "S3 Series page": header (symbol 20/28 mono, status pill, verified pill, stats ribbon Last | 24h vol | Bond/CU | Coverage | Record); 12-col grid gap 16, `align-items:start`: chart+tape cols 1-6, order book cols 7-9, ticket cols 10-12 (tabs Buy primary | Place order); Bond | Terms | Redemptions | Reputation tabs below, full width. <1280px: ticket, chart, book, tabs. <860px: one column.
+- Remove the blank gap between Prints/Book and Market/Bond (panels `align-self:start`, no stretched heights).
+- Heading metadata: render "ID {id} · window {yyyy-mm}". If id is missing, omit the whole "ID" token (never a bare "ID").
+- Verified pill: `white-space:nowrap`; on narrow widths drop to the next line as its own pill, not mid-text wrap.
+- Redeem link and every other in-app link/action text: use `--color-accent-text` for ember actions or `--color-text-primary` for neutral; no browser-blue (`--color-text-link` only for external docs links).
+- Empty book copy: "No orders. Place the first bid." with the Place order tab as the action. Empty tape: "No prints yet."
+
+## #10  S4 Redemption detail
+- Left card: state amount 36px mono (ember when Defaulted, ok when Completed), key-facts row (CU, holder, provider, deadline), one action row (Confirm / Dispute / Claim default, red fill, 56px tall on mobile). Right card: timeline unchanged. Card height = content, no empty space.
+- The line "Default paid. $45.00 sent to 0x2222...2222." must be the largest text on the page.
+
+## #11  Header "Connect wallet" secondary
+- Use `--btn-chrome-*` (outlined dark). Ember only for the page's single primary action. Snapshot switcher uses neutral selected state, not ember.
+
+## #12  Mobile tables, no page-level horizontal scroll (`/`, `/markets`, viewport 390)
+- Wrap every `<table>` in `.table-scroll{overflow-x:auto}`; `min-width:0` on grid children. Acceptance: `document.documentElement.scrollWidth <= innerWidth` at 390px on `/`, `/markets`, `/markets/1`.
+- Also: `.btn.menu-toggle{display:none}` above 860px (Menu button must not show on desktop).
+
+## #13  Dev-only banners
+- Mock banner and snapshot switcher render only when `NEXT_PUBLIC_DATA_SOURCE=mock` AND not a production build. Production Vercel must show neither.
+
+## LR-6  Contrast of small text
+- Token values already pass (`contrast-report.md`: tertiary `#838C9B` on `#0A0C0F` >= 4.5:1). The live app looks dimmer, so something overrides them. Find and replace any hard-coded or opacity-dimmed text (footer/utility bar, "Spot reference (synthetic demo data)", table headers, helper text) with `--color-text-tertiary` (minimum) or `--color-text-secondary`; no `opacity` below 1 on text.
+- Acceptance: computed color vs computed background >= 4.5:1 for all text <= 13px (check with `scripts/contrast.py` values or any contrast checker); do not use `--color-text-disabled` for readable text.
+
+## LR-8  Provider console tabs
+- Tab labels Title Case ("Requests", "Series", "Bond", "Agent"), 13px, medium weight; active tab has ember underline and primary text, inactive secondary text; keyboard focus ring per tokens; 44px min target on mobile.
+
+## Also adopt (low risk, from the audit)
+- Import `tokens.v2.css` instead of `tokens.css` in `globals.css` (legacy aliases preserved). Markets row height 32px with status pill inline.
+- Per-route `<title>` and a skip link (`<a class="skip" href="#main">`).
+- Keep grep guard `affiliated|endorsed by` in CI.
+
+## Verification (Designer will re-check on live after deploy)
+Screenshots at 1280 and 390 for `/`, `/markets`, `/markets/1`, `/portfolio`, `/provider`, redemption detail; no horizontal scroll at 390; no blue links; contrast >= 4.5:1.
+
+## Decision map (07 §15, APPROVED by Fatih 9 Oct 2026 14:40 WIB)
+#9 + LR-5 = D-67, #10 = D-68, #11 = D-69, #12 = D-70, #13 = D-71, LR-6 (contrast) = D-72, LR-8 (Provider tabs) = D-73, "Also adopt" (tokens.v2.css, per-route title, skip link, CI grep guard) = D-74.
+If time is short, implement in this order: D-70, D-71, D-72, D-69, D-73, D-68, D-67.
+Status: all APPROVED; implementation by Principal Engineer in progress. Designer verification on live pending.

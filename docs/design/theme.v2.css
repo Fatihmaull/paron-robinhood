@@ -1,0 +1,128 @@
+/* =====================================================================
+   Paron v2 · Tailwind CSS v4 theme (repo uses tailwindcss 4.3.3, CSS-first config)
+   Usage in web/app/globals.css:
+       @import "tailwindcss";
+       @import "./paron/tokens.v2.css";   // runtime values (unlayered: wins, supports light theme)
+       @import "./paron/theme.css";    // this file: registers names so utilities exist
+   The values below are dark-theme fallbacks only. Real values come from tokens.css,
+   whose unlayered :root overrides Tailwind's @layer theme, so [data-theme="light"] works.
+   Generates utilities like: bg-bg-surface, text-text-secondary, border-border-default, label-overline, tnum,
+   text-bid, text-ask, bg-accent, text-accent-ink, bg-ok-subtle, rounded-md, shadow-2,
+   font-mono, text-sm (13px), ease-standard, z-modal (via z-(--z-modal)).
+   ===================================================================== */
+
+@theme {
+  /* Fonts */
+  --font-sans: "IBM Plex Sans", ui-sans-serif, system-ui, sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+
+  /* Surfaces */
+  --color-bg-canvas: #0A0C0F;
+  --color-bg-surface: #101317;
+  --color-bg-raised: #161A21;
+  --color-bg-sunken: #0D1013;
+  --color-bg-hover: #1B2029;
+  --color-bg-selected: #222833;
+
+  /* Text */
+  --color-text-primary: #E6E9EE;
+  --color-text-secondary: #A3ABB8;
+  --color-text-tertiary: #838C9B;
+  --color-text-disabled: #6B7380;
+  --color-text-inverse: #0A0C0F;
+  --color-text-link: #6AA8F5;
+
+  /* Borders */
+  --color-border-subtle: #1F252E;
+  --color-border-default: #2A313C;
+  --color-border-strong: #3A4250;
+  --color-border-input: #646E7E;
+  --color-focus-ring: #F07A2A;
+
+  /* Brand */
+  --color-accent: #F07A2A;
+  --color-accent-hover: #FF8F45;
+  --color-accent-press: #D2621A;
+  --color-accent-text: #F28A45;
+  --color-accent-ink: #1A0D04;
+  --color-accent-subtle: rgba(240, 122, 42, 0.12);
+
+  /* Market + state */
+  --color-bid: #3CC68A;
+  --color-bid-subtle: rgba(60, 198, 138, 0.10);
+  --color-ask: #F2646A;
+  --color-ask-subtle: rgba(242, 100, 106, 0.10);
+  --color-up: #3CC68A;
+  --color-down: #F2646A;
+  --color-ok: #3CC68A;
+  --color-ok-subtle: #0F2A1F;
+  --color-warn: #E8B64C;
+  --color-warn-subtle: #2E2410;
+  --color-danger: #F2575C;
+  --color-danger-subtle: #33161A;
+  --color-danger-fill: #D93036;
+  --color-info: #6AA8F5;
+  --color-info-subtle: #122338;
+  --color-dispute: #B09CFB;
+  --color-dispute-subtle: #221C3A;
+  --color-neutral: #A3ABB8;
+  --color-neutral-subtle: #1B2029;
+
+  /* v2 additions */
+  --color-chart-line: #F07A2A;
+  --color-chart-grid: #1F252E;
+  --text-book: 0.75rem; --text-book--line-height: 1rem;
+  --animate-skeleton: skeleton 1.2s ease-in-out infinite;
+  @keyframes skeleton { 0%,100% { opacity: .55 } 50% { opacity: 1 } }
+
+  /* Type scale (overrides Tailwind defaults on purpose: dense data UI) */
+  --text-2xs: 0.6875rem;  --text-2xs--line-height: 1rem;
+  --text-xs: 0.75rem;     --text-xs--line-height: 1rem;
+  --text-sm: 0.8125rem;   --text-sm--line-height: 1.25rem;
+  --text-md: 0.875rem;    --text-md--line-height: 1.375rem;
+  --text-lg: 1rem;        --text-lg--line-height: 1.5rem;
+  --text-xl: 1.25rem;     --text-xl--line-height: 1.75rem;
+  --text-2xl: 1.625rem;   --text-2xl--line-height: 2rem;
+  --text-3xl: 2.25rem;    --text-3xl--line-height: 2.5rem;
+  --text-countdown: 3.5rem; --text-countdown--line-height: 1;
+
+  --tracking-overline: 0.06em;
+  --tracking-wordmark: 0.22em;
+
+  /* Spacing: Tailwind v4 multiplier (p-1 = 4px ... p-4 = 16px), same grid as --space-* */
+  --spacing: 0.25rem;
+
+  /* Radius */
+  --radius-xs: 2px;
+  --radius-sm: 4px;
+  --radius-md: 6px;
+  --radius-lg: 10px;
+
+  /* Elevation */
+  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.4);
+  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.45);
+  --shadow-3: 0 16px 48px rgba(0, 0, 0, 0.55);
+
+  /* Motion */
+  --ease-standard: cubic-bezier(0.2, 0, 0, 1);
+  --ease-exit: cubic-bezier(0.4, 0, 1, 1);
+
+  /* Print flash for new tape rows (06 §4.5: highlight 2 s) */
+  --animate-print-flash: print-flash 2s var(--ease-standard);
+  @keyframes print-flash {
+    0% { background-color: rgba(240, 122, 42, 0.18); }
+    100% { background-color: transparent; }
+  }
+}
+
+/* Small utilities that the token system needs everywhere */
+@utility tnum {
+  font-variant-numeric: tabular-nums;
+}
+@utility label-overline {
+  font-size: var(--text-xs);
+  letter-spacing: var(--tracking-overline);
+  text-transform: uppercase;
+  color: var(--color-text-tertiary);
+  font-weight: 500;
+}
