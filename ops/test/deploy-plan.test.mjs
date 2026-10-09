@@ -107,7 +107,7 @@ test("core broadcast refuses to overwrite a label", async () => {
     accountFromKey: async () => ({ address: "0x00000000000000000000000000000000000000a1" }),
     store: {
       loadState() {
-        return { infra: emptyInfra(46630), label: emptyLabel({ chainId: 46630, chainKey: "robinhoodTestnet", label: "stage-1" }), labelExisted: true };
+        return { infra: emptyInfra(46630), label: emptyLabel({ chainId: 46630, chainKey: "robinhoodTestnet", label: "stage-1" }), labelExisted: true, label: { ...emptyLabel({ chainId: 46630, chainKey: "robinhoodTestnet", label: "stage-1" }), contracts: { SeriesFactory: { address: "0x00000000000000000000000000000000000000b1" } } } };
       },
       saveState() { throw new Error("saved"); },
     },
