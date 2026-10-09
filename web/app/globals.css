@@ -36,7 +36,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   top: 0;
   z-index: var(--z-sticky);
 }
-.brand { display: flex; align-items: center; text-decoration: none; }
+.brand { display: flex; align-items: center; justify-content: center; text-decoration: none; min-width: 44px; min-height: 44px; }
 .brand img { height: 24px; width: auto; display: block; }
 .nav-links { display: flex; gap: var(--space-5); flex-wrap: wrap; }
 .nav-links a {
@@ -493,7 +493,10 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
 }
 .tab-with-pill { gap: 8px; }
 
-@media (max-width: 860px) { .tabs a, .tabs button { min-height: 44px; display: inline-flex; align-items: center; } }
+@media (max-width: 860px) {
+  .tabs a, .tabs button { min-height: 44px; min-width: 44px; padding-left: 12px; padding-right: 12px; display: inline-flex; align-items: center; justify-content: center; }
+  a.touch-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 10px 8px; }
+}
 .lede .pill { white-space: nowrap; vertical-align: middle; }
 
 @media (max-width: 860px) {

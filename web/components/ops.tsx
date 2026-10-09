@@ -379,7 +379,7 @@ export function DemoPage() {
         {checks.map((item) => (
           <div className="row" key={item.id}>
             <span>{item.label}</span>
-            <Link href={item.href}>Open</Link>
+            <Link className="touch-link" href={item.href}>Open</Link>
           </div>
         ))}
       </Panel>
