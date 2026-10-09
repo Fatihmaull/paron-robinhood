@@ -15,6 +15,14 @@ import { fileURLToPath, pathToFileURL } from "node:url";
 const SKIP_DIRS = new Set(["node_modules", ".next", ".git"]);
 const EXT = /\.(ts|tsx|css|md|json|mjs)$/;
 
+/**
+ * Files under web/ that may quote the D-74 phrase as test data.
+ * They are not product copy. Anything else under web/ or the root README
+ * still fails the guard. No other web fixture currently contains the phrase;
+ * do not add a blanket *.test.ts skip.
+ */
+export const EXCLUDED_FILES = new Set(["web/lib/copy-guard.test.ts"]);
+
 export const RULES = [
   {
     id: "D-74",
@@ -64,7 +72,14 @@ function walk(dir, out = []) {
   return out;
 }
 
-/** Product surface: root README.md and web/. docs/ is intentionally outside. */
+function posixRelative(root, file) {
+  return relative(root, file).split("\\").join("/");
+}
+
+/**
+ * D-74 scan roots, and nothing else: the root README.md and files under web/.
+ * docs/, pitch material, contracts, and indexer are never opened.
+ */
 export function productFiles(root) {
   const files = [];
   const readme = join(root, "README.md");
@@ -79,7 +94,7 @@ export function productFiles(root) {
   } catch {
     // A single-file check has no web tree.
   }
-  return files;
+  return files.filter((file) => !EXCLUDED_FILES.has(posixRelative(root, file)));
 }
 
 export function scanRoot(root) {

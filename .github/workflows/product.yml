@@ -12,7 +12,7 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version-file: .nvmrc
-      - name: D-74 grep guard
+      - name: D-74 grep guard (README.md and web/ only)
         run: node script/copy-guard.mjs
       - name: Guard fails on violations
         run: node --test script/copy-guard.test.mjs

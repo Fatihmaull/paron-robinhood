@@ -5,7 +5,8 @@ import { join } from "node:path";
 import { spawnSync } from "node:child_process";
 import test from "node:test";
 import { fileURLToPath } from "node:url";
-import { lineViolations, repoRoot, scanRoot } from "./copy-guard.mjs";
+import { readFileSync } from "node:fs";
+import { lineViolations, productFiles, repoRoot, scanRoot } from "./copy-guard.mjs";
 
 const script = fileURLToPath(new URL("./copy-guard.mjs", import.meta.url));
 
@@ -67,16 +68,48 @@ test("cli exits 0 on clean product copy", () => {
   assert.match(result.stdout, /ok/);
 });
 
-test("docs and pitch text are outside the product scan", () => {
+const PHRASE = "Not affiliated with or endorsed by Example.";
+
+function fixtureTree() {
   const dir = mkdtempSync(join(tmpdir(), "paron-guard-"));
   mkdirSync(join(dir, "docs", "pitch"), { recursive: true });
-  mkdirSync(join(dir, "web"), { recursive: true });
+  mkdirSync(join(dir, "indexer", "src"), { recursive: true });
+  mkdirSync(join(dir, "web", "app"), { recursive: true });
+  mkdirSync(join(dir, "web", "lib"), { recursive: true });
   writeFileSync(join(dir, "README.md"), "Built by Fatih Maulana with help from Grok Bot.\n");
-  writeFileSync(join(dir, "web", "page.tsx"), "export const title = \"Markets\";\n");
-  writeFileSync(join(dir, "docs", "pitch", "deck.md"), "Not affili" + "ated with or endors" + "ed by Example.\n");
+  writeFileSync(join(dir, "web", "app", "page.tsx"), "export const title = \"Markets\";\n");
+  writeFileSync(join(dir, "web", "lib", "copy-guard.test.ts"), `const sample = ${JSON.stringify(PHRASE)};\n`);
+  writeFileSync(join(dir, "docs", "pitch", "deck.md"), `${PHRASE}\n`);
+  writeFileSync(join(dir, "indexer", "src", "note.ts"), `${PHRASE}\n`);
+  return dir;
+}
+
+test("docs, pitch, indexer, and the excluded web test stay green", () => {
+  const dir = fixtureTree();
   const hits = scanRoot(dir);
+  const cli = runCli(["--root", dir]);
   rmSync(dir, { recursive: true, force: true });
   assert.deepEqual(hits, []);
+  assert.equal(cli.status, 0, cli.stderr);
+});
+
+test("the same phrase in product copy or the README fails", () => {
+  const dir = fixtureTree();
+  writeFileSync(join(dir, "web", "app", "page.tsx"), `export const note = ${JSON.stringify(PHRASE)};\n`);
+  const pageHits = scanRoot(dir);
+  const pageCli = runCli(["--root", dir]);
+  writeFileSync(join(dir, "web", "app", "page.tsx"), "export const title = \"Markets\";\n");
+  writeFileSync(join(dir, "README.md"), `${PHRASE}\n`);
+  const readmeHits = scanRoot(dir);
+  const readmeCli = runCli(["--root", dir]);
+  rmSync(dir, { recursive: true, force: true });
+  assert.deepEqual(pageHits.map((hit) => hit.file), ["web/app/page.tsx"]);
+  assert.equal(pageHits[0].rule, "D-74");
+  assert.equal(pageCli.status, 1, pageCli.stderr);
+  assert.match(pageCli.stderr, /web\/app\/page\.tsx/);
+  assert.doesNotMatch(pageCli.stderr, /docs\//);
+  assert.deepEqual(readmeHits.map((hit) => hit.file), ["README.md"]);
+  assert.equal(readmeCli.status, 1, readmeCli.stderr);
 });
 
 test("a violation under web/ fails the root scan", () => {
@@ -90,6 +123,15 @@ test("a violation under web/ fails the root scan", () => {
   assert.equal(hits[0].rule, "wording-partner");
 });
 
-test("the repository product surface is clean", () => {
+test("the live scan never leaves README.md and web/", () => {
+  const files = productFiles(repoRoot).map((file) => file.slice(repoRoot.length + 1).split("\\").join("/"));
+  assert.ok(files.includes("README.md"));
+  assert.ok(files.some((file) => file.startsWith("web/")));
+  assert.equal(files.includes("web/lib/copy-guard.test.ts"), false);
+  for (const file of files) {
+    assert.ok(file === "README.md" || file.startsWith("web/"), file);
+  }
+  const docs = readFileSync(join(repoRoot, "docs/knowledge-base/paron-gaps.md"), "utf8");
+  assert.match(docs, /affiliated|endorsed by/i);
   assert.deepEqual(scanRoot(repoRoot), []);
 });
