@@ -67,6 +67,7 @@ export function agentUrl(): string {
 }
 
 export const ZERO_ADDRESS = "0x0000000000000000000000000000000000000000" as const;
+export const ZERO_BYTES32 = `0x${"0".repeat(64)}` as const;
 
 /** Unmeasured. T6-01 has no gas snapshot yet. */
 export const CLAIM_DEFAULT_GAS_LIMIT = 300_000n;
@@ -86,14 +87,21 @@ const ADDR_KEYS = {
   conversionTable: "NEXT_PUBLIC_ADDR_CONVERSION_TABLE",
   timelock: "NEXT_PUBLIC_ADDR_TIMELOCK",
   panel: "NEXT_PUBLIC_ADDR_PANEL",
+  gate: "NEXT_PUBLIC_ADDR_GATE",
   cuTokenSeries4: "NEXT_PUBLIC_ADDR_CU_TOKEN_SERIES_4",
 } as const;
 
 export type ContractKey = keyof typeof ADDR_KEYS;
 
 export function contractAddress(key: ContractKey): `0x${string}` {
-  const value = read(ADDR_KEYS[key], "");
-  if (/^0x[0-9a-fA-F]{40}$/.test(value) && value !== ZERO_ADDRESS) {
+  const value = read(ADDR_KEYS[key], "").trim();
+  if (key === "easSchema") {
+    if (/^0x[0-9a-fA-F]{64}$/.test(value) && value.toLowerCase() !== ZERO_BYTES32) {
+      return value as `0x${string}`;
+    }
+    return ZERO_BYTES32;
+  }
+  if (/^0x[0-9a-fA-F]{40}$/.test(value) && value.toLowerCase() !== ZERO_ADDRESS) {
     return value as `0x${string}`;
   }
   return ZERO_ADDRESS;

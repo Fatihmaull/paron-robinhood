@@ -7,7 +7,7 @@ export const SCHEMA_PARTICIPANT =
 export const SCHEMA_KYB =
   "KybApplication(bytes32 entityId,uint8 role,bytes2 country,bytes32 dataHash)";
 
-/** Demo constructor set from dev doc 04 §5. maxFillsPerTx stays unset until 01 T-02. */
+/** Demo constructor set from dev doc 04 §5. The deploy script reads config/params/{demo,prod}.json. */
 export const DEMO_PARAMS = {
   bounds: {
     ackMin: 60,
@@ -31,12 +31,12 @@ export const DEMO_PARAMS = {
   disputeBondBps: 500,
   minDisputeBond: 5_000_000,
   maxLevels: 10,
-  maxFillsPerTx: null,
+  maxFillsPerTx: 10,
   factors: {
     "H100-SXM-80GB": 10_000,
     "H200-SXM-141GB": 14_000,
     "B200-SXM-180GB": 25_000,
-    GB200: 35_000,
+    "GB200-NVL72": 35_000,
     "A100-SXM-80GB": 4_500,
   },
   printIndex: {
@@ -56,6 +56,35 @@ export function assertParamSet(paramSet, params) {
   if (paramSet === "prod" && params.allowOpenWindow) {
     throw new Error("PARAM_SET=prod cannot set allowOpenWindow");
   }
+}
+
+export function windowBounds(bounds = {}) {
+  const num = (value) => (value == null || value === "" ? 0 : Number(value));
+  return {
+    minAck: num(bounds.minAck ?? bounds.ackMin),
+    maxAck: num(bounds.maxAck ?? bounds.ackMax),
+    minDelivery: num(bounds.minDelivery ?? bounds.deliveryMin),
+    maxDelivery: num(bounds.maxDelivery ?? bounds.deliveryMax),
+    minDispute: num(bounds.minDispute ?? bounds.disputeMin),
+    maxDispute: num(bounds.maxDispute ?? bounds.disputeMax),
+  };
+}
+
+export function normalizeParams(file) {
+  const index = file.printIndex || file.index || {};
+  return {
+    ...file,
+    bounds: windowBounds(file.bounds),
+    printIndex: {
+      windowLength: Number(index.windowLength ?? 0),
+      minVolume: String(index.minVolume ?? "0"),
+      minParticipants: Number(index.minParticipants ?? 0),
+      maxCarryForward: Number(index.maxCarryForward ?? 0),
+    },
+    panelThreshold: file.panelThreshold ?? 2,
+    makerFeeBps: file.makerFeeBps ?? 0,
+    maxFillsPerTx: file.maxFillsPerTx ?? null,
+  };
 }
 
 export const VERIFY_COMMAND = "node ops/scripts/verify-deployment.mjs";
@@ -123,29 +152,23 @@ export function coreActions(env = {}) {
   const registryGate = env.GATE_KIND === "registry";
   const actions = [];
   if (registryGate) {
-    actions.push(deploy("RegistryGate", []));
+    actions.push(deploy("RegistryGate", [{ name: "admin", ref: "deployer" }]));
   } else {
     actions.push(
       deploy("EASGate", [
         { name: "eas", ref: "EAS" },
         { name: "schemaUid", ref: "ParticipantVerified" },
         { name: "trustedAttesters", ref: "W-VERIFIER" },
-      ]),
-    );
-  }
-  actions.push(deploy("ConversionTable", []));
-  for (const [gpu, factor] of Object.entries(DEMO_PARAMS.factors)) {
-    actions.push(
-      call("ConversionTable", "setFactor", [
-        { name: "gpuModel", value: gpu },
-        { name: "factor", value: factor },
+        { name: "admin", ref: "deployer" },
       ]),
     );
   }
   actions.push(
+    deploy("ConversionTable", [{ name: "admin", ref: "deployer" }]),
     deploy("ProviderRegistry", [
       { name: "gate", ref: "gate" },
       { name: "redemptionManager", ref: "RedemptionManager" },
+      { name: "admin", ref: "deployer" },
     ]),
     deploy("BondVault", [
       { name: "settlementToken", ref: "MockUSDC" },
@@ -156,23 +179,24 @@ export function coreActions(env = {}) {
     deploy("PrintIndex", [
       { name: "orderBook", ref: "OrderBook" },
       { name: "redemptionManager", ref: "RedemptionManager" },
-      { name: "windowLength", ref: "params.printIndex.windowLength" },
-      { name: "minVolume", ref: "params.printIndex.minVolume" },
-      { name: "minParticipants", ref: "params.printIndex.minParticipants" },
-      { name: "maxCarryForward", ref: "params.printIndex.maxCarryForward" },
+      { name: "factory", ref: "SeriesFactory" },
+      { name: "admin", ref: "deployer" },
+      { name: "params", ref: "params.index" },
     ]),
     deploy("SeriesFactory", [
       { name: "registry", ref: "ProviderRegistry" },
       { name: "conversionTable", ref: "ConversionTable" },
       { name: "bondVault", ref: "BondVault" },
       { name: "cuTokenImpl", ref: "CUToken" },
-      { name: "redemptionManager", ref: "RedemptionManager" },
       { name: "primarySale", ref: "PrimarySale" },
+      { name: "redemptionManager", ref: "RedemptionManager" },
+      { name: "gate", ref: "gate" },
+      { name: "settlementToken", ref: "MockUSDC" },
+      { name: "admin", ref: "deployer" },
       { name: "bounds", ref: "params.bounds" },
       { name: "allowOpenWindow", ref: "params.allowOpenWindow" },
       { name: "enforceCalendarMonth", ref: "params.enforceCalendarMonth" },
       { name: "leadTime", ref: "params.leadTime" },
-      { name: "bondFloorBps", ref: "params.bondFloorBps" },
     ]),
     deploy("PrimarySale", [
       { name: "factory", ref: "SeriesFactory" },
@@ -180,6 +204,7 @@ export function coreActions(env = {}) {
       { name: "gate", ref: "gate" },
       { name: "treasury", ref: "treasury" },
       { name: "primaryFeeBps", ref: "params.primaryFeeBps" },
+      { name: "admin", ref: "deployer" },
     ]),
     deploy("OrderBook", [
       { name: "factory", ref: "SeriesFactory" },
@@ -188,9 +213,8 @@ export function coreActions(env = {}) {
       { name: "printIndex", ref: "PrintIndex" },
       { name: "treasury", ref: "treasury" },
       { name: "takerFeeBps", ref: "params.takerFeeBps" },
-      { name: "makerFeeBps", ref: "params.makerFeeBps" },
-      { name: "maxLevels", ref: "params.maxLevels" },
       { name: "maxFillsPerTx", ref: "params.maxFillsPerTx" },
+      { name: "admin", ref: "deployer" },
     ]),
     deploy("RedemptionManager", [
       { name: "factory", ref: "SeriesFactory" },
@@ -199,19 +223,25 @@ export function coreActions(env = {}) {
       { name: "printIndex", ref: "PrintIndex" },
       { name: "settlementToken", ref: "MockUSDC" },
       { name: "rulingWindow", ref: "params.rulingWindow" },
-      { name: "disputeBondBps", ref: "params.disputeBondBps" },
-      { name: "minDisputeBond", ref: "params.minDisputeBond" },
     ]),
     deploy("PanelArbitrator", [
       { name: "members", ref: "panel" },
       { name: "threshold", ref: "params.panelThreshold" },
       { name: "redemptionManager", ref: "RedemptionManager" },
+      { name: "admin", ref: "deployer" },
     ]),
   );
   if (env.REFERENCE_FEED === "1") {
-    actions.push(deploy("ReferenceFeed", [{ name: "signer", ref: "W-FEED" }]));
+    actions.push(
+      deploy("ReferenceFeed", [
+        { name: "admin", ref: "deployer" },
+        { name: "feedSigner", ref: "W-FEED" },
+        { name: "label", value: "synthetic demo data" },
+      ]),
+    );
   }
   actions.push(
+    call("SeriesFactory", "setOrderBook", [{ name: "orderBook", ref: "OrderBook" }]),
     call("SeriesFactory", "setArbitratorAllowed", [
       { name: "arbitrator", ref: "PanelArbitrator" },
       { name: "allowed", value: true },
@@ -242,8 +272,8 @@ export function actionsFor(stepId, { chain, env = {} } = {}) {
   if (stepId === "mock-usdc") {
     return [
       deploy("MockUSDC", [
-        { name: "name", value: DEMO_PARAMS.mockUsdcName },
-        { name: "symbol", value: DEMO_PARAMS.mockUsdcSymbol },
+        { name: "admin", ref: "deployer" },
+        { name: "minter", ref: "deployer" },
       ]),
     ];
   }
@@ -269,6 +299,7 @@ export function seedActions(env = {}) {
     args: [],
     note: step.note || "",
     symbol: step.symbol || "",
+    step,
   }));
 }
 
