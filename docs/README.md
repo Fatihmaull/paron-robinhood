@@ -23,7 +23,7 @@ This folder is the full written context of Paron (collateral-backed GPU compute-
 ## Status: drafted vs approved
 
 - Decisions are marked `APPROVED` (Fatih decided) or `PENDING`/`USULAN` (proposal) inside the docs. Trust only APPROVED items as binding.
-- Designer findings (`design/spec-change-requests.md` #9 to #13 and live-review items LR-5, LR-6, LR-8) were approved by Fatih on 9 Oct 2026 14:40 WIB; the sync into dev-docs 06/07/08/09 (D-67 onward) is being finished. Re-read `07-decisions-log.md` after the next docs refresh.
+- Designer findings (`design/spec-change-requests.md` #9 to #13 and live-review items LR-5, LR-6, LR-8) were approved by Fatih on 9 Oct 2026 14:40 WIB and are recorded as D-67 to D-74 (APPROVED) in `dev-docs/07-decisions-log.md` §15, with UI details in `dev-docs/06-screens-wireframes.md` §0.6 and `design/approved-ui-changes.md`.
 - Not verified at export time: live contrast ratios and the D-66 skeleton visuals.
 - Open item: backup RPC URL (`INDEXER_RPC_URL_BACKUP`).
 
