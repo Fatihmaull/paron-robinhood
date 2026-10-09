@@ -1,0 +1,2 @@
+id,kind,gpu_type,gpu,price_per_gpu_hour,cu_price,factor,qty_cu,native_gpu_hours,gpu_count,region,country,ts_ms,ts_iso,series,series_id,delivery_window,side,notional_usd,fee_usd,eligible,ineligible_reason,index_status,thin,tx_hash
+46630-0xc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5-4,TRADE,H100-SXM-80GB,H100,3.200000,3.200000,1.0000,5,5,,AS,ID,1791601265000,2026-10-10T03:01:05Z,CU-JKT-H100-2610,4,2026-10,BUY,16.000000,0.024000,true,,OK,false,0xc5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5c5

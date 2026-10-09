@@ -1,0 +1,18 @@
+{
+  "data": {
+    "chain_id": 46630,
+    "chain": "robinhoodTestnet",
+    "synced": true,
+    "indexed_block": 130100400,
+    "head_block": 130100400,
+    "lag_blocks": 0,
+    "indexed_at_ms": 1791601450000,
+    "api_version": "v1"
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

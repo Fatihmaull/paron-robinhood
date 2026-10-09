@@ -1,0 +1,28 @@
+{
+  "data": [
+    {
+      "id": "1",
+      "contract": "ConversionTable",
+      "contract_address": "0x1010101010101010101010101010101010101010",
+      "event": "FactorSet",
+      "args": {
+        "gpu": "A100",
+        "old_factor": "0.6000",
+        "new_factor": "0.4500"
+      },
+      "ts_ms": 1791601560000,
+      "ts_iso": "2026-10-10T03:06:00Z",
+      "tx_hash": "0xf0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0",
+      "tx_from": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "tx_to": "0x1010101010101010101010101010101010101010",
+      "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xf0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0"
+    }
+  ],
+  "next_cursor": null,
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100500,
+    "indexed_at_ms": 1791601560000,
+    "server_now_ms": 1791601560000
+  }
+}

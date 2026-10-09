@@ -1,0 +1,24 @@
+{
+  "data": {
+    "address": "0x2222222222222222222222222222222222222222",
+    "verified": true,
+    "entity_id": "0xe2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2",
+    "role": {
+      "code": 2,
+      "name": "Buyer"
+    },
+    "country": "ID",
+    "expiry_ms": 1822953600000,
+    "source": "EAS",
+    "attestation_uid": "0xabababababababababababababababababababababababababababababababab",
+    "attester": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "revoked": false,
+    "explorer_url": null
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

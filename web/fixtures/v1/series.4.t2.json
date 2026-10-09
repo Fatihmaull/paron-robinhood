@@ -1,0 +1,76 @@
+{
+  "data": {
+    "series_id": "4",
+    "symbol": "CU-JKT-H100-2610",
+    "token": "0xa4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4",
+    "gpu": "H100",
+    "gpu_type": "H100-SXM-80GB",
+    "factor": "1.0000",
+    "region": "AS",
+    "country": "ID",
+    "delivery_window": "2026-10",
+    "window_start_ms": 1790812800000,
+    "window_end_ms": 1793491200000,
+    "primary_price": "3.000000",
+    "native_primary_price": "3.000000",
+    "max_supply": "500",
+    "paused": false,
+    "finalized": false,
+    "institutional": false,
+    "sale_open": true,
+    "last_price": "3.200000",
+    "volume_24h_cu": "5",
+    "volume_24h_usd": "16.000000",
+    "bond_per_cu": "4.500000",
+    "coverage": "1.50",
+    "sold_supply": "30",
+    "total_supply": "22",
+    "provider": {
+      "address": "0x1111111111111111111111111111111111111111",
+      "verified": true,
+      "status": "ACTIVE",
+      "delivered_cu": "8",
+      "defaulted_cu": "0",
+      "voluntary_defaulted_cu": "0"
+    },
+    "gpu_hours": "500",
+    "terms": {
+      "ack_window_secs": 60,
+      "delivery_window_secs": 60,
+      "dispute_window_secs": 90,
+      "min_redemption_cu": "1",
+      "arbitrator": "0x8888888888888888888888888888888888888888",
+      "spec_hash": "0x5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e5e",
+      "terms_hash": "0x0000000000000000000000000000000000000000000000000000000000000000"
+    },
+    "bond": {
+      "deposited": "2250.000000",
+      "balance": "2214.000000",
+      "released": "36.000000",
+      "slashed": "0.000000",
+      "health": "0.984",
+      "finalized": false,
+      "withdrawn": false
+    },
+    "redemption_stats": {
+      "requested_cu": "18",
+      "delivered_cu": "8",
+      "defaulted_cu": "0",
+      "open_requests": 1,
+      "locked_cu": "10"
+    },
+    "index": {
+      "status": "OK",
+      "value": "3.200000"
+    },
+    "created_at_ms": 1791601200000,
+    "created_tx": "0xc1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1",
+    "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xc1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1"
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100398,
+    "indexed_at_ms": 1791601441000,
+    "server_now_ms": 1791601441000
+  }
+}

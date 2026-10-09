@@ -1,0 +1,24 @@
+{
+  "data": {
+    "series_id": "4",
+    "symbol": "CU-JKT-H100-2610",
+    "tick": "0.010000",
+    "bids": [],
+    "asks": [
+      {
+        "price": "3.200000",
+        "qty_cu": "5",
+        "orders": 1
+      }
+    ],
+    "best_bid": null,
+    "best_ask": "3.200000",
+    "spread": null
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100245,
+    "indexed_at_ms": 1791601262000,
+    "server_now_ms": 1791601250000
+  }
+}

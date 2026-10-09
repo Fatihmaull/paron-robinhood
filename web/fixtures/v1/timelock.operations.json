@@ -1,0 +1,35 @@
+{
+  "data": [
+    {
+      "operation_id": "0xab11ab11ab11ab11ab11ab11ab11ab11ab11ab11ab11ab11ab11ab11ab11ab11",
+      "target": "0x1010101010101010101010101010101010101010",
+      "target_name": "ConversionTable",
+      "value": "0",
+      "data": "0x",
+      "decoded": {
+        "function": "setFactor",
+        "args": {
+          "gpu": "A100",
+          "gpu_model": "A100-SXM-80GB",
+          "new_factor": "0.4500"
+        }
+      },
+      "predecessor": "0x0000000000000000000000000000000000000000000000000000000000000000",
+      "salt": "0x5a175a175a175a175a175a175a175a175a175a175a175a175a175a175a175a17",
+      "delay_s": 300,
+      "scheduled_at_ms": 1791600900000,
+      "ready_at_ms": 1791601200000,
+      "status": "READY",
+      "scheduled_tx": "0xc1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1",
+      "executed_tx": null,
+      "cancelled_tx": null
+    }
+  ],
+  "next_cursor": null,
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

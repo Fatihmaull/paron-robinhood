@@ -1,0 +1,274 @@
+"use client";
+
+import dynamic from "next/dynamic";
+import Link from "next/link";
+import { useMemo, useState } from "react";
+import { keccak256, parseUnits, stringToHex } from "viem";
+import { orderBookAbi, primarySaleAbi, redemptionManagerAbi } from "@/lib/abi";
+import { contractAddress } from "@/lib/config";
+import { formatCoverage, formatCu, formatFactor, formatUsd, formatWib, isWholeCu, quotePrimary, shortId } from "@/lib/format";
+import { useBook, usePrints, useSeries } from "@/lib/hooks";
+import { TAPE_UNAVAILABLE } from "@/lib/onchain";
+import { Panel, TxButton, Field } from "./ui";
+import { useSend } from "./tx";
+import { useData } from "./providers";
+
+const PrintChart = dynamic(() => import("./charts").then((mod) => mod.PrintChart), { ssr: false });
+const BondChart = dynamic(() => import("./charts").then((mod) => mod.BondChart), { ssr: false });
+
+const CU = 10n ** 18n;
+
+export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview" | "buy" | "trade" }) {
+  const series = useSeries(seriesId);
+  const book = useBook(seriesId);
+  const prints = usePrints();
+  const detail = series.data?.data;
+  const tape = (prints.data?.data ?? []).filter((print) => print.series_id === seriesId || seriesId === "4");
+  const onchainTape = prints.data?.origin === "onchain";
+
+  return (
+    <div>
+      <p className="kicker">Series {seriesId}</p>
+      <h1>{detail?.symbol ?? (series.isLoading ? "Loading…" : "Series not found")}</h1>
+      {series.isError ? <p className="bad">{series.error instanceof Error ? series.error.message : "Couldn't load this series."}</p> : null}
+      {detail ? (
+        <p className="lede">
+          {detail.gpu_type} · factor {formatFactor(detail.factor)} · {detail.country} · window {detail.delivery_window || "—"} · provider {shortId(detail.provider.address)}
+          {detail.provider.verified ? " · Verified by Paron demo verifier" : ""}
+        </p>
+      ) : null}
+      <div className="tabs">
+        <Link href={`/markets/${seriesId}`} data-active={tab === "overview"}>Overview</Link>
+        <Link href={`/buy/${seriesId}`} data-active={tab === "buy"}>Buy</Link>
+        <Link href={`/trade/${seriesId}`} data-active={tab === "trade"}>Trade</Link>
+        <Link href="/trade/leverage">Leverage</Link>
+      </div>
+      <div className="grid two">
+        <div className="grid">
+          {detail ? (
+            <Panel title="Market">
+              <div className="row"><span>Primary</span><span>{formatUsd(detail.primary_price)}/CU</span></div>
+              <div className="row"><span>Native</span><span>{formatUsd(detail.native_primary_price)}/{detail.gpu}-hour</span></div>
+              <div className="row"><span>Last</span><span>{detail.last_price ? `${formatUsd(detail.last_price)}/CU` : "—"}</span></div>
+              <div className="row"><span>Bond / CU</span><span>{formatUsd(detail.bond_per_cu)}</span></div>
+              <div className="row"><span>Coverage</span><span>{formatCoverage(detail.coverage)}</span></div>
+              <div className="row"><span>Sold / supply</span><span>{formatCu(detail.sold_supply)} / {formatCu(detail.max_supply)}</span></div>
+              <div className="row"><span>Outstanding</span><span>{formatCu(detail.total_supply)}</span></div>
+              <div className="row"><span>Sale</span><span>{detail.sale_open ? "Open" : "Closed"}{detail.paused ? " · paused" : ""}</span></div>
+            </Panel>
+          ) : null}
+          <Panel title="Prints">
+            {onchainTape ? <p>{TAPE_UNAVAILABLE}</p> : null}
+            {tape.length > 0 ? <PrintChart prints={tape} /> : <p className="muted">No prints for this series in the current snapshot.</p>}
+            <table>
+              <thead><tr><th>Time</th><th>Price</th><th>Qty</th><th>Notional</th></tr></thead>
+              <tbody>
+                {tape.map((print) => (
+                  <tr key={print.id}>
+                    <td title={print.ts_iso}>{formatWib(print.ts_ms)}</td>
+                    <td>{formatUsd(print.cu_price)}/CU</td>
+                    <td>{formatCu(print.qty_cu)}</td>
+                    <td>{formatUsd(print.notional_usd)}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+          </Panel>
+          {tab !== "buy" ? <OrderBookPanel seriesId={seriesId} asks={book.data?.data.asks ?? []} bids={book.data?.data.bids ?? []} /> : null}
+        </div>
+        <div className="grid">
+          {detail && (tab === "overview" || tab === "buy") ? <BuyBox seriesId={seriesId} price={detail.primary_price} saleOpen={detail.sale_open} /> : null}
+          {detail && (tab === "overview" || tab === "trade") ? <TradeBox seriesId={seriesId} /> : null}
+          {detail?.bond ? (
+            <Panel title="Bond">
+              <BondChart balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
+              <div className="row"><span>Deposited</span><span>{formatUsd(detail.bond.deposited)}</span></div>
+              <div className="row"><span>Balance</span><span>{formatUsd(detail.bond.balance)}</span></div>
+              <div className="row"><span>Released</span><span>{formatUsd(detail.bond.released)}</span></div>
+              <div className="row"><span>Slashed</span><span>{formatUsd(detail.bond.slashed)}</span></div>
+              <div className="row"><span>Health</span><span>{detail.bond.health}</span></div>
+            </Panel>
+          ) : detail ? (
+            <Panel title="Bond">
+              <p className="muted">Vault totals for this series are not in the current fixture. Series 4 carries the full bond record. Bond per CU is {formatUsd(detail.bond_per_cu)}.</p>
+            </Panel>
+          ) : null}
+          {detail?.terms ? (
+            <Panel title="Terms">
+              <div className="row"><span>Ack / delivery / dispute</span><span>{detail.terms.ack_window_secs}s / {detail.terms.delivery_window_secs}s / {detail.terms.dispute_window_secs}s</span></div>
+              <div className="row"><span>Min redemption</span><span>{formatCu(detail.terms.min_redemption_cu)}</span></div>
+              <div className="row"><span>Arbitrator</span><span>{shortId(detail.terms.arbitrator)}</span></div>
+              <div className="row"><span>Spec hash</span><span>{shortId(detail.terms.spec_hash)}</span></div>
+            </Panel>
+          ) : null}
+          {detail?.redemption_stats ? (
+            <Panel title="Redemptions">
+              <div className="row"><span>Delivered</span><span>{formatCu(detail.redemption_stats.delivered_cu)}</span></div>
+              <div className="row"><span>Defaulted</span><span>{formatCu(detail.redemption_stats.defaulted_cu)}</span></div>
+              <div className="row"><span>Open</span><span>{detail.redemption_stats.open_requests}</span></div>
+              <Link href={`/redemptions/new?series=${seriesId}`}>Redeem</Link>
+            </Panel>
+          ) : null}
+          <Panel title="Reputation">
+            <p>{detail ? `${detail.provider.delivered_cu} delivered · ${detail.provider.defaulted_cu} defaulted · ${detail.provider.voluntary_defaulted_cu} voluntary` : "—"}</p>
+            <p className="help">Provider-wide record, so both Jakarta rows share it.</p>
+          </Panel>
+        </div>
+      </div>
+    </div>
+  );
+}
+
+function OrderBookPanel({ seriesId, bids, asks }: { seriesId: string; bids: { price: string; qty_cu: string }[]; asks: { price: string; qty_cu: string }[] }) {
+  return (
+    <Panel title={`Book · series ${seriesId}`}>
+      <div className="grid two">
+        <div>
+          <h2>Bids</h2>
+          {bids.length === 0 ? <p className="muted">Empty</p> : bids.map((level) => (
+            <div className="row" key={`b-${level.price}`}><span>{formatUsd(level.price)}</span><span>{formatCu(level.qty_cu)}</span></div>
+          ))}
+        </div>
+        <div>
+          <h2>Asks</h2>
+          {asks.length === 0 ? <p className="muted">Empty</p> : asks.map((level) => (
+            <div className="row" key={`a-${level.price}`}><span>{formatUsd(level.price)}</span><span>{formatCu(level.qty_cu)}</span></div>
+          ))}
+        </div>
+      </div>
+    </Panel>
+  );
+}
+
+function BuyBox({ seriesId, price, saleOpen }: { seriesId: string; price: string; saleOpen: boolean }) {
+  const [qty, setQty] = useState("1");
+  const [maxCost, setMaxCost] = useState("");
+  const { send, pending, error } = useSend();
+  const whole = isWholeCu(qty);
+  const quote = useMemo(() => (whole ? quotePrimary(qty, price) : null), [whole, qty, price]);
+  const shownMax = maxCost || (quote ? quote.cost : "");
+
+  return (
+    <Panel title="Buy primary">
+      <Field label="Quantity (whole CU)">
+        <input value={qty} onChange={(event) => setQty(event.target.value)} />
+      </Field>
+      {!whole && qty !== "" ? <p className="bad">Quantity must be a whole number of CU.</p> : null}
+      <div className="row"><span>Cost</span><span>{quote ? formatUsd(quote.cost) : "—"}</span></div>
+      <div className="row"><span>Fee (1%)</span><span>{quote ? formatUsd(quote.fee) : "—"}</span></div>
+      <Field label="Max cost (USDC, required)">
+        <input value={shownMax} onChange={(event) => setMaxCost(event.target.value)} />
+      </Field>
+      {!saleOpen ? <p className="warn">The primary sale is closed.</p> : null}
+      <TxButton
+        disabled={!whole || !shownMax || !saleOpen}
+        reason={pending ?? undefined}
+        onClick={() => {
+          const cost = parseUnits(shownMax, 6);
+          void send("buy", {
+            address: contractAddress("primarySale"),
+            abi: primarySaleAbi,
+            functionName: "buy",
+            args: [BigInt(seriesId), BigInt(qty) * CU, cost],
+          });
+        }}
+      >
+        {pending === "buy" ? "Buying…" : "Buy"}
+      </TxButton>
+      {error ? <p className="bad">{error}</p> : null}
+      <p className="help">Quote is computed locally in mock mode. Live mode reads PrimarySale.quote before sending. maxCost is never zero.</p>
+    </Panel>
+  );
+}
+
+function TradeBox({ seriesId }: { seriesId: string }) {
+  const [side, setSide] = useState<"0" | "1">("1");
+  const [price, setPrice] = useState("3.20");
+  const [qty, setQty] = useState("1");
+  const [ioc, setIoc] = useState(false);
+  const { send, pending, error } = useSend();
+  const whole = isWholeCu(qty);
+  const priceOk = /^\d+(\.\d{1,2})?$/.test(price);
+
+  return (
+    <Panel title="Place order">
+      <Field label="Side">
+        <select value={side} onChange={(event) => setSide(event.target.value as "0" | "1")}>
+          <option value="0">Bid</option>
+          <option value="1">Ask</option>
+        </select>
+      </Field>
+      <Field label="Price (USDC per CU, 0.01 tick)">
+        <input value={price} onChange={(event) => setPrice(event.target.value)} />
+      </Field>
+      <Field label="Size (whole CU)">
+        <input value={qty} onChange={(event) => setQty(event.target.value)} />
+      </Field>
+      {!whole && qty !== "" ? <p className="bad">Order size must be a whole number of CU.</p> : null}
+      <label>
+        <input type="checkbox" checked={ioc} onChange={(event) => setIoc(event.target.checked)} style={{ width: "auto" }} /> Immediate or cancel
+      </label>
+      <TxButton
+        disabled={!whole || !priceOk}
+        onClick={() => {
+          void send("order", {
+            address: contractAddress("orderBook"),
+            abi: orderBookAbi,
+            functionName: "placeOrder",
+            args: [BigInt(seriesId), Number(side), parseUnits(price, 6), BigInt(qty) * CU, ioc],
+          });
+        }}
+      >
+        {pending === "order" ? "Placing…" : "Place order"}
+      </TxButton>
+      {error ? <p className="bad">{error}</p> : null}
+      <RedeemLink seriesId={seriesId} />
+    </Panel>
+  );
+}
+
+function RedeemLink({ seriesId }: { seriesId: string }) {
+  return (
+    <p className="help">
+      Holding CU? <Link href={`/redemptions/new?series=${seriesId}`}>Request redemption</Link>. Delivery text is hashed on-chain.
+      {" "}
+      <span className="muted">{shortId(keccak256(stringToHex("demo")))}</span>
+    </p>
+  );
+}
+
+export function RedeemForm({ seriesId }: { seriesId: string }) {
+  const [amount, setAmount] = useState("1");
+  const [refText, setRefText] = useState("");
+  const { send, pending, error } = useSend();
+  const whole = isWholeCu(amount);
+  const hash = refText ? keccak256(stringToHex(refText)) : null;
+  return (
+    <Panel title={`Redeem series ${seriesId}`}>
+      <p className="help">Demo: access details are hashed, not delivered.</p>
+      <Field label="Amount (whole CU)">
+        <input value={amount} onChange={(event) => setAmount(event.target.value)} />
+      </Field>
+      {!whole && amount !== "" ? <p className="bad">Quantity must be a whole number of CU.</p> : null}
+      <Field label="Access details (hashed before the transaction)">
+        <textarea value={refText} onChange={(event) => setRefText(event.target.value)} />
+      </Field>
+      <p className="help">deliveryRef {hash ? shortId(hash) : "—"}</p>
+      <TxButton
+        disabled={!whole || !hash}
+        onClick={() => {
+          if (!hash) return;
+          void send("redeem", {
+            address: contractAddress("redemptionManager"),
+            abi: redemptionManagerAbi,
+            functionName: "requestRedemption",
+            args: [BigInt(seriesId), BigInt(amount) * CU, hash],
+          });
+        }}
+      >
+        {pending === "redeem" ? "Requesting…" : "Request redemption"}
+      </TxButton>
+      {error ? <p className="bad">{error}</p> : null}
+    </Panel>
+  );
+}

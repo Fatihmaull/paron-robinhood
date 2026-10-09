@@ -1,0 +1,24 @@
+{
+  "data": {
+    "address": "0x1111111111111111111111111111111111111111",
+    "verified": true,
+    "entity_id": "0xe1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1",
+    "role": {
+      "code": 1,
+      "name": "Provider"
+    },
+    "country": "ID",
+    "expiry_ms": 1822953600000,
+    "source": "EAS",
+    "attestation_uid": "0xabababababababababababababababababababababababababababababababab",
+    "attester": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "revoked": false,
+    "explorer_url": null
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

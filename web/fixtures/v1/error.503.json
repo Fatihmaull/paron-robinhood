@@ -1,0 +1,7 @@
+{
+  "error": {
+    "code": "INDEXER_SYNCING",
+    "message": "indexer is still backfilling",
+    "details": {}
+  }
+}

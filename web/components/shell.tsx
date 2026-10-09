@@ -1,0 +1,134 @@
+"use client";
+
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useState } from "react";
+import { useAccount, useBalance, useBlockNumber, useChainId, useSwitchChain } from "wagmi";
+import { ConnectButton } from "@rainbow-me/rainbowkit";
+import { formatUsd } from "@/lib/format";
+import { chainFooterLine, chainId, deployLabel, walletConnectId, wrongNetworkCopy } from "@/lib/config";
+import { formatCu } from "@/lib/format";
+import { useIndex } from "@/lib/hooks";
+import type { Snap } from "@/lib/types";
+import { useData } from "./providers";
+import { WalletConnect } from "./wallet";
+
+const LINKS = [
+  ["/markets", "Markets"],
+  ["/buy", "Buy"],
+  ["/trade", "Trade"],
+  ["/portfolio", "Portfolio"],
+  ["/provider", "Provider"],
+  ["/index", "Index"],
+  ["/data", "Data"],
+  ["/demo", "Demo"],
+] as const;
+
+function indexCopy(status: string, value: string | null, participants: number, volume: string): string {
+  if (status === "DISRUPTED") return "H100 index · DISRUPTED · do not use for settlement";
+  if (status === "THIN" && !value) return "H100 index · THIN · no eligible prints yet";
+  if (status === "THIN") return `H100 index · THIN · last OK ${formatUsd(value)}/CU`;
+  return `H100 index · OK · ${formatUsd(value)}/CU · ${participants} entities · ${formatCu(volume).replace(" CU", "")} CU/24h`;
+}
+
+export function Shell({ children }: { children: React.ReactNode }) {
+  const path = usePathname();
+  const { snap, setSnap, source, origin, indexedBlock } = useData();
+  const index = useIndex();
+  const { address, isConnected } = useAccount();
+  const walletChain = useChainId();
+  const { switchChain } = useSwitchChain();
+  const block = useBlockNumber({ watch: source === "live" });
+  const balance = useBalance({ address });
+  const [open, setOpen] = useState(false);
+  const strip = index.data?.data;
+  const ref = strip?.reference?.value;
+  const wrong = isConnected && walletChain !== chainId();
+  const lowGas = balance.data != null && balance.data.value < 5_000_000_000_000_000n;
+  const head = block.data != null ? Number(block.data) : null;
+  const lag = source === "live" && origin === "live" && head != null && indexedBlock != null && head > indexedBlock;
+  const banner = source === "mock"
+    ? `Mock data (fixtures). Transactions are disabled. Snapshot ${snap}.`
+    : origin === "onchain"
+      ? "Live data unavailable. Showing onchain reads only."
+      : lag
+        ? `Indexer catching up (block ${indexedBlock} of ${head}). Onchain actions still work; lists may lag a few seconds.`
+        : null;
+
+  return (
+    <div className="shell">
+      <header className="nav">
+        <Link className="brand" href="/">PARON</Link>
+        <button className="btn ghost menu-toggle" type="button" onClick={() => setOpen((v) => !v)} aria-label="Menu">
+          Menu
+        </button>
+        <nav className={`nav-links ${open ? "open" : ""}`}>
+          {LINKS.map(([href, label]) => (
+            <Link key={href} href={href} data-active={path === href || path.startsWith(`${href}/`)}>
+              {label}
+            </Link>
+          ))}
+        </nav>
+        <div className="nav-spacer" />
+        <span className="chip ok">{chainId() === 421614 ? "Arb Sepolia" : "RH Testnet"}</span>
+        {walletConnectId() ? <ConnectButton label="Connect wallet" /> : <WalletConnect />}
+      </header>
+      <div className="strip">
+        <span>{strip ? indexCopy(strip.status, strip.value, strip.participants, strip.eligible_volume_cu) : "H100 index"}</span>
+        <span>Spot reference (synthetic demo data) {ref ? formatUsd(ref) : ""}</span>
+      </div>
+      {banner ? (
+        <div className={`banner ${source === "mock" ? "mock" : "warn"}`} data-testid="mock-banner">
+          {banner}
+        </div>
+      ) : null}
+      {wrong ? (
+        <div className="banner danger">
+          {wrongNetworkCopy()}{" "}
+          <button className="btn ghost" type="button" onClick={() => switchChain({ chainId: chainId() })}>
+            Switch
+          </button>
+        </div>
+      ) : null}
+      {lowGas ? (
+        <div className="banner warn">Low gas balance. Get testnet ETH: see the faucet page.</div>
+      ) : null}
+      {source === "mock" && process.env.NODE_ENV === "development" ? (
+        <div className="snapshot" data-testid="snapshot-switch">
+          <span>Fixture snapshot</span>
+          {(["t0", "t1", "t2", "t3"] as Snap[]).map((item) => (
+            <button key={item} type="button" data-on={snap === item} onClick={() => setSnap(item)}>
+              {item}
+            </button>
+          ))}
+        </div>
+      ) : null}
+      <main className="main">{children}</main>
+      <footer className="footer" data-testid="footer-disclaimer">
+        <p>Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners.</p>
+        <p>Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners.</p>
+        <p>{chainFooterLine()}</p>
+        <div className="footer-row">
+          <span>
+            <Link href="/docs/contracts">Docs</Link>
+            {" · "}
+            <Link href="/data">API</Link>
+            {" · "}
+            <a href="https://github.com/Fatihmaull/paron-robinhood">GitHub</a>
+            {" · "}
+            <Link href="/verifier">Verifier</Link>
+            {" · "}
+            <Link href="/admin">Admin</Link>
+            {" · "}
+            <Link href="/ops/keepers">Keepers</Link>
+            {" · "}
+            <Link href="/legal/disclaimer">Disclaimer</Link>
+          </span>
+          <span>
+            Build {deployLabel()} · Chain {chainId()} · Block {source === "mock" ? (indexedBlock ?? "—") : (head ?? "—")}
+          </span>
+        </div>
+      </footer>
+    </div>
+  );
+}
