@@ -17,7 +17,7 @@ const mono = IBM_Plex_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Paron",
+  title: { default: "Paron", template: "%s · Paron" },
   description: "Compute-hour markets on Robinhood Chain Testnet.",
 };
 

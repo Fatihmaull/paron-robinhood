@@ -63,6 +63,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
           <Panel title="Prints">
             {onchainTape ? <p>{TAPE_UNAVAILABLE}</p> : null}
             {tape.length > 0 ? <PrintChart prints={tape} /> : <p className="muted">No prints for this series in the current snapshot.</p>}
+            <div className="table-scroll">
             <table>
               <thead><tr><th>Time</th><th>Price</th><th>Qty</th><th>Notional</th></tr></thead>
               <tbody>
@@ -76,6 +77,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
                 ))}
               </tbody>
             </table>
+            </div>
           </Panel>
           {tab !== "buy" ? <OrderBookPanel seriesId={seriesId} asks={book.data?.data.asks ?? []} bids={book.data?.data.bids ?? []} /> : null}
         </div>

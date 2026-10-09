@@ -38,6 +38,7 @@ export function Markets({ headline = false }: { headline?: boolean }) {
       <Panel title="Series">
         {query.isError ? <p className="bad">{query.error instanceof Error ? query.error.message : "Couldn't load markets. Check your connection and retry."}</p> : null}
         {query.isLoading ? <p className="muted">Loading series…</p> : null}
+        <div className="table-scroll">
         <table>
           <thead>
             <tr>
@@ -95,6 +96,7 @@ export function Markets({ headline = false }: { headline?: boolean }) {
             ))}
           </tbody>
         </table>
+        </div>
         <p className="help">Record = delivered CU / defaulted CU / voluntary defaults, counted across the provider. {rows.length} series.</p>
       </Panel>
     </div>

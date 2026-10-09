@@ -12,6 +12,7 @@ export default function DataPage() {
       <h1>Prints</h1>
       <p className="lede">Eligible H100 prints from the fixture tape. CSV export matches the data contract columns.</p>
       {query.data?.origin === "onchain" ? <p>{TAPE_UNAVAILABLE}</p> : null}
+      <div className="table-scroll">
       <table>
         <thead>
           <tr><th>Time</th><th>Series</th><th>Price</th><th>Qty</th><th>Notional</th></tr>
@@ -28,6 +29,7 @@ export default function DataPage() {
           ))}
         </tbody>
       </table>
+      </div>
       <p className="help">curl example: GET /v1/prints?gpu=H100&amp;limit=3</p>
     </div>
   );
