@@ -838,7 +838,7 @@ Bisa disetujui sekaligus (`D-55 ok`) atau per butir (`D-55b ok`).
 
 ## 12. Approval kelima: Jum 9 Okt 2026 13:30 WIB (Fatih, di grup)
 
-Fatih membalas di grup: "oke 1-4, footer not affiliated hapus itu, lanjutkan" (dicatat Scout di CONTEXT-INDEX 13:30 WIB). Sumber D-60..D-63: `/workspace/paron-design/spec-change-requests.md` butir 1-4 (usulan Paron Product Designer, hanya saran sampai disetujui). Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-1331/`. Semua APPROVED 13:30 WIB.
+Fatih membalas di grup: "oke 1-4, footer not affiliated hapus itu, lanjutkan" (dicatat Scout di CONTEXT-INDEX 13:30 WIB). Sumber D-60..D-63: `docs/design/spec-change-requests.md` butir 1-4 (usulan Paron Product Designer, hanya saran sampai disetujui). Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-1331/`. Semua APPROVED 13:30 WIB.
 
 | ID | Keputusan (APPROVED 13:30 WIB) | Diterapkan di |
 |---|---|---|
@@ -882,7 +882,7 @@ Fatih menjawab: "utility bar pake aja itu" (13:35 WIB). Ini menyetujui `UtilityB
 
 ## 15. Approval ketujuh: Jum 9 Okt 2026 14:40 WIB (Fatih): semua item Designer yang tersisa
 
-Fatih di grup (14:40 WIB): "setujui semua, sesuai rekomendasi kalian, sinkronkan, dan arsipkan semuanya". Ini menyetujui butir #9 sampai #13 di `/workspace/paron-design/spec-change-requests.md` dan temuan review live LR-5, LR-6, LR-8 (label LR dari Designer, tercatat di `SESSION_HANDOFF_HACKATHON.md`). Spesifikasi akhir **hanya** dari teks rekomendasi Designer di `/workspace/paron-design/approved-ui-changes.md` dan `audit/04-actions.md` ("Key component specs"); tidak ada yang ditambahkan Spec Writer. Cakupan: visual dan layout saja, tanpa perubahan alur, route, kontrak, atau perilaku API. Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-d67/`.
+Fatih di grup (14:40 WIB): "setujui semua, sesuai rekomendasi kalian, sinkronkan, dan arsipkan semuanya". Ini menyetujui butir #9 sampai #13 di `docs/design/spec-change-requests.md` dan temuan review live LR-5, LR-6, LR-8 (label LR dari Designer, tercatat di `SESSION_HANDOFF_HACKATHON.md`). Spesifikasi akhir **hanya** dari teks rekomendasi Designer di `docs/design/approved-ui-changes.md` dan `audit/04-actions.md` ("Key component specs"); tidak ada yang ditambahkan Spec Writer. Cakupan: visual dan layout saja, tanpa perubahan alur, route, kontrak, atau perilaku API. Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-d67/`.
 
 **Tabel pemetaan nomor → D-xx**
 
@@ -908,6 +908,6 @@ Catatan pemetaan: LR-5 beririsan penuh dengan #9 sehingga digabung (satu D). LR-
 | D-71 | **Banner dev-only (#13):** banner mock dan pemilih snapshot hanya dirender kalau `NEXT_PUBLIC_DATA_SOURCE=mock` **dan** bukan build produksi. Vercel produksi tidak menampilkan keduanya | 06 §1.6, §11.3 |
 | D-72 | **Kontras teks kecil (LR-6).** Nilai token sudah lolos (`contrast-report.md`: tertiary `#838C9B` di `#0A0C0F` ≥ 4.5:1); tampilan live lebih redup karena ada override. Ganti warna hard-coded atau teks ber-opacity (utility bar, "Spot reference (synthetic demo data)", header tabel, helper text) dengan `--color-text-tertiary` (minimum) atau `--color-text-secondary`; tidak ada `opacity` di bawah 1 pada teks; `--color-text-disabled` tidak dipakai untuk teks yang harus terbaca. Acceptance: kontras warna terhitung vs latar terhitung ≥ 4.5:1 untuk semua teks ≤ 13 px | 06 §0.2, §12 |
 | D-73 | **Tab Provider console (LR-8).** Label Title Case ("Requests", "Series", "Bond", "Agent"), 13 px, weight medium; tab aktif bergaris bawah ember dengan teks primer, tab tidak aktif teks sekunder; ring fokus keyboard sesuai token; target minimal 44 px di mobile | 06 §6.1, §6.5 |
-| D-74 | **Adopsi tambahan berisiko rendah dari audit Designer:** impor `tokens.v2.css` (dan `theme.v2.css`) menggantikan `tokens.css` (alias lama tetap, tanpa rename); tinggi baris tabel Markets 32 px dengan pill status sebaris; `<title>` per route dan skip link (`<a class="skip" href="#main">`); grep guard CI `affiliated|endorsed by` tetap. Sumber visual terbaru: `design.md` terbaru di `/workspace/paron-design/` | 06 §0.2, §2.2, §12; 08 §2.2 |
+| D-74 | **Adopsi tambahan berisiko rendah dari audit Designer:** impor `tokens.v2.css` (dan `theme.v2.css`) menggantikan `tokens.css` (alias lama tetap, tanpa rename); tinggi baris tabel Markets 32 px dengan pill status sebaris; `<title>` per route dan skip link (`<a class="skip" href="#main">`); grep guard CI `affiliated|endorsed by` tetap. Sumber visual terbaru: `design.md` terbaru di `docs/design/` | 06 §0.2, §2.2, §12; 08 §2.2 |
 
 **Catatan:** PE menerapkan D-67..D-74 dalam satu PR kecil sebelum freeze UI Sab 09:00 WIB (08 §2.2). Verifikasi akhir: Designer memotret ulang live pada 1280 dan 390 px untuk `/`, `/markets`, `/markets/1`, `/portfolio`, `/provider`, dan detail redemption (tanpa scroll horizontal di 390, tanpa link biru, kontras ≥ 4.5:1). Tidak ada item ini yang mengubah daftar never-cut (tetap 3 butir, D-64).

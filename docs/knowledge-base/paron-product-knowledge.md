@@ -9,7 +9,7 @@ Disusun Selasa 6 Okt 2026 (WIB) dari empat file: `paron-design.md`, `paron-stack
 - **[BELUM TERVERIFIKASI]** = belum dicek, atau sumbernya pihak ketiga.
 - ✅ terverifikasi · ⚠️ sebagian/inferensi · ❓ belum dicek.
 
-> Footnote wajib di pitch, README, dan situs: *"Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners."* dan *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."* Untuk slide yang menyebut ICE/HPR: *"Not affiliated with or endorsed by Ornn AI Inc. or ICE. OCPI and HPR are trademarks of their respective owners; figures cited from public sources."*
+> Footnote wajib di pitch deck / slide saja `[D-64, 13:30 WIB: dihapus dari situs dan README]`: *"Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners."* dan *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."* Untuk slide yang menyebut ICE/HPR: *"Not affiliated with or endorsed by Ornn AI Inc. or ICE. OCPI and HPR are trademarks of their respective owners; figures cited from public sources."*
 
 ---
 

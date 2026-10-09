@@ -25,11 +25,11 @@ This folder is the full written context of Paron (collateral-backed GPU compute-
 - Decisions are marked `APPROVED` (Fatih decided) or `PENDING`/`USULAN` (proposal) inside the docs. Trust only APPROVED items as binding.
 - Designer findings (`design/spec-change-requests.md` #9 to #13 and live-review items LR-5, LR-6, LR-8) were approved by Fatih on 9 Oct 2026 14:40 WIB and are recorded as D-67 to D-74 (APPROVED) in `dev-docs/07-decisions-log.md` §15, with UI details in `dev-docs/06-screens-wireframes.md` §0.6 and `design/approved-ui-changes.md`.
 - Not verified at export time: live contrast ratios and the D-66 skeleton visuals.
-- Open item: backup RPC URL (`INDEXER_RPC_URL_BACKUP`).
+- Open item: backup RPC URL (`INDEXER_RPC_URL_BACKUP`): belum terpasang per 9 Okt 2026 15:15 WIB, menunggu RPC kedua dari Fatih.
 
 ## Notes
 
 - Some docs mention working files that are not in the repo (`tokens.css` / `tokens.v2.css` live in `docs/design/` and are implemented in `web/app/paron/`; `compute-unit.md`, `names.md` and other early-stage notes were left out on purpose). Treat those references as historical.
 - Docs were written before and during the hackathon. Product code was written from scratch during the hackathon period (starting Fri 9 Oct 2026 09:00 WIB); these docs are research/design context.
 - Addresses and hashes in the docs (`0x1111...`, `0xe1e1...`) are placeholders. No private keys, API keys, or `.env` contents are committed. Env vars appear by name only.
-- `web/lib/copy-guard.test.ts` scans `web/` and the root `README.md` only; `docs/` is outside its scope.
+- `web/lib/copy-guard.test.ts` scans `web/` and the root `README.md` only; `docs/` is outside its scope (after editing docs, run a manual `grep -ri "not affiliated" docs/`; footnotes remain valid only for slides).

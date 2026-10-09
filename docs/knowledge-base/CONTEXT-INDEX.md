@@ -1,9 +1,9 @@
-# Paron: indeks dokumen konteks (master: Hackathon Scout)
+# Paron: indeks dokumen konteks (master: Hackathon Scout; sekarang PO/project handler)
 
-Folder: /workspace/hackathon-scout/ethereum-jakarta-2026/
-Terakhir diperbarui: Jumat 9 Okt 2026, ~10:35 WIB
+Sumber kebenaran: repo `docs/knowledge-base/` (mirror dari folder kerja Scout di box; path box lama tidak dipakai).
+Terakhir diperbarui: Jumat 9 Okt 2026, ~15:34 WIB
 
-**Mulai dari sini untuk dev:** `HANDOFF-BRIEF.md` (posisi sekarang, urutan baca, tugas pertama, prioritas, aturan), lalu `paron-product-plan.md` (gambaran produk penuh: semua modul, aplikasi, arsitektur akhir, roadmap P0–P5, batas lingkup hackathon).
+**Urutan mulai:** `SESSION_HANDOFF_HACKATHON.md` (state terkini) → file ini → `HANDOFF-BRIEF.md` (urutan baca, tugas pertama, prioritas, aturan), lalu `paron-product-plan.md` (gambaran produk penuh: semua modul, aplikasi, arsitektur akhir, roadmap P0–P5, batas lingkup hackathon).
 
 ## A. Dokumen kanonik (sumber kebenaran, pakai ini)
 | File | Isi | Pemilik |
@@ -11,26 +11,30 @@ Terakhir diperbarui: Jumat 9 Okt 2026, ~10:35 WIB
 | paron-product-plan.md | Rancangan produk PENUH (bukan MVP): modul, aplikasi end state, arsitektur, roadmap P0–P5, matriks lingkup hackathon vs nanti, NFR, metrik | Hackathon Scout |
 | paron-product-knowledge.md | Peta produk lengkap: overview, nama, one-liner, fitur + tech, fitur per aktor, flow, diagram, bisnis, demo, risiko, roadmap, glossary | Hackathon Scout |
 | paron-sitemap.md | Sitemap produk LENGKAP (78 route): spec per route (tujuan, role gate, komponen, fungsi kontrak/API, state, tag MVP-27h/FULL, demo live), pohon mermaid, matriks cakupan aksi→layar (59 aksi), checklist anti-mock, potongan build 27 jam + tier build solo S0–S3 (§9.1); keputusan terkait APPROVED Jum 9 Okt ~09:40 WIB | Hackathon Scout |
-| paron-sitemap.xml | sitemap.xml route publik yang bisa diindeks (domain placeholder https://paron.exchange, belum dibeli); route ber-role dikecualikan | Hackathon Scout |
+| paron-sitemap.xml | **Tidak di repo** (ada di folder kerja Scout): sitemap.xml route publik (domain placeholder, belum dibeli) | Hackathon Scout |
 | paron-design.md | Design brief utama: konsep, flow A-E, 12 kontrak, state machine redemption, fee, narasi, MVP 27 jam, build plan WIB, demo script, Q&A, open questions (§9), gap analysis (§10), chain config + go/no-go (§11) | Hackathon Scout |
 | paron-stack.md | Tech stack lengkap + versi, konfigurasi chain, go/no-go checks, prerequisites | Hackathon Scout |
 | paron-gaps.md | Gap analysis narasi infra untuk market compute (G1-G13) | Hackathon Scout |
 | open-questions-research.md | Hasil riset open questions (EAS, Safe, faucet, Robinhood Chain, dll.) | Hackathon Scout |
 | notes.md | Aturan, judging, timeline ETHJKT 2026 (WIB) | Hackathon Scout |
-| checks/ | Hasil cek environment (anvil fork, deploy EAS, pragma, Safe). Bukan kode produk. | Hackathon Scout |
+| checks/ | **Tidak di repo** (folder kerja Scout): hasil cek environment. Bukan kode produk. | Hackathon Scout |
+| HANDOFF-BRIEF.md | Brief untuk Principal Engineer (snapshot ~10:50 WIB; state terkini di SESSION_HANDOFF) | Hackathon Scout |
+| SESSION_HANDOFF_HACKATHON.md | State terkini, pemilik, env (nama saja), isu, tugas per peran | Semua agent |
+| `../design/` | Brand, guidelines, design.md, approved-ui-changes.md, tokens/theme CSS | Product Designer |
+| `../build/STATUS.md` | Log build/merge/deploy PE | Principal Engineer |
 
-## B. Dokumen dev (ditulis Paron Spec Writer, folder paron-dev-docs/; semua SELESAI)
+## B. Dokumen dev (ditulis Paron Spec Writer, folder dev-docs/; semua SELESAI)
 | # | File | Isi | Status |
 |---|---|---|---|
-| 1 | paron-dev-docs/01-contract-interfaces.md | Signature fungsi, event, error, access control 12 kontrak + IParticipantGate | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 2 | paron-dev-docs/02-invariants-acceptance.md | Invariant + acceptance criteria + daftar test Foundry per kontrak | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 3 | paron-dev-docs/03-data-contract.md | Schema Ponder + spesifikasi API (/v1/prints, dll.) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 4 | paron-dev-docs/04-repo-config.md | Layout monorepo, template .env, chain config, urutan deploy | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 5 | paron-dev-docs/05-demo-seed.md | Skenario + spec script seed demo (500 CU, buy 20, ask $3.20, default 10 CU) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 6 | paron-dev-docs/06-screens-wireframes.md | Wireframe teks + copy per screen | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 7 | paron-dev-docs/07-decisions-log.md | Open questions §9 + treasury/fee + D-41..D-44 → keputusan (rekomendasi disetujui Fatih Jum 9 Okt ~09:40 WIB) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 8 | paron-dev-docs/08-team-tasks.md | Timeline solo per jam (go/no-go Jum 10:30, S0 Jum 20:00, S1 Sab 02:00, S2 Sab 05:30, freeze Sab 06:00, submit 11:30), cut ladder, daftar never-cut, slot ukur PENDING teknis | SELESAI (tim = Fatih solo) |
-| 9 | paron-dev-docs/09-submission-checklist.md | Field HackQuest, README + disclaimer, video demo | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
+| 1 | dev-docs/01-contract-interfaces.md | Signature fungsi, event, error, access control 12 kontrak + IParticipantGate | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
+| 2 | dev-docs/02-invariants-acceptance.md | Invariant + acceptance criteria + daftar test Foundry per kontrak | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
+| 3 | dev-docs/03-data-contract.md | Schema Ponder + spesifikasi API (/v1/prints, dll.) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
+| 4 | dev-docs/04-repo-config.md | Layout monorepo, template .env, chain config, urutan deploy | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
+| 5 | dev-docs/05-demo-seed.md | Skenario + spec script seed demo (500 CU, buy 20, ask $3.20, default 10 CU) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
+| 6 | dev-docs/06-screens-wireframes.md | Wireframe teks + copy per screen | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
+| 7 | dev-docs/07-decisions-log.md | Open questions §9 + treasury/fee + D-41..D-44 → keputusan (rekomendasi disetujui Fatih Jum 9 Okt ~09:40 WIB) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
+| 8 | dev-docs/08-team-tasks.md | Timeline solo per jam (T0 Jum 11:14; freeze kontrak Sab 06:00; freeze UI 09:00; submit internal 11:30; tenggat keras 12:00 WIB), cut ladder, daftar never-cut, slot ukur PENDING teknis | SELESAI (4 lane agent, D-59) |
+| 9 | dev-docs/09-submission-checklist.md | Field HackQuest, README + disclaimer, video demo | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
 
 ## Keputusan terakhir Fatih (Jum 9 Okt ~10:34 WIB, APPROVED)
 - D-10 domain/handle: pakai URL Vercel dulu, belum beli domain/handle
@@ -43,7 +47,7 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 
 ## Aturan
 - Semua dokumen = spec, BUKAN kode. Kode produk baru boleh ditulis mulai Jumat 9 Okt 09:00 WIB.
-- Dokumen kanonik dan dev docs tidak boleh menyebut nama proyek lama/eks-tim.
+- Dokumen kanonik dan dev docs tidak boleh menyebut nama proyek lama/eks-tim. Pengecualian [APPROVED Fatih via handler 9 Okt ~15:34 WIB]: nama pihak ketiga (Ornn, ICE, Robinhood) BUKAN nama proyek lama dan boleh disebut di dokumen dan footnote slide (sesuai PK §10.3); "not affiliated" tetap hanya di pitch deck/slide [D-64].
 - Jangan kontak Ornn, ETHJKT, atau siapa pun tanpa izin Fatih.
 
 
@@ -57,7 +61,7 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 - Plan produk: paron-product-plan.md v1.3 (temuan PG-2..PG-14 sudah masuk).
 
 ## Keputusan Fatih Jum 9 Okt ~11:13 WIB [APPROVED]
-- D-45..D-58 di-approve semua (lihat paron-dev-docs/07).
+- D-45..D-58 di-approve semua (lihat dev-docs/07).
 - Repo: https://github.com/Fatihmaull/paron-robinhood
 - Git author untuk semua commit: Fatih Maulana <fatihmaulanamail@gmail.com>.
 - Kalau Robinhood Chain Testnet gagal di go/no-go (maks 45 menit), langsung pindah ke Arbitrum Sepolia (ganti chain config).
@@ -80,3 +84,20 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 - (2026-10-09 ~14:01 WIB) Fatih approved D-66 (syncing state copy: neutral "Indexer is syncing. Series will appear shortly.", 3 skeleton rows, hide "0 series." while syncing, red only for real /v1 errors). Indexer healthy since 13:59 (PR #30, schema paron_<sha8>), 3 seed series.
 - (2026-10-09 ~14:40 WIB) Fatih: approve ALL pending designer items (spec-change-requests #9-#13, LR-5, LR-6, LR-8) per recommendations; sync all docs; archive everything; push archive + knowledge base to GitHub under docs/.
 - (2026-10-09 ~14:50 WIB) D-67..D-74 APPROVED (Fatih 14:40): #9+LR-5=D-67, #10=D-68, #11=D-69, #12=D-70, #13=D-71, LR-6 contrast=D-72, LR-8 Provider tabs=D-73, also-adopt (tokens.v2.css, route titles, skip link, CI grep guard)=D-74. PE priority if short on time: D-70,71,72,69,73,68,67. Docs pass 1 merged to repo docs/ (PR #37).
+
+## Keputusan Fatih Jum 9 Okt 2026 ~15:34 WIB [APPROVED, disampaikan lewat handler; "lanjutkan dengan rekomendasi"]
+- Satu PR docs (`docs/audit-2026-10-09`): draf audit Scout + temuan Spec Writer; boleh di-merge kalau tidak ada konflik dan tidak menyentuh kode.
+- Nama pihak ketiga (Ornn, ICE, Robinhood) dikecualikan eksplisit dari aturan "nama proyek lama" untuk dokumen dan footnote slide.
+- Nama series demo = `CU-JKT-H100-2611` sesuai live; docs 05, 09, dan slide mengikuti; seed kontrak tidak diubah. (Menggantikan preset `2610` di D-19 untuk penamaan; detail penulisan ulang oleh Spec Writer, PENDING.)
+- Designer P1-P6 disetujui: P1 banner syncing hanya jika `synced:false` atau lag >20 blok, warna info; P2 skeleton pulse; P3 tab Leverage "Coming soon"; P4 hapus copy implementasi di tiket Buy; P5 format uang `$3,240.00` dan max cost 2 desimal; P6 padatkan beranda. Spec Writer menulisnya sebagai D-nomor baru (mulai D-75) di 06/design.md; isi tidak ditulis di PR bagian ini.
+- D-64 menggantikan footer "not affiliated" di UI/README (hanya pitch deck/slide); teks lama di docs ditandai `[SUPERSEDED D-64]`.
+- D-74 CI grep guard dibatalkan per Fatih (dilaporkan lewat Spec Writer; menunggu konfirmasi langsung). Karena itu tidak ada teks lingkup guard di PR ini.
+
+## Hosting/infra (catatan kronologis, Jum 9 Okt 2026; tanpa nilai env)
+- ~13:08 WIB: Vercel project `paron` (root `web`) https://paron.vercel.app; Railway project `paron`, service `paron-robinhood` (root `indexer`, port 42069) https://paron-robinhood-production.up.railway.app.
+- ~13:25 WIB: stage-1 ter-deploy di Robinhood Chain Testnet (46630); 3 seed series.
+- ~14:02 WIB: tiap build Railway memakai schema `paron_<sha8>` (PR #30); 503 INDEXER_SYNCING ~1 menit setelah deploy itu normal.
+- ~14:15 WIB: risiko RPC publik intermiten di browser; `INDEXER_RPC_URL_BACKUP` PENDING.
+- 15:15 dan 15:31 WIB (cek live): /v1/health synced:true chain 46630; /v1/series = 3 seed; RPC cadangan belum terpasang, menunggu RPC kedua dari Fatih.
+- Env (nama saja): DATABASE_URL, DATABASE_SCHEMA, CHAIN, PORT, DEPLOY_LABEL, INDEXER_RPC_URL, INDEXER_RPC_URL_BACKUP (belum), API_CORS_ORIGIN, NEXT_PUBLIC_RPC_URL, NEXT_PUBLIC_RPC_URL_BACKUP (belum), NEXT_PUBLIC_API_BASE_URL.
+- Deadline WIB: freeze kontrak Sab 10 Okt 06:00; freeze UI 09:00; submit internal 11:30; tenggat keras 12:00.

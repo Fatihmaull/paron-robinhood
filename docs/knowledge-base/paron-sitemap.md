@@ -4,9 +4,9 @@ Disusun Kamis 8 Okt 2026, ~21:30 WIB. Diperbarui Jum 9 Okt 2026, ~09:45 WIB: per
 
 **Sumber:**
 - `paron-product-knowledge.md` → (PK §x). Terutama §5 Fitur dan §6 Fitur per Aktor.
-- `paron-dev-docs/01-contract-interfaces.md` → (01 §x). Signature fungsi; rekomendasi APPROVED Jum 9 Okt ~09:40 WIB (sisa terbuka: 07 §10).
-- `paron-dev-docs/03-data-contract.md` → (03 E1–E18). Endpoint API Ponder/Hono.
-- `paron-dev-docs/07-decisions-log.md` → (07 D-xx).
+- `dev-docs/01-contract-interfaces.md` → (01 §x). Signature fungsi; rekomendasi APPROVED Jum 9 Okt ~09:40 WIB (sisa terbuka: 07 §10).
+- `dev-docs/03-data-contract.md` → (03 E1–E18). Endpoint API Ponder/Hono.
+- `dev-docs/07-decisions-log.md` → (07 D-xx).
 - Dokumen kanonik: `paron-design.md`, `paron-stack.md`, `paron-gaps.md`, `open-questions-research.md`.
 
 **Legenda:**
@@ -267,7 +267,7 @@ State umum yang berlaku di semua halaman (tidak diulang per route):
 - **Tujuan:**
   - **terms:** template term series (`SERIES_TERMS.md`, G14, NICE);
   - **risk:** basis risk pembeli sekunder di atas 1,5p, CU hangus saat expiry, default strategis, testnet only;
-  - **disclaimer:** "Not affiliated with or endorsed by Ornn AI Inc." + Robinhood + bukan nasihat keuangan + POJK 27/2024 (PK §12.1).
+  - **disclaimer:** testnet, token tanpa nilai uang, bukan nasihat keuangan + POJK 27/2024 (PK §12.1); **tanpa** teks "not affiliated" [D-64, 06 §0.2].
 - **Gate:** Publik.
 - **Komponen/aksi:** statis. Link dari footer + checkbox di `/buy/[seriesId]`.
 - **Kontrak/API:** — (opsional tampilkan `termsHash` series).

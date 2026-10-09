@@ -31,7 +31,7 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 
 **Git authorship [APPROVED, Jum 9 Okt ~11:05 WIB; nilai ~11:12 WIB]:** semua commit dari lane agent ber-**author Fatih** (`user.name` = `Fatih Maulana`, `user.email` = `fatihmaulanamail@gmail.com`), bukan identitas agent. Repo: https://github.com/Fatihmaull/paron-robinhood. Aturan lengkap: 04 §9.2; dicek di 09 §7.
 
-**Sumber:** AUDIT §5, §6 (`/workspace/paron-build/AUDIT.md`); design §7.1–§7.4, §8, §11.3; sitemap §9.1 (tier S0–S3, berlaku); 02 §0 (shortlist MUST), §4 (`test_E2E_StageScript`); 03 §4 (fixture mock); 04 §8 (go/no-go), §9.2; 05 §3, §4.6–§4.8; 06 §0.5; 07 §10–§11; 09 §1.2, §7.
+**Sumber:** AUDIT §5, §6 (`AUDIT.md`, tidak di repo); design §7.1–§7.4, §8, §11.3; sitemap §9.1 (tier S0–S3, berlaku); 02 §0 (shortlist MUST), §4 (`test_E2E_StageScript`); 03 §4 (fixture mock); 04 §8 (go/no-go), §9.2; 05 §3, §4.6–§4.8; 06 §0.5; 07 §10–§11; 09 §1.2, §7.
 
 **Legenda:**
 - **T0** = saat Fatih memberi **"go"** untuk mulai build paralel = **Jum 9 Okt 2026 11:14 WIB** (diberikan 11:14 WIB). Jam WIB absolut ditulis di samping setiap waktu T0-relatif.

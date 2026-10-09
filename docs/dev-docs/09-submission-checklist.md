@@ -1,5 +1,8 @@
 # Paron: checklist submission ETHJKT 2026 (dev doc 09)
 
+> **[Update 9 Okt 2026 ~15:34 WIB, APPROVED Fatih via handler (CONTEXT-INDEX)]:** nama series demo = `CU-JKT-H100-2611` (sesuai live; seed kontrak tidak diubah). Penyebutan `CU-JKT-H100-2610` di dokumen ini dibaca sebagai `CU-JKT-H100-2611` untuk demo/slide; penulisan ulang detail (D-19, series ke-4 yang di-forge, nomor window) dilakukan Spec Writer sebagai usulan PENDING.
+
+
 Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (Jum 9 Okt 2026 ~09:40 WIB); disinkronkan Jum 9 Okt ~10:30 WIB untuk tim solo (D-08) dan jadwal 08. Cadangan: `.bak-2026-10-09-pre-approval/`. Isinya timeline, daftar isian, outline README, checklist video, pemetaan kriteria juri, checklist aturan, dan daftar item terbuka. Tidak ada kode, script, atau secret. Tidak ada pengecekan eksternal: semua fakta diambil dari dokumen kanonik, dan yang tidak ada di sana ditandai **[TBD]**. Disusun Kamis 8 Okt 2026, ~21:40 WIB.
 
 **Catatan audit Jum 9 Okt 2026 ~11:09 WIB (audit Principal Engineer; cadangan `.bak-2026-10-09-pre-audit/`). APPROVED Fatih ~11:05 WIB (07 §10.4):**

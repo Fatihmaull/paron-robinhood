@@ -137,7 +137,7 @@ Layar admin, verifier, dan keeper **ada** di produk: sitemap §1 prinsip 1 ("set
 
 ### 0.6 Penyesuaian UI Designer [APPROVED D-67..D-74, Jum 9 Okt 2026 14:40 WIB, Fatih]
 
-Visual dan layout saja; alur, route, dan perilaku kontrak/API tidak berubah. Sumber teknis: `/workspace/paron-design/approved-ui-changes.md`, `audit/04-actions.md`, `tokens.v2.css`, `design.md` terbaru. Wireframe ASCII di bawah tetap dipakai sebagai urutan isi; tata letak akhir mengikuti daftar ini.
+Visual dan layout saja; alur, route, dan perilaku kontrak/API tidak berubah. Sumber teknis: `docs/design/approved-ui-changes.md`, `audit/04-actions.md`, `tokens.v2.css`, `design.md` terbaru. Wireframe ASCII di bawah tetap dipakai sebagai urutan isi; tata letak akhir mengikuti daftar ini.
 
 | Layar | Aturan akhir | D-xx |
 |---|---|---|

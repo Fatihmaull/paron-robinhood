@@ -6,7 +6,7 @@ Written 2026-10-09 ~14:40 WIB. Each agent appends its own section under "## Agen
 - Chain: Robinhood Chain Testnet (id 46630) primary; Arbitrum Sepolia (421614) fallback. Go/no-go was GO.
 - Repo: https://github.com/Fatihmaull/paron-robinhood (git author Fatih Maulana <fatihmaulanamail@gmail.com>; PE may merge PRs when tests are green).
 - Deadlines (WIB): T0 Fri 9 Oct 11:14; contract freeze Sat 06:00; UI freeze Sat 09:00; internal submit Sat 11:30; hard deadline Sat 12:00.
-- Source of truth: this folder; start at CONTEXT-INDEX.md, then canonical docs, then paron-dev-docs/01-09. Never use archive files (section C) or .bak-* folders.
+- Source of truth: this folder; start at CONTEXT-INDEX.md, then canonical docs, then dev-docs/01-09. Never use archive files (section C) or .bak-* folders.
 
 ## 1. Agent sections
 ### 1.1 Hackathon Scout (this agent)
@@ -32,13 +32,13 @@ Written 2026-10-09 ~14:40 WIB. Each agent appends its own section under "## Agen
 2. Once PE finishes RPC hardening, set `INDEXER_RPC_URL_BACKUP` on Railway if Fatih supplies a second RPC.
 3. Record every new Fatih decision in CONTEXT-INDEX.md and tell Spec Writer.
 4. Rebuild the docs zip (HANDOFF-BRIEF + product plan) if Fatih wants it.
-5. Support submission prep (HackQuest fields per paron-dev-docs/09); never submit on Fatih's behalf.
+5. Support submission prep (HackQuest fields per dev-docs/09); never submit on Fatih's behalf.
 
 ### 1.2 Other agents (append below: Principal Engineer, Spec Writer, Product Designer)
 
 #### Paron Spec Writer
-**Identitas dan scope:** agent `Paron Spec Writer` (id `b1cd1647-d9ab-4378-b41a-58e760a83941`). Tugas: menulis dan merawat dev spec 01-09 di `paron-dev-docs/` sebagai satu-satunya sumber spec, hanya dari dokumen kanonik di `CONTEXT-INDEX.md` §A (Scout = master). Spec saja, tanpa kode. Prosa Indonesia, identifier Inggris. Laporan dokumen selesai dikirim ke grup `2a9c57e5-87fb-4321-8227-3237d377dd87` dalam bahasa Indonesia santai. Hanya Fatih yang menyetujui keputusan; yang belum disetujui tetap `PENDING`.
-**Aturan kerja:** backup sebelum setiap edit ke folder `paron-dev-docs/.bak-2026-10-09-pre-<jam>/` (terbaru: `.bak-2026-10-09-pre-1415/`). Tidak mengedit file milik Scout (`CONTEXT-INDEX.md`, `paron-sitemap.md`, `paron-product-plan.md`, `HANDOFF-BRIEF.md`). Tidak memakai file arsip (section C), `raw/`, atau `.bak-*` sebagai sumber. Grep daftar kata terlarang di instruksi Spec Writer atas 01-09 harus 0 hasil (terakhir dicek saat menulis bagian ini: 0 file cocok).
+**Identitas dan scope:** agent `Paron Spec Writer`. Tugas: menulis dan merawat dev spec 01-09 di `dev-docs/` sebagai satu-satunya sumber spec, hanya dari dokumen kanonik di `CONTEXT-INDEX.md` §A (Scout = master). Spec saja, tanpa kode. Prosa Indonesia, identifier Inggris. Laporan dokumen selesai dikirim ke grup `2a9c57e5-87fb-4321-8227-3237d377dd87` dalam bahasa Indonesia santai. Hanya Fatih yang menyetujui keputusan; yang belum disetujui tetap `PENDING`.
+**Aturan kerja:** backup sebelum setiap edit ke folder `dev-docs/.bak-2026-10-09-pre-<jam>/` (terbaru: `.bak-2026-10-09-pre-1415/`). Tidak mengedit file milik Scout (`CONTEXT-INDEX.md`, `paron-sitemap.md`, `paron-product-plan.md`, `HANDOFF-BRIEF.md`). Tidak memakai file arsip (section C), `raw/`, atau `.bak-*` sebagai sumber. Grep daftar kata terlarang di instruksi Spec Writer atas 01-09 harus 0 hasil (terakhir dicek saat menulis bagian ini: 0 file cocok).
 
 **Status dokumen (semua spec saja, bukan kode):**
 | File | Topik | Sinkron terakhir |
@@ -64,7 +64,7 @@ Catatan jujur: hanya 06 dan 07 yang menyebut D-66 secara eksplisit; 01-05, 08, 0
 - `INDEXER_RPC_URL_BACKUP` opsional di 04 (tabel env), status PENDING (nilai contoh di spec masih placeholder, bukan keputusan provider).
 
 **Masih PENDING / belum disetujui Fatih:**
-- Usulan Designer #6-#13 di `/workspace/paron-design/spec-change-requests.md` yang belum tercakup D-60..D-66: #9 layout series page satu viewport, #10 S4 redemption result summary, #11 tombol Connect wallet secondary, #12 tabel mobile scroll/stacked, #13 banner mock dan snapshot switcher tidak muncul di build produksi (#6-#8 sudah tercakup D-64/D-60). Catatan: penomoran Scout ("5, 6, 8" contoh format balasan) tidak sama dengan nomor di file Designer; dicocokkan dulu sebelum mencatat D-67+. Temuan "contrast >= 4.5:1" dan "Provider tabs" ada di review Designer, bukan di file tersebut; tidak sempat diverifikasi di sini.
+- Usulan Designer #6-#13 di `docs/design/spec-change-requests.md` yang belum tercakup D-60..D-66: #9 layout series page satu viewport, #10 S4 redemption result summary, #11 tombol Connect wallet secondary, #12 tabel mobile scroll/stacked, #13 banner mock dan snapshot switcher tidak muncul di build produksi (#6-#8 sudah tercakup D-64/D-60). Catatan: penomoran Scout ("5, 6, 8" contoh format balasan) tidak sama dengan nomor di file Designer; dicocokkan dulu sebelum mencatat D-67+. Temuan "contrast >= 4.5:1" dan "Provider tabs" ada di review Designer, bukan di file tersebut; tidak sempat diverifikasi di sini.
 - RPC provider kedua untuk `INDEXER_RPC_URL_BACKUP`.
 - Sudah APPROVED (bukan pending): D-10 (URL Vercel dulu, ~10:33 WIB), P5-26 bot trader, T9-06 lisensi MIT (07 §10.3). Hanya pertanyaan nama copyright LICENSE yang masih opsional (lihat bagian Scout).
 
@@ -84,7 +84,7 @@ Catatan jujur: hanya 06 dan 07 yang menyebut D-66 secara eksplisit; 01-05, 08, 0
 - Standing permissions from Fatih: merge Paron PRs when tests are green; fix incidents directly and report after; ask only for real decisions.
 - Commits authored as `Fatih Maulana <fatihmaulanamail@gmail.com>`, no co-author trailers. README says built with help of Grok Bot.
 - Spec conflicts go to Paron Spec Writer; product questions go to Hackathon Scout.
-- Deadline Sat 10 Oct 2026 12:00 WIB (internal submit 11:30), UI freeze Sat 09:00 WIB, contract freeze 06:00. Build log: `/workspace/paron-build/STATUS.md`, audit: `/workspace/paron-build/AUDIT.md`, `DEPLOYMENTS.md`.
+- Deadline Sat 10 Oct 2026 12:00 WIB (internal submit 11:30), UI freeze Sat 09:00 WIB, contract freeze 06:00. Build log: `docs/build/STATUS.md`; `AUDIT.md` tidak ada di repo (arsip box); `DEPLOYMENTS.md`.
 - Anti-scope: no secrets in group or repo; testnet only.
 
 **Architecture / ADR.**
@@ -127,7 +127,7 @@ Catatan jujur: hanya 06 dan 07 yang menyebut D-66 secara eksplisit; 01-05, 08, 0
 - `design.md` baru masuk repo kalau Fatih bilang "masukkan design.md".
 - Teks syncing `/markets` (D-66) APPROVED dan sudah live (PR #31): netral "Indexer is syncing. Series will appear shortly.", 3 skeleton, "N series." disembunyikan saat syncing, merah hanya untuk error selain 503 INDEXER_SYNCING.
 
-**Lokasi file (semua di `/workspace/paron-design/`):**
+**Lokasi file (di repo: `docs/design/`; subfolder `audit/`, `scripts/`, `logo/`, `preview.*` ada di folder kerja Designer, tidak di repo):**
 - `brand.md` (identitas brand v1, voice, warna, tipografi, guardrail), `guidelines.md` (layout dan komponen), `research.md` (riset tren, dengan sumber).
 - `tokens.css` dan `theme.css` (v1, Tailwind v4 `@theme`), `tokens.v2.css` dan `theme.v2.css` (v2: tinggi baris 32/24, tracking overline 0.06em, token chart, skeleton, utilbar), `audit/tokens-v2-diff.md` (selisih v1 ke v2). Status: v1 approved; v2 DRAFTED dan belum dipastikan sudah dipakai di repo (cek `web/app/globals.css`).
 - `design.md` (aturan visual untuk repo, DRAFTED, belum di repo), `contrast-report.md` dan `scripts/contrast.py` (laporan kontras WCAG token), `preview.html` dan `preview.png` serta `preview.v2.*`, `logo/` (SVG wordmark dan mark).
@@ -145,7 +145,7 @@ Penomoran B: temuan review UI live (di chat, saya beri label LR-1 sampai LR-8):
 - LR-5 layout detail series `/markets/1` (celah kosong besar antara Prints/Book dan Market/Bond, metadata "ID · window 2026-11" tanpa nilai ID, teks "Verified by Paron demo verifier" wrap jelek, link Redeem berwarna biru bukan ember): PENDING Fatih. Nomor ini beririsan dengan #9 (series page satu viewport); disarankan digabung.
 - LR-6 kontras teks kecil (footer, label "Spot reference", header tabel, helper text) tampak sekitar 3:1 atau kurang: PENDING Fatih, belum diukur. Target minimal 4.5:1 lewat token tersier.
 - LR-8 label tab Provider (`requests`, `series`, `bond`, `agent`) huruf kecil tanpa styling: PENDING Fatih.
-**UPDATE 14:40 WIB:** Fatih menyetujui SEMUA item di atas (#9-#13, LR-5, LR-6, LR-8). Spec final: `/workspace/paron-design/approved-ui-changes.md`. Peta keputusan: #9+LR-5=D-67, #10=D-68, #11=D-69, #12=D-70, #13=D-71, LR-6=D-72, LR-8=D-73, tambahan (tokens.v2, title, skip link, grep guard)=D-74 (07 §15). Principal Engineer sedang menerapkan; verifikasi live oleh Designer masih menunggu. Tugas 1 di bawah sudah selesai; mulai dari tugas 2 dan 3.
+**UPDATE 14:40 WIB:** Fatih menyetujui SEMUA item di atas (#9-#13, LR-5, LR-6, LR-8). Spec final: `docs/design/approved-ui-changes.md`. Peta keputusan: #9+LR-5=D-67, #10=D-68, #11=D-69, #12=D-70, #13=D-71, LR-6=D-72, LR-8=D-73, tambahan (tokens.v2, title, skip link, grep guard)=D-74 (07 §15). Principal Engineer sedang menerapkan; verifikasi live oleh Designer masih menunggu. Tugas 1 di bawah sudah selesai; mulai dari tugas 2 dan 3.
 Cara memilih: Fatih cukup menyebut nomor, misalnya "setuju #9-#13" atau "setuju LR-5,6,8". Setelah dipilih, Spec Writer mencatat sebagai D-67 dan seterusnya.
 
 **Blocker dan hal yang belum kuverifikasi:** (1) rasio kontras live belum diukur (hanya perkiraan mata). (2) Skeleton D-66 belum diverifikasi visual (butuh throttle jaringan atau menangkap saat 503). (3) Pemakaian `tokens.v2.css` di repo belum dicek. (4) Tidak ada akses tulis ke repo dari sisi Designer; semua perubahan UI lewat Principal Engineer.
@@ -163,9 +163,9 @@ Cara memilih: Fatih cukup menyebut nomor, misalnya "setuju #9-#13" atau "setuju 
 
 **Bots created for Paron (all in the ETHJKT group, id 2a9c57e5-87fb-4321-8227-3237d377dd87):**
 - Hackathon Scout 9eea0cc5-758c-416d-ae26-3b08525b1d44 (master, product knowledge, hosting on Vercel/Railway)
-- Paron Spec Writer b1cd1647-d9ab-4378-b41a-58e760a83941 (dev docs 01-09, decisions log 07)
+- Paron Spec Writer (dev docs 01-09, decisions log 07)
 - Paron Principal Engineer c031279a-8599-4ad6-b9ba-4719cdb2800d (build via cloud agents, deploys from its own computer, merges PRs when tests are green)
-- Paron Product Designer 02760c4f-27a5-4b75-bbea-5540f515b027 (files in /workspace/paron-design/)
+- Paron Product Designer 02760c4f-27a5-4b75-bbea-5540f515b027 (files in docs/design/)
 
 **Standing rules from Fatih (keep in the new session):** secrets only via 1:1 secret-request, never in group; testnet only; commits in Fatih's name; README credits Grok Bot; footer "not affiliated" removed (D-64); UtilityBar approved (D-65); healthcheck routines stay paused.
 

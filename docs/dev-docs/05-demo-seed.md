@@ -1,5 +1,8 @@
 # Paron: skenario demo + spesifikasi seed (dev doc 05)
 
+> **[Update 9 Okt 2026 ~15:34 WIB, APPROVED Fatih via handler (CONTEXT-INDEX)]:** nama series demo = `CU-JKT-H100-2611` (sesuai live; seed kontrak tidak diubah). Penyebutan `CU-JKT-H100-2610` di dokumen ini dibaca sebagai `CU-JKT-H100-2611` untuk demo/slide; penulisan ulang detail (D-19, series ke-4 yang di-forge, nomor window) dilakukan Spec Writer sebagai usulan PENDING.
+
+
 Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P5-xx disetujui Fatih (Jum 9 Okt 2026 ~09:40 WIB); disinkronkan Jum 9 Okt ~10:30 WIB (event `ReputationUpdated` dengan `strikes`, tim solo, X-6/X-7 selesai). Cadangan: `.bak-2026-10-09-pre-approval/`. Isinya prosa dan langkah semu bernomor. **Tidak ada script dalam bahasa apa pun.** Disusun Kamis 8 Okt 2026, ~21:20 WIB. Kode (termasuk `script/Seed.s.sol`, stack §4.4) baru ditulis mulai Jumat 9 Okt 09:00 WIB.
 
 **Changelog Jum 9 Okt 2026 ~11:07 WIB (audit Principal Engineer; cadangan `.bak-2026-10-09-pre-audit/`):**

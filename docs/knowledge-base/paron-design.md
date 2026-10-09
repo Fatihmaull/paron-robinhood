@@ -221,8 +221,8 @@ Three ways we expand the market Ornn leads, all without a partnership:
 **Wording rules:**
 - ✅ "complements", "built for the market Ornn is creating", "compatible with benchmarks like Ornn's OCPI".
 - ❌ "partner", "powered by Ornn", "Ornn's onchain arm", the Ornn logo, Ornn's taglines or website copy.
-- Put a footnote on the pitch and the site: *"Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners."*
-- The same rule applies to the chain. Say "deployed on Robinhood Chain Testnet", never "built for", "backed by" or "partnered with Robinhood", and don't use the Robinhood logo. Footnote: *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."*
+- `[SUPERSEDED D-64 untuk UI/README; tetap berlaku untuk slide]` Put a footnote on the pitch (slides only) and ~~the site~~: *"Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners."*
+- The same rule applies to the chain. Say "deployed on Robinhood Chain Testnet", never "built for", "backed by" or "partnered with Robinhood", and don't use the Robinhood logo. Footnote (slides only; `[SUPERSEDED D-64]` for site and README): *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."*
 - Ornn's actual legal, funding and credential work is theirs. Don't claim we rely on it. The pitch line is: *"Regulated venues handle the derivatives layer; we focus on making the physical unit open, collateralized and printable."*
 
 ## 7. 27-hour MVP
@@ -248,7 +248,7 @@ Three ways we expand the market Ornn leads, all without a partnership:
   - `CU-BTM-H200-2611`: H200 at $4.06/CU, i.e. $5.69 per H200-hour.
   - `CU-SGP-B200-2612`.
 - A **provider agent** script (Node, viem) that auto-acknowledges and marks delivered, with a kill switch for the default demo.
-- README with architecture, contract addresses, the attribution block (§7.5), and the "not affiliated with Ornn" and "not affiliated with Robinhood" footnotes. The chain, chain ID and explorer links go at the top.
+- README with architecture, contract addresses, the attribution block (§7.5), and ~~the "not affiliated" footnotes~~ `[SUPERSEDED D-64: README has no "not affiliated" text; footnotes only in slides]`. The chain, chain ID and explorer links go at the top.
 
 **Nice-to-have (in order)**
 1. Real EAS attestations (`ProviderVerified`, `DeliveryReceipt`) instead of a role mapping.
@@ -567,4 +567,4 @@ Partial failure: if only check 3 fails, stay on Robinhood and use `RegistryGate`
 
 ### 11.5 Narrative: Arbitrum link and footnotes
 - **Verified:** Robinhood's own docs say Robinhood Chain "is built on Arbitrum Dedicated Blockchains" (docs.robinhood.com/chain). Robinhood's EU Stock Tokens launched on Arbitrum One in June 2025 (Robinhood docs). Arbitrum docs list Arbitrum Sepolia as a Nitro rollup. So the line "one Arbitrum technology family, primary and fallback" is accurate. Pitch lines are in §7.6.
-- Never claim support from Robinhood, Offchain Labs or the Arbitrum Foundation. The Robinhood footnote goes on the README, the site footer and any slide naming Robinhood: *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."*
+- Never claim support from Robinhood, Offchain Labs or the Arbitrum Foundation. The Robinhood footnote goes on any slide naming Robinhood `[SUPERSEDED D-64 for README and site footer]`: *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."*
