@@ -1,8 +1,8 @@
 /**
  * Contract ABIs from shared/abi (exported by the contracts package).
  * EAS `attest` and the OZ TimelockController are not Paron contracts, so those
- * two fragments stay here. Addresses stay empty until deployments/46630/*.json
- * lands; mock mode does not call these ABIs.
+ * two fragments stay here. next.config copies deployments/<chainId> into
+ * NEXT_PUBLIC_ADDR_* when those variables are unset. Mock mode does not call these ABIs.
  *
  * getSeries appends soldSupply after the stored series fields. SeriesParams
  * for createSeries matches the exported tuple order.

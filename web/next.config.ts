@@ -1,4 +1,12 @@
+import path from "node:path";
+import { fileURLToPath } from "node:url";
 import type { NextConfig } from "next";
+import { loadManifestAddresses } from "./lib/manifest";
+
+const repoRoot = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
+for (const [key, value] of Object.entries(loadManifestAddresses(repoRoot, process.env))) {
+  process.env[key] = value;
+}
 
 const dataSource = process.env.NEXT_PUBLIC_DATA_SOURCE ?? "mock";
 
