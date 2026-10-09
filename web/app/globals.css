@@ -131,9 +131,12 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   color: var(--utilbar-fg);
   font-size: var(--text-2xs);
 }
-.utilbar { justify-content: flex-end; }
+.utilbar { justify-content: space-between; }
+.utilbar a { color: var(--color-text-secondary); text-decoration: none; }
+.utilbar a:hover { color: var(--color-text-primary); }
+.utilbar-note { margin-left: var(--space-4); }
 .chip-narrow { display: none; }
-.chip, .nav .btn { white-space: nowrap; }
+.chip { white-space: nowrap; }
 
 h1 {
   font-size: var(--text-2xl);
