@@ -21,7 +21,7 @@ const LINKS = [
   ["/trade", "Trade"],
   ["/portfolio", "Portfolio"],
   ["/provider", "Provider"],
-  ["/index", "Index"],
+  ["/h100-index", "Index"],
   ["/data", "Data"],
   ["/demo", "Demo"],
 ] as const;
