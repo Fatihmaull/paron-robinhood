@@ -31,7 +31,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const { address, isConnected } = useAccount();
   const walletChain = useChainId();
   const { switchChain } = useSwitchChain();
-  const block = useBlockNumber({ watch: source === "live" });
+  const block = useBlockNumber({
+    watch: false,
+    // /v1/health carries the indexed block; the chain head is only needed for the lag banner, so poll it rarely.
+    query: { enabled: source === "live", refetchInterval: 30_000, retry: false },
+  });
   const balance = useBalance({ address });
   const [open, setOpen] = useState(false);
   const [syncing, setSyncing] = useState(false);
