@@ -40,12 +40,16 @@ export function Shell({ children }: { children: React.ReactNode }) {
     if (source !== "live" || !apiBase()) return;
     let dead = false;
     const check = async () => {
+      const ctrl = new AbortController();
+      const timer = setTimeout(() => ctrl.abort(), 4000);
       try {
-        const res = await fetch(`${apiBase()}/health`);
+        const res = await fetch(`${apiBase()}/health`, { signal: ctrl.signal });
         const body = (await res.json()) as { data?: { synced?: boolean } };
         if (!dead) setSyncing(body.data?.synced === false);
       } catch {
         if (!dead) setSyncing(false);
+      } finally {
+        clearTimeout(timer);
       }
     };
     void check();

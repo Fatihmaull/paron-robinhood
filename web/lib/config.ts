@@ -21,8 +21,39 @@ export { arbitrumSepolia };
 
 export type DataSource = "mock" | "live";
 
+// Next inlines NEXT_PUBLIC_* only for literal `process.env.NEXT_PUBLIC_X` reads. A dynamic
+// `process.env[name]` is empty in the browser, so every variable is listed literally here.
+const PUBLIC_ENV: Record<string, string | undefined> = {
+  NEXT_PUBLIC_DATA_SOURCE: process.env.NEXT_PUBLIC_DATA_SOURCE,
+  NEXT_PUBLIC_CHAIN_ID: process.env.NEXT_PUBLIC_CHAIN_ID,
+  NEXT_PUBLIC_RPC_URL: process.env.NEXT_PUBLIC_RPC_URL,
+  NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
+  NEXT_PUBLIC_DEPLOY_LABEL: process.env.NEXT_PUBLIC_DEPLOY_LABEL,
+  NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
+  NEXT_PUBLIC_DEMO_PRESETS: process.env.NEXT_PUBLIC_DEMO_PRESETS,
+  NEXT_PUBLIC_SHOW_SYNTHETIC_LABEL: process.env.NEXT_PUBLIC_SHOW_SYNTHETIC_LABEL,
+  NEXT_PUBLIC_AGENT_URL: process.env.NEXT_PUBLIC_AGENT_URL,
+  NEXT_PUBLIC_ADDR_USDC: process.env.NEXT_PUBLIC_ADDR_USDC,
+  NEXT_PUBLIC_ADDR_EAS: process.env.NEXT_PUBLIC_ADDR_EAS,
+  NEXT_PUBLIC_ADDR_EAS_SCHEMA: process.env.NEXT_PUBLIC_ADDR_EAS_SCHEMA,
+  NEXT_PUBLIC_ADDR_PROVIDER_REGISTRY: process.env.NEXT_PUBLIC_ADDR_PROVIDER_REGISTRY,
+  NEXT_PUBLIC_ADDR_SERIES_FACTORY: process.env.NEXT_PUBLIC_ADDR_SERIES_FACTORY,
+  NEXT_PUBLIC_ADDR_PRIMARY_SALE: process.env.NEXT_PUBLIC_ADDR_PRIMARY_SALE,
+  NEXT_PUBLIC_ADDR_ORDER_BOOK: process.env.NEXT_PUBLIC_ADDR_ORDER_BOOK,
+  NEXT_PUBLIC_ADDR_REDEMPTION_MANAGER: process.env.NEXT_PUBLIC_ADDR_REDEMPTION_MANAGER,
+  NEXT_PUBLIC_ADDR_BOND_VAULT: process.env.NEXT_PUBLIC_ADDR_BOND_VAULT,
+  NEXT_PUBLIC_ADDR_PRINT_INDEX: process.env.NEXT_PUBLIC_ADDR_PRINT_INDEX,
+  NEXT_PUBLIC_ADDR_REFERENCE_FEED: process.env.NEXT_PUBLIC_ADDR_REFERENCE_FEED,
+  NEXT_PUBLIC_ADDR_CONVERSION_TABLE: process.env.NEXT_PUBLIC_ADDR_CONVERSION_TABLE,
+  NEXT_PUBLIC_ADDR_TIMELOCK: process.env.NEXT_PUBLIC_ADDR_TIMELOCK,
+  NEXT_PUBLIC_ADDR_PANEL: process.env.NEXT_PUBLIC_ADDR_PANEL,
+  NEXT_PUBLIC_ADDR_GATE: process.env.NEXT_PUBLIC_ADDR_GATE,
+  NEXT_PUBLIC_ADDR_CU_TOKEN_SERIES_4: process.env.NEXT_PUBLIC_ADDR_CU_TOKEN_SERIES_4,
+  NEXT_PUBLIC_ON_VERCEL: process.env.NEXT_PUBLIC_ON_VERCEL,
+};
+
 function read(name: string, fallback = ""): string {
-  return process.env[name] ?? fallback;
+  return PUBLIC_ENV[name] ?? fallback;
 }
 
 export function dataSource(): DataSource {
@@ -30,7 +61,7 @@ export function dataSource(): DataSource {
   if (raw === "live" || raw === "api") return "live";
   if (raw === "mock") return "mock";
   // Unset: live when an API base is configured (Vercel), otherwise local fixtures.
-  return apiBase() || process.env.VERCEL === "1" ? "live" : "mock";
+  return apiBase() || read("NEXT_PUBLIC_ON_VERCEL") === "1" ? "live" : "mock";
 }
 
 export function chainId(): number {
