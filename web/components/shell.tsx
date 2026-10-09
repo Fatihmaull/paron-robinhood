@@ -7,6 +7,7 @@ import { useAccount, useBalance, useBlockNumber, useChainId, useSwitchChain } fr
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { formatUsd } from "@/lib/format";
 import { catchupBanner, type HealthSnapshot } from "@/lib/indexer-banner";
+import { rpcBackoffMs } from "@/lib/rpc";
 import { apiBase, chainId, deployLabel, walletConnectId, wrongNetworkCopy } from "@/lib/config";
 import { formatCu } from "@/lib/format";
 import { useIndex } from "@/lib/hooks";
@@ -35,7 +36,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const block = useBlockNumber({
     watch: false,
     // /v1/health carries the indexed block; the chain head is only needed for the lag banner, so poll it rarely.
-    query: { enabled: source === "live", refetchInterval: 30_000, retry: false },
+    query: {
+      enabled: source === "live",
+      refetchInterval: 30_000,
+      retry: 3,
+      retryDelay: (attemptIndex) => rpcBackoffMs(attemptIndex + 1),
+    },
   });
   const balance = useBalance({ address });
   const [open, setOpen] = useState(false);

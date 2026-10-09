@@ -13,6 +13,7 @@ import { useBook, usePrints, useSeries } from "@/lib/hooks";
 import { signErc2612 } from "@/lib/permit";
 import { bidUsdcAllowance, uint256Of } from "@/lib/settlement";
 import { TAPE_UNAVAILABLE } from "@/lib/onchain";
+import { readFailureTone } from "@/lib/markets-state";
 import { Panel, TxButton, Field } from "./ui";
 import { useSend } from "./tx";
 import { useData } from "./providers";
@@ -29,6 +30,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
   const detail = series.data?.data;
   const tape = (prints.data?.data ?? []).filter((print) => print.series_id === seriesId || seriesId === "4");
   const onchainTape = prints.data?.origin === "onchain";
+  const seriesTone = readFailureTone(series.error);
 
   return (
     <div>
@@ -38,7 +40,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
         {detail ? <SeriesStatus detail={detail} /> : null}
         {detail?.provider.verified ? <span className="pill ok">Verified by Paron demo verifier</span> : null}
       </div>
-      {series.isError ? <p className="bad">{series.error instanceof Error ? series.error.message : "Couldn't load this series."}</p> : null}
+      {series.isError ? <p className={seriesTone} role={seriesTone === "muted" ? "status" : undefined}>{series.error instanceof Error ? series.error.message : "Couldn't load this series."}</p> : null}
       {detail ? <StatsRibbon detail={detail} /> : null}
       {detail ? (
         <p className="lede">

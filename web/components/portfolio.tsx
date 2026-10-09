@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { formatCu, formatUsd, formatWib, shortId } from "@/lib/format";
+import { readFailureTone } from "@/lib/markets-state";
 import { useHolderQueue, useHoldings, useKeeperQueue, useStatement } from "@/lib/hooks";
 import { Panel } from "./ui";
 
@@ -35,7 +36,10 @@ export function Portfolio({ tab }: { tab: string }) {
 function Holdings() {
   const query = useHoldings();
   const rows = query.data?.data ?? [];
-  if (query.isError) return <p className="bad">{query.error instanceof Error ? query.error.message : "Couldn't load holdings."}</p>;
+  if (query.isError) {
+    const tone = readFailureTone(query.error);
+    return <p className={tone} role={tone === "muted" ? "status" : undefined}>{query.error instanceof Error ? query.error.message : "Couldn't load holdings."}</p>;
+  }
   return (
     <Panel title="Holdings">
       <div className="table-scroll">
@@ -85,7 +89,10 @@ function RedemptionList({ claimsOnly }: { claimsOnly: boolean }) {
 function Statement() {
   const query = useStatement();
   const rows = query.data?.data ?? [];
-  if (query.isError) return <p className="bad">{query.error instanceof Error ? query.error.message : "Statements need the Paron API. Try again shortly."}</p>;
+  if (query.isError) {
+    const tone = readFailureTone(query.error);
+    return <p className={tone} role={tone === "muted" ? "status" : undefined}>{query.error instanceof Error ? query.error.message : "Statements need the Paron API. Try again shortly."}</p>;
+  }
   return (
     <Panel title="Statement">
       <div className="table-scroll">

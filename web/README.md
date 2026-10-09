@@ -25,6 +25,7 @@ Copy `.env.example` to `.env.local`. Every value is public. Do not put keys here
 |---|---|
 | `NEXT_PUBLIC_CHAIN_ID` | `46630` (Robinhood Chain Testnet) or `421614` (Arbitrum Sepolia fallback). |
 | `NEXT_PUBLIC_RPC_URL` | HTTP RPC. Default `https://rpc.testnet.chain.robinhood.com`. |
+| `NEXT_PUBLIC_RPC_URL_BACKUP` | Optional fallback transport. Public chain 46630 example (no key): `https://robinhood-sepolia-rpc.publicnode.com`. Alternate: `https://robinhood-testnet.drpc.org`. Empty uses only `NEXT_PUBLIC_RPC_URL`. |
 | `NEXT_PUBLIC_API_BASE_URL` | Indexer API origin, no trailing path beyond `/v1` if that is the base. |
 | `NEXT_PUBLIC_DATA_SOURCE` | Optional. `live` (or `api`) or `mock` (fixtures, transactions disabled). Unset: live if API base set, else mock. |
 | `NEXT_PUBLIC_DEPLOY_LABEL` | Manifest name under `deployments/<chainId>/`. Default `stage-1`. |
