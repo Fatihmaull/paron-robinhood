@@ -16,6 +16,7 @@ const KEYS: ContractKey[] = [
   "conversionTable",
   "timelock",
   "panel",
+  "gate",
 ];
 
 export default function ContractsPage() {

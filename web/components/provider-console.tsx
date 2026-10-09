@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useState } from "react";
-import { keccak256, stringToHex } from "viem";
+import { keccak256, parseUnits, stringToHex } from "viem";
 import { useAccount, useSignTypedData } from "wagmi";
 import { agentCommandTypes, bondVaultAbi, redemptionManagerAbi, seriesFactoryAbi } from "@/lib/abi";
 import { beforeDeadlineOpen } from "@/lib/clock";
@@ -187,7 +187,7 @@ function RaisePrice({ seriesId }: { seriesId: string }) {
             address: contractAddress("seriesFactory"),
             abi: seriesFactoryAbi,
             functionName: "raisePrimaryPrice",
-            args: [BigInt(seriesId), BigInt(Math.round(Number(price) * 1_000_000))],
+            args: [BigInt(seriesId), parseUnits(price, 6)],
           })
         }
       >

@@ -82,6 +82,7 @@ const ADDR_KEYS = {
   conversionTable: "NEXT_PUBLIC_ADDR_CONVERSION_TABLE",
   timelock: "NEXT_PUBLIC_ADDR_TIMELOCK",
   panel: "NEXT_PUBLIC_ADDR_PANEL",
+  gate: "NEXT_PUBLIC_ADDR_GATE",
   cuTokenSeries4: "NEXT_PUBLIC_ADDR_CU_TOKEN_SERIES_4",
 } as const;
 

@@ -28,8 +28,8 @@ export function useSend() {
     label: string,
     request: WriteReq,
     opts?: { deadlineMs?: number; staleOk?: boolean },
-  ) {
-    if (source === "mock") return;
+  ): Promise<boolean> {
+    if (source === "mock") return false;
     setPending(label);
     setError(null);
     setNote(null);
@@ -49,14 +49,16 @@ export function useSend() {
           if (stale) {
             setNote("Waiting for the next block…");
             await writeContractAsync({ ...request, gas: CLAIM_DEFAULT_GAS_LIMIT } as never);
-            return;
+            return true;
           }
           throw err;
         }
       }
       await writeContractAsync(args);
+      return true;
     } catch (err) {
       setError(err instanceof Error ? err.message : "Transaction failed.");
+      return false;
     } finally {
       setPending(null);
     }
