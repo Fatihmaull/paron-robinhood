@@ -1,0 +1,41 @@
+{
+  "label": "prod",
+  "bondFloorBps": 15000,
+  "primaryFeeBps": 100,
+  "takerFeeBps": 15,
+  "maxTakerFeeBps": 50,
+  "leadTime": 86400,
+  "allowOpenWindow": false,
+  "enforceCalendarMonth": true,
+  "maxFillsPerTx": 10,
+  "maxLevels": 10,
+  "tick": 10000,
+  "cuLot": "1000000000000000000",
+  "rulingWindow": 259200,
+  "disputeBondBps": 500,
+  "minDisputeBond": 5000000,
+  "bounds": {
+    "minAck": 3600,
+    "maxAck": 259200,
+    "minDelivery": 86400,
+    "maxDelivery": 1209600,
+    "minDispute": 86400,
+    "maxDispute": 604800
+  },
+  "index": {
+    "windowLength": 86400,
+    "minVolume": "0",
+    "minParticipants": 0,
+    "maxCarryForward": 259200,
+    "alphaBps": null
+  },
+  "factors": {
+    "H100-SXM-80GB": 10000,
+    "H200-SXM-141GB": 14000,
+    "B200-SXM-180GB": 25000,
+    "GB200-NVL72": 35000,
+    "A100-SXM-80GB": 4500
+  },
+  "timelockDelay": 172800,
+  "notes": "PrintIndex alpha and production minVolume/minParticipants are TBD (T-04). maxFillsPerTx 10 is the T-02 working value pending forge snapshot."
+}
