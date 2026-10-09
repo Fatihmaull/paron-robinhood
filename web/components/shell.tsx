@@ -35,6 +35,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const balance = useBalance({ address });
   const [open, setOpen] = useState(false);
   const [syncing, setSyncing] = useState(false);
+  const [healthBlock, setHealthBlock] = useState<number | null>(null);
   useEffect(() => {
     if (source !== "live" || !apiBase()) return;
     let dead = false;
@@ -43,16 +44,23 @@ export function Shell({ children }: { children: React.ReactNode }) {
       const timer = setTimeout(() => ctrl.abort(), 4000);
       try {
         const res = await fetch(`${apiBase()}/health`, { signal: ctrl.signal });
-        const body = (await res.json()) as { data?: { synced?: boolean } };
-        if (!dead) setSyncing(body.data?.synced === false);
+        const body = (await res.json()) as { data?: { synced?: boolean; indexed_block?: number } };
+        if (!res.ok) throw new Error(`health ${res.status}`);
+        if (!dead) {
+          setSyncing(body.data?.synced === false);
+          setHealthBlock(typeof body.data?.indexed_block === "number" ? body.data.indexed_block : null);
+        }
       } catch {
-        if (!dead) setSyncing(false);
+        if (!dead) {
+          setSyncing(false);
+          setHealthBlock(null);
+        }
       } finally {
         clearTimeout(timer);
       }
     };
     void check();
-    const id = setInterval(check, 15000);
+    const id = setInterval(check, 10000);
     return () => {
       dead = true;
       clearInterval(id);
@@ -154,7 +162,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           </span>
         </span>
         <span className="num">
-          Build {deployLabel()} · Chain {chainId()} · Block {source === "mock" ? (indexedBlock ?? "—") : (head ?? "—")}
+          Build {deployLabel()} · Chain {chainId()} · Block {source === "mock" ? (indexedBlock ?? "—") : (healthBlock ?? head ?? "—")}
         </span>
       </footer>
     </div>
