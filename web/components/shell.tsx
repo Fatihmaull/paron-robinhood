@@ -76,7 +76,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const lowGas = balance.data != null && balance.data.value < 5_000_000_000_000_000n;
   const head = block.data != null ? Number(block.data) : null;
   const lag = !syncing && source === "live" && origin === "live" && head != null && indexedBlock != null && head > indexedBlock;
-  const banner = source === "mock"
+  const devMock = source === "mock" && process.env.NODE_ENV !== "production";
+  const banner = devMock
     ? `Mock data (fixtures). Transactions are disabled. Snapshot ${snap}.`
     : origin === "onchain"
       ? "Live data unavailable. Showing onchain reads only."
@@ -121,7 +122,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </span>
       </div>
       {banner ? (
-        <div className={`banner ${source === "mock" ? "mock" : "warn"}`} data-testid="mock-banner">
+        <div className={`banner ${devMock ? "mock" : "warn"}`} data-testid="mock-banner">
           {banner}
         </div>
       ) : null}

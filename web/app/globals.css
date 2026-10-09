@@ -13,7 +13,8 @@ body {
   line-height: var(--leading-normal);
   -webkit-font-smoothing: antialiased;
 }
-a { color: var(--color-text-link); text-decoration: none; }
+a { color: var(--color-accent-text); text-decoration: none; }
+a.ext { color: var(--color-text-link); }
 a:hover { text-decoration: underline; }
 button, input, select, textarea { font: inherit; color: inherit; }
 button { cursor: pointer; }
@@ -53,6 +54,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 .nav-links a:hover { color: var(--color-text-primary); text-decoration: none; }
 .nav-spacer { flex: 1; }
 .btn.menu-toggle { display: none; }
+@media (min-width: 861px) { .btn.menu-toggle { display: none !important; } }
 
 .chip {
   display: inline-flex;
@@ -202,6 +204,9 @@ tr:hover td { background: var(--table-row-hover); }
 
 .tabs { display: flex; gap: var(--space-4); margin: 12px 0; flex-wrap: wrap; border-bottom: 1px solid var(--color-border-subtle); }
 .tabs a, .tabs button {
+  font-size: var(--text-sm);
+  font-weight: 500;
+  min-height: 32px;
   border: 0;
   border-bottom: 2px solid transparent;
   background: transparent;
@@ -424,3 +429,6 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
 .skeleton.row-sk { height: var(--table-row-height); margin-bottom: 4px; }
 .skeleton.title-sk { height: 32px; width: 280px; max-width: 100%; margin: 4px 0 12px; }
 @keyframes skeleton-shine { to { background-position: -200% 0; } }
+
+@media (max-width: 860px) { .tabs a, .tabs button { min-height: 44px; display: inline-flex; align-items: center; } }
+.lede .pill { white-space: nowrap; vertical-align: middle; }
