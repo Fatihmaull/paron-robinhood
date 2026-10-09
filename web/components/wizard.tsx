@@ -139,6 +139,7 @@ export function ListingWizard() {
         </button>
       ) : null}
       <div style={{ height: 12 }} />
+      <div className="wizard-grid">
       <Panel>
         {step === 0 ? (
           <>
@@ -241,6 +242,20 @@ export function ListingWizard() {
           ) : null}
         </div>
       </Panel>
+      <Panel title="Preview">
+        <p className="preview-sym">{draft.symbol || "CU-——"}</p>
+        <p className="help">
+          {draft.hours || "—"} hours · {draft.gpu} · factor {factor ? formatFactor(factor) : "—"}
+        </p>
+        <p className="ok">✓ Verified by Paron demo verifier</p>
+        <div className="bond-bar" aria-hidden="true">
+          <span className="fill" style={{ width: "100%" }} />
+        </div>
+        <div className="row"><span>Bond</span><span>{draft.bond ? formatUsd(draft.bond.includes(".") ? draft.bond : `${draft.bond}.00`) : "—"} / CU</span></div>
+        <div className="row"><span>Primary</span><span>{draft.price ? formatUsd(draft.price) : "—"} / CU</span></div>
+        <p className="help">The provider pays the 1% primary fee.</p>
+      </Panel>
+      </div>
     </div>
   );
 }

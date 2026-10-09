@@ -28,7 +28,7 @@ import {
   STATEMENT_UNAVAILABLE,
   TAPE_UNAVAILABLE,
 } from "./onchain";
-import type { LoadResult, Meta, Snap } from "./types";
+import type { GpuRow, LoadResult, Meta, Participant, Snap, StatementRow, TimelockOp } from "./types";
 
 export class ApiError extends Error {
   code: string;
@@ -184,34 +184,36 @@ export function loadPrints(snap: Snap, source: "mock" | "live", client?: PublicC
   }, client);
 }
 
-export function loadStatement(snap: Snap, source: "mock" | "live") {
-  if (source === "mock") return Promise.resolve({ ...statementOf(), origin: "mock" as const });
-  return liveGet("/statements").then((env) => ({ ...env, origin: "live" as const })).catch(() => {
-    throw new OnchainUnavailable(STATEMENT_UNAVAILABLE);
-  });
+export function loadStatement(snap: Snap, source: "mock" | "live"): Promise<LoadResult<StatementRow[]>> {
+  if (source === "mock") return Promise.resolve({ ...statementOf(), origin: "mock" });
+  return liveGet<StatementRow[]>("/statements")
+    .then((env) => ({ ...env, origin: "live" as const }))
+    .catch(() => {
+      throw new OnchainUnavailable(STATEMENT_UNAVAILABLE);
+    });
 }
 
-export function loadGpus(snap: Snap, source: "mock" | "live") {
-  if (source === "mock") return Promise.resolve({ ...gpus(), origin: "mock" as const });
-  return liveGet("/gpus").then((env) => ({ ...env, origin: "live" as const }));
+export function loadGpus(snap: Snap, source: "mock" | "live"): Promise<LoadResult<GpuRow[]>> {
+  if (source === "mock") return Promise.resolve({ ...gpus(), origin: "mock" });
+  return liveGet<GpuRow[]>("/gpus").then((env) => ({ ...env, origin: "live" as const }));
 }
 
-export function loadTimelock(source: "mock" | "live") {
-  if (source === "mock") return Promise.resolve({ ...timelock(), origin: "mock" as const });
-  return liveGet("/admin/timelock").then((env) => ({ ...env, origin: "live" as const }));
+export function loadTimelock(source: "mock" | "live"): Promise<LoadResult<TimelockOp[]>> {
+  if (source === "mock") return Promise.resolve({ ...timelock(), origin: "mock" });
+  return liveGet<TimelockOp[]>("/admin/timelock").then((env) => ({ ...env, origin: "live" as const }));
 }
 
-export function loadParticipant(address: string, source: "mock" | "live") {
-  if (source === "mock") return Promise.resolve({ ...participantFor(address), origin: "mock" as const });
-  return liveGet(`/participants/${address}`).then((env) => ({ ...env, origin: "live" as const }));
+export function loadParticipant(address: string, source: "mock" | "live"): Promise<LoadResult<Participant>> {
+  if (source === "mock") return Promise.resolve({ ...participantFor(address), origin: "mock" });
+  return liveGet<Participant>(`/participants/${address}`).then((env) => ({ ...env, origin: "live" as const }));
 }
 
-export function loadKyb(source: "mock" | "live") {
+export function loadKyb(source: "mock" | "live"): Promise<LoadResult<unknown[]>> {
   if (source === "mock") {
-    const env = kybPendingApps() as { data: unknown; meta: Meta; next_cursor?: string | null };
-    return Promise.resolve({ ...env, origin: "mock" as const });
+    const env = kybPendingApps() as { data: unknown[]; meta: Meta; next_cursor?: string | null };
+    return Promise.resolve({ ...env, origin: "mock" });
   }
-  return liveGet("/verifier/applications?status=PENDING").then((env) => ({ ...env, origin: "live" as const }));
+  return liveGet<unknown[]>("/verifier/applications?status=PENDING").then((env) => ({ ...env, origin: "live" as const }));
 }
 
 export function loadReference() {

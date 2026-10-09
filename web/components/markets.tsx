@@ -1,13 +1,16 @@
 "use client";
 
 import Link from "next/link";
-import { formatCoverage, formatUsd, shortId } from "@/lib/format";
+import { useRouter } from "next/navigation";
+import { formatCoverage, formatCu, formatFactor, formatUsd, shortId } from "@/lib/format";
 import { useSeriesList } from "@/lib/hooks";
+import type { SeriesRow } from "@/lib/types";
 import { Panel } from "./ui";
 
 export function Markets({ headline = false }: { headline?: boolean }) {
   const query = useSeriesList();
   const rows = query.data?.data ?? [];
+  const router = useRouter();
   return (
     <div>
       {headline ? (
@@ -23,7 +26,13 @@ export function Markets({ headline = false }: { headline?: boolean }) {
           </div>
         </>
       ) : (
-        <h1>Markets</h1>
+        <div className="page-head">
+          <div>
+            <h1>Markets</h1>
+            <p className="lede">Primary sales, a secondary book, and bonded redemptions.</p>
+          </div>
+          <Link className="btn" href="/provider/series/new">List capacity</Link>
+        </div>
       )}
       <div style={{ height: 16 }} />
       <Panel title="Series">
@@ -33,39 +42,68 @@ export function Markets({ headline = false }: { headline?: boolean }) {
           <thead>
             <tr>
               <th>Series</th>
-              <th>Window</th>
-              <th>Primary</th>
-              <th>Last</th>
-              <th>Bond / CU</th>
-              <th>Coverage</th>
-              <th>Record</th>
-              <th></th>
+              <th>Provider</th>
+              <th>GPU</th>
+              <th className="num">Primary</th>
+              <th className="num">Last</th>
+              <th className="num">24h vol</th>
+              <th className="num">Bond / CU</th>
+              <th className="num">Coverage</th>
+              <th className="num">Record</th>
             </tr>
           </thead>
           <tbody>
             {rows.map((row) => (
-              <tr key={row.series_id}>
+              <tr
+                key={row.series_id}
+                className="click-row"
+                tabIndex={0}
+                onClick={() => router.push(`/markets/${row.series_id}`)}
+                onKeyDown={(event) => {
+                  if (event.key === "Enter") router.push(`/markets/${row.series_id}`);
+                }}
+              >
                 <td>
-                  <Link href={`/markets/${row.series_id}`}>{row.symbol}</Link>
-                  <div className="muted">{row.gpu} · {shortId(row.provider.address)}</div>
+                  <span className="sym">{row.symbol}</span>
+                  <div className="pills">
+                    <SalePill row={row} />
+                  </div>
                 </td>
-                <td>{row.delivery_window}</td>
-                <td>{formatUsd(row.primary_price)}/CU</td>
-                <td>{row.last_price ? `${formatUsd(row.last_price)}/CU` : "—"}</td>
-                <td>{formatUsd(row.bond_per_cu)}</td>
-                <td>{formatCoverage(row.coverage)}</td>
-                <td>{row.provider.delivered_cu} / {row.provider.defaulted_cu} / {row.provider.voluntary_defaulted_cu}</td>
                 <td>
-                  <Link href={`/buy/${row.series_id}`}>Buy</Link>
-                  {" · "}
-                  <Link href={`/trade/${row.series_id}`}>Trade</Link>
+                  {row.provider.verified ? <span className="ok">✓ </span> : null}
+                  <span className="num">{shortId(row.provider.address)}</span>
+                  {row.provider.status !== "Active" ? <span className="pill danger">{row.provider.status}</span> : null}
+                </td>
+                <td>
+                  {row.gpu} <span className="num muted">{formatFactor(row.factor)}</span>
+                </td>
+                <td className="num">{formatUsd(row.primary_price)}</td>
+                <td className="num">{row.last_price ? formatUsd(row.last_price) : "—"}</td>
+                <td className="num">{formatCu(row.volume_24h_cu)}</td>
+                <td className="num">
+                  {formatUsd(row.bond_per_cu)}
+                  {Number(row.coverage) >= 2 ? <span className="pill outline">200% backed</span> : null}
+                </td>
+                <td className="num">{formatCoverage(row.coverage)}</td>
+                <td className="num">
+                  {row.provider.delivered_cu} /{" "}
+                  <span className={Number(row.provider.defaulted_cu) > 0 ? "bad" : undefined}>{row.provider.defaulted_cu}</span>
+                  {" / "}
+                  {row.provider.voluntary_defaulted_cu}
                 </td>
               </tr>
             ))}
           </tbody>
         </table>
-        <p className="help">Record is delivered / defaulted / voluntary, counted across the provider.</p>
+        <p className="help">Record = delivered CU / defaulted CU / voluntary defaults, counted across the provider. {rows.length} series.</p>
       </Panel>
     </div>
   );
+}
+
+function SalePill({ row }: { row: SeriesRow }) {
+  if (row.finalized) return <span className="pill neutral">Finalized</span>;
+  if (row.paused) return <span className="pill warn">Paused</span>;
+  if (row.sale_open) return <span className="pill sale">Sale open</span>;
+  return <span className="pill outline">Sale closed</span>;
 }

@@ -18,7 +18,7 @@ export function TxButton({
   onClick?: () => void;
   disabled?: boolean;
   reason?: string;
-  tone?: "default" | "danger" | "ghost";
+  tone?: "default" | "danger" | "danger-outline" | "ghost";
   armed?: boolean;
   testId?: string;
   type?: "button" | "submit";
@@ -39,7 +39,7 @@ export function TxButton({
   return (
     <button
       type={type}
-      className={`btn ${tone} ${armed ? "armed" : ""}`}
+      className={`btn ${tone === "default" ? "" : tone} ${armed ? "armed" : ""}`}
       disabled={blocked}
       title={title}
       data-testid={testId}

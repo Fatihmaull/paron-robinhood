@@ -81,11 +81,12 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
           {detail && (tab === "overview" || tab === "trade") ? <TradeBox seriesId={seriesId} /> : null}
           {detail?.bond ? (
             <Panel title="Bond">
+              <BondBar deposited={detail.bond.deposited} balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
               <BondChart balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
               <div className="row"><span>Deposited</span><span>{formatUsd(detail.bond.deposited)}</span></div>
               <div className="row"><span>Balance</span><span>{formatUsd(detail.bond.balance)}</span></div>
-              <div className="row"><span>Released</span><span>{formatUsd(detail.bond.released)}</span></div>
-              <div className="row"><span>Slashed</span><span>{formatUsd(detail.bond.slashed)}</span></div>
+              <div className="row"><span>Released to provider</span><span>{formatUsd(detail.bond.released)}</span></div>
+              <div className="row"><span>Paid to holders</span><span>{formatUsd(detail.bond.slashed)}</span></div>
               <div className="row"><span>Health</span><span>{detail.bond.health}</span></div>
             </Panel>
           ) : detail ? (
@@ -120,23 +121,46 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
 }
 
 function OrderBookPanel({ seriesId, bids, asks }: { seriesId: string; bids: { price: string; qty_cu: string }[]; asks: { price: string; qty_cu: string }[] }) {
+  const askRows = [...asks].sort((a, b) => Number(a.price) - Number(b.price));
+  const bidRows = [...bids].sort((a, b) => Number(b.price) - Number(a.price));
+  const max = Math.max(1, ...[...askRows, ...bidRows].map((level) => Number(level.qty_cu)));
+  const bestAsk = askRows[0] ? Number(askRows[0].price) : null;
+  const bestBid = bidRows[0] ? Number(bidRows[0].price) : null;
+  const spread = bestAsk != null && bestBid != null ? bestAsk - bestBid : null;
   return (
     <Panel title={`Book · series ${seriesId}`}>
-      <div className="grid two">
-        <div>
-          <h2>Bids</h2>
-          {bids.length === 0 ? <p className="muted">Empty</p> : bids.map((level) => (
-            <div className="row" key={`b-${level.price}`}><span>{formatUsd(level.price)}</span><span>{formatCu(level.qty_cu)}</span></div>
-          ))}
-        </div>
-        <div>
-          <h2>Asks</h2>
-          {asks.length === 0 ? <p className="muted">Empty</p> : asks.map((level) => (
-            <div className="row" key={`a-${level.price}`}><span>{formatUsd(level.price)}</span><span>{formatCu(level.qty_cu)}</span></div>
-          ))}
-        </div>
-      </div>
+      {askRows.length === 0 && bidRows.length === 0 ? <p className="muted">Empty</p> : null}
+      {askRows.map((level) => (
+        <BookRow key={`a-${level.price}`} side="ask" price={level.price} qty={level.qty_cu} max={max} />
+      ))}
+      <div className="spread">spread {spread == null ? "—" : formatUsd(spread.toFixed(2))}</div>
+      {bidRows.map((level) => (
+        <BookRow key={`b-${level.price}`} side="bid" price={level.price} qty={level.qty_cu} max={max} />
+      ))}
     </Panel>
+  );
+}
+
+function BondBar({ deposited, balance, released, slashed }: { deposited: string; balance: string; released: string; slashed: string }) {
+  const parts = [Number(balance), Number(released), Number(slashed)];
+  const base = Number(deposited) || parts.reduce((sum, n) => sum + n, 0) || 1;
+  const widths = parts.map((n) => `${Math.max(0, (n / base) * 100)}%`);
+  return (
+    <div className="bond-bar" aria-hidden="true">
+      <span className="fill" style={{ width: widths[0] }} />
+      <span className="released" style={{ width: widths[1] }} />
+      <span className="slashed" style={{ width: widths[2] }} />
+    </div>
+  );
+}
+
+function BookRow({ side, price, qty, max }: { side: "bid" | "ask"; price: string; qty: string; max: number }) {
+  const depth = `${Math.min(100, (Number(qty) / max) * 100)}%`;
+  return (
+    <div className={`book-row ${side}`} style={{ ["--depth" as string]: depth }}>
+      <span className="num px">{formatUsd(price)}</span>
+      <span className="num">{formatCu(qty)}</span>
+    </div>
   );
 }
 

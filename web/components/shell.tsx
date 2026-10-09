@@ -24,13 +24,6 @@ const LINKS = [
   ["/demo", "Demo"],
 ] as const;
 
-function indexCopy(status: string, value: string | null, participants: number, volume: string): string {
-  if (status === "DISRUPTED") return "H100 index · DISRUPTED · do not use for settlement";
-  if (status === "THIN" && !value) return "H100 index · THIN · no eligible prints yet";
-  if (status === "THIN") return `H100 index · THIN · last OK ${formatUsd(value)}/CU`;
-  return `H100 index · OK · ${formatUsd(value)}/CU · ${participants} entities · ${formatCu(volume).replace(" CU", "")} CU/24h`;
-}
-
 export function Shell({ children }: { children: React.ReactNode }) {
   const path = usePathname();
   const { snap, setSnap, source, origin, indexedBlock } = useData();
@@ -41,6 +34,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const block = useBlockNumber({ watch: source === "live" });
   const balance = useBalance({ address });
   const [open, setOpen] = useState(false);
+  const [footerOpen, setFooterOpen] = useState(false);
   const strip = index.data?.data;
   const ref = strip?.reference?.value;
   const wrong = isConnected && walletChain !== chainId();
@@ -58,7 +52,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="shell">
       <header className="nav">
-        <Link className="brand" href="/">PARON</Link>
+        <Link className="brand" href="/">
+          <img src="/brand/paron-lockup.svg" alt="Paron" height={24} />
+        </Link>
         <button className="btn ghost menu-toggle" type="button" onClick={() => setOpen((v) => !v)} aria-label="Menu">
           Menu
         </button>
@@ -70,12 +66,23 @@ export function Shell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="nav-spacer" />
-        <span className="chip ok">{chainId() === 421614 ? "Arb Sepolia" : "RH Testnet"}</span>
+        <span className="chip"><span className="dot" />{chainId() === 421614 ? "Arb Sepolia" : "RH Testnet"}</span>
         {walletConnectId() ? <ConnectButton label="Connect wallet" /> : <WalletConnect />}
       </header>
       <div className="strip">
-        <span>{strip ? indexCopy(strip.status, strip.value, strip.participants, strip.eligible_volume_cu) : "H100 index"}</span>
-        <span>Spot reference (synthetic demo data) {ref ? formatUsd(ref) : ""}</span>
+        <span className="strip-main">
+          <span style={{ color: "var(--color-text-primary)" }}>H100 index</span>
+          {strip ? <span className={`pill ${strip.status === "OK" ? "ok" : strip.status === "THIN" ? "thin" : "dis"}`}>{strip.status}</span> : null}
+          <span className="num" style={{ color: "var(--color-text-primary)" }}>
+            {strip?.status === "OK" && strip.value ? `${formatUsd(strip.value)}/CU` : strip?.status === "THIN" && strip.value ? `last OK ${formatUsd(strip.value)}/CU` : strip?.status === "DISRUPTED" ? "do not use for settlement" : strip?.status === "THIN" ? "no eligible prints yet" : ""}
+          </span>
+          {strip?.status === "OK" ? <span>· {strip.participants} entities · <span className="num">{formatCu(strip.eligible_volume_cu).replace(" CU", "")}</span> CU/24h</span> : null}
+        </span>
+        <span className="strip-ref">
+          <span className="sep" />
+          Spot reference (synthetic demo data)
+          <span className="num" style={{ color: "var(--color-text-primary)" }}>{ref ? formatUsd(ref) : ""}</span>
+        </span>
       </div>
       {banner ? (
         <div className={`banner ${source === "mock" ? "mock" : "warn"}`} data-testid="mock-banner">
@@ -104,10 +111,15 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </div>
       ) : null}
       <main className="main">{children}</main>
-      <footer className="footer" data-testid="footer-disclaimer">
-        <p>Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners.</p>
-        <p>Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners.</p>
-        <p>{chainFooterLine()}</p>
+      <footer className={`footer ${footerOpen ? "open" : ""}`} data-testid="footer-disclaimer">
+        <p>
+          Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners.{" "}
+          <button className="footer-toggle" type="button" onClick={() => setFooterOpen((v) => !v)} aria-label="Expand disclaimer">…</button>
+        </p>
+        <div className="footer-more">
+          <p>Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners.</p>
+          <p>{chainFooterLine()}</p>
+        </div>
         <div className="footer-row">
           <span>
             <Link href="/docs/contracts">Docs</Link>

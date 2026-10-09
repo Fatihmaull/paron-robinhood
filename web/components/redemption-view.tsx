@@ -15,6 +15,23 @@ import { useData } from "./providers";
 import { useSend } from "./tx";
 import { Field, Panel, TxButton } from "./ui";
 
+const STATE_PILL: Record<string, { label: string; tone: string }> = {
+  REQUESTED: { label: "Waiting for provider ack", tone: "req" },
+  ACKNOWLEDGED: { label: "Provider acknowledged", tone: "ack" },
+  DELIVERED: { label: "Delivered · review", tone: "del" },
+  DEFAULTABLE: { label: "Deadline missed", tone: "dfa" },
+  DISPUTED: { label: "In dispute", tone: "dsp" },
+  DEFAULTED: { label: "Defaulted · paid", tone: "dft" },
+  FINALIZED: { label: "Completed", tone: "fin" },
+  REFUNDED: { label: "Refunded · CU returned", tone: "ref" },
+};
+
+function StatePill({ state }: { state: string }) {
+  const known = STATE_PILL[state];
+  if (!known) return <span className="pill outline">{state}</span>;
+  return <span className={`pill ${known.tone}`}>{known.label}</span>;
+}
+
 export function activeDeadline(row: Redemption): number | null {
   if (row.state === "REQUESTED") return row.ack_deadline_ms;
   if (row.state === "ACKNOWLEDGED") return row.delivery_deadline_ms;
@@ -41,10 +58,11 @@ export function RedemptionView({ reqId }: { reqId: string }) {
   return (
     <div>
       <p className="kicker">Public redemption</p>
-      <h1>Redemption #{row.req_id}</h1>
+      <h1 className="sym">Redemption #{row.req_id}</h1>
       <p className="lede">
-        {row.symbol} · {formatCu(row.amount_cu)} · {row.state}
-        {row.stored_state !== row.state ? ` (stored ${row.stored_state})` : ""}
+        <span className="num">{row.symbol}</span> · <span className="num">{formatCu(row.amount_cu)}</span>{" "}
+        <StatePill state={row.state} />
+        {row.stored_state !== row.state ? <span className="muted"> stored {row.stored_state}</span> : null}
       </p>
       <div className="grid two">
         <Panel>
@@ -121,7 +139,7 @@ function ClaimBlock({
   const gap = inUnlockGap(nowMs, deadline);
   const when = formatWib(deadline);
   return (
-    <div>
+    <div className="rc-alert">
       <h2>Claim default on #{row.req_id}</h2>
       <p>{row.stored_state === "ACKNOWLEDGED" ? "The provider missed the delivery deadline." : "The provider missed the acknowledgment deadline."}</p>
       <p>Anyone can trigger the payout. No admin, no oracle.</p>
@@ -207,7 +225,7 @@ function HolderActions({ row, nowMs, deadline }: { row: Redemption; nowMs: numbe
             <textarea value={receipt} onChange={(event) => setReceipt(event.target.value)} />
           </Field>
           <TxButton
-            tone="danger"
+            tone="ghost"
             disabled={deadline != null && !beforeDeadlineOpen(nowMs, deadline)}
             onClick={() => {
               void (async () => {

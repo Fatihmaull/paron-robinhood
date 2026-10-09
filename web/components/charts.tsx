@@ -12,11 +12,11 @@ export function PrintChart({ prints }: { prints: PrintRow[] }) {
     if (!node) return;
     const chart = createChart(node, {
       height: 220,
-      layout: { background: { type: ColorType.Solid, color: "#141a15" }, textColor: "#c5d4c2" },
-      grid: { vertLines: { color: "#243028" }, horzLines: { color: "#243028" } },
+      layout: { background: { type: ColorType.Solid, color: "#101317" }, textColor: "#A3ABB8" },
+      grid: { vertLines: { color: "#1F252E" }, horzLines: { color: "#1F252E" } },
       timeScale: { timeVisible: true },
     });
-    const series = chart.addSeries(LineSeries, { color: "#d6ff4a" });
+    const series = chart.addSeries(LineSeries, { color: "#F07A2A" });
     const points = [...prints]
       .sort((a, b) => a.ts_ms - b.ts_ms)
       .map((print) => ({ time: Math.floor(print.ts_ms / 1000) as UTCTimestamp, value: Number(print.cu_price) }));
@@ -45,9 +45,9 @@ export function BondChart({ balance, released, slashed }: { balance: string; rel
     <div style={{ height: 140 }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
-          <XAxis dataKey="name" stroke="#8d9b8a" />
-          <YAxis stroke="#8d9b8a" />
-          <Bar dataKey="value" fill="#d6ff4a" />
+          <XAxis dataKey="name" stroke="#838C9B" />
+          <YAxis stroke="#838C9B" />
+          <Bar dataKey="value" fill="#3CC68A" />
         </BarChart>
       </ResponsiveContainer>
     </div>

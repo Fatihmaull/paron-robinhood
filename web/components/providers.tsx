@@ -124,7 +124,14 @@ export function useData(): DataValue {
 }
 
 export function Providers({ children }: { children: React.ReactNode }) {
-  const [query] = useState(() => new QueryClient());
+  const [query] = useState(
+    () =>
+      new QueryClient({
+        defaultOptions: {
+          queries: { retry: false, refetchOnWindowFocus: false, networkMode: "always" },
+        },
+      }),
+  );
   const inner = <DataProvider>{children}</DataProvider>;
   return (
     <WagmiProvider config={wagmiConfig}>

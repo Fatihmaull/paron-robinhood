@@ -7,7 +7,7 @@ import { useAccount, useSignTypedData } from "wagmi";
 import { agentCommandTypes, bondVaultAbi, redemptionManagerAbi, seriesFactoryAbi } from "@/lib/abi";
 import { beforeDeadlineOpen } from "@/lib/clock";
 import { agentUrl, chainId, contractAddress } from "@/lib/config";
-import { formatCu, formatUsd, formatWib, shortId } from "@/lib/format";
+import { formatCountdown, formatCu, formatUsd, formatWib, shortId } from "@/lib/format";
 import { useProviderAccount, useProviderQueue } from "@/lib/hooks";
 import type { Redemption } from "@/lib/types";
 import { activeDeadline, useProviderNow } from "./redemption-view";
@@ -18,9 +18,14 @@ import { Field, Panel, TxButton } from "./ui";
 export function ProviderConsole({ focus }: { focus?: string }) {
   const account = useProviderAccount();
   const queue = useProviderQueue();
+  const nowMs = useProviderNow();
   const provider = account.data?.data;
   const [tab, setTab] = useState(focus ? "requests" : "requests");
   const rows = queue.data?.data ?? [];
+  const nextDeadline = rows
+    .map((row) => activeDeadline(row))
+    .filter((value): value is number => value != null)
+    .sort((a, b) => a - b)[0];
   return (
     <div>
       <p className="kicker">Provider console</p>
@@ -28,6 +33,26 @@ export function ProviderConsole({ focus }: { focus?: string }) {
       <p className="lede">
         {provider?.verified ? "Verified by Paron demo verifier" : "Not verified"} · {provider?.status ?? "—"}
       </p>
+      {provider ? (
+        <div className="stat-grid">
+          <section className="panel stat">
+            <h2>Bond balance</h2>
+            <b>{formatUsd(provider.bond.balance)}</b>
+          </section>
+          <section className="panel stat">
+            <h2>Proceeds</h2>
+            <b>{formatUsd(provider.proceeds.net)}</b>
+          </section>
+          <section className="panel stat">
+            <h2>Open requests</h2>
+            <b>{provider.open_requests}</b>
+          </section>
+          <section className="panel stat">
+            <h2>Next deadline</h2>
+            <b>{nextDeadline ? formatCountdown(nowMs, nextDeadline) : "—"}</b>
+          </section>
+        </div>
+      ) : null}
       <div className="actions">
         <Link className="btn" href="/provider/series/new">List capacity</Link>
       </div>
@@ -107,7 +132,7 @@ function RequestCard({ row, highlight }: { row: Redemption; highlight: boolean }
         {showDecline ? (
           <TxButton
             testId="decline-pay"
-            tone="danger"
+            tone="danger-outline"
             onClick={() =>
               void send("decline", {
                 address: rm,

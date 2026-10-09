@@ -120,7 +120,7 @@ export function KeepersPage() {
         <Queue title="claimDefault" empty="No defaultable requests.">
           {claims.map((row) => (
             <Row key={row.req_id} label={`#${row.req_id} ${row.symbol}`}>
-              <TxButton onClick={() => void send(`c-${row.req_id}`, { address: rm, abi: redemptionManagerAbi, functionName: "claimDefault", args: [BigInt(row.req_id)] }, { staleOk: true, deadlineMs: row.ack_deadline_ms ?? undefined })}>
+              <TxButton tone="danger" onClick={() => void send(`c-${row.req_id}`, { address: rm, abi: redemptionManagerAbi, functionName: "claimDefault", args: [BigInt(row.req_id)] }, { staleOk: true, deadlineMs: row.ack_deadline_ms ?? undefined })}>
                 {pending === `c-${row.req_id}` ? "Sending…" : "Claim default"}
               </TxButton>
             </Row>
@@ -184,8 +184,28 @@ export function VerifierPage() {
 
   return (
     <div>
-      <h1>Paron demo verifier (team-operated)</h1>
+      <div className="page-head">
+        <h1>Verifier</h1>
+        <span className="pill outline">Paron demo verifier (team-operated)</span>
+      </div>
       <p className="lede">Manual EAS attest. The signer is the verifier EOA. Revoke stays on this page once an attestation uid is known.</p>
+      <div className="grid two">
+      <Panel title="Applications">
+        {list.length === 0 ? <p className="muted">No pending applications in this fixture.</p> : null}
+        <div className="actions" aria-label="KYB statuses">
+          <KybPill status="PENDING" />
+          <KybPill status="APPROVED" />
+          <KybPill status="EXPIRED" />
+          <KybPill status="REVOKED" />
+          <KybPill status="WITHDRAWN" />
+        </div>
+        {list.map((item) => (
+          <div className="row" key={item.uid}>
+            <span>{shortId(item.applicant)} · {item.role?.name ?? "Applicant"}</span>
+            <KybPill status={item.status} />
+          </div>
+        ))}
+      </Panel>
       <Panel title="Issue attestation">
         <Field label="Applicant"><input value={applicant} onChange={(event) => setApplicant(event.target.value)} /></Field>
         <Field label="Entity id (bytes32)"><input value={entity} onChange={(event) => setEntity(event.target.value)} /></Field>
@@ -235,16 +255,7 @@ export function VerifierPage() {
         {error ? <p className="bad">{error}</p> : null}
         <p className="help">Schema ParticipantVerified(bytes32 entityId, uint8 role, bytes2 country, uint64 expiry).</p>
       </Panel>
-      <div style={{ height: 12 }} />
-      <Panel title="Applications">
-        {list.length === 0 ? <p className="muted">No pending applications in this fixture.</p> : null}
-        {list.map((item) => (
-          <div className="row" key={item.uid}>
-            <span>{shortId(item.applicant)} · {item.role?.name ?? item.status}</span>
-            <span>{shortId(item.uid)}</span>
-          </div>
-        ))}
-      </Panel>
+      </div>
     </div>
   );
 }
@@ -254,6 +265,9 @@ export function AdminPage() {
   const { send, pending, error } = useSend();
   const [factor, setFactor] = useState("0.4500");
   const rows = ops.data?.data ?? [];
+  const ready = rows.filter((op) => op.status === "READY").length;
+  const waiting = rows.filter((op) => op.status === "PENDING" || op.status === "WAITING").length;
+  const delay = rows[0]?.delay_s ?? 300;
   const table = contractAddress("conversionTable");
   const timelock = contractAddress("timelock");
   const gpu = stringToHex("A100-SXM-80GB", { size: 32 });
@@ -271,10 +285,15 @@ export function AdminPage() {
     <div>
       <h1>Admin</h1>
       <p className="lede">Schedule setFactor from the admin wallet. Execute is open to any wallet. There is no Safe protocol-kit in this app.</p>
+      <div className="stat-grid three">
+        <Panel title="Ready to execute"><b className="stat-value">{ready}</b></Panel>
+        <Panel title="Waiting for delay"><b className="stat-value">{waiting}</b></Panel>
+        <Panel title="Timelock delay"><b className="stat-value">{Math.floor(delay / 60)}:{String(delay % 60).padStart(2, "0")}</b></Panel>
+      </div>
       <Panel title="Ready operations">
         {rows.map((op) => (
           <div key={op.operation_id}>
-            <div className="row"><span>{op.target_name}.{op.decoded.function}</span><span>{op.status}</span></div>
+            <div className="row"><span>{op.target_name}.{op.decoded.function}</span><OpPill status={op.status} /></div>
             <div className="row"><span>A100 factor</span><span>{formatFactor(op.decoded.args.new_factor)}</span></div>
             <div className="row"><span>Ready</span><span>{formatWib(op.ready_at_ms)}</span></div>
             <p className="help">Fixture calldata is a placeholder. Execute encodes setFactor locally. Salt {shortId(op.salt)}.</p>
@@ -316,6 +335,35 @@ export function AdminPage() {
       </Panel>
     </div>
   );
+}
+
+const KYB_PILLS = {
+  PENDING: { label: "Pending", tone: "info" },
+  APPROVED: { label: "Approved", tone: "ok" },
+  EXPIRED: { label: "Expired", tone: "warn" },
+  REVOKED: { label: "Revoked", tone: "danger" },
+  WITHDRAWN: { label: "Withdrawn", tone: "neutral" },
+} as const;
+
+function KybPill({ status }: { status: string }) {
+  const known = KYB_PILLS[status as keyof typeof KYB_PILLS];
+  if (!known) return <span className="pill neutral">{status}</span>;
+  return <span className={`pill ${known.tone}`}>{known.label}</span>;
+}
+
+const OP_PILLS = {
+  PENDING: { label: "Pending", tone: "warn" },
+  WAITING: { label: "Pending", tone: "warn" },
+  READY: { label: "Ready", tone: "ok" },
+  DONE: { label: "Done", tone: "neutral" },
+  EXECUTED: { label: "Done", tone: "neutral" },
+  CANCELLED: { label: "Cancelled", tone: "outline" },
+} as const;
+
+function OpPill({ status }: { status: string }) {
+  const known = OP_PILLS[status as keyof typeof OP_PILLS];
+  if (!known) return <span className="pill neutral">{status}</span>;
+  return <span className={`pill ${known.tone}`}>{known.label}</span>;
 }
 
 export function DemoPage() {
