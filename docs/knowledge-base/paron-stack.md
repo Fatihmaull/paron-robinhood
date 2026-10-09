@@ -92,7 +92,7 @@ Scores: ●●● strong · ●● ok · ● weak.
 1. **The hype doesn't come with it.** Stock Tokens are minted only by Robinhood's KYB'd Authorized Participants and sold through Robinhood's own app. A third-party CU token doesn't appear in the Robinhood app (❓), so Robinhood users won't discover Paron by default.
 2. **Operator concentration.** One company runs the sequencer and decides chain policy. Institutions will ask about that, so answer it with the multi-venue design.
 3. **USDC vs USDG is a real business decision.** Settlement stays USDC for the hackathon (MockUSDC). Robinhood mainnet has no native USDC, though, so the long-term stablecoin per venue is an open question (§3.6). The settlement token is already a constructor parameter, so the code is ready either way.
-4. **Endorsement risk.** As with Ornn, never say "built for", "backed by" or "partnered with Robinhood". Say "deployed on Robinhood Chain (testnet)", and add *"Not affiliated with or endorsed by Robinhood Markets, Inc."* next to the existing Ornn footnote.
+4. **Endorsement risk.** As with Ornn, never say "built for", "backed by" or "partnered with Robinhood". Say "deployed on Robinhood Chain (testnet)", and add *"Not affiliated with or endorsed by Robinhood Markets, Inc."* in slides only `[D-64]`.
 5. **Indonesia.** Stock Token availability in Indonesia isn't confirmed (❓). That's irrelevant to Paron's contracts but worth knowing if a judge asks "can Indonesians use this chain's flagship assets?".
 
 ---
@@ -155,7 +155,7 @@ Fund wallets on both chains on Thursday (fresh keys; never the anvil dev keys, s
   - *"Tokenized stocks proved Wall Street's assets can live onchain. Paron does it for the asset AI runs on: the GPU-hour."*
   - Short: *"Stocks went onchain. Compute is next."*
   - Keep Stock Tokens out of the product. They're KYB-minted securities on mainnet, and we're on testnet.
-- **Footnote** (README, site footer, any slide naming Robinhood): *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."*
+- **Footnote** (slides only; README and site footer removed `[SUPERSEDED D-64]`): *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."*
 
 ### 3.6 Long-term business
 - **Robinhood Chain mainnet as the RWA home venue**, if early providers and buyers are comfortable there. Its vendor set (Fireblocks, BitGo, Paxos, Morpho, TRM, Chainlink) matches what compliance teams ask about.
@@ -244,7 +244,7 @@ Versions are registry/GitHub "latest" as of 6 Oct 2026, 5:30 PM WIB ✅ unless m
 - Monorepo: `pnpm` workspaces (latest **12.9.1** ✅; any recent version works) with `contracts/` (Foundry), `indexer/` (Ponder), `web/` (Next.js), `agents/`, `docs/`.
 - CI: GitHub Actions with `foundry-rs/foundry-toolchain` (pinned v1.8.5), forge build/test, Slither, Biome, typecheck.
 - Verification: Robinhood Testnet `forge verify-contract <addr> src/X.sol:X --chain-id 46630 --rpc-url $RH_TESTNET_RPC --verifier blockscout --verifier-url https://explorer.testnet.chain.robinhood.com/api/` (✅ per Robinhood deploy docs). Arbitrum Sepolia `--chain 421614 --verifier etherscan --etherscan-api-key $ETHERSCAN_API_KEY` (Etherscan V2).
-- Docs in repo: `README.md` (chain and explorer links first, architecture diagram, attribution and "not affiliated" footnotes), `METHODOLOGY.md`, `paron-spec/v1.schema.json`, `SERIES_TERMS.md`, `DEPLOYMENTS.md` (addresses per chain).
+- Docs in repo: `README.md` (chain and explorer links first, architecture diagram, attribution; no "not affiliated" text [D-64]), `METHODOLOGY.md`, `paron-spec/v1.schema.json`, `SERIES_TERMS.md`, `DEPLOYMENTS.md` (addresses per chain).
 
 ---
 

@@ -838,7 +838,7 @@ Bisa disetujui sekaligus (`D-55 ok`) atau per butir (`D-55b ok`).
 
 ## 12. Approval kelima: Jum 9 Okt 2026 13:30 WIB (Fatih, di grup)
 
-Fatih membalas di grup: "oke 1-4, footer not affiliated hapus itu, lanjutkan" (dicatat Scout di CONTEXT-INDEX 13:30 WIB). Sumber D-60..D-63: `/workspace/paron-design/spec-change-requests.md` butir 1-4 (usulan Paron Product Designer, hanya saran sampai disetujui). Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-1331/`. Semua APPROVED 13:30 WIB.
+Fatih membalas di grup: "oke 1-4, footer not affiliated hapus itu, lanjutkan" (dicatat Scout di CONTEXT-INDEX 13:30 WIB). Sumber D-60..D-63: `docs/design/spec-change-requests.md` butir 1-4 (usulan Paron Product Designer, hanya saran sampai disetujui). Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-1331/`. Semua APPROVED 13:30 WIB.
 
 | ID | Keputusan (APPROVED 13:30 WIB) | Diterapkan di |
 |---|---|---|
@@ -882,7 +882,7 @@ Fatih menjawab: "utility bar pake aja itu" (13:35 WIB). Ini menyetujui `UtilityB
 
 ## 15. Approval ketujuh: Jum 9 Okt 2026 14:40 WIB (Fatih): semua item Designer yang tersisa
 
-Fatih di grup (14:40 WIB): "setujui semua, sesuai rekomendasi kalian, sinkronkan, dan arsipkan semuanya". Ini menyetujui butir #9 sampai #13 di `/workspace/paron-design/spec-change-requests.md` dan temuan review live LR-5, LR-6, LR-8 (label LR dari Designer, tercatat di `SESSION_HANDOFF_HACKATHON.md`). Spesifikasi akhir **hanya** dari teks rekomendasi Designer di `/workspace/paron-design/approved-ui-changes.md` dan `audit/04-actions.md` ("Key component specs"); tidak ada yang ditambahkan Spec Writer. Cakupan: visual dan layout saja, tanpa perubahan alur, route, kontrak, atau perilaku API. Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-d67/`.
+Fatih di grup (14:40 WIB): "setujui semua, sesuai rekomendasi kalian, sinkronkan, dan arsipkan semuanya". Ini menyetujui butir #9 sampai #13 di `docs/design/spec-change-requests.md` dan temuan review live LR-5, LR-6, LR-8 (label LR dari Designer, tercatat di `SESSION_HANDOFF_HACKATHON.md`). Spesifikasi akhir **hanya** dari teks rekomendasi Designer di `docs/design/approved-ui-changes.md` dan `audit/04-actions.md` ("Key component specs"); tidak ada yang ditambahkan Spec Writer. Cakupan: visual dan layout saja, tanpa perubahan alur, route, kontrak, atau perilaku API. Cadangan dokumen sebelum perubahan: `.bak-2026-10-09-pre-d67/`.
 
 **Tabel pemetaan nomor → D-xx**
 
@@ -895,7 +895,7 @@ Fatih di grup (14:40 WIB): "setujui semua, sesuai rekomendasi kalian, sinkronkan
 | #13 | Banner dev-only tidak muncul di build produksi | **D-71** |
 | LR-6 | Kontras teks kecil ≥ 4.5:1 | **D-72** |
 | LR-8 | Tab Provider console | **D-73** |
-| "Also adopt" di `approved-ui-changes.md` | `tokens.v2.css`, `<title>` per route, skip link, grep guard | **D-74** |
+| "Also adopt" di `approved-ui-changes.md` | `tokens.v2.css`, `<title>` per route, skip link. Grep CI: dibatalkan di D-81 | **D-74** |
 
 Catatan pemetaan: LR-5 beririsan penuh dengan #9 sehingga digabung (satu D). LR-6 **bukan** bagian #12 (petunjuk awal Designer "mirip #12" tidak dipakai; #12 adalah tabel mobile, LR-6 adalah kontras). #5 (status pills) sudah selesai sebelumnya; #1-#4 = D-60..D-63; #6-#8 = D-64/D-65/D-60.
 
@@ -908,6 +908,33 @@ Catatan pemetaan: LR-5 beririsan penuh dengan #9 sehingga digabung (satu D). LR-
 | D-71 | **Banner dev-only (#13):** banner mock dan pemilih snapshot hanya dirender kalau `NEXT_PUBLIC_DATA_SOURCE=mock` **dan** bukan build produksi. Vercel produksi tidak menampilkan keduanya | 06 §1.6, §11.3 |
 | D-72 | **Kontras teks kecil (LR-6).** Nilai token sudah lolos (`contrast-report.md`: tertiary `#838C9B` di `#0A0C0F` ≥ 4.5:1); tampilan live lebih redup karena ada override. Ganti warna hard-coded atau teks ber-opacity (utility bar, "Spot reference (synthetic demo data)", header tabel, helper text) dengan `--color-text-tertiary` (minimum) atau `--color-text-secondary`; tidak ada `opacity` di bawah 1 pada teks; `--color-text-disabled` tidak dipakai untuk teks yang harus terbaca. Acceptance: kontras warna terhitung vs latar terhitung ≥ 4.5:1 untuk semua teks ≤ 13 px | 06 §0.2, §12 |
 | D-73 | **Tab Provider console (LR-8).** Label Title Case ("Requests", "Series", "Bond", "Agent"), 13 px, weight medium; tab aktif bergaris bawah ember dengan teks primer, tab tidak aktif teks sekunder; ring fokus keyboard sesuai token; target minimal 44 px di mobile | 06 §6.1, §6.5 |
-| D-74 | **Adopsi tambahan berisiko rendah dari audit Designer:** impor `tokens.v2.css` (dan `theme.v2.css`) menggantikan `tokens.css` (alias lama tetap, tanpa rename); tinggi baris tabel Markets 32 px dengan pill status sebaris; `<title>` per route dan skip link (`<a class="skip" href="#main">`); grep guard CI `affiliated|endorsed by` tetap. Sumber visual terbaru: `design.md` terbaru di `/workspace/paron-design/` | 06 §0.2, §2.2, §12; 08 §2.2 |
+| D-74 | **Adopsi tambahan berisiko rendah dari audit Designer:** impor `tokens.v2.css` (dan `theme.v2.css`) menggantikan `tokens.css` (alias lama tetap, tanpa rename); tinggi baris tabel Markets 32 px dengan pill status sebaris; `<title>` per route dan skip link (`<a class="skip" href="#main">`). Butir grep CI `affiliated|endorsed by` **dibatalkan oleh D-81** (bukan butir yang masih berlaku). Sumber visual terbaru: `design.md` terbaru di `docs/design/` | 06 §0.2, §2.2, §12; 08 §2.2 |
 
 **Catatan:** PE menerapkan D-67..D-74 dalam satu PR kecil sebelum freeze UI Sab 09:00 WIB (08 §2.2). Verifikasi akhir: Designer memotret ulang live pada 1280 dan 390 px untuk `/`, `/markets`, `/markets/1`, `/portfolio`, `/provider`, dan detail redemption (tanpa scroll horizontal di 390, tanpa link biru, kontras ≥ 4.5:1). Tidak ada item ini yang mengubah daftar never-cut (tetap 3 butir, D-64).
+
+---
+
+## 16. Approval kedelapan: Jum 9 Okt 2026 ~15:34 WIB (Fatih, via handler)
+
+Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): item UI Designer P1–P6 (D-75..D-80) dan nama series demo yang live (D-82). Pengecualian nama pihak ketiga (Ornn, ICE, Robinhood) untuk dokumen dan footnote slide sudah dicatat di CONTEXT-INDEX pada jam yang sama. D-81 bukan approval.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-75 | **APPROVED (Fatih, Jum 9 Okt 2026 ~15:34 WIB, via handler). P1 Banner syncing.** Banner tampil hanya jika `/v1/health` `synced:false` atau lag > 20 blok. Warna info, bukan amber. Copy D-66 tetap ("Indexer is syncing. Series will appear shortly."). | 06 §1.6, §2; design.md state loading |
+| D-76 | **APPROVED (sama). P2 Skeleton.** Animasi pulse opacity, bukan shimmer, sesuai design.md §6. Kalimat "0 series." tetap disembunyikan saat loading (D-66). | design.md §6; 06 §2 |
+| D-77 | **APPROVED (sama). P3 Tab Leverage.** Di `/markets/[id]` tab Leverage berlabel "Coming soon", tanpa aksi. | 06 §4; approved-ui-changes |
+| D-78 | **APPROVED (sama). P4 Tiket Buy.** Hapus copy implementasi dari tiket Buy. Yang tampil hanya copy produk. | 06 §4 tiket Buy |
+| D-79 | **APPROVED (sama). P5 Format angka.** Uang ditulis `$3,240.00` (pemisah ribuan, 2 desimal). Max cost 2 desimal. | 06 format angka; design.md |
+| D-80 | **APPROVED (sama). P6 Beranda.** Isi beranda dipadatkan: kurangi ruang kosong, terutama mobile 390 px; connect wallet satu baris. | 06 S1; design.md |
+| D-81 | **DIBATALKAN. Guard CI grep `affiliated\|endorsed by` (butir terakhir D-74).** Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Status: awaiting Fatih's direct confirmation in group. | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md |
+| D-82 | **APPROVED (sama). Nama series demo yang live = `CU-JKT-H100-2611`.** Seed kontrak series 1 tidak diubah. D-19 (series panggung `CU-JKT-H100-2610`) dan D-25 tetap catatan historis; yang digantikan hanya penamaan series demo yang live. `series_id`, window, dan input skrip seed/forge tidak ditulis ulang. | 03, 05, 06, 09 |
+
+---
+
+## 17. Usulan PENDING: Safe di roadmap mainnet (D-83)
+
+Belum dikonfirmasi Fatih. Bukan bagian approval ~15:34 WIB.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-83 | **PENDING.** Safe multisig masuk roadmap: rencana kalau Paron live di mainnet. Sampai freeze kontrak (Sab 06:00 WIB), peran admin tetap seperti sekarang (D-54): tanpa EOA kedua, tanpa pindah ke Safe. Arsitektur Safe pada produk penuh sudah di product-plan §4.10; bagian ini tidak mengulanginya. | 08 §7.1; CONTEXT-INDEX |

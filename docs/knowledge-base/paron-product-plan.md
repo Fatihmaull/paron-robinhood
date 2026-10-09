@@ -108,6 +108,7 @@ Kolom "Hackathon" memakai tier solo dari sitemap §9.1: **S0** jalur demo (Jum s
 - **Hackathon:** S1 `/admin` dengan tab (proposals, parameters, gate, treasury, dll.) + eksekusi; **satu perubahan timelock dieksekusi dari UI (never cut)**, delay demo 5 menit (D-20 [APPROVED]).
 - **Kejujuran governance (PG-7):** di testnet, owner Safe 2-of-3, arbiter panel (W-ARB-1..3), dan verifier semuanya dipegang Fatih (D-08). Wording README/Q&A: "single operator in testnet; independent signers in P3". Jangan klaim terdesentralisasi.
 - **EN-2 [APPROVED Fatih, Jum 9 Okt ~11:06]:** verifier = EOA, proposer timelock = EOA di samping Safe, executor terbuka, supaya approve KYB dan eksekusi timelock (dua never-cut) tidak bergantung pada tanda tangan Safe 2-of-3 di dalam app.
+- **[D-83, PENDING]:** Safe multisig adalah rencana roadmap untuk saat Paron live di mainnet. Sampai freeze kontrak, peran admin tetap seperti EN-2/D-54 (tanpa EOA kedua, tanpa pindah ke Safe). Rincian operasional: 08 §7.1.
 - **Later:** penandatangan independen, kebijakan treasury, tidak ada governance token (di luar lingkup).
 
 ### 4.11 Ops dan keeper
@@ -122,7 +123,7 @@ Kolom "Hackathon" memakai tier solo dari sitemap §9.1: **S0** jalur demo (Jum s
 
 ### 4.13 Legal, kepatuhan, keamanan
 - **Produk penuh:** halaman legal (disclaimer, risiko, terms), structuring hukum dan OJK sebelum produksi (POJK 27/2024), counsel-reviewed series terms, audit eksternal, bug bounty, dokumentasi siap EFRP (kelayakan = keputusan bursa).
-- **Hackathon:** footnote dan disclaimer not-affiliated wajib (09), halaman legal S2, lisensi repo MIT (T9-06 [APPROVED]), Slither di CI kalau sempat.
+- **Hackathon:** footnote not-affiliated hanya di pitch deck/slide [D-64] (09), halaman legal S2, lisensi repo MIT (T9-06 [APPROVED]), Slither di CI kalau sempat.
 - **Atribusi AI (PG-11) [APPROVED Fatih ~11:06]:** README menyebut proyek ini dibangun dengan bantuan Grok Bot (notes §1 rule 6). Commit dari cloud agent harus atas nama Fatih (author git = Fatih), bukan atas nama agent.
 - **Kepatuhan & ops produk penuh (PG-10) [USULAN, P1–P3]:** screening sanksi saat KYB; penanganan PII untuk dokumen `KybApplication.dataHash`; UX expiry/renewal KYB; revoke KYB membatalkan order maker yang masih resting (EN-9); risiko blacklist stablecoin pada push payment, solusinya pola pull/withdraw untuk payout holder (EN-12); pajak/invoice compute yang dikirim; skema receipt/SLA provider (T5-04); runbook insiden dan alerting.
 - **Later:** audit, structuring, bug bounty, modul kepatuhan & ops di atas.
@@ -273,7 +274,7 @@ Tebal = never cut. Urutan potong kalau waktu habis: 08 (cut ladder).
 - **Gas/kinerja:** order book dibatasi ≤10 level per sisi; loop matching terbatas. Angka gas dan finality diukur saat build (07 §10.2).
 - **Data:** indexer ke API ke UI; mode `NEXT_PUBLIC_DATA_SOURCE=mock|live` hanya untuk pengembangan, demo selalu live.
 - **UX:** copy UI bahasa Inggris (P6-01 [APPROVED]); setiap aksi punya status pending/sukses/gagal dan link tx; disclaimer di setiap halaman.
-- **Observabilitas:** `/status` (chain, indexer, kontrak), log event, build log di `/workspace/paron-build/STATUS.md`.
+- **Observabilitas:** `/status` (chain, indexer, kontrak), log event, build log di `docs/build/STATUS.md`.
 
 ---
 
@@ -312,12 +313,12 @@ Default strategis saat harga melonjak (payout tetap `bondPerCU`, jadi kalau spot
 | Stack dan versi | paron-stack.md |
 | Gap infra pasar compute | paron-gaps.md |
 | Semua layar, gate, tier solo | paron-sitemap.md |
-| Interface kontrak | paron-dev-docs/01 |
-| Invariant dan test | paron-dev-docs/02 |
-| Indexer dan API | paron-dev-docs/03 |
-| Repo, env, deploy | paron-dev-docs/04 |
-| Skenario demo dan seed | paron-dev-docs/05 |
-| Wireframe dan copy | paron-dev-docs/06 |
-| Semua keputusan | paron-dev-docs/07 |
-| Timeline solo per jam | paron-dev-docs/08 |
-| Submission | paron-dev-docs/09 |
+| Interface kontrak | dev-docs/01 |
+| Invariant dan test | dev-docs/02 |
+| Indexer dan API | dev-docs/03 |
+| Repo, env, deploy | dev-docs/04 |
+| Skenario demo dan seed | dev-docs/05 |
+| Wireframe dan copy | dev-docs/06 |
+| Semua keputusan | dev-docs/07 |
+| Timeline solo per jam | dev-docs/08 |
+| Submission | dev-docs/09 |

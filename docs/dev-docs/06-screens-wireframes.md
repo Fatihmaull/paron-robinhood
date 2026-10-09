@@ -17,7 +17,7 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P6-xx disetujui Fatih (
 - **Tier build = sitemap §9.1 (solo S0–S3)**, bukan kolom MUST/NICE saja (X6-19 APPROVED). Urutan jam per jam: `08-team-tasks.md`.
 - **MUST / NICE** mengikuti design §7.1 dan §10.4. S6 dan S7 = NICE (design §7.2); sitemap §9 menaruhnya di Tier 2 / Tier 1 (lihat §17 X6-19).
 - Teks di dalam tanda kutip pada tabel copy = **copy UI persis** (bahasa Inggris, lihat §0.1). Placeholder ditulis `{nama}`.
-- Semua angka contoh = CONTOH DATA dari naskah 05 (series panggung 4 `CU-JKT-H100-2610`).
+- Semua angka contoh = CONTOH DATA dari naskah 05 (series panggung 4 `CU-JKT-H100-2610`). **[D-82]** Nama series demo yang live = `CU-JKT-H100-2611`. Simbol `2610` pada contoh layar tetap, karena mengikat window Oktober, `series_id` 4, dan naskah forge (catatan D-19, historis). Seed series 1 tidak diubah.
 - Wireframe = desktop 1440 px kecuali disebut mobile. Hanya tata letak, bukan desain visual (tema gelap "terminal", stack §4.3).
 
 ---
@@ -137,7 +137,7 @@ Layar admin, verifier, dan keeper **ada** di produk: sitemap §1 prinsip 1 ("set
 
 ### 0.6 Penyesuaian UI Designer [APPROVED D-67..D-74, Jum 9 Okt 2026 14:40 WIB, Fatih]
 
-Visual dan layout saja; alur, route, dan perilaku kontrak/API tidak berubah. Sumber teknis: `/workspace/paron-design/approved-ui-changes.md`, `audit/04-actions.md`, `tokens.v2.css`, `design.md` terbaru. Wireframe ASCII di bawah tetap dipakai sebagai urutan isi; tata letak akhir mengikuti daftar ini.
+Visual dan layout saja; alur, route, dan perilaku kontrak/API tidak berubah. Sumber teknis: `docs/design/approved-ui-changes.md`, `audit/04-actions.md`, `tokens.v2.css`, `design.md` terbaru. Wireframe ASCII di bawah tetap dipakai sebagai urutan isi; tata letak akhir mengikuti daftar ini.
 
 | Layar | Aturan akhir | D-xx |
 |---|---|---|
@@ -151,6 +151,10 @@ Visual dan layout saja; alur, route, dan perilaku kontrak/API tidak berubah. Sum
 | Token (§0.2, §2.2) | `tokens.v2.css`; baris tabel Markets 32 px dengan pill sebaris; `<title>` per route; skip link | D-74 |
 
 Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe §6.1 adalah tata letak lama; teks di UI memakai Title Case (D-73).
+
+**[D-75..D-80, APPROVED ~15:34 WIB, 07 §16]** P1–P6: banner syncing hanya jika `synced:false` atau lag > 20 blok, warna info, copy D-66 tetap (D-75); skeleton pulse opacity, "0 series." tetap tersembunyi saat loading (D-76); tab Leverage di `/markets/[id]` berlabel "Coming soon", tanpa aksi (D-77); tiket Buy hanya copy produk (D-78); uang `$3,240.00`, max cost 2 desimal (D-79); beranda dipadatkan, mobile 390 px, connect wallet satu baris (D-80).
+
+**[D-81]** Guard CI grep `affiliated|endorsed by` (butir D-74) dibatalkan. Tidak ada grep itu di CI. Status: awaiting Fatih's direct confirmation in group. `copy-guard.test.ts` tidak diubah.
 
 ---
 
@@ -1480,7 +1484,7 @@ Kode: **M** = sumber utama, **o** = opsional/NICE, **·** = tidak dipakai.
 | 1:35–1:45 | Integrity callout (opsional) | S3 series 3 `SelfMatchCallout` | kartu "Blocked: self-trade" terbaca di proyektor |
 | 1:45–2:10 | Countdown | S4 R-CARD #2 + S4-R di HP juri | tombol "Claim default" terlihat disabled, aktif saat `now_s > deadline` dan `actions` berisi `CLAIM_DEFAULT` |
 | ≈2:11–2:15 | WOW claim default | S4-R mobile (§5.7) → S3 | kartu sukses "Default paid. $45.00 sent to 0x2222…2222." + "Bond: $2,214.00 → $2,169.00"; S3 bond bar beranimasi; strike di reputasi |
-| 2:15–2:30 | Close | slide | footnote not affiliated di slide (bukan app) |
+| 2:15–2:30 | Close | slide | footnote not affiliated di slide [D-64] (penyebutan di app: historis [D-64]) |
 
 ---
 
@@ -1498,7 +1502,7 @@ Kode: **M** = sumber utama, **o** = opsional/NICE, **·** = tidak dipakai.
 | D-15, D-16 | status dan metode indeks di strip dan S6 | §1.1, §8.1 |
 | D-17 | maks 10 level order book, copy `TooManyPriceLevels` | §4.4, §9.2 |
 | D-18 | baris "Covers {n} CU outstanding" | §4.6 |
-| D-19 | wizard demo menawarkan bulan berjalan; preset 2610 | §3.2, §14 |
+| D-19 | wizard demo menawarkan bulan berjalan; preset 2610. Penamaan live: D-82 (`CU-JKT-H100-2611`); preset dan window di baris ini historis | §3.2, §14 |
 | D-20 | batas window di wizard, countdown 60/60/90 s | §3.3 |
 | D-21 | copy hasil dispute | §5.5 |
 | D-22 | field print untuk tape/S6, decode ABI | §4.5, §9.2 |
@@ -1573,7 +1577,7 @@ Semua D-xx di atas **APPROVED** di 07 (Jum 9 Okt 2026 ~09:40 WIB, Fatih), termas
 
 | # | Divergensi | Sumber | Penanganan |
 |---|---|---|---|
-| X6-1 | Preset listing memakai `CU-JKT-H100-2610`, bukan `CU-JKT-H100-2611` seperti naskah design §7.4 | design §7.4 vs 07 D-19, 05 §2.3 | ikuti D-19/05 |
+| X6-1 | Preset listing memakai `CU-JKT-H100-2610`, bukan `CU-JKT-H100-2611` seperti naskah design §7.4. Penamaan live demo: D-82; baris divergensi ini historis | design §7.4 vs 07 D-19, 05 §2.3 | ikuti D-19/05 |
 | X6-2 | "Redemption detail" diberi route sendiri `/redemptions/{reqId}`, padahal PK menyebutnya bagian S4, bukan layar terpisah | PK §6 peta layar vs 05 §2.4 "S4 publik" untuk HP juri | komponen sama (R-CARD); hanya route publik tambahan |
 | X6-3 | Listing = 1 tanda tangan permit + 1 tx, bukan "satu transaksi approve USDC + createSeries" | PK §6.1, design §2 Flow A vs D-30 | ikuti D-30 dengan fallback 2 tx |
 | X6-4 | Kolom "Record" S1 menambah "declined" | design §7.2 S1 (delivered/defaulted) vs D-33 | ikuti D-33 |

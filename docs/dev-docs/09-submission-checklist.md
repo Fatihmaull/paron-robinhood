@@ -1,5 +1,8 @@
 # Paron: checklist submission ETHJKT 2026 (dev doc 09)
 
+> **[D-82, APPROVED Fatih Jum 9 Okt 2026 ~15:34 WIB, via handler]:** nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (series `CU-JKT-H100-2610` yang di-forge, window, `series_id`, field `seed.series`) tetap historis; yang digantikan hanya penamaan live. String `2610` yang mengikat window atau data seed tidak ditulis ulang di dokumen ini.
+
+
 Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (Jum 9 Okt 2026 ~09:40 WIB); disinkronkan Jum 9 Okt ~10:30 WIB untuk tim solo (D-08) dan jadwal 08. Cadangan: `.bak-2026-10-09-pre-approval/`. Isinya timeline, daftar isian, outline README, checklist video, pemetaan kriteria juri, checklist aturan, dan daftar item terbuka. Tidak ada kode, script, atau secret. Tidak ada pengecekan eksternal: semua fakta diambil dari dokumen kanonik, dan yang tidak ada di sana ditandai **[TBD]**. Disusun Kamis 8 Okt 2026, ~21:40 WIB.
 
 **Catatan audit Jum 9 Okt 2026 ~11:09 WIB (audit Principal Engineer; cadangan `.bak-2026-10-09-pre-audit/`). APPROVED Fatih ~11:05 WIB (07 §10.4):**
@@ -35,7 +38,7 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (
 - **Batas durasi video tidak disebut** di dokumen kanonik → [TBD T9-02]. Rekomendasi: video submission = rekaman naskah ter-retime 2:30 (05 P5-06), maks ~3 menit [APPROVED P9-05].
 - Demo Day **Min 11 Okt 10:00–21:00 WIB** hanya untuk tim terpilih; judging berakhir 15:00 WIB; waktu pengumuman shortlist dan pemenang tidak dipublikasikan (notes §2).
 - Aturan inti: dibangun dari nol selama periode resmi; commit pertama ≥ Jum 09:00 WIB; atribusi pihak ketiga wajib (OQR §5; 04 §9.2).
-- **[D-64, 13:30 WIB]** Disclaimer "not affiliated" **tidak ada** di produk: tidak di footer situs, tidak di README. Footnote hanya di pitch deck / slide yang menyebut Ornn/ICE/OCPI/Robinhood (teks di §3.2).
+- **[D-64, 13:30 WIB]** Footnote "not affiliated" hanya di pitch deck / slide yang menyebut Ornn/ICE/OCPI/Robinhood (teks di §3.2). Penyebutan di footer situs dan README: historis [D-64].
 
 ---
 
@@ -60,6 +63,8 @@ Jendela build = Jum 09:00 → Sab 12:00 = **27 jam** (notes §2). Boleh terus me
 **[APPROVED D-59 / D-57, Jum 9 Okt ~11:05 WIB]** Baris Jumat di tabel ini (go/no-go 10:30, blok 10:30–20:00, dst.) digantikan rencana 4 lane di 08 §1 dengan **T0 = "go" Fatih = Jum 9 Okt 11:14 WIB**: go/no-go 11:14–11:59 (gagal → langsung Arbitrum Sepolia), G2 16:14, G3 / S0 selesai 19:14, S1 selesai Sab 01:14 + buffer G4 sampai 02:00. Baris Sabtu (freeze 06:00/09:00, submit 11:30, tenggat 12:00) tetap.
 
 **Tim solo (Jum 9 Okt):** semua milestone di bawah dipegang Fatih. Tenggat yang dikunci: **Sab 06:00** freeze kontrak + video backup v1, **Sab 09:00** freeze UI, **Sab 11:30** submit internal, **Sab 12:00** tenggat keras. Rincian per jam, blok tidur, dan cut ladder: `08-team-tasks.md`.
+
+**[PENDING, menunggu konfirmasi Fatih; rincian 08 §7.2]** Usulan batas kode setelah freeze. Jam, tag `freeze-contracts` / `freeze-ui`, dan merge saat test hijau tetap seperti tabel di bawah dan 04 §9.2. Yang diajukan: setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya perbaikan bug yang memblokir jalur demo S0; setelah submit internal 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu.
 
 | Waktu (WIB) | Milestone | Pemilik | Sumber | Buffer / catatan |
 |---|---|---|---|---|
@@ -113,7 +118,7 @@ Pertanyaan terbuka: apakah Fatih sudah terdaftar dan siapa pemegang akun yang me
 
 ## 3. Outline README
 
-Kewajiban dari sumber: "README with architecture, contract addresses, the attribution block (§7.5), and the 'not affiliated with Ornn' and 'not affiliated with Robinhood' footnotes. The chain, chain ID and explorer links go at the top." (design §7.1). **[D-64, 13:30 WIB] Fatih menghapus kedua footnote dari README dan produk; hanya dipakai di pitch deck.** Stack §4.7: "`README.md` (chain and explorer links first, architecture diagram, attribution and 'not affiliated' footnotes), `METHODOLOGY.md`, `paron-spec/v1.schema.json`, `SERIES_TERMS.md`, `DEPLOYMENTS.md` (addresses per chain)". README bahasa Inggris (sejalan dengan copy UI, 06 P6-01) [APPROVED P9-06].
+Kewajiban dari sumber (historis untuk README dan produk, [D-64]): "README with architecture, contract addresses, the attribution block (§7.5), and the 'not affiliated with Ornn' and 'not affiliated with Robinhood' footnotes. The chain, chain ID and explorer links go at the top." (design §7.1). **[D-64, 13:30 WIB] Kedua footnote itu historis di README dan produk; yang berlaku: footnote hanya di pitch deck.** Stack §4.7: "`README.md` (chain and explorer links first, architecture diagram, attribution and 'not affiliated' footnotes), `METHODOLOGY.md`, `paron-spec/v1.schema.json`, `SERIES_TERMS.md`, `DEPLOYMENTS.md` (addresses per chain)" — kutipan footnote di situ historis untuk README [D-64]. README bahasa Inggris (sejalan dengan copy UI, 06 P6-01) [APPROVED P9-06].
 
 ### 3.1 Urutan bagian
 
@@ -154,7 +159,7 @@ Kewajiban dari sumber: "README with architecture, contract addresses, the attrib
 - EN (README): "Built by Fatih Maulana with help from Grok Bot".
 - ID (kalau ada versi Indonesia): "Dibangun oleh Fatih Maulana dengan bantuan Grok Bot".
 
-**Footnote hanya untuk pitch deck / slide [D-64]** (bukan README, bukan web). Dipakai di slide penutup dan setiap slide yang menyebut pihak lain:
+**Footnote hanya untuk pitch deck / slide [D-64].** Penyebutan di README dan web: historis [D-64]. Dipakai di slide penutup dan setiap slide yang menyebut pihak lain:
 - Ornn (design §6, PK header): *"Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners."*
 - Robinhood (design §11.5, stack §3.5, PK header): *"Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners."*
 - Kalau slide menyebut ICE/HPR, tambahkan (PK header, design §10.5 #6): *"Not affiliated with or endorsed by Ornn AI Inc. or ICE. OCPI and HPR are trademarks of their respective owners; figures cited from public sources."*
@@ -173,14 +178,14 @@ Kolom: **Contract** · **Address** · **Explorer** (`explorerUrl`) · **Verified
 |---|---|---|
 | Inti Paron | `ProviderRegistry`, `ConversionTable`, `SeriesFactory`, `CUToken` (implementasi), `BondVault`, `PrimarySale`, `OrderBook`, `RedemptionManager`, `PanelArbitrator`, `PrintIndex`, `ReferenceFeed`, `EASGate` atau `RegistryGate`, `TimelockController` | `<label>.json` → `contracts` |
 | Infrastruktur | `MockUSDC`, `EAS` + `SchemaRegistry` (self-deploy di RH, existing di Arbitrum Sepolia), schema UID `ParticipantVerified`, Safe tim | `infra.json` → `mockUsdc`, `eas`, `schemas`, `safe` |
-| Token series | `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612` (seed) dan `CU-JKT-H100-2610` (di-forge live; belum ada saat submission) [D-19] [D-25] | `<label>.json` → `seed.series` |
+| Token series | `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612` (seed) dan `CU-JKT-H100-2610` (di-forge live; belum ada saat submission) [D-19] [D-25]. Penamaan series demo yang live: D-82 (`CU-JKT-H100-2611`); token `2610` di sel ini catatan historis | `<label>.json` → `seed.series` |
 | Peran | treasury, panel (anggota + threshold), feed signer, minter, `adminMode` | `<label>.json` → `roles` |
 
 Catatan:
 - Alamat yang dicantumkan = deployment **panggung** `stage-1` (05 §4.6 butir 4), bukan latihan.
 - Clone `CUToken` per series tidak diverifikasi satu per satu; tampilkan implementasi + catatan [TBD 04 T4-05].
 - Kalau verifikasi EAS self-deploy gagal: tulis atribusi + link source EAS dan tandai "unverified" (04 §6.4, P4-16).
-- Series 2610 baru ada setelah demo live; README menyebut "forged live on stage; see video" agar juri tidak mencarinya di manifest submission [APPROVED P9-10].
+- Series 2610 baru ada setelah demo live; README menyebut "forged live on stage; see video" agar juri tidak mencarinya di manifest submission [APPROVED P9-10]. **[D-82]** Nama series demo yang sudah live = `CU-JKT-H100-2611` (seed series 1, tidak diubah). Kalimat `2610` di atas tetap catatan D-19.
 
 ### 3.4 Cara menjalankan (prosa, mengikuti 04)
 
@@ -337,7 +342,7 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 **Hari demo: reachability RPC (catatan ~14:15 WIB)**
 - [ ] Cek RPC publik `https://rpc.testnet.chain.robinhood.com` bisa dijangkau dari browser dan wifi yang dipakai demo (intermiten untuk sebagian koneksi, `ERR_SSL_UNRECOGNIZED_NAME_ALERT`; lihat 04 §4.2). Siapkan RPC cadangan (`INDEXER_RPC_URL_BACKUP`, PENDING keputusan Fatih) atau rekaman video backup (§4.5) sebagai fallback.
 
-**Penyesuaian UI Designer (D-67..D-74, APPROVED 14:40 WIB; cek di URL Vercel produksi setelah freeze UI 09:00)**
+**Penyesuaian UI Designer (D-67..D-74, APPROVED 14:40 WIB; cek di URL Vercel produksi setelah freeze UI 09:00).** **[D-81]** Guard CI grep `affiliated|endorsed by` dibatalkan (awaiting Fatih's direct confirmation in group). Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah.
 - [ ] `/markets/1`: series page muat satu viewport di 1280 px, tanpa celah kosong; judul tidak menampilkan "ID" kosong; pill Verified tidak wrap di tengah teks; tidak ada link biru browser (D-67).
 - [ ] Detail redemption: jumlah state 36 px mono, baris aksi tunggal, "Default paid. $45.00 sent to 0x2222...2222." teks terbesar (D-68).
 - [ ] Header: "Connect wallet" sekunder; satu aksi ember per halaman (D-69).
@@ -345,7 +350,7 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 - [ ] Build produksi tidak menampilkan banner mock maupun pemilih snapshot (D-71).
 - [ ] Kontras teks ≤ 13 px ≥ 4.5:1; tidak ada teks ber-opacity (D-72).
 - [ ] Tab Provider: "Requests", "Series", "Bond", "Agent", aktif bergaris bawah ember (D-73).
-- [ ] `tokens.v2.css` terpasang; `<title>` per route; skip link; grep guard `affiliated|endorsed by` hijau (D-74).
+- [ ] `tokens.v2.css` terpasang; `<title>` per route; skip link (D-74). Guard CI grep `affiliated|endorsed by` tidak dicek: dibatalkan (D-81).
 
 **Kontrak dan deployment**
 - [ ] Semua kontrak inti di `stage-1.json` ber-`verified: true` (atau dicatat alasannya, mis. EAS self-deploy, 04 §6.4).
@@ -407,7 +412,7 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 | # | Divergensi | Sumber | Penanganan |
 |---|---|---|---|
 | X9-1 | Waktu rekaman video backup: "paling lambat Sab 06:00" vs "Sab 06–10 + rekam video backup" | design §7.3, §8; PK §11.1; 05 §0 vs 05 §4.6 butir 3 | v1 wajib Sab 06:00, v2 opsional Sab 06–10 (P9-03) |
-| X9-2 | Naskah video mengikuti 05 §2.3 (ter-retime, 2610), bukan design §7.4 / PK §11.1 (2611, default di 1:45) | 05 P5-06, 07 D-19 | ikuti 05 |
+| X9-2 | Naskah video mengikuti 05 §2.3 (ter-retime, 2610), bukan design §7.4 / PK §11.1 (2611, default di 1:45). Penamaan live demo: D-82; baris divergensi ini historis | 05 P5-06, 07 D-19 | ikuti 05 |
 | X9-3 | Blok atribusi design §7.5 hanya menyebut OZ, EAS, Foundry, wagmi/viem; stack memakai lebih banyak pihak ketiga yang juga perlu diatribusi (aturan 10) | design §7.5 vs stack §4, OQR §5 aturan 10 | blok tetap kata per kata + daftar tambahan (P9-07) |
 | X9-4 | Blok atribusi menyebut "Deployed on Robinhood Chain Testnet (fallback: Arbitrum Sepolia)", sedangkan design §11.3 meminta baris chain README diganti saat no-go | design §7.5 vs §11.3 | kalimat tambahan di bawah blok (P9-08) |
 | X9-5 | notes §1 hanya mewajibkan "demo video **or** presentation materials"; dokumen ini merekomendasikan keduanya | notes §1 | rekomendasi, bukan kewajiban |
@@ -431,9 +436,9 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 | D-13 | "fees go to the team multisig" | §3.1 #9 |
 | D-16 | kalimat VWAP onchain vs winsorized API | §3.1 #8, §3.5 |
 | D-17 | 10 level order book (feasibility, limitation) | §3.5, §5.1 |
-| D-19 | series panggung 2610 + flag `allowOpenWindow` | §3.3, §3.5, §4.2 |
+| D-19 | series panggung 2610 + flag `allowOpenWindow`. Penamaan live: D-82 (`CU-JKT-H100-2611`); baris ini historis | §3.3, §3.5, §4.2 |
 | D-20 | tabel "demo parameters" vs prod | §3.1 #7, §3.5 |
-| D-25 | 4 series (3 seed + 1 live) di tabel alamat | §3.3 |
+| D-25 | 4 series (3 seed + 1 live) di tabel alamat. Penamaan live: D-82; baris ini historis | §3.3 |
 | D-26 | receipt hash + mock GPU output berlabel | §3.5 |
 | D-30 | listing permit + 1 tx (adegan video) | §4.2 |
 | D-31 | klaim default dari wallet tanpa KYB (demo walkthrough, video) | §3.1 #4, §4.2, §4.4 |
@@ -458,7 +463,7 @@ Semua D-xx di atas **APPROVED** di 07 (Jum 9 Okt 2026 ~09:40 WIB, Fatih); D-10 A
 | P9-07 | Daftar atribusi tambahan di bawah blok design §7.5 | §3.1, §6 R5 |
 | P9-08 | Kalimat tambahan di bawah blok atribusi kalau live di Arbitrum Sepolia | §3.2 |
 | P9-09 | README memuat tabel alamat ringkas + link `DEPLOYMENTS.md` | §3.3 |
-| P9-10 | README menjelaskan series 2610 di-forge live (tidak ada di manifest submission) | §3.3 |
+| P9-10 | README menjelaskan series 2610 di-forge live (tidak ada di manifest submission). Historis (D-19); nama series demo yang live = D-82 `CU-JKT-H100-2611` | §3.3 |
 | P9-11 | Rekam 1920×1080 dengan zoom browser yang terbaca | §4.3 |
 | P9-12 | Potongan waktu countdown hanya dengan overlay eksplisit | §4.4 |
 | P9-13 | Penanda waktu per adegan di video backup | §4.5 |

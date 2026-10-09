@@ -26,12 +26,13 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 **Changelog Jum 9 Okt 2026 ~11:37 WIB (cadangan `.bak-2026-10-09-pre-1137/`):** go/no-go **GO** ~11:36 WIB di Robinhood Chain Testnet (`46630`); [PR #1](https://github.com/Fatihmaull/paron-robinhood/pull/1) L4 masuk `main`; fallback Arbitrum Sepolia tidak dipicu (§1.4, milestone ≤11:59).
 **Changelog Jum 9 Okt 2026 ~13:25 WIB (cadangan `.bak-2026-10-09-pre-1325/`):** kontrak **stage-1** deployed ~13:20 WIB (PE) di RH Testnet `46630` (`startBlock` `131496617`; verify-deployment lulus; seed 3 series cocok 05); langkah deploy S0 **DONE lebih awal** dari gerbang G2 16:14. Scout set Railway `DEPLOY_LABEL=stage-1` + CORS origin Vercel; menunggu konfirmasi redeploy (§0 milestone).
 **Changelog Jum 9 Okt 2026 13:30 WIB (cadangan `.bak-2026-10-09-pre-1331/`):** Fatih ("oke 1-4, footer not affiliated hapus itu"): D-60..D-63 (perubahan tampilan 06) dan D-64 (footer + teks "not affiliated" dihapus dari produk; disclaimer hanya di pitch deck) APPROVED, lihat 07 §12. **Daftar never-cut kini tepat 3 butir:** claim default dari wallet mana pun; terbitkan KYB live di `/verifier`; satu execute Timelock dari `/admin`. Butir ke-4 (footer) dihapus di §0 dan §4; X8-8 diperbarui.
+**Catatan Jum 9 Okt 2026 (PENDING, 07 D-83, §7):** Safe multisig = rencana roadmap kalau Paron live di mainnet. Peran admin tidak berubah sampai freeze. Usulan aturan kode setelah freeze ada di §7.2; jam dan tag di §0 tidak digeser.
 
 **Tim.** Satu-satunya manusia dan pembuat keputusan = **Fatih** (07 D-08 APPROVED; isian HackQuest tetap "Fatih solo"). Eksekusi build = **4 lane cloud agent** (L1 kontrak, L2 frontend, L3 indexer/API, L4 ops/deploy) dengan **PE sebagai integrator** (merge, review, menjaga kontrak antarmuka) [APPROVED D-59]; PE boleh merge sendiri kalau test hijau (izin tetap Fatih ~11:27 WIB). Hanya Fatih yang menyetujui keputusan; agent tidak mengubah status D-xx.
 
 **Git authorship [APPROVED, Jum 9 Okt ~11:05 WIB; nilai ~11:12 WIB]:** semua commit dari lane agent ber-**author Fatih** (`user.name` = `Fatih Maulana`, `user.email` = `fatihmaulanamail@gmail.com`), bukan identitas agent. Repo: https://github.com/Fatihmaull/paron-robinhood. Aturan lengkap: 04 §9.2; dicek di 09 §7.
 
-**Sumber:** AUDIT §5, §6 (`/workspace/paron-build/AUDIT.md`); design §7.1–§7.4, §8, §11.3; sitemap §9.1 (tier S0–S3, berlaku); 02 §0 (shortlist MUST), §4 (`test_E2E_StageScript`); 03 §4 (fixture mock); 04 §8 (go/no-go), §9.2; 05 §3, §4.6–§4.8; 06 §0.5; 07 §10–§11; 09 §1.2, §7.
+**Sumber:** AUDIT §5, §6 (`AUDIT.md`, tidak di repo); design §7.1–§7.4, §8, §11.3; sitemap §9.1 (tier S0–S3, berlaku); 02 §0 (shortlist MUST), §4 (`test_E2E_StageScript`); 03 §4 (fixture mock); 04 §8 (go/no-go), §9.2; 05 §3, §4.6–§4.8; 06 §0.5; 07 §10–§11; 09 §1.2, §7.
 
 **Legenda:**
 - **T0** = saat Fatih memberi **"go"** untuk mulai build paralel = **Jum 9 Okt 2026 11:14 WIB** (diberikan 11:14 WIB). Jam WIB absolut ditulis di samping setiap waktu T0-relatif.
@@ -254,6 +255,28 @@ Sudah diputuskan Jum ~10:33 WIB: D-10 (URL Vercel), P5-26 (bot otomatis; setup L
 | X8-7 | Cut order AUDIT §6 diawali sandbox (PG-2); 08 menghapusnya | PG-2 DITOLAK Fatih ~11:05 WIB |
 | X8-8 | Sitemap §9.1 punya 3 must-not-cut; 08 sempat menambahkan footer "not affiliated" sebagai butir ke-4. **Digantikan D-64 (13:30 WIB):** footer dihapus, never-cut = 3 butir | AUDIT §6 "Never cut" + 06 §0.2 |
 | X8-9 | Blok hosting (AUDIT EN-4) ditambahkan di L4 sebelum G3 (19:14) | D-58 APPROVED ~11:12 WIB |
+
+---
+
+## 7. Admin sampai freeze, dan usulan setelah freeze
+
+Jam freeze, tag, dan izin merge saat test hijau sudah terkunci di §0, §2.1–§2.3, 04 §9.2, dan 09 §1.2. Bagian ini tidak mengulang jadwal itu.
+
+### 7.1 Peran admin dan roadmap Safe [D-83, PENDING]
+
+Sampai freeze kontrak Sab 06:00 WIB, peran admin tetap seperti D-54: proposer Timelock = Safe + `W-ADMIN` (EOA yang sudah ada), executor terbuka. Tidak ada EOA kedua. Peran admin tidak pindah ke Safe sebelum freeze.
+
+Safe multisig adalah rencana roadmap untuk saat Paron live di mainnet. Bentuk produk penuh (Safe 2-of-3, Timelock, PG-7, EN-2) tetap di `paron-product-plan.md` §4.10 dan tidak disalin ke sini. Status: PENDING, menunggu konfirmasi Fatih (07 §17).
+
+### 7.2 Usulan aturan setelah freeze [PENDING, menunggu konfirmasi Fatih]
+
+Usulan ini membatasi perubahan kode. Milestone video, README, dan submit di §2.2–§2.3 tidak digeser.
+
+- Setelah freeze kontrak Sab 06:00 WIB: tidak ada perubahan kontrak. Selaras dengan baris 06:00 di §2.1.
+- Setelah freeze UI 09:00: hanya perbaikan bug yang memblokir jalur demo S0.
+- Setelah submit internal 11:30: tidak ada merge, kecuali blocker yang diumumkan lebih dulu.
+- Merge hanya kalau test hijau. Ini sudah berlaku (izin merge PE ~11:27 WIB, §1.1, 04 §9.2). Usulan ini tidak menambah izin baru.
+- Tiap freeze memakai tag yang sudah ada: `freeze-contracts` pada 06:00, `freeze-ui` pada 09:00 (§0, 04 §9.2). Tidak ada nama tag baru.
 
 ---
 
