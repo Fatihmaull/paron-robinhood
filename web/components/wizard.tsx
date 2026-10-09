@@ -5,7 +5,7 @@ import { keccak256, parseUnits, stringToHex } from "viem";
 import { useAccount, usePublicClient, useSignTypedData } from "wagmi";
 import { conversionTableAbi, erc20Abi, seriesFactoryAbi } from "@/lib/abi";
 import { ZERO_ADDRESS, chainId, contractAddress, demoPresets } from "@/lib/config";
-import { formatFactor, formatUsd } from "@/lib/format";
+import { canonicalAddress, formatFactor, formatUsd } from "@/lib/format";
 import { useGpus } from "@/lib/hooks";
 import { signErc2612 } from "@/lib/permit";
 import { factorBps, seriesBondRaw, uint256Of } from "@/lib/settlement";
@@ -59,7 +59,7 @@ const PRESET: Draft = {
   bond: "4.50",
   windowStart: "1790812800",
   windowEnd: "1793491200",
-  symbol: "CU-JKT-H100-2610",
+  symbol: "CU-JKT-H100-2611",
 };
 
 export function ListingWizard() {
@@ -68,7 +68,7 @@ export function ListingWizard() {
   const [step, setStep] = useState(0);
   const [draft, setDraft] = useState<Draft>({
     ...EMPTY,
-    arbitrator: panel !== ZERO_ADDRESS ? panel : EMPTY.arbitrator,
+    arbitrator: panel !== ZERO_ADDRESS ? canonicalAddress(panel) : EMPTY.arbitrator,
   });
   const { address } = useAccount();
   const client = usePublicClient();
@@ -156,7 +156,7 @@ export function ListingWizard() {
       </div>
       {demoPresets() ? (
         <button className="btn ghost" type="button" onClick={() => setDraft((prev) => ({ ...PRESET, arbitrator: prev.arbitrator }))}>
-          Demo preset · 2610 · 500h · $3.00 · bond $4.50 · 60/60/90
+          Demo preset · {PRESET.symbol.slice(-4)} · 500h · $3.00 · bond $4.50 · 60/60/90
         </button>
       ) : null}
       <div style={{ height: 12 }} />

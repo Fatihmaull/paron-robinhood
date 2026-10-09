@@ -53,9 +53,9 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 .nav-links a:hover { color: var(--color-text-primary); text-decoration: none; }
 .nav-spacer { flex: 1; }
-.nav-wallet { display: flex; align-items: center; flex: 0 0 auto; }
+.nav-wallet { display: flex; align-items: center; flex: 0 1 auto; min-width: 0; max-width: 100%; }
 .nav-wallet button,
-.nav-wallet .btn { white-space: nowrap; }
+.nav-wallet .btn { white-space: nowrap; max-width: min(42ch, 46vw); overflow: hidden; text-overflow: ellipsis; }
 .btn.menu-toggle { display: none; }
 @media (min-width: 861px) { .btn.menu-toggle { display: none !important; } }
 
@@ -155,9 +155,10 @@ h1 {
   font-weight: var(--weight-semibold);
   letter-spacing: var(--tracking-tight);
   margin: 0 0 8px;
+  overflow-wrap: anywhere;
 }
 h2 { font-size: var(--text-xs); margin: 0 0 10px; font-weight: 500; }
-.lede { color: var(--color-text-secondary); max-width: 68ch; margin: 0 0 18px; }
+.lede { color: var(--color-text-secondary); max-width: 68ch; margin: 0 0 18px; overflow-wrap: anywhere; }
 .grid { display: grid; gap: var(--space-4); }
 .grid > *, .main > * { min-width: 0; }
 .table-scroll { overflow-x: auto; max-width: 100%; }

@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { shortId } from "@/lib/format";
+import { canonicalAddress, shortId } from "@/lib/format";
 
 export function WalletConnect() {
   const { address, isConnected } = useAccount();
@@ -27,7 +27,7 @@ export function WalletConnect() {
 
   return (
     <div className="menu">
-      <button className="btn ghost" type="button" onClick={() => setOpen((v) => !v)}>
+      <button className="btn ghost" type="button" title={canonicalAddress(address)} onClick={() => setOpen((v) => !v)}>
         {shortId(address)}
       </button>
       {open ? (
