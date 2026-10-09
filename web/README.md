@@ -15,7 +15,7 @@ pnpm test
 pnpm build
 ```
 
-`next build` throws when `VERCEL=1` and `NEXT_PUBLIC_DATA_SOURCE=mock`.
+`next build` throws when `VERCEL=1` and `NEXT_PUBLIC_DATA_SOURCE=mock` is set explicitly. Unset defaults to `live` when `NEXT_PUBLIC_API_BASE_URL` is set (or on Vercel).
 
 ## Environment
 
@@ -26,7 +26,7 @@ Copy `.env.example` to `.env.local`. Every value is public. Do not put keys here
 | `NEXT_PUBLIC_CHAIN_ID` | `46630` (Robinhood Chain Testnet) or `421614` (Arbitrum Sepolia fallback). |
 | `NEXT_PUBLIC_RPC_URL` | HTTP RPC. Default `https://rpc.testnet.chain.robinhood.com`. |
 | `NEXT_PUBLIC_API_BASE_URL` | Indexer API origin, no trailing path beyond `/v1` if that is the base. |
-| `NEXT_PUBLIC_DATA_SOURCE` | `mock` (fixtures, transactions disabled) or `live`. |
+| `NEXT_PUBLIC_DATA_SOURCE` | Optional. `live` (or `api`) or `mock` (fixtures, transactions disabled). Unset: live if API base set, else mock. |
 | `NEXT_PUBLIC_DEPLOY_LABEL` | Manifest name under `deployments/<chainId>/`. Default `stage-1`. |
 | `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` | Set to enable RainbowKit. Empty uses the injected browser wallet. |
 | `NEXT_PUBLIC_DEMO_PRESETS` | `true` shows the listing-wizard demo preset. |

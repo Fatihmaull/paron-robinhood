@@ -94,6 +94,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   font-size: var(--text-xs);
   z-index: var(--z-banner);
 }
+.banner.info,
 .banner.mock { background: var(--color-info-subtle); color: var(--color-info); }
 .banner.warn { background: var(--color-warn-subtle); color: var(--color-warn); }
 .banner.danger { background: var(--color-danger-subtle); color: var(--color-danger); }
