@@ -1,0 +1,14 @@
+{
+  "name": "paron",
+  "private": true,
+  "version": "0.0.0",
+  "packageManager": "pnpm@12.9.1",
+  "engines": {
+    "node": "24.21.0"
+  },
+  "scripts": {
+    "abi": "pnpm --filter @paron/contracts abi",
+    "test:contracts": "pnpm --filter @paron/contracts test",
+    "build:contracts": "pnpm --filter @paron/contracts build"
+  }
+}

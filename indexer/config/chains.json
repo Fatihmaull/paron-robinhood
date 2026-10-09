@@ -1,0 +1,38 @@
+{
+  "robinhoodTestnet": {
+    "key": "robinhoodTestnet",
+    "role": "primary",
+    "chainId": 46630,
+    "viemChain": "robinhoodTestnet",
+    "rpc": {
+      "public": "https://rpc.testnet.chain.robinhood.com",
+      "primaryEnv": "RH_TESTNET_RPC",
+      "backupEnv": "RH_TESTNET_RPC_BACKUP"
+    },
+    "explorer": {
+      "url": "https://explorer.testnet.chain.robinhood.com"
+    },
+    "eas": {
+      "mode": "self-deploy",
+      "address": "self-deploy"
+    }
+  },
+  "arbitrumSepolia": {
+    "key": "arbitrumSepolia",
+    "role": "fallback",
+    "chainId": 421614,
+    "viemChain": "arbitrumSepolia",
+    "rpc": {
+      "public": "https://sepolia-rollup.arbitrum.io/rpc",
+      "primaryEnv": "ARB_SEPOLIA_RPC",
+      "backupEnv": "ARB_SEPOLIA_RPC_BACKUP"
+    },
+    "explorer": {
+      "url": "https://sepolia.arbiscan.io"
+    },
+    "eas": {
+      "mode": "existing",
+      "address": "0x2521021fc8BF070473E1e1801D3c7B4aB701E1dE"
+    }
+  }
+}

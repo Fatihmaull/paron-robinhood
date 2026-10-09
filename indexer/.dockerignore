@@ -1,0 +1,8 @@
+node_modules
+.ponder
+dist
+.env
+.env.*
+!.env.example
+test
+**/*.spec.ts

@@ -1,0 +1,8 @@
+{
+  "name": "@paron/shared",
+  "version": "0.0.0",
+  "private": true,
+  "exports": {
+    "./abi/*": "./abi/*"
+  }
+}

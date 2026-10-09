@@ -1,0 +1,6 @@
+packages:
+  - "contracts"
+  - "shared"
+  - "indexer"
+  - "web"
+  - "agents"

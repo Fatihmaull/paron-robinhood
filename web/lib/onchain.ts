@@ -95,6 +95,7 @@ type Stored = {
   symbol: string;
   paused: boolean;
   finalized: boolean;
+  soldSupply: bigint;
 };
 
 function countryCode(raw: `0x${string}`): string {
@@ -129,12 +130,12 @@ export async function readSeries(client: PublicClient, seriesId: string): Promis
   if (stored.provider === "0x0000000000000000000000000000000000000000") return null;
   let saleOpen = false;
   try {
-    saleOpen = await client.readContract({
+    saleOpen = (await client.readContract({
       address: factory,
       abi: seriesFactoryAbi,
       functionName: "isSaleOpen",
       args: [BigInt(seriesId)],
-    });
+    })) as boolean;
   } catch {
     saleOpen = false;
   }
@@ -165,7 +166,7 @@ export async function readSeries(client: PublicClient, seriesId: string): Promis
     volume_24h_usd: "0.000000",
     bond_per_cu: bondPer,
     coverage: "—",
-    sold_supply: "0",
+    sold_supply: cuString(stored.soldSupply),
     total_supply: "0",
     provider: {
       address: stored.provider,
@@ -195,12 +196,19 @@ export async function readSeries(client: PublicClient, seriesId: string): Promis
   try {
     const vault = contractAddress("bondVault");
     if (vault !== "0x0000000000000000000000000000000000000000") {
-      const bond = await client.readContract({
+      const bond = (await client.readContract({
         address: vault,
         abi: bondVaultAbi,
         functionName: "bondOf",
         args: [BigInt(seriesId)],
-      });
+      })) as {
+        deposited: bigint;
+        balance: bigint;
+        released: bigint;
+        slashed: bigint;
+        finalized: boolean;
+        withdrawn: boolean;
+      };
       row.bond = {
         deposited: formatRaw6(bond.deposited),
         balance: formatRaw6(bond.balance),
@@ -220,18 +228,18 @@ export async function readSeries(client: PublicClient, seriesId: string): Promis
 export async function readOrderBook(client: PublicClient, seriesId: string): Promise<OrderBook> {
   const book = requireAddr("orderBook");
   const depth = 10n;
-  const [bidPrices, bidQtys] = await client.readContract({
+  const [bidPrices, bidQtys] = (await client.readContract({
     address: book,
     abi: orderBookAbi,
     functionName: "getLevels",
     args: [BigInt(seriesId), 0, depth],
-  });
-  const [askPrices, askQtys] = await client.readContract({
+  })) as readonly [readonly bigint[], readonly bigint[]];
+  const [askPrices, askQtys] = (await client.readContract({
     address: book,
     abi: orderBookAbi,
     functionName: "getLevels",
     args: [BigInt(seriesId), 1, depth],
-  });
+  })) as readonly [readonly bigint[], readonly bigint[]];
   const map = (prices: readonly bigint[], qtys: readonly bigint[]) =>
     prices.map((price, i) => ({
       price: formatRaw6(price),
@@ -254,12 +262,25 @@ export async function readOrderBook(client: PublicClient, seriesId: string): Pro
 
 export async function readRedemption(client: PublicClient, reqId: string): Promise<Redemption | null> {
   const rm = requireAddr("redemptionManager");
-  const request = await client.readContract({
+  const request = (await client.readContract({
     address: rm,
     abi: redemptionManagerAbi,
     functionName: "getRequest",
     args: [BigInt(reqId)],
-  });
+  })) as {
+    seriesId: bigint;
+    holder: Address;
+    amount: bigint;
+    deliveryRef: `0x${string}`;
+    receiptHash: `0x${string}`;
+    state: number;
+    requestedAt: bigint;
+    ackDeadline: bigint;
+    deliveryDeadline: bigint;
+    disputeDeadline: bigint;
+    rulingDeadline: bigint;
+    disputeBond: bigint;
+  };
   if (request.holder === "0x0000000000000000000000000000000000000000") return null;
   const state = await client.readContract({
     address: rm,
@@ -269,12 +290,12 @@ export async function readRedemption(client: PublicClient, reqId: string): Promi
   });
   let reopened = 0n;
   try {
-    reopened = await client.readContract({
+    reopened = (await client.readContract({
       address: rm,
       abi: redemptionManagerAbi,
       functionName: "reopenedFrom",
       args: [BigInt(reqId)],
-    });
+    })) as bigint;
   } catch {
     reopened = 0n;
   }
@@ -319,32 +340,34 @@ export async function readRedemption(client: PublicClient, reqId: string): Promi
 export async function readIndex(client: PublicClient, gpu = "H100-SXM-80GB"): Promise<IndexStrip> {
   const index = requireAddr("printIndex");
   const key = stringToHex(gpu, { size: 32 });
-  const status = await client.readContract({
+  const statusRound = (await client.readContract({
     address: index,
     abi: printIndexAbi,
     functionName: "statusOf",
     args: [key],
-  });
-  const round = await client.readContract({
+  })) as readonly [number, bigint];
+  const status = statusRound[0];
+  const round = (await client.readContract({
     address: index,
     abi: printIndexAbi,
     functionName: "latestRoundData",
     args: [key],
-  });
+  })) as readonly [bigint, bigint, bigint, bigint, bigint];
   let reference: IndexStrip["reference"] = { value: null, label: "synthetic demo data" };
   const feed = contractAddress("referenceFeed");
   if (feed !== "0x0000000000000000000000000000000000000000") {
     try {
-      const ref = await client.readContract({
+      const ref = (await client.readContract({
         address: feed,
         abi: referenceFeedAbi,
         functionName: "latestRoundData",
-      });
-      const label = await client.readContract({
+        args: [key],
+      })) as readonly [bigint, bigint, bigint, bigint, bigint];
+      const label = (await client.readContract({
         address: feed,
         abi: referenceFeedAbi,
         functionName: "label",
-      });
+      })) as string;
       reference = { value: formatRaw6(BigInt(ref[1])), label: label || "synthetic demo data" };
     } catch {
       reference = { value: null, label: "synthetic demo data" };
