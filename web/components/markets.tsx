@@ -109,7 +109,7 @@ export function Markets({ headline = false }: { headline?: boolean }) {
           </tbody>
         </table>
         </div>
-        <p className="help">Record = delivered CU / defaulted CU / voluntary defaults, counted across the provider. {showSeriesCount(notice) ? ` ${rows.length} series.` : null}</p>
+        <p className="help">Record = delivered CU / defaulted CU / voluntary defaults, counted across the provider. {showSeriesCount(notice, query.isLoading) ? ` ${rows.length} series.` : null}</p>
       </Panel>
     </div>
   );

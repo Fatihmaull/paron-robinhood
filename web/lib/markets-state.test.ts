@@ -27,3 +27,8 @@ test("no error means synced: count shown", () => {
   assert.equal(marketsNotice(null), null);
   assert.equal(showSeriesCount(null), true);
 });
+
+test("loading hides the series count, including a zero", () => {
+  assert.equal(showSeriesCount(null, true), false);
+  assert.equal(showSeriesCount({ kind: "error", text: "boom" }, true), false);
+});

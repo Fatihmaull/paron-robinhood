@@ -1,3 +1,5 @@
+import { getAddress, isAddress } from "viem";
+
 const SCALE6 = 1_000_000n;
 
 export function parseUsd6(amount: string): bigint {
@@ -81,10 +83,16 @@ export function formatCoverage(coverage: string | null | undefined): string {
   return `${whole}.${(frac + "00").slice(0, 2)}×`;
 }
 
+/** EIP-55 so an API lowercase address and an onchain checksummed address render the same. */
+export function canonicalAddress(value: string): string {
+  return isAddress(value) ? getAddress(value) : value;
+}
+
 export function shortId(value: string | null | undefined): string {
   if (!value) return "—";
-  if (value.length < 12) return value;
-  return `${value.slice(0, 6)}…${value.slice(-4)}`;
+  const shown = canonicalAddress(value);
+  if (shown.length < 12) return shown;
+  return `${shown.slice(0, 6)}…${shown.slice(-4)}`;
 }
 
 export function formatWib(ms: number): string {

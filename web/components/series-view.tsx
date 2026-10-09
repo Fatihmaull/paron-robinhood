@@ -8,6 +8,7 @@ import { useAccount, usePublicClient, useSignTypedData } from "wagmi";
 import { erc20Abi, orderBookAbi, primarySaleAbi, redemptionManagerAbi } from "@/lib/abi";
 import { ZERO_ADDRESS, chainId, contractAddress } from "@/lib/config";
 import { formatCoverage, formatCu, formatFactor, formatMaxCost, formatUsd, formatWib, isWholeCu, quotePrimary, shortId } from "@/lib/format";
+import type { SeriesDetail } from "@/lib/types";
 import { useBook, usePrints, useSeries } from "@/lib/hooks";
 import { signErc2612 } from "@/lib/permit";
 import { bidUsdcAllowance, uint256Of } from "@/lib/settlement";
@@ -32,25 +33,33 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
   return (
     <div>
       <p className="kicker">Series {seriesId}</p>
-      {detail ? <h1>{detail.symbol}</h1> : series.isLoading ? <div className="skeleton title-sk" role="status" aria-label="Loading series" data-testid="series-skeleton" /> : <h1>Series not found</h1>}
+      <div className="series-title">
+        {detail ? <h1 className="series-symbol">{detail.symbol}</h1> : series.isLoading ? <div className="skeleton title-sk" role="status" aria-label="Loading series" data-testid="series-skeleton" /> : <h1>Series not found</h1>}
+        {detail ? <SeriesStatus detail={detail} /> : null}
+        {detail?.provider.verified ? <span className="pill ok">Verified by Paron demo verifier</span> : null}
+      </div>
       {series.isError ? <p className="bad">{series.error instanceof Error ? series.error.message : "Couldn't load this series."}</p> : null}
+      {detail ? <StatsRibbon detail={detail} /> : null}
       {detail ? (
         <p className="lede">
-          {detail.gpu_type} · factor {formatFactor(detail.factor)} · {detail.country ? `country ${detail.country} · ` : ""}window {detail.delivery_window || "—"} · provider {shortId(detail.provider.address)}
-          {detail.provider.verified ? <>{" "}<span className="pill ok">Verified by Paron demo verifier</span></> : null}
+          {detail.gpu_type} · factor {formatFactor(detail.factor)}
+          {detail.country ? ` · country ${detail.country}` : ""}
+          {seriesId ? ` · ID ${seriesId}` : ""}
+          {` · window ${detail.delivery_window || "—"}`}
+          {` · provider ${shortId(detail.provider.address)}`}
         </p>
       ) : null}
       <div className="tabs">
         <Link href={`/markets/${seriesId}`} data-active={tab === "overview"}>Overview</Link>
         <Link href={`/buy/${seriesId}`} data-active={tab === "buy"}>Buy</Link>
         <Link href={`/trade/${seriesId}`} data-active={tab === "trade"}>Trade</Link>
-        <Link href="/trade/leverage">Leverage</Link>
+        <Link href="/trade/leverage" className="tab-with-pill">Leverage <span className="pill outline">Coming soon</span></Link>
       </div>
       <div className="terminal">
         <div className="t-chart">
           <Panel title="Prints">
             {onchainTape ? <p>{TAPE_UNAVAILABLE}</p> : null}
-            {tape.length > 0 ? <PrintChart prints={tape} /> : <p className="muted">No prints for this series in the current snapshot.</p>}
+            {tape.length > 0 ? <PrintChart prints={tape} /> : <p className="muted">No prints yet.</p>}
             <div className="table-scroll">
             <table>
               <thead><tr><th>Time</th><th>Price</th><th>Qty</th><th>Notional</th></tr></thead>
@@ -132,6 +141,26 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
         </div>
       </div>
     </div>
+  );
+}
+
+function SeriesStatus({ detail }: { detail: SeriesDetail }) {
+  if (detail.finalized) return <span className="pill neutral">Finalized</span>;
+  if (detail.paused) return <span className="pill warn">Paused</span>;
+  if (detail.sale_open) return <span className="pill sale">Sale open</span>;
+  return <span className="pill outline">Sale closed</span>;
+}
+
+function StatsRibbon({ detail }: { detail: SeriesDetail }) {
+  const record = `${detail.provider.delivered_cu} / ${detail.provider.defaulted_cu} / ${detail.provider.voluntary_defaulted_cu}`;
+  return (
+    <dl className="stats-ribbon">
+      <div><dt>Last</dt><dd>{detail.last_price ? `${formatUsd(detail.last_price)}/CU` : "—"}</dd></div>
+      <div><dt>24h vol</dt><dd>{formatCu(detail.volume_24h_cu)}</dd></div>
+      <div><dt>Bond/CU</dt><dd>{formatUsd(detail.bond_per_cu)}</dd></div>
+      <div><dt>Coverage</dt><dd>{formatCoverage(detail.coverage)}</dd></div>
+      <div><dt>Record</dt><dd>{record}</dd></div>
+    </dl>
   );
 }
 

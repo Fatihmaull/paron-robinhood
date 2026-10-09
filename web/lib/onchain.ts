@@ -15,7 +15,7 @@ import {
   seriesFactoryAbi,
 } from "./abi";
 import { contractAddress, contractsConfigured } from "./config";
-import { formatRaw6 } from "./format";
+import { canonicalAddress, formatRaw6 } from "./format";
 import type { IndexStrip, OrderBook, Redemption, SeriesDetail, SeriesRow } from "./types";
 
 export class OnchainUnavailable extends Error {
@@ -156,7 +156,7 @@ export async function readSeries(client: PublicClient, seriesId: string): Promis
   const row: SeriesDetail = {
     series_id: seriesId,
     symbol: stored.symbol,
-    token: stored.token,
+    token: canonicalAddress(stored.token),
     gpu,
     gpu_type: gpuKeyOf(stored.gpuModel),
     factor: factorString(stored.factor),
@@ -180,7 +180,7 @@ export async function readSeries(client: PublicClient, seriesId: string): Promis
     sold_supply: cuString(stored.soldSupply),
     total_supply: "0",
     provider: {
-      address: stored.provider,
+      address: canonicalAddress(stored.provider),
       verified: false,
       status: "ACTIVE",
       delivered_cu: "0",
@@ -193,7 +193,7 @@ export async function readSeries(client: PublicClient, seriesId: string): Promis
       delivery_window_secs: Number(stored.deliveryWindow),
       dispute_window_secs: Number(stored.disputeWindow),
       min_redemption_cu: cuString(stored.minRedemption),
-      arbitrator: stored.arbitrator,
+      arbitrator: canonicalAddress(stored.arbitrator),
       spec_hash: stored.specHash,
       terms_hash: stored.termsHash,
     },
@@ -315,7 +315,7 @@ export async function readRedemption(client: PublicClient, reqId: string): Promi
     req_id: reqId,
     series_id: request.seriesId.toString(),
     symbol: "",
-    holder: request.holder,
+    holder: canonicalAddress(request.holder),
     provider: "0x0000000000000000000000000000000000000000",
     amount_cu: cuString(request.amount),
     claim_usd: "0.000000",
