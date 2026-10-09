@@ -10,7 +10,7 @@ export default function DataPage() {
   return (
     <div>
       <h1>Prints</h1>
-      <p className="lede">Eligible H100 prints from the fixture tape. CSV export matches the data contract columns.</p>
+      <p className="lede">Eligible H100 prints. CSV export matches the data contract columns.</p>
       {query.data?.origin === "onchain" ? <p>{TAPE_UNAVAILABLE}</p> : null}
       <div className="table-scroll">
       <table>

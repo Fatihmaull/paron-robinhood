@@ -43,14 +43,14 @@ export function activeDeadline(row: Redemption): number | null {
 
 export function RedemptionView({ reqId }: { reqId: string }) {
   const query = useRedemption(reqId);
-  const { nowMs, clockLabel, snap } = useData();
+  const { nowMs, clockLabel } = useData();
   const row = query.data?.data;
   if (query.isLoading) return <p className="muted">Loading redemption…</p>;
   if (!row) {
     return (
       <div>
-        <h1>Redemption #{reqId}</h1>
-        <p>This request is not in snapshot {snap}. Switch to t2 for request 2 before the claim, or t3 after it.</p>
+        <h1>Request not found.</h1>
+        <p>Request not found.</p>
       </div>
     );
   }

@@ -146,7 +146,7 @@ export function ListingWizard() {
     <div>
       <p className="kicker">Provider</p>
       <h1>List capacity</h1>
-      <p className="lede">Three steps. The bond is approved to BondVault, then the series is created. Permit is tried first.</p>
+      <p className="lede">Three steps. The bond is approved to BondVault, then the series is created.</p>
       <div className="tabs">
         {["GPU and size", "Terms", "Review"].map((label, index) => (
           <button key={label} type="button" data-active={step === index} onClick={() => setStep(index)}>
@@ -263,7 +263,7 @@ export function ListingWizard() {
           ) : null}
         </div>
       </Panel>
-      <Panel title="Preview">
+      <Panel>
         <p className="preview-sym">{draft.symbol || "CU-——"}</p>
         <p className="help">
           {draft.hours || "—"} hours · {draft.gpu} · factor {factor ? formatFactor(factor) : "—"}

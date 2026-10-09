@@ -11,7 +11,6 @@ import { formatCountdown, formatCu, formatUsd, formatWib, shortId } from "@/lib/
 import { useProviderAccount, useProviderQueue } from "@/lib/hooks";
 import type { Redemption } from "@/lib/types";
 import { activeDeadline, useProviderNow } from "./redemption-view";
-import { useData } from "./providers";
 import { useSend } from "./tx";
 import { Field, Panel, TxButton } from "./ui";
 
@@ -65,7 +64,7 @@ export function ProviderConsole({ focus }: { focus?: string }) {
       </div>
       {tab === "requests" ? (
         <div className="grid">
-          {rows.length === 0 ? <Panel><p className="muted">No open requests in this snapshot.</p></Panel> : null}
+          {rows.length === 0 ? <Panel><p className="muted">No open requests.</p></Panel> : null}
           {rows.map((row) => (
             <RequestCard key={row.req_id} row={row} highlight={focus === row.req_id} />
           ))}
@@ -101,7 +100,6 @@ export function ProviderConsole({ focus }: { focus?: string }) {
 
 function RequestCard({ row, highlight }: { row: Redemption; highlight: boolean }) {
   const nowMs = useProviderNow();
-  const { snap } = useData();
   const deadline = activeDeadline(row);
   const before = deadline != null && beforeDeadlineOpen(nowMs, deadline);
   const wantsDecline = row.actions.includes("DECLINE_AND_PAY") || row.state === "REQUESTED" || row.state === "ACKNOWLEDGED";
@@ -115,7 +113,6 @@ function RequestCard({ row, highlight }: { row: Redemption; highlight: boolean }
     <Panel title={`Request #${row.req_id} · ${row.state}`}>
       <p>{row.symbol} · {formatCu(row.amount_cu)} · claim {formatUsd(row.claim_usd)}</p>
       {deadline ? <p className="help">Deadline {formatWib(deadline)} (server time). Card clock {formatWib(nowMs)}.</p> : null}
-      {snap === "t1" ? <p className="help">This card uses the pre-deadline provider fixture clock so Ack and Decline & pay stay reachable.</p> : null}
       <div className="actions">
         {(row.actions.includes("ACK") || (row.state === "REQUESTED" && before)) && before ? (
           <TxButton

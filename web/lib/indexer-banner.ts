@@ -7,8 +7,7 @@ export type HealthSnapshot = {
   lag_blocks?: number | null;
 };
 
-const COPY =
-  "Indexer catching up (block {indexed} of {head}). Onchain actions still work; lists may lag a few seconds.";
+const COPY = "Indexer is catching up to the latest blocks; data may lag briefly.";
 
 /** Banner only when /v1/health says unsynced, or the indexer is more than 20 blocks behind. */
 export function catchupBanner(health: HealthSnapshot | null): string | null {
@@ -19,8 +18,5 @@ export function catchupBanner(health: HealthSnapshot | null): string | null {
   if (lag == null && indexed != null && head != null) lag = Math.max(0, head - indexed);
   const behind = health.synced === false || (lag != null && lag > INDEXER_LAG_BLOCKS);
   if (!behind) return null;
-  return COPY.replace("{indexed}", indexed == null ? "—" : String(indexed)).replace(
-    "{head}",
-    head == null ? "—" : String(head),
-  );
+  return COPY;
 }

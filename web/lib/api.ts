@@ -82,7 +82,7 @@ async function withFallback<T>(
 ): Promise<LoadResult<T>> {
   if (source === "mock") {
     const env = mock();
-    if (!env) throw new ApiError("NOT_FOUND", "Not in this fixture snapshot.");
+    if (!env) throw new ApiError("NOT_FOUND", "Not found.");
     return { ...env, origin: "mock" };
   }
   try {
