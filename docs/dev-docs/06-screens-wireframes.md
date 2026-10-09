@@ -154,11 +154,11 @@ Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe �
 
 **[D-75..D-80, APPROVED ~15:34 WIB, 07 §16]** P1–P6: banner syncing hanya jika `synced:false` atau lag > 20 blok, warna info (D-75); kalimat banner yang live = D-84; skeleton pulse opacity, "0 series." tetap tersembunyi saat loading (D-76); tab Leverage di `/markets/[id]` berlabel "Coming soon", tanpa aksi (D-77); tiket Buy hanya copy produk (D-78); uang `$3,240.00`, max cost 2 desimal (D-79); beranda dipadatkan, mobile 390 px, connect wallet satu baris (D-80).
 
-**[D-81]** Guard CI grep `affiliated|endorsed by` (butir D-74) dibatalkan. Tidak ada grep itu di CI. Status: PENDING (awaiting Fatih's direct confirmation in group). `copy-guard.test.ts` tidak diubah.
+**[D-81, APPROVED Fatih langsung 2026-10-09 17:01 WIB]** Guard CI grep `affiliated|endorsed by` (butir D-74) dibatalkan. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah.
 
 **[D-84, APPROVED Fatih langsung 2026-10-09 16:39 WIB]** Banner syncing, warna info. Kalimat persis: "Indexer is catching up to the latest blocks; data may lag briefly." Muncul hanya jika `synced:false` atau lag > 20 blok.
 
-**[D-85, APPROVED sama]** Tab series mengikuti D-67 (Bond, Terms, Redemptions, Reputation). Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap, dan sisa itu dicatat di sini. Pada `main` `93f8e60` tab halaman series masih Overview, Buy, Trade, Leverage.
+**[D-85, APPROVED sama]** Tab series mengikuti D-67 (Bond, Terms, Redemptions, Reputation). Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap, dan sisa itu dicatat di sini. Pada `main` `93f8e60` tab halaman series masih Overview, Buy, Trade, Leverage. Syarat jam 09:00 itu [SUPERSEDED D-90]. PR #51 sudah di `main` (belum live di web).
 
 **[D-86, APPROVED sama]** `/redemptions/1` dan `/disputes/1` saat request tidak ada: "Request not found."
 

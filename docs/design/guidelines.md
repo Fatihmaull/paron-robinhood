@@ -110,4 +110,4 @@ Tab label "Leverage" + outline pill "Coming soon". Page = one panel with the exa
 3. Load IBM Plex Sans + Mono with `next/font/google` (variables `--font-plex-sans`, `--font-plex-mono`); body → `var(--font-sans)`.
 4. Replace the scaffold text "PARON" brand link with `logo/paron-lockup.svg` (as `next/image` or inline SVG); add `favicon.svg` as `app/icon.svg`.
 5. Restyle `.btn` (radius 4, ember), `.tabs` (underline), `.panel` (flat), `.chip` (radius 4) per the tokens above; add `.pill` variants from `preview.html`.
-6. Check: utility bar on every route; Claim default is the only red-filled button; no lime anywhere (`grep -i "d6ff4a\|ccff00\|00c805" web/`). The `affiliated|endorsed by` grep is not a CI check: cancelled (D-81, awaiting Fatih's direct confirmation in group).
+6. Check: utility bar on every route; Claim default is the only red-filled button; no lime anywhere (`grep -i "d6ff4a\|ccff00\|00c805" web/`). The `affiliated|endorsed by` grep is not a CI check: cancelled (D-81, APPROVED by Fatih directly on 2026-10-09 17:01 WIB).

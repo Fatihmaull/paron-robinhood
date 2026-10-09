@@ -26,7 +26,8 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 **Changelog Jum 9 Okt 2026 ~11:37 WIB (cadangan `.bak-2026-10-09-pre-1137/`):** go/no-go **GO** ~11:36 WIB di Robinhood Chain Testnet (`46630`); [PR #1](https://github.com/Fatihmaull/paron-robinhood/pull/1) L4 masuk `main`; fallback Arbitrum Sepolia tidak dipicu (§1.4, milestone ≤11:59).
 **Changelog Jum 9 Okt 2026 ~13:25 WIB (cadangan `.bak-2026-10-09-pre-1325/`):** kontrak **stage-1** deployed ~13:20 WIB (PE) di RH Testnet `46630` (`startBlock` `131496617`; verify-deployment lulus; seed 3 series cocok 05); langkah deploy S0 **DONE lebih awal** dari gerbang G2 16:14. Scout set Railway `DEPLOY_LABEL=stage-1` + CORS origin Vercel; menunggu konfirmasi redeploy (§0 milestone).
 **Changelog Jum 9 Okt 2026 13:30 WIB (cadangan `.bak-2026-10-09-pre-1331/`):** Fatih ("oke 1-4, footer not affiliated hapus itu"): D-60..D-63 (perubahan tampilan 06) dan D-64 (footer + teks "not affiliated" dihapus dari produk; disclaimer hanya di pitch deck) APPROVED, lihat 07 §12. **Daftar never-cut kini tepat 3 butir:** claim default dari wallet mana pun; terbitkan KYB live di `/verifier`; satu execute Timelock dari `/admin`. Butir ke-4 (footer) dihapus di §0 dan §4; X8-8 diperbarui.
-**Catatan Jum 9 Okt 2026 (PENDING, 07 D-83, §7):** Safe multisig = rencana roadmap kalau Paron live di mainnet. Peran admin tidak berubah sampai freeze. Usulan aturan kode setelah freeze ada di §7.2; jam dan tag di §0 tidak digeser.
+**Catatan Jum 9 Okt 2026 (historis, sebelum 17:01 WIB; saat itu PENDING, 07 D-83, §7):** Safe multisig = rencana roadmap kalau Paron live di mainnet. Peran admin tidak berubah sampai freeze. Usulan aturan kode setelah freeze ada di §7.2; jam dan tag di §0 tidak digeser.
+**Catatan 2026-10-09 17:01 WIB (APPROVED, Fatih langsung, 07 §20):** D-83 APPROVED (Safe di mainnet nanti; admin tidak berubah, tanpa EOA kedua, tanpa pindah ke Safe). D-90 membatalkan aturan freeze kontrak, aturan freeze UI, dan aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Detail: §0 dan §7.
 
 **Tim.** Satu-satunya manusia dan pembuat keputusan = **Fatih** (07 D-08 APPROVED; isian HackQuest tetap "Fatih solo"). Eksekusi build = **4 lane cloud agent** (L1 kontrak, L2 frontend, L3 indexer/API, L4 ops/deploy) dengan **PE sebagai integrator** (merge, review, menjaga kontrak antarmuka) [APPROVED D-59]; PE boleh merge sendiri kalau test hijau (izin tetap Fatih ~11:27 WIB). Hanya Fatih yang menyetujui keputusan; agent tidak mengubah status D-xx.
 
@@ -36,7 +37,7 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 
 **Legenda:**
 - **T0** = saat Fatih memberi **"go"** untuk mulai build paralel = **Jum 9 Okt 2026 11:14 WIB** (diberikan 11:14 WIB). Jam WIB absolut ditulis di samping setiap waktu T0-relatif.
-- **Jangkar jam tetap** (tidak ikut T0): tidur Sab 02:00–03:30, freeze kontrak Sab 06:00, freeze UI 09:00, submit 11:30, tenggat keras Sab 12:00. Dengan T0 = 11:14, blok lane terakhir (→T0+14h) selesai Sab 01:14, jadi tidak menabrak tidur; 01:14–02:00 = buffer integrasi + G4.
+- **Jangkar jam tetap** (tidak ikut T0): tidur Sab 02:00–03:30, dan **tenggat keras Sab 12:00**. Freeze kontrak 06:00, freeze UI 09:00, dan submit internal 11:30 adalah catatan historis [SUPERSEDED D-90] dan tidak mengikat. Dengan T0 = 11:14, blok lane terakhir (→T0+14h) selesai Sab 01:14, jadi tidak menabrak tidur; 01:14–02:00 = buffer integrasi + G4.
 - **[usulan 08]** = urutan atau durasi yang diusulkan dokumen ini. Tidak ada di sumber kanonik; boleh digeser selama tenggat terkunci tidak berubah.
 - **Done-check** = kondisi yang harus benar sebelum pindah blok. Kalau gagal, ikuti aturan **checkpoint** (§3) dan **cut order** (§4). Jangan memperpanjang blok diam-diam.
 - Durasi tiap blok adalah estimasi, bukan jaminan (sitemap §9.1).
@@ -44,6 +45,8 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 ---
 
 ## 0. Tenggat terkunci dan milestone utama
+
+**[D-90, APPROVED Fatih langsung 2026-10-09 17:01 WIB]** Tidak ada aturan freeze kontrak, tidak ada aturan freeze UI, dan tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Baris 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 di tabel ini, di §2, di §3, dan di Lampiran A adalah catatan historis, bukan jadwal yang mengikat. **Tenggat keras tetap Sab 2026-10-10 12:00 WIB.**
 
 | Waktu | Milestone | Sumber |
 |---|---|---|
@@ -54,12 +57,12 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 | **T0+8h = Jum 19:14** | **S0 selesai**: OrderBook, PrintIndex, PanelArbitrator, `invariant_BondCoversSupply`, **`test_E2E_StageScript`** hijau; frontend di API live + fallback onchain; deployment **latihan** di chain terpilih (gerbang G3) | AUDIT §6, sitemap §9.1 |
 | **T0+14h = Sab 01:14** (buffer + G4 sampai 02:00) | **S1 selesai**: `/ops/keepers`, `/verifier`, `/admin`, agent + kill switch, bot trader, `/demo` (tanpa sandbox) (gerbang G4) | AUDIT §6, sitemap §9.1 |
 | Sab 02:00–03:30 | Tidur (semua lane berhenti; tidak ada merge) | AUDIT §6 |
-| **Sab 06:00** | **Freeze kontrak** (tag `freeze-contracts`) + **video backup v1**; deployment **panggung** dari kode beku | design §7.3, §8; 05 §4.6; 09 §1.2 |
+| **Sab 06:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze kontrak (tag `freeze-contracts`, tidak dipakai) + video backup v1; deployment panggung dari kode beku. Jam ini tidak mengikat | design §7.3, §8; 05 §4.6; 09 §1.2 |
 | Sab 08:00 | README final (termasuk atribusi Grok Bot, 09 R5) | 09 §1.2 |
-| **Sab 09:00** | **Freeze UI** (tag `freeze-ui`) | design §7.3, 09 §1.2 |
+| **Sab 09:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze UI (tag `freeze-ui`, tidak dipakai). Jam ini tidak mengikat | design §7.3, 09 §1.2 |
 | Sab 10:00 | Isian HackQuest final + video submission terunggah | 09 §1.2 |
-| **Sab 11:30** | **Submit internal** di HackQuest; tag `submission` | design §7.3, 09 §1.2 |
-| **Sab 12:00** | **Tenggat keras** | notes §2 |
+| **Sab 11:30** | **[HISTORIS D-90]** Submit internal di HackQuest; tag `submission`. Jam 11:30 tidak mengikat. Submit tetap dilakukan Fatih sendiri | design §7.3, 09 §1.2 |
+| **Sab 12:00** | **Tenggat keras** (tetap mengikat) | notes §2 |
 | Min 11 Okt | Demo Day (kalau masuk shortlist); checklist T−24/T−60/T−10 | 05 §4.7, 09 §1.2 |
 
 **Tidak boleh dipotong (sitemap §9.1 + AUDIT §6; tepat 3 butir sejak D-64, 13:30 WIB):**
@@ -100,8 +103,8 @@ Footer "not affiliated" **bukan lagi** butir never-cut: dihapus dari produk (D-6
 | **T0+8h → T0+14h** (Jum 19:14 → Sab 01:14) | Test SHOULD, perbaikan | S1: `/ops/keepers`; `/verifier` (EOA `W-VERIFIER`) [APPROVED D-54]; `/admin` schedule → execute (executor terbuka) [APPROVED D-54]; `/demo` checklist **tanpa sandbox** (PG-2 DITOLAK) | E23, `config-changes` | Agent + kill switch (timebox 15 menit, catatan EN-11 di bawah; fallback E); bot trader otomatis (P5-26) |
 | **T0+14h → Sab 02:00** (01:14–02:00) | Buffer: perbaikan, merge PE | Buffer S1 | Buffer | Gerbang **G4** di latihan (§1.5) |
 | **Sab 02:00–03:30** | tidur | tidur | tidur | tidur |
-| **Sab 03:30–06:00** | S2 kontrak **hanya kalau test hijau**; **freeze 06:00** | S2: `/arbiter` (D-43), revoke, raise price, tab leverage "Coming soon", legal | — | Rencana deploy panggung |
-| **Sab 06:00–11:30** | §2.2–§2.3 (deploy panggung, video v1, README dengan known limitation dari audit, freeze UI 09:00, submit 11:30) | | | |
+| **Sab 03:30–06:00** | S2 kontrak **hanya kalau test hijau**; **freeze 06:00 [HISTORIS, SUPERSEDED D-90]** | S2: `/arbiter` (D-43), revoke, raise price, tab leverage "Coming soon", legal | — | Rencana deploy panggung |
+| **Sab 06:00–11:30** | §2.2–§2.3 (deploy panggung, video v1, README dengan known limitation dari audit, freeze UI 09:00, submit 11:30). **[HISTORIS D-90]** Jam 06:00, 09:00, dan 11:30 tidak mengikat. Tag `freeze-ui` tidak dipakai | | | |
 
 **Catatan EN-11 (L4, kill switch):** alur D-42 (halaman HTTPS → `http://127.0.0.1`) bergantung pada browser (Private Network Access, Safari). Uji panggilan HTTPS → localhost **pertama kali**; kalau gagal, langsung pakai **fallback E** (env / jendela agent). Debug maksimal **15 menit**.
 
@@ -135,7 +138,9 @@ Footer "not affiliated" **bukan lagi** butir never-cut: dihapus dari produk (D-6
 
 ## 2. Sabtu 10 Okt
 
-### 2.1 Tidur, S2, freeze (02:00 → 06:00)
+**[D-90]** Baris freeze dan jam 06:00, 09:00, serta 11:30 di §2.1–§2.3 adalah historis dan tidak mengikat. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai **[SUPERSEDED / CANCELLED D-90]**. Tenggat keras 12:00 tetap. Tabel di bawah tidak dihapus.
+
+### 2.1 Tidur, S2, freeze (02:00 → 06:00) [jam freeze historis, D-90]
 
 Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); blok S2 di bawah dikerjakan L2 (frontend), persiapan freeze oleh L1 + PE; L3/L4 hanya perbaikan dan menyiapkan script deploy panggung (dijalankan PE, §1.1).
 
@@ -146,9 +151,9 @@ Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); 
 | 04:30–05:15 | S2 #2: revoke di `/verifier/attestations`; raise price di tab provider `/markets/[seriesId]`; tab `/trade/leverage` "Coming soon" (statis, ±15 menit, copy 06 §0.5); `/legal/risk` + `/legal/disclaimer` (link dari utility bar; tanpa teks "not affiliated", D-64) | Halaman S2 | Setiap item bisa dibuka; leverage tanpa form, tanpa tx, tanpa angka |
 | 05:15–05:30 | S2 #3 (kalau sempat): `/status` ringan; `/docs/contracts` = tabel alamat di README + link | — | — |
 | 05:30–06:00 | Persiapan freeze: semua test Foundry dijalankan; test MUST yang masih merah dicatat sebagai known limitation di README [usulan 08]; diff terakhir di-review | Daftar test hijau/merah | Tidak ada perubahan kontrak tanpa test |
-| **06:00** | **Freeze kontrak**: tag `freeze-contracts`. Setelah ini kontrak tidak diubah | Tag | Tag ada di remote |
+| **06:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze kontrak: tag `freeze-contracts` tidak dipakai. Tidak ada larangan perubahan kontrak pada jam ini | Tag | Tag ada di remote (rencana lama; tag tidak dipakai) |
 
-**Penyesuaian UI Designer [APPROVED D-67..D-74, Jum 9 Okt 2026 14:40 WIB, Fatih]:** PE mengerjakan semuanya dalam **satu PR kecil** (L2 frontend) sebelum freeze UI Sab 09:00 WIB; PR terpisah dari PR `docs/`. Isi: series page terminal satu viewport (D-67), kartu redemption (D-68), Connect wallet sekunder (D-69), tabel mobile + Menu (D-70), banner dev-only (D-71), kontras (D-72), tab Provider (D-73), `tokens.v2.css` + `<title>` + skip link (D-74). Urutan kalau waktu sempit: D-70, D-71, D-72, D-69, D-73, D-68, lalu D-67 (fallback D-67: hanya `align-items:start` dan Buy/Place order di samping Market). Designer memverifikasi ulang di live setelah deploy (07 §15). Tidak mengubah daftar never-cut (3 butir).
+**Penyesuaian UI Designer [APPROVED D-67..D-74, Jum 9 Okt 2026 14:40 WIB, Fatih]:** PE mengerjakan semuanya dalam **satu PR kecil** (L2 frontend). Batas "sebelum freeze UI Sab 09:00 WIB" [SUPERSEDED D-90] tidak mengikat. PR terpisah dari PR `docs/`. Isi: series page terminal satu viewport (D-67), kartu redemption (D-68), Connect wallet sekunder (D-69), tabel mobile + Menu (D-70), banner dev-only (D-71), kontras (D-72), tab Provider (D-73), `tokens.v2.css` + `<title>` + skip link (D-74). Urutan kalau waktu sempit: D-70, D-71, D-72, D-69, D-73, D-68, lalu D-67 (fallback D-67: hanya `align-items:start` dan Buy/Place order di samping Market). Designer memverifikasi ulang di live setelah deploy (07 §15). Tidak mengubah daftar never-cut (3 butir).
 
 ### 2.2 Panggung, video, README, freeze UI (06:00 → 10:00)
 
@@ -158,7 +163,7 @@ Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); 
 | 06:40–07:20 | **Video backup v1**: rekam naskah 05 fase 3 (bot trader otomatis, 05 §2.5) di deployment **latihan** atau anvil, **bukan** panggung (05 §4.6 butir 3); simpan di 2 perangkat (design §8); penanda waktu per adegan [APPROVED P9-13] | File video backup | Video bisa diputar dari 2 perangkat |
 | 07:20–08:00 | README final: URL app = URL Vercel bawaan (D-10), alamat panggung dari `DEPLOYMENTS.md`, blok atribusi design §7.5 + kalimat atribusi Grok Bot (09 R5, APPROVED ~11:05 WIB: "Dibangun oleh Fatih Maulana dengan bantuan Grok Bot" / "Built by Fatih Maulana with help from Grok Bot"), bagian License = MIT + link `LICENSE` (T9-06), catatan known limitation (termasuk celah S7 kalau S2 #1 gagal), footnote "not affiliated" | README final | Semua link README terbuka dari jendela private |
 | 08:00–09:00 | Polish UI terakhir (empty/error state, countdown) + **gladi #1 dan #2** (latihan/anvil). Gladi #1: bot otomatis; gladi #2: bot sengaja tidak di-arm, latih **trigger manual** (05 §2.5) | Catatan gladi + jarak S-02 → ask | Naskah 2:30 selesai tanpa intervensi; bot terpicu tepat sekali; trigger manual teruji |
-| **09:00** | **Freeze UI**: tag `freeze-ui`; build frontend final menunjuk manifest panggung | Tag + URL Vercel bawaan final (D-10) | URL Vercel menampilkan state panggung |
+| **09:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze UI: tag `freeze-ui` tidak dipakai | Tag + URL Vercel bawaan final (D-10) | URL Vercel menampilkan state panggung |
 | 09:00–09:30 | **Gladi #3** di latihan/anvil dengan build beku, bot otomatis | — | Lulus atau catat fallback 05 §4.8 (level 2b = bot; level 2 = fallback onchain kalau API mati) |
 | 09:30–10:00 | Video submission (naskah ter-retime, target ≤ 3:00, P9-05); unggah; cek bisa diputar tanpa login. Host video = T9-07 | Link video | Link terbuka dari jendela private |
 
@@ -169,9 +174,9 @@ Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); 
 | 10:00 | Semua isian HackQuest final (09 §2); info tim = Fatih solo | Teks isian | 8 isian terisi |
 | 10:00–11:15 | Checklist pra-submit 09 §7 (link, verifikasi kontrak, repo publik, tag, guardrail merek, tidak ada secret, **author semua commit = Fatih**) | Checklist dicentang | Semua butir 09 §7 ✅ |
 | 11:15–11:30 | Buffer | — | — |
-| **11:30** | **Submit** di HackQuest; tag `submission`; tangkapan layar konfirmasi + waktu | Bukti submit | Halaman konfirmasi tersimpan |
+| **11:30** | **[HISTORIS D-90]** Submit di HackQuest; tag `submission`; tangkapan layar konfirmasi + waktu. Jam 11:30 tidak mengikat. Yang menekan submit = Fatih sendiri | Bukti submit | Halaman konfirmasi tersimpan |
 | 11:30–12:00 | Buffer: hanya koreksi teks isian kalau form mengizinkan. Deployment panggung dan README alamat tidak disentuh (05 §4.6 butir 5) | — | — |
-| **12:00** | Tenggat keras. Setelah ini: tidur | — | — |
+| **12:00** | **Tenggat keras** (tetap mengikat, D-90). Setelah ini: tidur | — | — |
 
 **Setelah submit:** Sab sore checklist T−24 (05 §4.7); Min 11 Okt checklist T−60 / T−10 (05 §4.7); slot demo [TBD T9-04].
 
@@ -188,9 +193,9 @@ Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); 
 | **T0+5h = 16:14 (G2)** | Shortlist #1–#15 hijau, halaman S0 di mock, handler inti jalan? | Tunda test SHOULD/NICE ke Sab 03:30; jangan tunda #6 (claim default) dan #14 (isolasi bond). L2 tetap di mock sampai L3 siap |
 | **T0+8h = 19:14 (G3)** | `test_E2E_StageScript` hijau dan S0 bisa diklik penuh di anvil dengan API live? | Perbaiki E2E maksimal 30 menit (s.d. 19:44); S0 maksimal +1,5 jam (s.d. 20:44) dengan memakan blok S1 sesuai cut order §4; deploy latihan tetap malam ini |
 | **Sab 02:00 (G4)** | Tiga must-not-cut S1 sudah terbukti? | Lanjutkan yang belum (tidur dipotong jadi 45 menit); S2 mulai dari cut order §4 |
-| **Sab 06:00** | Kontrak siap beku? | Freeze tetap 06:00. Bug yang tersisa dicatat sebagai known limitation, tidak diperbaiki di kontrak |
-| **Sab 09:00** | UI siap beku? | Freeze tetap 09:00; fitur yang belum jadi disembunyikan dari navigasi |
-| **Sab 11:30** | Submit internal terkirim? | Submit apa pun yang ada sebelum 12:00; video backup v1 dipakai kalau video submission belum jadi |
+| **Sab 06:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Kontrak siap beku? | Jam 06:00 tidak mengikat. Tidak ada aturan freeze kontrak |
+| **Sab 09:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** UI siap beku? | Jam 09:00 tidak mengikat. Tidak ada aturan freeze UI |
+| **Sab 11:30** | **[HISTORIS D-90]** Submit internal terkirim? | Jam 11:30 tidak mengikat. Tenggat keras tetap 12:00. Video backup v1 dipakai kalau video submission belum jadi |
 
 ---
 
@@ -258,31 +263,33 @@ Sudah diputuskan Jum ~10:33 WIB: D-10 (URL Vercel), P5-26 (bot otomatis; setup L
 
 ---
 
-## 7. Admin sampai freeze, dan usulan setelah freeze
+## 7. Admin, roadmap Safe, dan aturan setelah freeze
 
-Jam freeze, tag, dan izin merge saat test hijau sudah terkunci di §0, §2.1–§2.3, 04 §9.2, dan 09 §1.2. Bagian ini tidak mengulang jadwal itu.
+Jam freeze dan tag `freeze-*` tidak lagi mengikat [D-90]. Izin merge saat test hijau (PE, ~11:27 WIB) tidak diubah oleh bagian ini.
 
-### 7.1 Peran admin dan roadmap Safe [D-83, PENDING]
+### 7.1 Peran admin dan roadmap Safe [D-83, APPROVED]
 
-Sampai freeze kontrak Sab 06:00 WIB, peran admin tetap seperti D-54: proposer Timelock = Safe + `W-ADMIN` (EOA yang sudah ada), executor terbuka. Tidak ada EOA kedua. Peran admin tidak pindah ke Safe sebelum freeze.
+**[D-83, APPROVED Fatih langsung 2026-10-09 17:01 WIB.]** Safe multisig adalah rencana roadmap untuk saat Paron live di mainnet nanti. Peran admin tidak berubah: tetap seperti D-54 (proposer Timelock = Safe + `W-ADMIN` yang sudah ada, executor terbuka). Tidak ada EOA kedua. Peran admin tidak pindah ke Safe.
 
-Safe multisig adalah rencana roadmap untuk saat Paron live di mainnet. Bentuk produk penuh (Safe 2-of-3, Timelock, PG-7, EN-2) tetap di `paron-product-plan.md` §4.10 dan tidak disalin ke sini. Status: PENDING, menunggu konfirmasi Fatih (07 §17).
+Kalimat lama "sampai freeze kontrak Sab 06:00" [SUPERSEDED D-90]: tidak ada freeze, jadi tidak ada batas jam itu. Bentuk produk penuh (Safe 2-of-3, Timelock, PG-7, EN-2) tetap di `paron-product-plan.md` §4.10 dan tidak disalin ke sini.
 
-### 7.2 Usulan aturan setelah freeze [PENDING, menunggu konfirmasi Fatih]
+### 7.2 Usulan aturan setelah freeze [SUPERSEDED / CANCELLED D-90]
+
+**[SUPERSEDED / CANCELLED D-90, APPROVED Fatih langsung 2026-10-09 17:01 WIB.]** Aturan di bawah tidak berlaku. Tidak ada freeze kontrak, tidak ada freeze UI, tidak ada aturan setelah freeze, dan tag `freeze-contracts` serta `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB tidak mengikat. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Teks usulan dipertahankan sebagai riwayat.
 
 Usulan ini membatasi perubahan kode. Milestone video, README, dan submit di §2.2–§2.3 tidak digeser.
 
-- Setelah freeze kontrak Sab 06:00 WIB: tidak ada perubahan kontrak. Selaras dengan baris 06:00 di §2.1.
-- Setelah freeze UI 09:00: hanya perbaikan bug yang memblokir jalur demo S0.
-- Setelah submit internal 11:30: tidak ada merge, kecuali blocker yang diumumkan lebih dulu.
-- Merge hanya kalau test hijau. Ini sudah berlaku (izin merge PE ~11:27 WIB, §1.1, 04 §9.2). Usulan ini tidak menambah izin baru.
-- Tiap freeze memakai tag yang sudah ada: `freeze-contracts` pada 06:00, `freeze-ui` pada 09:00 (§0, 04 §9.2). Tidak ada nama tag baru.
+- Setelah freeze kontrak Sab 06:00 WIB: tidak ada perubahan kontrak. Selaras dengan baris 06:00 di §2.1. **[SUPERSEDED / CANCELLED D-90]**
+- Setelah freeze UI 09:00: hanya perbaikan bug yang memblokir jalur demo S0. **[SUPERSEDED / CANCELLED D-90]**
+- Setelah submit internal 11:30: tidak ada merge, kecuali blocker yang diumumkan lebih dulu. **[SUPERSEDED / CANCELLED D-90]**
+- Merge hanya kalau test hijau. Ini sudah berlaku (izin merge PE ~11:27 WIB, §1.1, 04 §9.2). Usulan ini tidak menambah izin baru. Izin merge itu tidak dibatalkan oleh D-90.
+- Tiap freeze memakai tag yang sudah ada: `freeze-contracts` pada 06:00, `freeze-ui` pada 09:00 (§0, 04 §9.2). Tidak ada nama tag baru. **[SUPERSEDED / CANCELLED D-90]** Tag itu tidak dipakai.
 
 ---
 
 ## Lampiran A. Rencana serial solo lama (DIGANTIKAN, hanya referensi)
 
-> **Digantikan Jum 9 Okt 2026 ~11:05 WIB oleh §1 (D-59 APPROVED).** Isi di bawah adalah teks APPROVED-BASIS versi ~10:35 WIB, disalin apa adanya untuk referensi; jangan dipakai sebagai jadwal. Beberapa jam sudah lewat (go/no-go 10:30 belum terjadi). Bagian Sabtu (§2) masih berlaku dan sudah ada di atas.
+> **Digantikan Jum 9 Okt 2026 ~11:05 WIB oleh §1 (D-59 APPROVED).** Isi di bawah adalah teks APPROVED-BASIS versi ~10:35 WIB, disalin apa adanya untuk referensi; jangan dipakai sebagai jadwal. Beberapa jam sudah lewat (go/no-go 10:30 belum terjadi). Bagian Sabtu (§2) ada di atas dan, untuk jam freeze, historis [D-90]. Tag `freeze-contracts` dan `freeze-ui` di lampiran ini **[SUPERSEDED / CANCELLED D-90]** dan tidak dipakai.
 
 ### A.0 Milestone lama (Jumat)
 
@@ -295,12 +302,12 @@ Usulan ini membatasi perubahan kode. Milestone video, README, dan submit di §2.
 | **Jum 20:00** | **S0 selesai**: jalur demo ±8 halaman jalan di anvil | sitemap §9.1 |
 | Jum ~21:00 | Deployment **latihan** di chain terpilih (deploy + verify + seed fase 0–2) | design §7.3, 05 §4.6 |
 | **Sab 02:00** | **S1 selesai**: `/ops/keepers`, `/verifier`, `/admin`, agent toggle, `/demo` | sitemap §9.1 |
-| **Sab 06:00** | **Freeze kontrak** (tag `freeze-contracts`) + **video backup v1** direkam; deployment **panggung** dibuat dari kode beku | design §7.3, §8; 05 §4.6; 09 §1.2 |
+| **Sab 06:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze kontrak (tag `freeze-contracts`, tidak dipakai) + video backup v1 direkam; deployment panggung dibuat dari kode beku | design §7.3, §8; 05 §4.6; 09 §1.2 |
 | Sab 08:00 | README final | 09 §1.2 [APPROVED P9] |
-| **Sab 09:00** | **Freeze UI** (tag `freeze-ui`) | design §7.3, 09 §1.2 |
+| **Sab 09:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze UI (tag `freeze-ui`, tidak dipakai) | design §7.3, 09 §1.2 |
 | Sab 10:00 | Isian HackQuest final + video submission terunggah | 09 §1.2 |
-| **Sab 11:30** | **Submit internal** di HackQuest; tag `submission` | design §7.3, 09 §1.2 |
-| **Sab 12:00** | **Tenggat keras** | notes §2 |
+| **Sab 11:30** | **[HISTORIS D-90]** Submit internal di HackQuest; tag `submission`. Jam 11:30 tidak mengikat | design §7.3, 09 §1.2 |
+| **Sab 12:00** | **Tenggat keras** (tetap mengikat) | notes §2 |
 | Min 11 Okt | Demo Day (kalau masuk shortlist); checklist T−24/T−60/T−10 | 05 §4.7, 09 §1.2 |
 
 ### A.1 Jumat 9 Okt (rencana solo)
