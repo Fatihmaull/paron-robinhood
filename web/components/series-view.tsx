@@ -75,6 +75,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
           {detail ? <Ticket seriesId={seriesId} detail={detail} initial={tab === "trade" ? "order" : "buy"} /> : null}
         </div>
         <div className="t-info">
+          <div className="info-col">
           {detail ? (
             <Panel title="Market">
               <div className="row"><span>Primary</span><span>{formatUsd(detail.primary_price)}/CU</span></div>
@@ -87,6 +88,12 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
               <div className="row"><span>Sale</span><span>{detail.sale_open ? "Open" : "Closed"}{detail.paused ? " · paused" : ""}</span></div>
             </Panel>
           ) : null}
+          <Panel title="Reputation">
+            <p>{detail ? `${detail.provider.delivered_cu} delivered · ${detail.provider.defaulted_cu} defaulted · ${detail.provider.voluntary_defaulted_cu} voluntary` : "—"}</p>
+            <p className="help">Provider-wide record, so both Jakarta rows share it.</p>
+          </Panel>
+          </div>
+          <div className="info-col">
           {detail?.bond ? (
             <Panel title="Bond">
               <BondBar deposited={detail.bond.deposited} balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
@@ -102,6 +109,9 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
               <p className="muted">Vault totals for this series are not in the current fixture. Series 4 carries the full bond record. Bond per CU is {formatUsd(detail.bond_per_cu)}.</p>
             </Panel>
           ) : null}
+          
+          </div>
+          <div className="info-col">
           {detail?.terms ? (
             <Panel title="Terms">
               <div className="row"><span>Ack / delivery / dispute</span><span>{detail.terms.ack_window_secs}s / {detail.terms.delivery_window_secs}s / {detail.terms.dispute_window_secs}s</span></div>
@@ -118,10 +128,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
               <Link href={`/redemptions/new?series=${seriesId}`}>Redeem</Link>
             </Panel>
           ) : null}
-          <Panel title="Reputation">
-            <p>{detail ? `${detail.provider.delivered_cu} delivered · ${detail.provider.defaulted_cu} defaulted · ${detail.provider.voluntary_defaulted_cu} voluntary` : "—"}</p>
-            <p className="help">Provider-wide record, so both Jakarta rows share it.</p>
-          </Panel>
+          </div>
         </div>
       </div>
     </div>
