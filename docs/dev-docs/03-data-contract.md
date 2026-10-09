@@ -32,7 +32,7 @@ Status: **APPROVED-SYNCED, spec saja (bukan kode).** Keputusan 07 dan usulan P3-
 | Database | PGlite saat dev → **Postgres 16/17** saat deploy | stack §4.2 |
 | API | Route **Hono 4.13.13** bawaan Ponder + GraphQL/SQL-over-HTTP Ponder | stack §4.2, PK §5.7 |
 | Chain | Satu chain aktif: Robinhood Chain Testnet (46630) atau Arbitrum Sepolia (421614), dipilih lewat `CHAIN=robinhoodTestnet\|arbitrumSepolia` | design §11.1, stack §3.1 |
-| RPC indexer | Alchemy atau Goldsky Edge, **bukan** RPC publik ("Public RPCs rate-limit, so don't run the indexer on them during the demo") | stack §4.2 |
+| RPC indexer | `INDEXER_RPC_URL`, ulang jeda 400/800/1600 ms, cadangan opsional `INDEXER_RPC_URL_BACKUP` [D-89, APPROVED handler]. Nama env final. Kosong pada cadangan = hanya URL utama. Nilai URL tidak ditulis di dokumen | 04 §4.4, PR #48 |
 | Hosting | **Vercel** project `paron` (frontend, root `web/`) + **Railway** project `paron` (Ponder/API + Postgres, root `indexer/`; tidak tidur). Vercel tidak bisa menjalankan Ponder. **[D-58 / D-10, terisi ~13:08 WIB]** Frontend produksi: `https://paron.vercel.app` (commit `b18b3d4`). API produksi: `https://paron-robinhood-production.up.railway.app/v1` (health 200; `synced:false` sampai kontrak di-deploy; ~14:02 WIB sudah `synced:true`, schema Ponder per build `paron_<sha8>`). Env Vercel yang dipakai: `NEXT_PUBLIC_RPC_URL` + `NEXT_PUBLIC_API_BASE_URL` saja — **`NEXT_PUBLIC_DATA_SOURCE=mock` dilarang di Vercel** (`live` opsional). **CORS (PE ~13:09 WIB):** `API_CORS_ORIGIN` **kosong dulu (historis; final: CORS = `https://paron.vercel.app` [D-58/D-10], `*` hanya default lokal)** (allow all origins; data publik, selaras P3-22); dikunci ke `https://paron.vercel.app` belakangan saat final. Akun login Scout (~11:32 WIB, tanpa kartu); `DATABASE_URL` via `${{Postgres.DATABASE_URL}}` (nilai mentah **tidak** dioper); fallback onchain frontend (05 P5-23) S0-kritis | stack §4.5; AUDIT EN-4; 07 §10.5; Scout ~13:08 WIB |
 | Alternatif | Goldsky subgraph (CLI 13.15.1) / graph-cli 0.98.1, hanya kalau hosting Ponder gagal | stack §4.2 |
 | Endpoint yang disebut sumber | `GET /v1/prints?gpu=&region=&from=&to=&format=csv`, `GET /v1/index/{gpu}` (dengan status), `GET /v1/series/{id}`, `GET /v1/accounts/{addr}/statement` | design §10.3, stack §4.2 |
@@ -72,7 +72,7 @@ Prinsip: **indexer hanya membaca event**; tidak ada data indexer yang dipakai un
 | Kontrak dinamis | Clone `CUToken` per series: alamat diambil dari `SeriesCreated.token` (pola factory Ponder), untuk event `Transfer` → saldo holder | [APPROVED P3-08] |
 | Alamat + start block | Dari output `DeployAll` / `DEPLOYMENTS.md` per chain (doc 04) | stack §4.7 |
 | Alamat EAS | RH Testnet: self-deploy (alamat dari deploy). Arbitrum Sepolia: EAS `0x2521021fc8BF070473E1e1801D3c7B4aB701E1dE` | design §11.1 |
-| RPC | Alchemy / Goldsky Edge (bukan RPC publik) | stack §4.2 |
+| RPC | `INDEXER_RPC_URL` plus opsional `INDEXER_RPC_URL_BACKUP` [D-89]. Nilai URL tidak ditulis di dokumen | 04 §4.4 |
 
 **Reorg / finality (hanya yang dinyatakan sumber):** Robinhood Chain memakai soft confirmation sequencer (~100 ms, klaim docs ⚠️, belum diukur); finality L1 mengikuti batch posting (stack §1.1). RPC publik RH Testnet berperilaku **non-archive** untuk blok lama (OQR, catatan housekeeping: fork anvil gagal "fork from an older block with a non-archive node" sampai di-pin `--fork-block-number = latest-20`). Konfigurasi finality/reorg Ponder dan kebutuhan RPC archive untuk sync historis tidak dinyatakan sumber → **[TBD T3-01]** (cek di go/no-go cek 5 "Ponder syncs one event", design §11.3).
 
@@ -407,7 +407,7 @@ Kolom "Sumber" mengikuti 01 §11: **src** = event disebut dokumen kanonik (stack
 | Waktu di query | `from`/`to` menerima integer ms **atau** ISO-8601 UTC; `from` inklusif, `to` eksklusif | `from`/`to` src; format = [APPROVED P3-21] |
 | Jumlah | String desimal (§1, P3-01) | |
 | Link explorer | Field `explorer_url` = `<explorer>/tx/<tx_hash>` dari `chains.json` (Blockscout RH Testnet `https://explorer.testnet.chain.robinhood.com`, atau `https://sepolia.arbiscan.io`) | design §10.2 G10, §11.1; PK §5.10 |
-| Caching / rate limit | **Tidak dinyatakan sumber** → [TBD T3-03]. Satu-satunya fakta: RPC publik me-rate-limit, jadi indexer memakai Alchemy/Goldsky (stack §4.2) | |
+| Caching / rate limit | **Tidak dinyatakan sumber** → [TBD T3-03]. RPC publik bisa rate-limit. Indexer mengulang panggilan (jeda 400/800/1600 ms) dan memakai `INDEXER_RPC_URL_BACKUP` hanya kalau terisi [D-89] | |
 | CORS | Tidak dinyatakan sumber; frontend Vercel memanggil API di Railway (beda origin) → [APPROVED P3-22, **diperbarui**: CORS = `https://paron.vercel.app` (D-58/D-10); `*` hanya default lokal] (data publik). **PE ~13:09 WIB:** `API_CORS_ORIGIN` **kosong dulu (historis; final: CORS = `https://paron.vercel.app` [D-58/D-10], `*` hanya default lokal)** (allow all origins); dikunci ke `https://paron.vercel.app` belakangan saat final (§0 Hosting) | stack §4.5; 04 `API_CORS_ORIGIN` |
 | GraphQL / SQL-over-HTTP Ponder | Tetap aktif (bawaan Ponder), tetapi **kontrak stabil = REST `/v1`**. Nama di GraphQL mengikuti nama tabel §2.2 dan boleh berubah | stack §4.2; stabilitas = [APPROVED P3-23] |
 

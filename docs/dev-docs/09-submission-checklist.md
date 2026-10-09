@@ -340,7 +340,7 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 - [ ] Link deck (kalau dilampirkan) terbuka.
 
 **Hari demo: reachability RPC (catatan ~14:15 WIB)**
-- [ ] Cek RPC publik `https://rpc.testnet.chain.robinhood.com` bisa dijangkau dari browser dan wifi yang dipakai demo (intermiten untuk sebagian koneksi, `ERR_SSL_UNRECOGNIZED_NAME_ALERT`; lihat 04 §4.2). Siapkan RPC cadangan (`INDEXER_RPC_URL_BACKUP`, PENDING keputusan Fatih) atau rekaman video backup (§4.5) sebagai fallback.
+- [ ] Cek RPC publik `https://rpc.testnet.chain.robinhood.com` bisa dijangkau dari browser dan wifi yang dipakai demo (intermiten untuk sebagian koneksi, `ERR_SSL_UNRECOGNIZED_NAME_ALERT`; lihat 04 §4.2). Nama env cadangan final: `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` [D-89]. Kosong = hanya URL utama. Kegagalan RPC publik di UI = teks redup, bukan merah. Video backup (§4.5) tetap fallback.
 
 **Penyesuaian UI Designer (D-67..D-74, APPROVED 14:40 WIB; cek di URL Vercel produksi setelah freeze UI 09:00).** **[D-81]** Guard CI grep `affiliated|endorsed by` dibatalkan (awaiting Fatih's direct confirmation in group). Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah.
 - [ ] `/markets/1`: series page muat satu viewport di 1280 px, tanpa celah kosong; judul tidak menampilkan "ID" kosong; pill Verified tidak wrap di tengah teks; tidak ada link biru browser (D-67).

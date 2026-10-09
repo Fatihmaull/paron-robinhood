@@ -18,7 +18,7 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P4-xx disetujui Fatih (
 **Changelog Jum 9 Okt 2026 ~13:10 WIB (cadangan `.bak-2026-10-09-pre-1310/`):** URL produksi terisi (Scout ~13:08 WIB): Vercel `https://paron.vercel.app` (project `paron`, root `web/`, commit `b18b3d4`); Railway API `https://paron-robinhood-production.up.railway.app/v1`; env Vercel = `NEXT_PUBLIC_RPC_URL` + `NEXT_PUBLIC_API_BASE_URL` saja (`NEXT_PUBLIC_DATA_SOURCE=mock` dilarang) (§8, §4.4/§4.5).
 **Changelog Jum 9 Okt 2026 ~13:11 WIB (cadangan `.bak-2026-10-09-pre-1310/` sebagai `*.pre-cors-fix-1311.md`):** PE ~13:09 WIB: `API_CORS_ORIGIN` **kosong dulu (historis; digantikan CORS = `https://paron.vercel.app`)** (allow all origins; data publik); dikunci ke `https://paron.vercel.app` belakangan saat final (§8, §4.4).
 **Changelog Jum 9 Okt 2026 ~13:25 WIB (cadangan `.bak-2026-10-09-pre-1325/`):** kontrak **stage-1** sudah di-deploy di Robinhood Chain Testnet (`46630`) ~13:20 WIB (PE, di grup): `startBlock` core = `131496617`; verify-deployment lulus (14 kontrak punya kode, timelock delay 300 dtk, executor terbuka); seed jalan dengan series `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612` (sama dengan contoh 05/D-25; alamat hanya di `deployments/46630/infra.json` + `stage-1.json` di `main`, tidak disalin ke doc). Railway (Scout ~13:20): `DEPLOY_LABEL=stage-1`, `INDEXER_RPC_URL` = RPC publik Robinhood sementara (belum ada RPC pribadi), `API_CORS_ORIGIN=https://paron.vercel.app` (menggantikan catatan 'kosong dulu' PE ~13:09; menunggu konfirmasi redeploy). Vercel/web baca alamat dari manifest (`NEXT_PUBLIC_DEPLOY_LABEL`); **tidak** memakai `NEXT_PUBLIC_ADDR_*` (§7, §8, §4.4/§4.5).
-**Catatan Jum 9 Okt 2026 ~14:15 WIB (PE dan Designer di grup ~14:13 WIB; cadangan `.bak-2026-10-09-pre-1415/`):** **Risiko:** RPC publik Robinhood Chain Testnet `https://rpc.testnet.chain.robinhood.com` intermiten untuk sebagian koneksi browser (`net::ERR_SSL_UNRECOGNIZED_NAME_ALERT`, muncul di `/markets` dan `/portfolio`; `curl` normal). Kemungkinan juga penyebab notifikasi MetaMask "Unable to connect to Robinhood Chain Testnet". Bukan bug app. PE menguatkan web: retry dengan backoff, transport cadangan kalau ada RPC kedua, polling RPC dikurangi (data utama tetap dari indexer), tanpa error merah untuk kegagalan RPC (tanpa perubahan copy). PE merekomendasikan menyiapkan `INDEXER_RPC_URL_BACKUP` (opsional, PENDING RPC provider kedua; Fatih memutuskan/menyediakan; tabel env §4.2). Pengecekan hari demo ada di 09 §7.
+**Catatan Jum 9 Okt 2026 ~14:15 WIB (PE dan Designer di grup ~14:13 WIB; cadangan `.bak-2026-10-09-pre-1415/`):** **Risiko:** RPC publik Robinhood Chain Testnet `https://rpc.testnet.chain.robinhood.com` intermiten untuk sebagian koneksi browser (`net::ERR_SSL_UNRECOGNIZED_NAME_ALERT`, muncul di `/markets` dan `/portfolio`; `curl` normal). Kemungkinan juga penyebab notifikasi MetaMask "Unable to connect to Robinhood Chain Testnet". Bukan bug app. PE menguatkan web: retry dengan backoff, transport cadangan kalau ada RPC kedua, polling RPC dikurangi (data utama tetap dari indexer), tanpa error merah untuk kegagalan RPC (tanpa perubahan copy). PE merekomendasikan menyiapkan `INDEXER_RPC_URL_BACKUP` (opsional, PENDING RPC provider kedua; Fatih memutuskan/menyediakan; tabel env §4.2). Pengecekan hari demo ada di 09 §7. **[D-89]** Nama `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` sekarang final (§4.4, §4.5). Catatan PENDING di kalimat sebelumnya hanya untuk keadaan ~14:15 WIB.
 
 **Catatan Jum 9 Okt 2026 ~14:02 WIB (PE di grup 13:59 WIB; cadangan `.bak-2026-10-09-pre-1402/`):** `DATABASE_SCHEMA` **tidak** lagi tetap `paron`. Penyebab kegagalan sebelumnya: Ponder menolak boot di schema `paron` yang dipakai build lama, sehingga Railway terus melayani container lama. Fix PR #30 (merge): tiap build memakai schema `paron_<sha8>` (8 karakter pertama commit sha). Indexer sehat: `/v1/health` 200 `synced:true`, `/v1/series` mengembalikan 3 series (`CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612`). Tiap deploy backfill ±1 menit, jadi `503 INDEXER_SYNCING` sebentar itu normal.
 
@@ -233,7 +233,7 @@ Dari stack §3.3/§4.1 dan `checks/forge-pragma/foundry.toml` (terbukti mengompi
 
 - **Satu file, dua entri** (`robinhoodTestnet`, `arbitrumSepolia`), dibaca oleh `DeployAll`/`Seed` (lewat `contracts/script/lib`), Ponder, web (saat build) dan agents (lewat `shared/chains`). `CHAIN=robinhoodTestnet|arbitrumSepolia` memilih entri aktif (design §11.1, stack §3.1).
 - Field dasar = daftar stack §3.1 `{chainId, rpc, explorer, verifier, verifierUrl, eas, schemaRegistry, safeMode}`. Field lain = perluasan [APPROVED P4-05].
-- **Tanpa secret.** URL RPC berisi key (Alchemy, Goldsky Edge) tidak ditulis di file. File hanya menyimpan **nama env** yang memegang URL itu.
+- **Tanpa secret.** URL RPC yang memuat secret tidak ditulis di file. File hanya menyimpan **nama env** yang memegang URL itu.
 - **Hanya fakta terverifikasi.** Yang belum diverifikasi = `null` + [TBD]. Alamat yang ditulis disingkat di sumber (`0xcA11…CA11`, `0x4e59…956C`, `0x45CB…d475` dll.) diisi lengkap hanya dari sumber yang menulis lengkap, atau setelah cek `eth_getCode` Jumat.
 - Alamat kontrak **Paron** tidak ada di sini; tempatnya di `deployments/` (§7). Alamat EAS self-deploy RH ditulis di `deployments/46630/infra.json`, dan `chains.json` RH memakai nilai khusus `"self-deploy"`.
 
@@ -249,7 +249,7 @@ Dari stack §3.3/§4.1 dan `checks/forge-pragma/foundry.toml` (terbukti mengompi
 | `parentChain` | string | Ethereum Sepolia ✅ | Ethereum Sepolia | OQR §2 |
 | `rpc.public` | string | `https://rpc.testnet.chain.robinhood.com` ✅ | `https://sepolia-rollup.arbitrum.io/rpc` ✅ | design §11.1 |
 | `rpc.primaryEnv` | string (nama env) | `RH_TESTNET_RPC` (Alchemy) | `ARB_SEPOLIA_RPC` (Alchemy) | stack §4.5 (Alchemy untuk kedua chain); nama env RH = stack §4.7 |
-| `rpc.backupEnv` | string (nama env) | `RH_TESTNET_RPC_BACKUP` (Goldsky Edge; pola URL `https://edge.goldsky.com/standard/evm/46630?key=…`) | `ARB_SEPOLIA_RPC_BACKUP` (QuickNode/Infura, ❓ plan) | design §11.1, stack §4.5 |
+| `rpc.backupEnv` | string (nama env) | `RH_TESTNET_RPC_BACKUP` (nama env saja; nilai tidak ditulis di dokumen) | `ARB_SEPOLIA_RPC_BACKUP` (nama env saja) | design §11.1; nama cadangan indexer/web final di D-89 |
 | `rpc.notes` | string | RPC publik rate-limit dan **non-archive** untuk blok lama; jangan dipakai indexer saat demo | — | stack §4.2, OQR housekeeping |
 | `explorer.url` | string | `https://explorer.testnet.chain.robinhood.com` (Blockscout) ✅ | `https://sepolia.arbiscan.io` ✅ | design §11.1 |
 | `explorer.mirror` | string\|null | `null` | `https://arbitrum-sepolia.blockscout.com` (ada bot check) | design §11.1 |
@@ -311,7 +311,7 @@ Mainnet Robinhood (4663) **tidak** masuk file ini (di luar scope hackathon).
 | Variabel | Wajib | Contoh placeholder | Keterangan | Ref |
 |---|---|---|---|---|
 | `RH_TESTNET_RPC` | ya (RH) | `https://<alchemy-rh-testnet-url-with-key>` | RPC utama Robinhood Testnet | stack §4.7 |
-| `RH_TESTNET_RPC_BACKUP` | tidak | `https://edge.goldsky.com/standard/evm/46630?key=<goldsky-key>` | RPC cadangan | design §11.1 |
+| `RH_TESTNET_RPC_BACKUP` | tidak | `https://<backup-rpc>` | RPC cadangan deploy. Nilai tidak ditulis kalau memuat secret [D-89] | design §11.1 |
 | `ARB_SEPOLIA_RPC` | ya (fallback) | `https://<alchemy-arb-sepolia-url-with-key>` | RPC utama Arbitrum Sepolia | stack §4.5 |
 | `ARB_SEPOLIA_RPC_BACKUP` | tidak | `https://<quicknode-or-infura-url>` | RPC cadangan | design §11.1 |
 | `ETHERSCAN_API_KEY` | ya (fallback) | `<etherscan-v2-key>` | Verifikasi Arbiscan (Etherscan V2) | design §11.1–§11.2 |
@@ -343,8 +343,8 @@ Mainnet Robinhood (4663) **tidak** masuk file ini (di luar scope hackathon).
 | Variabel | Wajib | Contoh placeholder | Keterangan | Ref |
 |---|---|---|---|---|
 | `CHAIN` | ya | `robinhoodTestnet` | Sama dengan root | 03 §0 |
-| `INDEXER_RPC_URL` | ya | `https://rpc.testnet.chain.robinhood.com` | **Sementara (Scout ~13:20 WIB):** RPC publik Robinhood (rate-limited); ganti ke Alchemy/Goldsky/RPC pribadi begitu ada. Ideal: bukan RPC publik | stack §4.2 |
-| `INDEXER_RPC_URL_BACKUP` | tidak | `https://<backup-rpc-provider>` | Cadangan. **Belum terpasang per Jum 9 Okt 15:15 WIB (cek live), menunggu RPC kedua dari Fatih.** **Status PENDING (Jum 9 Okt 2026 ~14:15 WIB):** menunggu RPC provider kedua; Fatih yang memutuskan/menyediakan (key lewat secret input, tidak di chat). Rekomendasi PE. Kalau kosong, indexer dan web tetap jalan dengan RPC publik. Lihat risiko di changelog ~14:15 WIB | stack §4.5 |
+| `INDEXER_RPC_URL` | ya | `https://rpc.testnet.chain.robinhood.com` | RPC indexer. **[D-89, APPROVED handler]** Nama final. Ulang: jeda 400 ms, 800 ms, 1600 ms | PR #48, 07 §19 |
+| `INDEXER_RPC_URL_BACKUP` | tidak | *(kosong)* | **Final [D-89].** Cadangan opsional. Kosong = hanya `INDEXER_RPC_URL`. Nilai URL tidak ditulis di dokumen. Bukan lagi PENDING pada nama env | 07 §19 |
 | `DATABASE_URL` | ya (hosted) | `postgres://<user>:<password>@<host>:5432/<db>` | Kosong = PGlite lokal | stack §4.2 |
 | `DEPLOY_LABEL` | ya | `stage-1` | Manifest yang dibaca untuk alamat + `startBlock` | §7 |
 | `API_PUBLIC_BASE_URL` | ya | `https://paron-robinhood-production.up.railway.app/v1` | Muncul di `explorer_url`/dokumen; URL produksi Railway (D-58 / D-10, Scout ~13:08 WIB); domain kustom menyusul | 03 §3 |
@@ -360,7 +360,7 @@ Mainnet Robinhood (4663) **tidak** masuk file ini (di luar scope hackathon).
 |---|---|---|---|---|
 | `NEXT_PUBLIC_CHAIN_ID` | ya | `46630` | `421614` setelah switch | design §11.3 |
 | `NEXT_PUBLIC_RPC_URL` | ya | `https://rpc.testnet.chain.robinhood.com` | Publik atau key terpisah yang dibatasi domain | [P4-07] |
-| `NEXT_PUBLIC_RPC_URL_BACKUP` | tidak | `https://<restricted-backup-rpc>` | Dipakai saat RPC utama gagal (05 T−60). Nama dibaca di `web/lib/config.ts` (diverifikasi 9 Okt); belum diset di Vercel (menunggu RPC kedua) | 05 §4.7 |
+| `NEXT_PUBLIC_RPC_URL_BACKUP` | tidak | *(kosong)* | **Final [D-89].** Cadangan browser. Kosong = hanya `NEXT_PUBLIC_RPC_URL`. Nilai URL tidak ditulis di dokumen | 07 §19, `web/lib/config.ts` |
 | `NEXT_PUBLIC_API_BASE_URL` | ya | `https://paron-robinhood-production.up.railway.app/v1` | URL produksi Railway (Scout ~13:08 WIB) | 03 §3 |
 | `NEXT_PUBLIC_DATA_SOURCE` | tidak (opsional) | `live` | `mock` (`fixtures/v1/`) atau `live`. **Di Vercel: jangan set `mock`** (build menolak saat `VERCEL=1`); cukup `NEXT_PUBLIC_RPC_URL` + `NEXT_PUBLIC_API_BASE_URL` | 03 P3-37; Scout ~13:08 WIB |
 | `NEXT_PUBLIC_DEPLOY_LABEL` | ya | `stage-1` | Alamat kontrak dibaca dari manifest saat build | §7 |
@@ -552,7 +552,7 @@ Semua cek jalan di Robinhood Chain Testnet antara 09:00 dan 10:30 (design §11.3
 | 2. Deploy + verify | Dijalankan PE dari mesinnya (§4.1 butir 6): `forge script DeployAll` dengan scope `smoke`, `--broadcast --verify`, akun keystore `DEPLOYER_ACCOUNT`, verifier Blockscout | `MockUSDC` + `SchemaRegistry` + `EAS` ter-deploy; `EAS.version()` = "1.4.0"; ketiganya "verified" di Blockscout | 09:45–10:05 | Deploy gagal = **hard fail**. Hanya verifikasi EAS gagal = lulus sebagian (§6.4) |
 | 3. Schema + attestation | Registrasi `ParticipantVerified` (DP-2), satu `attest` dari attester (untuk smoke boleh EOA tim, dicatat), `linkAttestation(uid)` di `EASGate` smoke, lalu `cast call` `isVerified(recipient)` | `isVerified` = true; `entityId` sesuai data | 10:05–10:15 | **Soft fail**: tetap di RH, `GATE_KIND=registry` |
 | 4. Safe 2-of-3 | Buat Safe di Safe{Wallet} (network "Robinhood Testnet") dengan 3 owner (tiga EOA terpisah, semuanya milik Fatih, D-08), threshold 2; eksekusi satu tx uji (mis. transfer 0 ETH ke diri sendiri) dengan 2 tanda tangan | Tx tereksekusi; alamat Safe dicatat di `infra.json` | paralel 09:15–10:15 (C) | **Soft fail**: tetap di RH, `safe.mode = allowlist` (opsi B) |
-| 5. Ponder sync | Ponder (`indexer/`, PGlite lokal) dengan `INDEXER_RPC_URL` (Alchemy/Goldsky, bukan publik) dan `startBlock` dari `smoke-1.json`; indeks satu event (mis. `Transfer` MockUSDC dari mint, atau `Attested`) | Baris muncul di DB/endpoint; jeda event → baris dicatat untuk T4-03 | 10:05–10:20 (C) | RPC lain (backup). Masih gagal = **hard fail** (design §11.3 mewajibkan kelima cek) |
+| 5. Ponder sync | Ponder (`indexer/`, PGlite lokal) dengan `INDEXER_RPC_URL` dan `startBlock` dari `smoke-1.json`; indeks satu event (mis. `Transfer` MockUSDC dari mint, atau `Attested`). Ulang RPC: jeda 400/800/1600 ms [D-89] | Baris muncul di DB/endpoint; jeda event → baris dicatat untuk T4-03 | 10:05–10:20 (C) | `INDEXER_RPC_URL_BACKUP` kalau terisi. Masih gagal = **hard fail** (design §11.3 mewajibkan kelima cek) |
 
 **Keputusan (paling lambat 11:59 WIB = T0+0:45; teks lama: 10:30):**
 - Kelima cek lulus (atau hanya soft fail 3 dan/atau 4) → tetap RH.
@@ -587,7 +587,9 @@ Semua cek jalan di Robinhood Chain Testnet antara 09:00 dan 10:30 (design §11.3
 
 CI tidak pernah memegang key deployer dan tidak pernah broadcast ke testnet [P4-17]. Deploy selalu manual dengan keystore dari **mesin PE** (sebelumnya "laptop A"); cloud agent / lane L4 hanya menyiapkan `DeployAll`, seed, dan manifest, tidak menjalankan broadcast (§4.1 butir 6).
 
-**[D-81]** Guard CI grep `affiliated|endorsed by` (butir terakhir D-74) dibatalkan. Tidak ada job grep itu di CI. Status: awaiting Fatih's direct confirmation in group. `web/lib/copy-guard.test.ts` tetap dan bukan guard ini.
+**[D-81]** Guard CI grep `affiliated|endorsed by` (butir terakhir D-74) dibatalkan. Tidak ada job grep itu di CI. Status: PENDING (awaiting Fatih's direct confirmation in group). `web/lib/copy-guard.test.ts` tetap dan bukan guard ini.
+
+**[D-89]** Tes web (`web/lib/rpc.test.ts`) dan indexer (`indexer/test/rpc-retry.spec.ts`) memeriksa jeda 400/800/1600 ms dan env cadangan yang kosong. CI tidak menulis URL RPC. Kegagalan RPC publik di UI = teks redup, bukan error merah.
 
 ### 9.2 Branch dan commit (singkat) [APPROVED P4-18]
 
