@@ -152,9 +152,19 @@ Visual dan layout saja; alur, route, dan perilaku kontrak/API tidak berubah. Sum
 
 Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe §6.1 adalah tata letak lama; teks di UI memakai Title Case (D-73).
 
-**[D-75..D-80, APPROVED ~15:34 WIB, 07 §16]** P1–P6: banner syncing hanya jika `synced:false` atau lag > 20 blok, warna info, copy D-66 tetap (D-75); skeleton pulse opacity, "0 series." tetap tersembunyi saat loading (D-76); tab Leverage di `/markets/[id]` berlabel "Coming soon", tanpa aksi (D-77); tiket Buy hanya copy produk (D-78); uang `$3,240.00`, max cost 2 desimal (D-79); beranda dipadatkan, mobile 390 px, connect wallet satu baris (D-80).
+**[D-75..D-80, APPROVED ~15:34 WIB, 07 §16]** P1–P6: banner syncing hanya jika `synced:false` atau lag > 20 blok, warna info (D-75); kalimat banner yang live = D-84; skeleton pulse opacity, "0 series." tetap tersembunyi saat loading (D-76); tab Leverage di `/markets/[id]` berlabel "Coming soon", tanpa aksi (D-77); tiket Buy hanya copy produk (D-78); uang `$3,240.00`, max cost 2 desimal (D-79); beranda dipadatkan, mobile 390 px, connect wallet satu baris (D-80).
 
-**[D-81]** Guard CI grep `affiliated|endorsed by` (butir D-74) dibatalkan. Tidak ada grep itu di CI. Status: awaiting Fatih's direct confirmation in group. `copy-guard.test.ts` tidak diubah.
+**[D-81]** Guard CI grep `affiliated|endorsed by` (butir D-74) dibatalkan. Tidak ada grep itu di CI. Status: PENDING (awaiting Fatih's direct confirmation in group). `copy-guard.test.ts` tidak diubah.
+
+**[D-84, APPROVED Fatih langsung 2026-10-09 16:39 WIB]** Banner syncing, warna info. Kalimat persis: "Indexer is catching up to the latest blocks; data may lag briefly." Muncul hanya jika `synced:false` atau lag > 20 blok.
+
+**[D-85, APPROVED sama]** Tab series mengikuti D-67 (Bond, Terms, Redemptions, Reputation). Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap, dan sisa itu dicatat di sini. Pada `main` `93f8e60` tab halaman series masih Overview, Buy, Trade, Leverage.
+
+**[D-86, APPROVED sama]** `/redemptions/1` dan `/disputes/1` saat request tidak ada: "Request not found."
+
+**[D-87, APPROVED sama]** Pita data demo sintetis tetap. Teks: "Reference price (demo data)".
+
+**[D-89, APPROVED handler]** Kegagalan RPC publik = teks redup, bukan error merah. Jeda ulang 400 ms, 800 ms, 1600 ms.
 
 ---
 
@@ -166,7 +176,7 @@ Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe �
 +------------------------------------------------------------------------------------------------+
 | PARON  Markets  Buy  Trade  Portfolio  Provider  Index  Data  Demo      [Robinhood Chain Testnet ●] [Connect]|
 +------------------------------------------------------------------------------------------------+
-| H100 index  OK  $3.20/CU  · 2 entities · 5 CU/24h  |  Spot reference (synthetic demo data) $3.00|
+| H100 index  OK  $3.20/CU  · 2 entities · 5 CU/24h  |  Reference price (demo data) $3.00|
 +------------------------------------------------------------------------------------------------+
 | [banner slot: wrong network / indexer syncing / live data unavailable / not verified]           |
 +------------------------------------------------------------------------------------------------+
@@ -295,7 +305,7 @@ Field: E13 `address`, `entity_id`, `role.name`, `country`, `expiry_ms`, `source`
 
 | Kondisi | Deteksi | Copy | Efek |
 |---|---|---|---|
-| Indexer tertinggal | E18 `/v1/health` lag > 10 blok, atau respons 503 `INDEXER_SYNCING` [APPROVED P6-06: ambang] | "Indexer catching up (block {indexed} of {head}). Onchain actions still work; lists may lag a few seconds." | data tetap dari API. Banner netral, bukan merah; untuk 503 `INDEXER_SYNCING` di `/markets` lihat state S1 [D-66] |
+| Indexer tertinggal [D-75, D-84] | E18 `/v1/health` `synced:false` atau lag > 20 blok | "Indexer is catching up to the latest blocks; data may lag briefly." | Warna info. Data tetap dari API. Bukan error merah. State 503 di tabel `/markets` tetap D-66 (§2.2), bukan kalimat banner ini. |
 | API mati | E18 gagal 2× berturut-turut / timeout 3 s | "Live data unavailable. Showing onchain reads only." | pindah ke fallback §11.2 (P5-23) |
 | Mode mock | `NEXT_PUBLIC_DATA_SOURCE=mock` | "Mock data (fixtures). Transactions are disabled." | semua tombol tx disabled |
 | Seri dipause | E5 `paused` | (di S3) "Sales and new orders are paused for this series. Redemptions, defaults and cancels still work." [D-32] | buy + order baru disabled |
@@ -351,7 +361,8 @@ Wireframe = keadaan setelah adegan "Buy and trade" (05 §2.3). Semua angka selai
 | State | Copy |
 |---|---|
 | Loading | 5 baris skeleton; tidak ada teks |
-| Indexer syncing (respons 503 `INDEXER_SYNCING`) [D-66] | Teks netral (warna sama dengan info banner, bukan merah): "Indexer is syncing. Series will appear shortly." Tabel menampilkan 3 baris skeleton. Kalimat "0 series." disembunyikan selama syncing. Bukan error; polling ulang otomatis |
+| Indexer syncing (respons 503 `INDEXER_SYNCING`) [D-66] | Teks state tabel, bukan banner shell (banner = D-84): "Indexer is syncing. Series will appear shortly." Tabel menampilkan 3 baris skeleton. Kalimat "0 series." disembunyikan selama syncing. Bukan error; polling ulang otomatis |
+| RPC publik gagal [D-89] | Teks redup, bukan merah. Baca diulang dengan jeda 400 ms, 800 ms, 1600 ms |
 | Kosong (`data` = [], indexer synced) | "No series listed yet." + "Providers can list capacity in three steps." + tombol "List capacity" |
 | Kosong karena filter | "No series match these filters." + tombol "Clear filters" |
 | Error API nyata (`/v1/*` selain 503 `INDEXER_SYNCING`) [D-66] | Hanya keadaan ini yang memakai warna merah. Lihat dua baris berikut |
@@ -1167,7 +1178,7 @@ Setiap tombol tx menjalankan simulasi dulu (wagmi `simulateContract`), lalu meng
 | Revert | "{Action} failed: {copy §9.2}" | menetap sampai ditutup |
 | Ditolak di wallet (EIP-1193 4001) | "Cancelled in your wallet." | hilang setelah 4 s |
 | Diganti / hilang | "The transaction was replaced or dropped. Check your wallet." | menetap |
-| RPC gagal | "Network error. Retrying with the backup RPC…" (pakai `NEXT_PUBLIC_RPC_URL_BACKUP`, 04 §4) | sekali coba ulang untuk baca, bukan untuk kirim tx |
+| RPC gagal [D-89] | Teks redup, bukan error merah. Jeda 400 ms, 800 ms, 1600 ms. `NEXT_PUBLIC_RPC_URL_BACKUP` hanya kalau terisi (04 §4.5) | ulang baca, bukan kirim tx ulang |
 | Error tak dikenal | "{Action} failed. {shortMessage}" + "Copy details" | menetap |
 
 Nama `{Action}`: "Purchase", "Order", "Cancel", "Redemption request", "Confirmation", "Dispute", "Default claim", "Finalization", "Refund", "Acknowledgment", "Delivery", "Decline", "Listing", "Permit", "Price change", "Series finalization", "Bond withdrawal", "Faucet", "Registration", "Approval".
@@ -1374,7 +1385,7 @@ Sumber: 01 §6.8.1 (aksi provider/holder boleh selama `now ≤ deadline`; `claim
 | S5 | `getProvider`, `bondOf`, `getSeries`, `openRequestCount` | proceeds, daftar request ("Request list needs the Paron API.") |
 | V-STMT, S6, S7 | — | "This view needs the Paron API. Try again shortly." |
 
-RPC cadangan `NEXT_PUBLIC_RPC_URL_BACKUP` dipakai kalau RPC utama gagal. Alamat kontrak dari manifest `deployments/<label>.json` (04 §7).
+`NEXT_PUBLIC_RPC_URL_BACKUP` final [D-89]. Kosong = hanya URL utama. Kalau terisi, transport cadangan dipakai setelah RPC utama gagal. Kegagalan yang tetap = teks redup, bukan error merah. Alamat kontrak dari manifest `deployments/<label>.json` (04 §7).
 
 ### 11.3 Mock
 

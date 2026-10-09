@@ -53,7 +53,7 @@ The schema has to stay stable per deployment. One Railway service, one schema na
 |---|---|---|
 | `DATABASE_URL` | yes | Railway Postgres connection string, injected by the plugin |
 | `DATABASE_SCHEMA` | yes | Stable Ponder schema, e.g. `paron` |
-| `INDEXER_RPC_URL` | yes | Archive-capable RPC (Alchemy or Goldsky). Secret |
+| `INDEXER_RPC_URL` | yes | Indexer RPC URL. Optional backup name `INDEXER_RPC_URL_BACKUP` is final [D-89]. Empty backup uses only the primary. Do not commit a secret URL |
 | `INDEXER_RPC_URL_BACKUP` | no | Optional second RPC. Public chain 46630 example (no key): `https://robinhood-sepolia-rpc.publicnode.com`. Alternate: `https://robinhood-testnet.drpc.org`. Empty uses only `INDEXER_RPC_URL`. |
 | `CHAIN` | no | `robinhoodTestnet` (default) or `arbitrumSepolia` |
 | `DEPLOY_LABEL` | no | Manifest label, default `stage-1` |

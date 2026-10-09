@@ -190,7 +190,7 @@ Setiap langkah ditulis: **Pemanggil**, **Fungsi** (01), **Input**, **Event yang 
 
 Urutan deploy mengikuti 01 §9. Detail script deploy = doc 04.
 
-1. **Chain + RPC.** Pilih `CHAIN=robinhoodTestnet` atau `arbitrumSepolia` sesuai go/no-go Jum 10:30 (design §11.3). RPC indexer = Alchemy/Goldsky Edge, bukan RPC publik (stack §4.2).
+1. **Chain + RPC.** Pilih `CHAIN=robinhoodTestnet` atau `arbitrumSepolia` sesuai go/no-go Jum 10:30 (design §11.3). RPC indexer = `INDEXER_RPC_URL`, cadangan opsional `INDEXER_RPC_URL_BACKUP` [D-89]. Nilai URL tidak ditulis di dokumen.
 2. **Deploy** `DeployAll` dengan set parameter **demo** [D-20]:
    - batas window `SeriesFactory`: ack 60 dtk–72 jam, delivery 60 dtk–7 hari, dispute 90 dtk–7 hari;
    - `allowOpenWindow = true` (demo saja) [D-19]; `enforceCalendarMonth` [D-02];
@@ -515,7 +515,7 @@ Di RH Testnet, deploy ulang boleh memakai ulang instance `EAS` + `SchemaRegistry
 - [ ] Keeper dalam **dry-run** (stack §4.4).
 - [ ] Bot trader **armed** dalam mode otomatis (§2.5) di deployment panggung; alamat token4 diprediksi (§4.5); USDC allowance `W-TRD` ke `PrimarySale` ada; saldo `W-TRD` ≥ 30 mUSDC + gas [T5-01]; trigger manual terlihat di jendela bot.
 - [ ] Profil browser: "Provider" (S2/S5), "Buyer" (S3/S4), "Buyer 2" (S3); HP juri dengan `W-JUDGE` terhubung [T5-03].
-- [ ] RPC utama dan cadangan (Alchemy ↔ Goldsky Edge) bisa dipakai frontend.
+- [ ] RPC utama (`NEXT_PUBLIC_RPC_URL`) dan, kalau terisi, cadangan (`NEXT_PUBLIC_RPC_URL_BACKUP`) bisa dipakai frontend [D-89].
 - [ ] Terminal `curl` dengan URL API siap; stopwatch di layar.
 
 **T−10 menit**
@@ -531,7 +531,7 @@ Go/no-go Jumat (design §11.3) menentukan chain utama. Rencana di bawah untuk De
 | Level | Gejala | Tindakan | Status |
 |---|---|---|---|
 | 0 | Satu tx lambat (> 15 dtk) | Narator mengisi waktu; kirim ulang dari UI | [P5-24] |
-| 1 | RPC error / rate-limit | Ganti RPC frontend dan Ponder ke cadangan (Alchemy ↔ Goldsky Edge, stack §4.5) | sumber + [P5] |
+| 1 | RPC error / rate-limit | Ulang dengan jeda 400/800/1600 ms. Kalau `NEXT_PUBLIC_RPC_URL_BACKUP` atau `INDEXER_RPC_URL_BACKUP` terisi, transport cadangan dipakai. Sisa kegagalan tampil sebagai teks redup, bukan error merah [D-89] | D-89 |
 | 2 | Ponder/API mati | Frontend membaca kontrak langsung untuk S3 (`bondOf`, `getLevels`) dan S4 (`stateOf`, `getRequest`) (03 P3-12); lewati adegan `curl`; tampilkan event di Blockscout | [P5-23]. **[D-58]** Mode ini **S0-kritis** (wajib jadi sebelum T0+8h = 19:14 WIB), karena juri meninjau async Sab 12:00 → Min dan API yang mati = UI kosong |
 | 2b | Bot trader tidak memasang ask ≤ 10 dtk setelah `PrimaryBuy` S-02 | Trigger manual di jendela bot → manual dari UI dengan `W-TRD` → lewati trade (§2.5) | [APPROVED P5-26] |
 | 3 | Agent tidak ack dalam 3 dtk | Provider menekan Ack / Mark delivered manual di S5 (design §7.2 S5) dan narasi tetap jalan | [P5] |

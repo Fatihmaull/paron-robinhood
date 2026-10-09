@@ -88,20 +88,30 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 ## Keputusan Fatih Jum 9 Okt 2026 ~15:34 WIB [APPROVED, disampaikan lewat handler; "lanjutkan dengan rekomendasi"]
 - Satu PR docs (`docs/audit-2026-10-09`): draf audit Scout + temuan Spec Writer; boleh di-merge kalau tidak ada konflik dan tidak menyentuh kode.
 - Nama pihak ketiga (Ornn, ICE, Robinhood) dikecualikan eksplisit dari aturan "nama proyek lama" untuk dokumen dan footnote slide.
-- D-75..D-80 APPROVED (P1–P6), 07 §16 dan `design/approved-ui-changes.md`: D-75 banner syncing hanya jika `synced:false` atau lag >20 blok, warna info, copy D-66 tetap; D-76 skeleton pulse opacity, "0 series." tetap tersembunyi saat loading; D-77 tab Leverage di `/markets/[id]` berlabel "Coming soon", tanpa aksi; D-78 tiket Buy hanya copy produk; D-79 uang `$3,240.00` (pemisah ribuan, 2 desimal) dan max cost 2 desimal; D-80 beranda dipadatkan (mobile 390 px, connect wallet satu baris).
-- D-81: guard CI grep `affiliated|endorsed by` (butir terakhir D-74) DIBATALKAN. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Status: awaiting Fatih's direct confirmation in group.
+- D-75..D-80 APPROVED (P1–P6, Fatih), 07 §16 dan `design/approved-ui-changes.md`: D-75 banner syncing hanya jika `synced:false` atau lag >20 blok, warna info, kalimat live di D-84; D-76 skeleton pulse opacity, "0 series." tetap tersembunyi saat loading; D-77 tab Leverage di `/markets/[id]` berlabel "Coming soon", tanpa aksi; D-78 tiket Buy hanya copy produk; D-79 uang `$3,240.00` (pemisah ribuan, 2 desimal) dan max cost 2 desimal; D-80 beranda dipadatkan (mobile 390 px, connect wallet satu baris).
+- D-81: guard CI grep `affiliated|endorsed by` (butir terakhir D-74) DIBATALKAN. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Status: PENDING (awaiting Fatih's direct confirmation in group).
 - D-82 APPROVED: nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (`CU-JKT-H100-2610` di panggung) tetap historis; yang digantikan hanya penamaan live. `series_id`, window, dan input skrip seed/forge di 03, 05, 06, 09 tidak ditulis ulang.
 - D-64 menggantikan footer "not affiliated" di UI/README (hanya pitch deck/slide); teks lama di UI/README ditandai historis atau `[SUPERSEDED D-64]`. Footnote slide tetap.
 
+## Keputusan Fatih 2026-10-09 16:39 WIB [APPROVED, langsung]
+- D-84..D-88 APPROVED (07 §18, `design/approved-ui-changes.md`).
+- D-84 banner syncing, warna info, hanya jika `synced:false` atau lag > 20 blok. Kalimat persis: "Indexer is catching up to the latest blocks; data may lag briefly."
+- D-85 tab series mengikuti D-67 (Bond, Terms, Redemptions, Reputation). Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap dan sisa itu dicatat di dokumen. Pada `main` `93f8e60` tab series masih yang lama.
+- D-86 pesan tidak ketemu "Request not found." di `/redemptions/1` dan `/disputes/1`.
+- D-87 pita data demo sintetis tetap, teks "Reference price (demo data)".
+- D-88 pratinjau PR #47 (beranda) belum ditinjau. Designer memeriksa produksi setelah rebase dan merge.
+- D-89 APPROVED (handler, 07 §19): ulang RPC jeda 400/800/1600 ms; gagal RPC publik = teks redup, bukan error merah; nama `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` final (kosong = hanya URL utama). Nilai URL tidak ditulis di dokumen.
+
 ## Usulan PENDING (belum konfirmasi Fatih)
+- D-81 tetap PENDING (lihat bagian ~15:34 WIB).
 - D-83: Safe multisig masuk roadmap, rencana kalau Paron live di mainnet. Sampai freeze kontrak, peran admin tetap seperti sekarang (D-54): tanpa EOA kedua, tanpa pindah ke Safe. Tercatat di 07 §17 dan 08 §7.1. Bentuk Safe pada produk penuh tetap di product-plan §4.10.
-- Aturan setelah freeze (08 §7.2, disebut di 09 §1.2): setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya bug blocker jalur demo S0; setelah 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu. Jam freeze, tag `freeze-contracts` / `freeze-ui`, dan merge saat test hijau sudah ada di baris Deadline di bawah, 08 §0, dan izin merge ~11:27 WIB.
+- Aturan setelah freeze (08 §7.2, disebut di 09 §1.2): setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya bug blocker jalur demo S0; setelah 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu. Jam freeze, tag `freeze-contracts` / `freeze-ui`, dan merge saat test hijau sudah ada di baris Deadline di bawah, 08 §0, dan izin merge ~11:27 WIB. Status tetap PENDING.
 
 ## Hosting/infra (catatan kronologis, Jum 9 Okt 2026; tanpa nilai env)
 - ~13:08 WIB: Vercel project `paron` (root `web`) https://paron.vercel.app; Railway project `paron`, service `paron-robinhood` (root `indexer`, port 42069) https://paron-robinhood-production.up.railway.app.
 - ~13:25 WIB: stage-1 ter-deploy di Robinhood Chain Testnet (46630); 3 seed series.
 - ~14:02 WIB: tiap build Railway memakai schema `paron_<sha8>` (PR #30); 503 INDEXER_SYNCING ~1 menit setelah deploy itu normal.
-- ~14:15 WIB: risiko RPC publik intermiten di browser; `INDEXER_RPC_URL_BACKUP` PENDING.
+- ~14:15 WIB: risiko RPC publik intermiten di browser; nama cadangan saat itu masih PENDING. **[D-89]** nama `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` sekarang final.
 - 15:15 dan 15:31 WIB (cek live): /v1/health synced:true chain 46630; /v1/series = 3 seed; RPC cadangan belum terpasang, menunggu RPC kedua dari Fatih.
 - Env (nama saja): DATABASE_URL, DATABASE_SCHEMA, CHAIN, PORT, DEPLOY_LABEL, INDEXER_RPC_URL, INDEXER_RPC_URL_BACKUP (belum), API_CORS_ORIGIN, NEXT_PUBLIC_RPC_URL, NEXT_PUBLIC_RPC_URL_BACKUP (belum), NEXT_PUBLIC_API_BASE_URL.
 - Deadline WIB: freeze kontrak Sab 10 Okt 06:00; freeze UI 09:00; submit internal 11:30; tenggat keras 12:00.

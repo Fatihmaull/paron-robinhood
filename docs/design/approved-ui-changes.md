@@ -49,11 +49,25 @@ Status: D-67..D-74 APPROVED except the grep item (D-81). Designer verification o
 
 | ID | Decision | Status |
 |---|---|---|
-| D-75 | P1 Syncing banner shows only when `/v1/health` is `synced:false` or lag is over 20 blocks. Info color, not amber. D-66 copy stays. | APPROVED |
+| D-75 | P1 Syncing banner shows only when `/v1/health` is `synced:false` or lag is over 20 blocks. Info color, not amber. Live sentence is D-84. | APPROVED |
 | D-76 | P2 Skeleton uses a pulse opacity animation, not a shimmer, per design.md §6. "0 series." stays hidden while loading (D-66). | APPROVED |
 | D-77 | P3 Leverage tab on `/markets/[id]` is labeled "Coming soon", with no action. | APPROVED |
 | D-78 | P4 Buy ticket: remove implementation copy. Product copy only. | APPROVED |
 | D-79 | P5 Numbers: money as `$3,240.00` (thousands separator, 2 decimals). Max cost uses 2 decimals. | APPROVED |
 | D-80 | P6 Home: fill the page, less empty space, especially at 390 px. Connect wallet stays on one line. | APPROVED |
-| D-81 | CI grep `affiliated` / `endorsed by` (last item of D-74) is cancelled. No such grep in CI. `copy-guard.test.ts` is unchanged. | awaiting Fatih's direct confirmation in group |
+| D-81 | CI grep `affiliated` / `endorsed by` (last item of D-74) is cancelled. No such grep in CI. `copy-guard.test.ts` is unchanged. | PENDING (awaiting Fatih's direct confirmation in group) |
 | D-82 | Live demo series name is `CU-JKT-H100-2611`. Contract seed series 1 is unchanged. D-19/D-25 stay historical records; only the live name is superseded. | APPROVED |
+
+## D-84..D-88 (07 §18, APPROVED by Fatih directly 2026-10-09 16:39 WIB)
+
+| ID | Decision | Status |
+|---|---|---|
+| D-84 | Syncing banner, info color. Exact sentence: "Indexer is catching up to the latest blocks; data may lag briefly." Shows only when `synced:false` or lag is over 20 blocks. UI copy is English. | APPROVED |
+| D-85 | Series tabs follow D-67: Bond, Terms, Redemptions, Reputation. If that is not done before the UI freeze Sat 2026-10-10 09:00 WIB, the old tabs (Overview, Buy, Trade, Leverage) stay and the leftover is noted in the docs. On `main` `93f8e60` those old tabs are still the ones on the series page. | APPROVED |
+| D-86 | Not-found message, exact copy: "Request not found." on `/redemptions/1` and `/disputes/1`. | APPROVED |
+| D-87 | The synthetic demo data ribbon stays. Ribbon text: "Reference price (demo data)". | APPROVED |
+| D-88 | PR #47 (homepage) preview was not reviewed. Designer checks production after rebase and merge. | APPROVED |
+
+## RPC failure tone (07 §19, D-89, APPROVED by handler)
+
+Public RPC failure is dim text, not a red error. Retries wait 400 ms, then 800 ms, then 1600 ms. `INDEXER_RPC_URL_BACKUP` and `NEXT_PUBLIC_RPC_URL_BACKUP` are final names. An empty value means the primary URL only. The URL value is not written in this doc.

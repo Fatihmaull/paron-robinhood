@@ -21,6 +21,12 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §11 Keputusan audit Principal Engineer (D-45 s.d. D-59), ditambahkan Jum 9 Okt ~11:05 WIB; semuanya APPROVED (~11:05 dan ~11:12 WIB)
 - §12 Approval kelima Jum 9 Okt 2026 13:30 WIB (Fatih, di grup): D-60..D-63 ("oke 1-4", usulan Product Designer) dan D-64 (footer + teks "not affiliated" dihapus dari produk; daftar never-cut jadi 3 butir)
 - §13 Approval keenam Jum 9 Okt 2026 13:35 WIB (Fatih): D-65 (`UtilityBar` tipis APPROVED sebagai pengganti footer)
+- §14 Catatan hosting dan D-66 (~14:02 WIB)
+- §15 Approval ketujuh 14:40 WIB (D-67..D-74)
+- §16 Approval kedelapan ~15:34 WIB (D-75..D-80 dan D-82 APPROVED; D-81 bukan approval)
+- §17 Usulan PENDING Safe (D-83) dan aturan setelah freeze tetap PENDING
+- §18 Approval 2026-10-09 16:39 WIB (D-84..D-88, Fatih langsung)
+- §19 Hardening RPC (D-89, APPROVED handler)
 
 ---
 
@@ -920,13 +926,13 @@ Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): ite
 
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
-| D-75 | **APPROVED (Fatih, Jum 9 Okt 2026 ~15:34 WIB, via handler). P1 Banner syncing.** Banner tampil hanya jika `/v1/health` `synced:false` atau lag > 20 blok. Warna info, bukan amber. Copy D-66 tetap ("Indexer is syncing. Series will appear shortly."). | 06 §1.6, §2; design.md state loading |
+| D-75 | **APPROVED (Fatih, Jum 9 Okt 2026 ~15:34 WIB, via handler; P1–P6 disetujui Fatih).** P1 Banner syncing. Banner tampil hanya jika `/v1/health` `synced:false` atau lag > 20 blok. Warna info, bukan amber. Kalimat banner yang live ada di D-84. | 06 §1.6, §2; design.md state loading |
 | D-76 | **APPROVED (sama). P2 Skeleton.** Animasi pulse opacity, bukan shimmer, sesuai design.md §6. Kalimat "0 series." tetap disembunyikan saat loading (D-66). | design.md §6; 06 §2 |
 | D-77 | **APPROVED (sama). P3 Tab Leverage.** Di `/markets/[id]` tab Leverage berlabel "Coming soon", tanpa aksi. | 06 §4; approved-ui-changes |
 | D-78 | **APPROVED (sama). P4 Tiket Buy.** Hapus copy implementasi dari tiket Buy. Yang tampil hanya copy produk. | 06 §4 tiket Buy |
 | D-79 | **APPROVED (sama). P5 Format angka.** Uang ditulis `$3,240.00` (pemisah ribuan, 2 desimal). Max cost 2 desimal. | 06 format angka; design.md |
 | D-80 | **APPROVED (sama). P6 Beranda.** Isi beranda dipadatkan: kurangi ruang kosong, terutama mobile 390 px; connect wallet satu baris. | 06 S1; design.md |
-| D-81 | **DIBATALKAN. Guard CI grep `affiliated\|endorsed by` (butir terakhir D-74).** Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Status: awaiting Fatih's direct confirmation in group. | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md |
+| D-81 | **DIBATALKAN. Guard CI grep `affiliated\|endorsed by` (butir terakhir D-74).** Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Status: PENDING (awaiting Fatih's direct confirmation in group). | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md |
 | D-82 | **APPROVED (sama). Nama series demo yang live = `CU-JKT-H100-2611`.** Seed kontrak series 1 tidak diubah. D-19 (series panggung `CU-JKT-H100-2610`) dan D-25 tetap catatan historis; yang digantikan hanya penamaan series demo yang live. `series_id`, window, dan input skrip seed/forge tidak ditulis ulang. | 03, 05, 06, 09 |
 
 ---
@@ -938,3 +944,29 @@ Belum dikonfirmasi Fatih. Bukan bagian approval ~15:34 WIB.
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
 | D-83 | **PENDING.** Safe multisig masuk roadmap: rencana kalau Paron live di mainnet. Sampai freeze kontrak (Sab 06:00 WIB), peran admin tetap seperti sekarang (D-54): tanpa EOA kedua, tanpa pindah ke Safe. Arsitektur Safe pada produk penuh sudah di product-plan §4.10; bagian ini tidak mengulanginya. | 08 §7.1; CONTEXT-INDEX |
+
+Aturan setelah freeze (08 §7.2, disebut di 09 §1.2) tetap **PENDING**. Bagian ini tidak mengubah jam freeze, tag, atau izin merge.
+
+---
+
+## 18. Approval 2026-10-09 16:39 WIB (Fatih, langsung): D-84..D-88
+
+Fatih menyetujui langsung pada 2026-10-09 16:39 WIB. Status D-84..D-88 = **APPROVED**. Bukan usulan yang menunggu keberatan.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-84 | **APPROVED (Fatih, langsung, 2026-10-09 16:39 WIB).** Banner syncing, warna info. Kalimat persis (copy UI bahasa Inggris): "Indexer is catching up to the latest blocks; data may lag briefly." Muncul hanya jika `/v1/health` `synced:false` atau lag > 20 blok. Ini kalimat banner yang live (diverifikasi Designer). Syarat tampil tetap D-75. | 06 §1.6; CONTEXT-INDEX; approved-ui-changes |
+| D-85 | **APPROVED (sama).** Tab series mengikuti D-67: Bond, Terms, Redemptions, Reputation. Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap, dan sisa itu dicatat di dokumen. Pada `main` `93f8e60`, tab di halaman series masih Overview, Buy, Trade, Leverage. Freeze belum lewat saat catatan ini ditulis. | 06 §0, §4; D-67 |
+| D-86 | **APPROVED (sama).** Pesan tidak ketemu, copy persis: "Request not found." di `/redemptions/1` dan `/disputes/1`. | 06 §0 |
+| D-87 | **APPROVED (sama).** Pita data demo sintetis tetap. Teks pita: "Reference price (demo data)". | 06 §1.1 |
+| D-88 | **APPROVED (sama).** Pratinjau PR #47 (beranda) belum ditinjau. Designer memeriksa produksi setelah rebase dan merge. | approved-ui-changes |
+
+---
+
+## 19. Hardening RPC: D-89 (APPROVED handler)
+
+Dicatat karena perilaku RPC di PR #48 (`93f8e60`) mengubah spec env dan tampilan gagal. Bukan bagian approval 16:39 WIB.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-89 | **APPROVED (handler).** Panggilan RPC publik diulang dengan jeda 400 ms, lalu 800 ms, lalu 1600 ms (batas berikutnya 8000 ms). Kegagalan RPC publik tampil sebagai teks redup, bukan error merah. Nama env `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` **final**. Kosong = hanya URL utama. Nilai URL tidak ditulis di dokumen. | 04 §3.2, §4.3–§4.5, §8, §9.1; 03 §0, §2.1, §3.1; 05 §3.1, §4.7–§4.8; 06 §1.6, §2.2, §9.1, §11.2; 09 §7 |
