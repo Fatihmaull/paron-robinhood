@@ -16,6 +16,8 @@ import {IAccessControl} from "@openzeppelin/contracts/access/IAccessControl.sol"
 import {Attestation} from "@ethereum-attestation-service/eas-contracts/IEAS.sol";
 import {EASGate} from "../../src/gate/EASGate.sol";
 import {IndexStatus, RedemptionState, Ruling, SeriesParams, Side} from "../../src/libraries/ParonTypes.sol";
+import {ProviderRegistry} from "../../src/registry/ProviderRegistry.sol";
+import {Vm} from "forge-std/Vm.sol";
 
 contract MustTest is ParonFixture {
     uint256 internal id;
@@ -391,7 +393,9 @@ contract MustTest is ParonFixture {
         rm.dispute(req);
         vm.stopPrank();
         uint256 buyerBefore = usdc.balanceOf(buyer);
+        vm.recordLogs();
         mockArb.rule(req, Ruling.NotDelivered);
+        _assertDefaultCaller(address(mockArb));
         assertEq(uint256(rm.stateOf(req)), uint256(RedemptionState.Defaulted));
         assertEq(usdc.balanceOf(buyer), buyerBefore + 5_000_000 + 36_000_000);
         assertEq(registry.getProvider(providerA).disputesLost, 1);
@@ -629,6 +633,113 @@ contract MustTest is ParonFixture {
         assertEq(CUToken(cu).totalSupply(), 0);
     }
 
+    function test_RevertWhen_BuyerRegistersAsProvider() public {
+        address bob = makeAddr("bob");
+        _kyb(bob, keccak256("BOB"), ParonConstants.ROLE_BUYER);
+        vm.prank(bob);
+        vm.expectRevert(ProviderRegistry.NotProviderRole.selector);
+        registry.registerProvider();
+        assertFalse(registry.isListable(bob));
+    }
+
+    function test_RevertWhen_BuyNotWholeLot() public {
+        vm.startPrank(buyer);
+        usdc.approve(address(sale), type(uint256).max);
+        vm.expectRevert(PrimarySale.InvalidLot.selector);
+        sale.buy(id, CU / 2, type(uint256).max);
+        vm.stopPrank();
+        _buy(trader, id, CU);
+        vm.startPrank(trader);
+        CUToken(token).approve(address(book), type(uint256).max);
+        vm.expectRevert(OrderBook.InvalidLot.selector);
+        book.placeOrder(id, Side.Ask, 3_000_000, CU / 2, false);
+        vm.stopPrank();
+    }
+
+    function test_MaxFills_NoCrossedBook() public {
+        _buy(trader, id, 11 * CU);
+        vm.startPrank(trader);
+        CUToken(token).approve(address(book), type(uint256).max);
+        for (uint256 i; i < 11; ++i) {
+            book.placeOrder(id, Side.Ask, 3_000_000, CU, false);
+        }
+        vm.stopPrank();
+
+        vm.startPrank(buyer2);
+        usdc.approve(address(book), type(uint256).max);
+        (uint256 orderId, uint256 filled) = book.placeOrder(id, Side.Bid, 3_000_000, 11 * CU, false);
+        vm.stopPrank();
+
+        assertEq(orderId, 0);
+        assertEq(filled, 10 * CU);
+        (, uint256 askQty) = book.bestAsk(id);
+        (, uint256 bidQty) = book.bestBid(id);
+        assertEq(askQty, CU);
+        assertEq(bidQty, 0);
+        assertEq(CUToken(token).balanceOf(buyer2), 10 * CU);
+    }
+
+    function test_IndexFailure_DoesNotBlockTrade() public {
+        book.setPrintIndex(address(new RevertingIndex()));
+        _buy(trader, id, CU);
+        _buy(buyer2, id, CU);
+        vm.startPrank(trader);
+        CUToken(token).approve(address(book), type(uint256).max);
+        book.placeOrder(id, Side.Ask, 3_200_000, CU, false);
+        vm.stopPrank();
+        vm.recordLogs();
+        vm.startPrank(buyer2);
+        usdc.approve(address(book), type(uint256).max);
+        (uint256 orderId, uint256 filled) = book.placeOrder(id, Side.Bid, 3_200_000, CU, true);
+        vm.stopPrank();
+        assertEq(orderId, 0);
+        assertEq(filled, CU);
+        assertEq(CUToken(token).balanceOf(buyer2), 2 * CU);
+        _assertTopic(keccak256("IndexUpdateFailed(bytes32,uint256,uint256)"));
+    }
+
+    function test_InstitutionalReturnToRevokedHolder() public {
+        SeriesParams memory p = _params(
+            ParonConstants.H100, 20, 3_000_000, 4_500_000, uint64(NOV1), uint64(DEC1), bytes2("ID"), address(mockArb), "INST"
+        );
+        p.institutional = true;
+        (uint256 sid, address cu) = _create(providerA, p);
+        _buy(trader, sid, 2 * CU);
+        vm.startPrank(trader);
+        CUToken(cu).approve(address(book), type(uint256).max);
+        (uint256 orderId,) = book.placeOrder(sid, Side.Ask, 3_000_000, CU, false);
+        vm.stopPrank();
+        gate.revokeParticipant(trader);
+        address stranger = makeAddr("stranger");
+        vm.prank(trader);
+        vm.expectRevert(abi.encodeWithSelector(CUToken.RecipientNotVerified.selector, stranger));
+        CUToken(cu).transfer(stranger, CU);
+        vm.prank(trader);
+        book.cancelOrder(orderId);
+        assertEq(CUToken(cu).balanceOf(trader), 2 * CU);
+    }
+
+    function _assertDefaultCaller(address expected) private view {
+        Vm.Log[] memory logs = vm.getRecordedLogs();
+        bytes32 topic = keccak256("Defaulted(uint256,uint256,address,uint256,uint256,bool,bool,address)");
+        for (uint256 i; i < logs.length; ++i) {
+            if (logs[i].topics.length > 0 && logs[i].topics[0] == topic) {
+                (,,,, address caller) = abi.decode(logs[i].data, (uint256, uint256, bool, bool, address));
+                assertEq(caller, expected);
+                return;
+            }
+        }
+        revert("Defaulted not emitted");
+    }
+
+    function _assertTopic(bytes32 topic) private view {
+        Vm.Log[] memory logs = vm.getRecordedLogs();
+        for (uint256 i; i < logs.length; ++i) {
+            if (logs[i].topics.length > 0 && logs[i].topics[0] == topic) return;
+        }
+        revert("topic missing");
+    }
+
     function _toDispute(uint256 amount) private returns (uint256 req) {
         vm.prank(buyer);
         req = rm.requestRedemption(id, amount, bytes32("ref"));
@@ -646,6 +757,12 @@ contract MustTest is ParonFixture {
     function _sign(uint256 pk, bytes32 digest) private returns (bytes memory) {
         (uint8 v, bytes32 r, bytes32 s) = vm.sign(pk, digest);
         return abi.encodePacked(r, s, v);
+    }
+}
+
+contract RevertingIndex {
+    function recordTrade(uint256, uint256, uint256, bool, bytes32, bytes32) external pure {
+        revert("index down");
     }
 }
 
