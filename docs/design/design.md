@@ -47,8 +47,9 @@ Palette is `tokens.v2.css` (colors unchanged from v1). Ratios in `contrast-repor
 - Body and data text >= 4.5:1 (AA). Primary, secondary, accent and bid text pass AAA on canvas and surface. Tertiary text 5.5:1 (AA), use only for captions and column headers.
 - Non-text (input edge, focus ring, bond bar) >= 3:1.
 - Never convey state by hue alone: pills always contain the word; overdue says "Deadline passed 0:12 ago."
-- No pure black or white backgrounds in dark mode; no purple/cyan accents; no gradients; no glow. Lime/neon is banned (guardrail).
+- No pure black or white backgrounds in dark mode, except the landing `/` hero, which may use black `#000` (D-91). No purple/cyan accents. No gradients, except the landing hero and its numbers panel (D-91). No glow. Lime/neon is banned (guardrail).
 - Light theme (`data-theme="light"`) must work in every component if shipped (R-34); default and judged theme is dark.
+- **Landing tokens (D-91, APPROVED).** Black `#000`, text `#f3f3f3`, secondary text `#a6a6a6` and `#8c8c8c`, amber-100 `#f1d3a6`, amber-300 `#d9a066`, amber-500 `#bc854d`, amber-800 `#5a3515`. Lines are 1px `rgba(255,255,255,.16)`, soft variant `rgba(255,255,255,.09)`. Dashboard amber is limited to numbers, small tags, active states, and 1px lines. The dashboard gets no gradient and no full glass. Semantic amber for review/thin stays on data screens.
 
 ## 5. Components (short form)
 
@@ -69,6 +70,8 @@ Palette is `tokens.v2.css` (colors unchanged from v1). Ratios in `contrast-repor
 | Skeleton pulse | 1200ms opacity only | ease-in-out |
 
 Rules: animate `transform` and `opacity` only; never `transition: all`; critically damped feel (no overshoot) everywhere because nothing here is a flick gesture; animations interruptible. `prefers-reduced-motion`: tokens drop to 0ms, flash shortens to 600ms, no slide, keep color and opacity changes. No parallax, no floating, no scroll-jacking.
+
+**Landing hero motion (D-91, APPROVED).** The landing `/` hero may run one motion of 38–64 seconds. That motion is off under `prefers-reduced-motion` (it does not run). The durations in the table above stay.
 
 ## 7. Accessibility and web-interface rules (Vercel guidelines applied)
 
@@ -111,10 +114,12 @@ Binding formats are in `brand.md` §6 (price `$3.20/CU`, CU `20 CU`, factor `1.4
 | Top-aligned panels with real content | Stretched cards with blank space |
 | Skeleton, empty, error for every list | "Empty" dumped in a panel |
 | Show real series data and "synthetic demo data" label | Invented stats, logos, testimonials |
-| Squared pills with words | Capsules, glow, sparkles, gradient text |
+| Squared pills with words | Capsules, glow, sparkles, gradient text (except the 1.5× number on the landing hero, D-91) |
 | Confirm Claim default with amounts | One-click irreversible actions |
 
 Hard bans: purple or cyan accents, glassmorphism, gradient blobs or particle backgrounds, generic icon-in-circle feature grids, fake terminals, "AI powered" badges, Robinhood logo/colors/style, the words "partner" or "powered by Ornn", any OCPI value, leverage beyond a "Coming soon" tab.
+
+**D-91 exception (APPROVED).** Gradient and glass are allowed only on the landing `/` hero and its numbers panel. Glass there uses radius 8px, sits under text that overlays amber light, and has no box-shadow. The dashboard gets no gradient and no full glass. Purple or cyan, blobs, gradient on text (except the 1.5× number), heavy shadows, fake cards, and fake stats stay banned. Content rules are unchanged (no third-party logos, no forbidden words). Source: Designer's `/workspace/paron-landing/design.md` on Designer's computer. A review must not flag that hero as a regression against the older gradient and glass ban.
 
 ## 11. Delivery checklist (run before each merge)
 

@@ -6,6 +6,7 @@ Ditulis Hackathon Scout, Jum 9 Okt 2026 ~10:50 WIB. Sumber kebenaran: CONTEXT-IN
 - Kode: BELUM ADA. Repo: https://github.com/Fatihmaull/paron-robinhood (git author Fatih Maulana <fatihmaulanamail@gmail.com>). "GO" dari Fatih Jum 9 Okt 11:14 WIB (T0). Build jalan.
 - Tim: Fatih + 4 lane agent paralel (kontrak, frontend, indexer/API, ops/deploy; D-59). Deadline keras Sab 10 Okt 12:00 WIB (submit internal 11:30). Demo Day Min 11 Okt.
 - 08 dihitung dari T0 Jum 9 Okt 11:14 WIB (lane 4). Freeze kontrak Sab 06:00, freeze UI 09:00, submit internal 11:30, tenggat keras 12:00 (WIB). Kalau telat, potong dari S1/S2, bukan S0/never-cut.
+- **HISTORICAL, superseded by D-90:** jam freeze kontrak 06:00, freeze UI 09:00, dan submit internal 11:30 pada Sab 2026-10-10 tidak mengikat. Tenggat keras Sab 2026-10-10 12:00 WIB tetap. Teks jam di dua baris di atas tidak dihapus.
 
 ## Urutan baca
 1. CONTEXT-INDEX.md

@@ -1,7 +1,7 @@
 # Paron: indeks dokumen konteks (master: Hackathon Scout; sekarang PO/project handler)
 
 Sumber kebenaran: repo `docs/knowledge-base/` (mirror dari folder kerja Scout di box; path box lama tidak dipakai).
-Terakhir diperbarui: Jumat 9 Okt 2026, 17:01 WIB
+Terakhir diperbarui: Jumat 9 Okt 2026, 18:10 WIB
 
 **Urutan mulai:** `SESSION_HANDOFF_HACKATHON.md` (state terkini) → file ini → `HANDOFF-BRIEF.md` (urutan baca, tugas pertama, prioritas, aturan), lalu `paron-product-plan.md` (gambaran produk penuh: semua modul, aplikasi, arsitektur akhir, roadmap P0–P5, batas lingkup hackathon).
 
@@ -90,7 +90,7 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 - Nama pihak ketiga (Ornn, ICE, Robinhood) dikecualikan eksplisit dari aturan "nama proyek lama" untuk dokumen dan footnote slide.
 - D-75..D-80 APPROVED (P1–P6, Fatih), 07 §16 dan `design/approved-ui-changes.md`: D-75 banner syncing hanya jika `synced:false` atau lag >20 blok, warna info, kalimat live di D-84; D-76 skeleton pulse opacity, "0 series." tetap tersembunyi saat loading; D-77 tab Leverage di `/markets/[id]` berlabel "Coming soon", tanpa aksi; D-78 tiket Buy hanya copy produk; D-79 uang `$3,240.00` (pemisah ribuan, 2 desimal) dan max cost 2 desimal; D-80 beranda dipadatkan (mobile 390 px, connect wallet satu baris).
 - D-81: guard CI grep `affiliated|endorsed by` (butir terakhir D-74) DIBATALKAN. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Pada ~15:34 WIB statusnya masih menunggu konfirmasi langsung. **APPROVED** Fatih langsung 2026-10-09 17:01 WIB (bagian di bawah).
-- D-82 APPROVED: nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (`CU-JKT-H100-2610` di panggung) tetap historis; yang digantikan hanya penamaan live. `series_id`, window, dan input skrip seed/forge di 03, 05, 06, 09 tidak ditulis ulang.
+- D-82 APPROVED: nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (`CU-JKT-H100-2610` di panggung) tetap historis; yang digantikan hanya penamaan live. `series_id`, window, dan input skrip seed/forge di 03, 05, 06, 09 tidak ditulis ulang. **Diperjelas oleh D-92 (APPROVED, bagian 18:10 WIB):** seed = 2611; series panggung/demo = 2610 (series 4). Pembacaan "nama live = 2611" tidak dipakai untuk panggung, S0, checklist `/demo`, atau rekaman.
 - D-64 menggantikan footer "not affiliated" di UI/README (hanya pitch deck/slide); teks lama di UI/README ditandai historis atau `[SUPERSEDED D-64]`. Footnote slide tetap.
 
 ## Keputusan Fatih 2026-10-09 16:39 WIB [APPROVED, langsung]
@@ -109,6 +109,10 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 - Penugasan pemilik (09): video demo = agen evergreen video editor yang sudah ada (tidak ada bot baru); submit HackQuest = Fatih sendiri yang menekan submit; pitch deck = Fatih sendiri yang membuatnya.
 - Hosting Vercel (04 bagian hosting, tanpa secret atau token): project hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam). `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota.
 - PR UI #47, #51, #53, #54 sudah merge ke `main` (CI hijau) dan belum tampil di web. Ujung `main` saat catatan ini: `0366ec6`.
+
+## Keputusan 2026-10-09 (D-91 APPROVED; D-92 APPROVED 18:10 WIB)
+- D-91 APPROVED (Fatih; prototipe disetujui; dicatat lewat Paron Designer dan Scout). Hero di landing `/` memakai emas dan kaca, plus aksen amber terbatas di dashboard (angka, tag kecil, state aktif, garis 1px). Dashboard tidak mendapat gradien dan tidak mendapat kaca penuh. Token final: hitam `#000`, teks `#f3f3f3`, teks sekunder `#a6a6a6` dan `#8c8c8c`, amber-100 `#f1d3a6`, amber-300 `#d9a066`, amber-500 `#bc854d`, amber-800 `#5a3515`. Garis 1px `rgba(255,255,255,.16)`, varian lembut `.09`. Kaca hanya di hero landing dan panel angka (radius 8px, di bawah teks yang menimpa cahaya amber), tanpa box-shadow. Motion 38 sampai 64 detik, mati di bawah `prefers-reduced-motion`. Larangan gradien dan kaca di design.md sekarang boleh hanya di hero landing dan panel angkanya. Tetap dilarang: ungu atau cyan, blob, gradien pada teks (kecuali angka 1.5×), bayangan berat, kartu palsu atau statistik palsu. Aturan isi tidak berubah (tanpa logo pihak ketiga, tanpa kata terlarang). Sumber prototipe: `design.md` di `/workspace/paron-landing/` pada komputer Designer. 07 §21, design.md, guidelines.md, approved-ui-changes.md.
+- D-92 APPROVED (Fatih, "rekomendasimu saja", dicatat Scout 2026-10-09 18:10 WIB). Memperjelas D-82: seed = 2611, series panggung/demo = 2610 (series 4). Fakta live: seed series 1–3 = `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612`. Series 4 `CU-JKT-H100-2610` dibuat oleh uji S0 dan sesuai D-19. Series untuk demo dan rekaman = series 4. `2611` tetap data seed di Markets. Rujukan panggung, S0, checklist `/demo`, dan rekaman di 03, 05, 06, 09 memakai `CU-JKT-H100-2610` lagi. **Dampak:** preset wizard (PR #53) mengisi `2611` dan akan diganti ke `2610` di PR UI mendatang oleh handler. Rekaman memakai putaran baru di series 4. 07 §22.
 
 ## Usulan yang ditutup 2026-10-09 17:01 WIB (riwayat, jangan dipakai sebagai status)
 Sebelum 17:01 WIB bagian ini mencatat tiga butir sebagai PENDING. Ketiganya ditutup oleh keputusan langsung Fatih pada jam itu. Teks lama dipertahankan di bawah.

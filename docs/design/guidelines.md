@@ -7,7 +7,7 @@ Paron Product Designer · Fri 9 Oct 2026. Layout and component guidance mapped t
 **Grid and density**
 - Desktop target 1440 px; content max `--size-content-max` (1440), side padding `--space-8` (32). Gutters between panels `--space-4` (16).
 - 4 px spacing grid (`--space-*` / Tailwind `p-1..p-16`). Panel padding `--card-pad` (16). Data tables: row `--table-row-height` 36 (S1, S4, S5), dense `--table-row-height-dense` 28 (order book, tape).
-- Panels: `--card-bg` + 1 px `--card-border` + `--card-radius` (6). Panel title = uppercase overline (`label-overline` utility: 12 px, 0.08em, tertiary). No gradients or glows on panels (L2's current `.panel` gradient + 40 px shadow should go).
+- Panels: `--card-bg` + 1 px `--card-border` + `--card-radius` (6). Panel title = uppercase overline (`label-overline` utility: 12 px, 0.08em, tertiary). No gradients or glows on panels (L2's current `.panel` gradient + 40 px shadow should go), except the landing `/` hero and its numbers panel (D-91).
 - Base body: `--font-sans` 14 px; data cells 13 px. **Every number in mono** (`--font-mono`, right-aligned in tables). The L2 scaffold sets the whole body to monospace; switch body to sans and use mono only for numbers/ids.
 
 **Color discipline**
@@ -15,6 +15,7 @@ Paron Product Designer · Fri 9 Oct 2026. Layout and component guidance mapped t
 - Red filled (`--btn-danger-*`) is reserved for **Claim default** (and Decline & pay in S5, which pays from the bond). Nothing else is red-filled.
 - Status always = word + color (pill). Never color-only (research #4).
 - Bid/ask colors only for market sides and price deltas. Don't use green for "success" decoration outside states.
+- **Landing hero (D-91, APPROVED).** The landing route `/` hero is gold and glass. Gradient and glass are allowed only there and on its numbers panel (radius 8px, under text that overlays amber light, no box-shadow). Motion on that hero may run 38–64 seconds and is off under `prefers-reduced-motion`. The dashboard may use amber on numbers, small tags, active states, and 1px lines only. The dashboard gets no gradient and no full glass. Tokens: black `#000`, text `#f3f3f3`, secondary text `#a6a6a6` and `#8c8c8c`, amber-100 `#f1d3a6`, amber-300 `#d9a066`, amber-500 `#bc854d`, amber-800 `#5a3515`. Lines are 1px `rgba(255,255,255,.16)`, soft variant `rgba(255,255,255,.09)`. Still banned: purple or cyan, blobs, gradient on text except the 1.5× number, heavy shadows, fake cards, fake stats. Content rules are unchanged (no third-party logos, no forbidden words). Source: Designer's `/workspace/paron-landing/design.md` on Designer's computer. Do not flag this hero as a regression against the panel gradient ban above.
 
 **Shell (`AppShell`, every page)**
 - Header 56 px (`--size-header`), `--header-bg`, bottom border. Left: `logo/paron-lockup.svg` at 24 px. Nav 13 px, secondary text; active item = primary text + 2 px ember underline. Right: `ChainBadge` (chip with ok dot) and `WalletButton` chip (mono address + balance).

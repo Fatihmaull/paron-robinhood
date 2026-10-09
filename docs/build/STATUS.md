@@ -7,7 +7,7 @@
 - L2 frontend: bc-89e8fbe8-e0b3-55cc-aa68-6a2c38bee038
 - L3 indexer/API: bc-0d91ea75-c507-5cb9-947f-24d7191cb1e9
 - L4 ops/deploy: bc-85f43bb6-7246-56c0-a646-9338d514f87d
-- 11:17 final dev docs 01-09 (D-45..58 merged) steered into all 4 lanes with schedule: 11:59 G1+go/no-go, 14:14 contracts ckpt, 16:14 G2, 18:44-19:14 hosting + P5-23, 19:14 G3, Sat 01:14 S1, 06:00 contract freeze, 09:00 UI freeze, 11:30 submit
+- 11:17 final dev docs 01-09 (D-45..58 merged) steered into all 4 lanes with schedule: 11:59 G1+go/no-go, 14:14 contracts ckpt, 16:14 G2, 18:44-19:14 hosting + P5-23, 19:14 G3, Sat 01:14 S1, 06:00 contract freeze, 09:00 UI freeze, 11:30 submit. **HISTORICAL, superseded by D-90:** the 06:00 contract freeze, 09:00 UI freeze, and 11:30 internal submit are no longer binding. The hard deadline Sat 2026-10-10 12:00 WIB stays. This schedule line is kept.
 - 11:25 deployer key received on box as env PARON_DEPLOYER_PK (secret forwarding to cloud agents disabled) -> deploys run from box; L4 told to make env-driven scripts + DEPLOYMENTS.md
 - 11:35 merged PR #1 (L4 ops: Robinhood GO, seed/keeper/bot, README) -> main 62140d4, per Fatih
 - 11:47 PR #3 (L4 env-only deploy scripts, 33 tests) merged → main 3230747. Deploy order: mock-usdc, eas-schema, core (needs MAX_FILLS_PER_TX), roles (needs SAFE_ADDRESS or PARON_SAFE_MODE=allowlist), seed; then verify-deployment. Blocked on L1 contracts/out.

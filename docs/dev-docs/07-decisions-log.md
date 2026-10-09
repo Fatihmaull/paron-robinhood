@@ -28,6 +28,8 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §18 Approval 2026-10-09 16:39 WIB (D-84..D-88, Fatih langsung)
 - §19 Hardening RPC (D-89, APPROVED handler)
 - §20 Approval 2026-10-09 17:01 WIB (Fatih langsung): D-81 APPROVED, D-83 APPROVED, D-90 membatalkan freeze
+- §21 Hero emas dan kaca di landing (D-91, APPROVED Fatih; dicatat lewat Paron Designer dan Scout)
+- §22 Klarifikasi nama series (D-92, APPROVED Fatih 18:10 WIB, "rekomendasimu saja"): D-82 diperjelas
 
 ---
 
@@ -923,7 +925,7 @@ Catatan pemetaan: LR-5 beririsan penuh dengan #9 sehingga digabung (satu D). LR-
 
 ## 16. Approval kedelapan: Jum 9 Okt 2026 ~15:34 WIB (Fatih, via handler)
 
-Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): item UI Designer P1–P6 (D-75..D-80) dan nama series demo yang live (D-82). Pengecualian nama pihak ketiga (Ornn, ICE, Robinhood) untuk dokumen dan footnote slide sudah dicatat di CONTEXT-INDEX pada jam yang sama. Pada jam ini D-81 belum approval; konfirmasi langsung Fatih ada di §20 (2026-10-09 17:01 WIB).
+Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): item UI Designer P1–P6 (D-75..D-80) dan nama series demo yang live (D-82). Pengecualian nama pihak ketiga (Ornn, ICE, Robinhood) untuk dokumen dan footnote slide sudah dicatat di CONTEXT-INDEX pada jam yang sama. Pada jam ini D-81 belum approval; konfirmasi langsung Fatih ada di §20 (2026-10-09 17:01 WIB). D-82 diperjelas oleh D-92 (§22, APPROVED 18:10 WIB).
 
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
@@ -934,7 +936,7 @@ Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): ite
 | D-79 | **APPROVED (sama). P5 Format angka.** Uang ditulis `$3,240.00` (pemisah ribuan, 2 desimal). Max cost 2 desimal. | 06 format angka; design.md |
 | D-80 | **APPROVED (sama). P6 Beranda.** Isi beranda dipadatkan: kurangi ruang kosong, terutama mobile 390 px; connect wallet satu baris. | 06 S1; design.md |
 | D-81 | **DIBATALKAN, dan pembatalan itu APPROVED (Fatih langsung, 2026-10-09 17:01 WIB, §20).** Guard CI grep `affiliated\|endorsed by` (butir terakhir D-74) tidak berlaku. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Pada ~15:34 WIB statusnya masih menunggu konfirmasi langsung. | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md |
-| D-82 | **APPROVED (sama). Nama series demo yang live = `CU-JKT-H100-2611`.** Seed kontrak series 1 tidak diubah. D-19 (series panggung `CU-JKT-H100-2610`) dan D-25 tetap catatan historis; yang digantikan hanya penamaan series demo yang live. `series_id`, window, dan input skrip seed/forge tidak ditulis ulang. | 03, 05, 06, 09 |
+| D-82 | **APPROVED (sama). Diperjelas oleh D-92 (APPROVED, §22, 18:10 WIB).** Kalimat lama: nama series demo yang live = `CU-JKT-H100-2611`; seed kontrak series 1 tidak diubah; D-19 (series panggung `CU-JKT-H100-2610`) dan D-25 disebut catatan historis; yang digantikan hanya penamaan series demo yang live; `series_id`, window, dan input skrip seed/forge tidak ditulis ulang. Pembacaan "nama live = 2611" menyamakan seed series 1 dengan series panggung. D-92 mengembalikan series panggung/demo/rekaman ke `CU-JKT-H100-2610` (series 4). Seed series 1 tetap `CU-JKT-H100-2611`. | 03, 05, 06, 09 |
 
 ---
 
@@ -989,3 +991,29 @@ Fatih memutuskan langsung pada 2026-10-09 17:01 WIB. Semua butir di bawah **APPR
 **Hosting (rincian di 04 §8 dan CONTEXT-INDEX; tanpa secret atau token):** project Vercel hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam), jadi `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota.
 
 **PR UI di `main`:** #47, #51, #53, #54 sudah merge (CI hijau) dan belum tampil di web.
+
+---
+
+## 21. Hero emas dan kaca di landing: D-91 (APPROVED)
+
+Fatih menyetujui prototipe. Dicatat lewat Paron Designer dan Scout. Bukan usulan. Chain tetap testnet. Nomor bebas berikutnya setelah D-90.
+
+Sumber prototipe: `design.md` di `/workspace/paron-landing/` pada komputer Designer. Tidak ada detail di luar tabel ini.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-91 | **APPROVED (Fatih; prototipe disetujui; dicatat lewat Paron Designer dan Scout).** Hero di landing `/` memakai emas dan kaca, plus aksen amber terbatas di dashboard (angka, tag kecil, state aktif, garis 1px). Dashboard tidak mendapat gradien dan tidak mendapat kaca penuh. Token final: hitam `#000`, teks `#f3f3f3`, teks sekunder `#a6a6a6` dan `#8c8c8c`, amber-100 `#f1d3a6`, amber-300 `#d9a066`, amber-500 `#bc854d`, amber-800 `#5a3515`. Garis 1px `rgba(255,255,255,.16)`, varian lembut `.09`. Kaca hanya di hero landing dan panel angka (radius 8px, di bawah teks yang menimpa cahaya amber), tanpa box-shadow. Motion 38 sampai 64 detik, mati di bawah `prefers-reduced-motion`. Larangan gradien dan kaca di `design.md` sekarang boleh hanya di hero landing dan panel angkanya. Tetap dilarang: ungu atau cyan, blob, gradien pada teks (kecuali angka 1.5×), bayangan berat, kartu palsu atau statistik palsu. Aturan isi tidak berubah (tanpa logo pihak ketiga, tanpa kata terlarang). | design.md; guidelines.md; approved-ui-changes.md |
+
+---
+
+## 22. Klarifikasi D-82: D-92 (APPROVED 2026-10-09 18:10 WIB)
+
+Fatih menyetujui rekomendasi untuk series demo ("rekomendasimu saja"). Dicatat Scout 2026-10-09 18:10 WIB. D-82 tetap APPROVED dan ditandai diperjelas oleh D-92. Chain tetap testnet.
+
+Fakta live: seed series 1–3 = `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612`. Series 4 `CU-JKT-H100-2610` dibuat oleh uji S0 dan sesuai D-19 (series panggung ke-4 bernama 2610). Series untuk demo dan rekaman = series 4 (2610). `2611` tetap data seed di Markets.
+
+**Dampak:** preset wizard (PR #53) mengisi `CU-JKT-H100-2611`. Handler menggantinya ke `CU-JKT-H100-2610` di PR UI mendatang. Bukan bagian PR dokumen ini. Rekaman memakai putaran baru di series 4.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-92 | **APPROVED (Fatih, "rekomendasimu saja", dicatat Scout 2026-10-09 18:10 WIB). Memperjelas D-82: seed = 2611, series panggung/demo = 2610 (series 4).** Rujukan yang berarti series panggung, uji S0, checklist `/demo`, atau rekaman memakai `CU-JKT-H100-2610` (series 4). Rujukan seed series 1 tetap `CU-JKT-H100-2611`. Catatan D-19/D-25 yang memakai 2610 untuk panggung bukan catatan historis. Preset wizard PR #53 masih mengisi 2611 sampai PR UI handler. Rekaman = putaran baru di series 4. | 03, 05, 06, 09; CONTEXT-INDEX; sitemap `/demo`; approved-ui-changes |
