@@ -1,0 +1,42 @@
+{
+  "schemaVersion": "paron-deployments/v1",
+  "chainId": 46630,
+  "mockUsdc": {
+    "address": "0x32142f5bd9674bb38f6b53c1dde429ba2f51f111",
+    "txHash": "0xb0e5f416a2d25f00d391e0b87c3162f1eca9213f34e784bd36a0bfbfc9ecd0ab",
+    "block": 131496051,
+    "verified": false,
+    "minter": "0xfAB1bb1f3de24231E61B814decA106dAc892716f"
+  },
+  "eas": {
+    "mode": "self-deploy",
+    "address": "0x52532ddcf56e5cada383b5ba15cdbac2fe85a349",
+    "schemaRegistry": "0x0E9A3dd0765d4Ef84D42b8e35Cef6aED89E6E379",
+    "version": "1.4.0",
+    "txHashes": [
+      "0x890093536aae0c4726ebd87c98c29e85024b9bcdeb881af095d9012e6285b37f"
+    ],
+    "verified": false
+  },
+  "schemas": {
+    "ParticipantVerified": {
+      "uid": "0x58aa312e14d11b14c0739620c263f5785c00d6a6bb4f5bcc7a1a76ab4a67eee9",
+      "schema": "ParticipantVerified(bytes32 entityId,uint8 role,bytes2 country,uint64 expiry)",
+      "revocable": true,
+      "resolver": "0x0000000000000000000000000000000000000000",
+      "txHash": "0x3853914660b3feb064e1be9fda9ad7936cc5abe5569dff456899746034f00a36"
+    },
+    "KybApplication": {
+      "uid": "0xe1590b17b6320150804a7e1e13e6828f01146fc7cf18bb234aa546c2db2b577d",
+      "schema": "KybApplication(bytes32 entityId,uint8 role,bytes2 country,bytes32 dataHash)",
+      "revocable": true,
+      "resolver": "0x0000000000000000000000000000000000000000",
+      "txHash": "0x90c95442620ea346643be665cdd069b98ca2fcf3ce7e07e4eb7791e0f4842721"
+    }
+  },
+  "safe": null,
+  "kyb": {
+    "attester": null,
+    "attestations": []
+  }
+}

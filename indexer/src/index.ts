@@ -1,12 +1,18 @@
 import { ponder } from "ponder:registry";
+import { CONTRACT_EVENTS } from "./config/events.js";
 import * as schema from "ponder:schema";
-import type { Hex } from "viem";
+import { createPublicClient, http, type Hex } from "viem";
 import { easAbi } from "./abi/temporary-event-abis.js";
 import { loadDeployment } from "./config/load.js";
 import { applyLog, type ApplyContext, type IndexedLog } from "./handlers/apply.js";
 import { PonderStore } from "./handlers/ponder-store.js";
 
 const deployment = loadDeployment();
+
+// EAS attestations are read at "latest" through our own client. Public RPC nodes prune
+// historical state, so a pinned eth_call at the event block throws and crashes the indexer.
+// An attestation's data and refUID never change after creation, so latest is safe.
+const latestClient = createPublicClient({ transport: http(deployment.rpcUrl, { retryCount: 4, retryDelay: 500 }) });
 
 const applyContext = (): ApplyContext => ({
   chainId: deployment.chainId,
@@ -46,62 +52,13 @@ const on = (ponder.on as unknown as (name: string, handler: (args: IndexArgs) =>
   ponder,
 );
 
-const CONTRACTS: Record<string, readonly string[]> = {
-  SeriesFactory: [
-    "SeriesCreated",
-    "PrimaryPriceRaised",
-    "SeriesPaused",
-    "SeriesUnpaused",
-    "SeriesFinalized",
-    "ArbitratorAllowlistUpdated",
-    "GateUpdated",
-    "RoleGranted",
-    "RoleRevoked",
-    "RoleAdminChanged",
-  ],
-  ProviderRegistry: ["ProviderRegistered", "ProviderStatusChanged", "ReputationUpdated", "RoleGranted", "RoleRevoked"],
-  ConversionTable: ["FactorSet", "RoleGranted", "RoleRevoked"],
-  BondVault: ["BondDeposited", "BondReleased", "BondSlashed", "BondFinalized", "BondWithdrawn"],
-  PrimarySale: ["PrimaryBuy", "TreasuryUpdated", "PrimaryFeeUpdated", "GateUpdated", "RoleGranted", "RoleRevoked"],
-  OrderBook: ["OrderPlaced", "OrderCancelled", "Trade", "TakerFeeUpdated", "GateUpdated", "IndexUpdateFailed", "RoleGranted", "RoleRevoked"],
-  RedemptionManager: [
-    "RedemptionRequested",
-    "Acknowledged",
-    "Delivered",
-    "Disputed",
-    "RedemptionFinalized",
-    "Defaulted",
-    "Refunded",
-    "Ruled",
-    "RedemptionReopened",
-    "IndexUpdateFailed",
-  ],
-  PanelArbitrator: ["DisputeReceived", "RulingSubmitted", "PanelUpdated", "RoleGranted", "RoleRevoked"],
-  PrintIndex: [
-    "IndexUpdated",
-    "IndexStatusChanged",
-    "DeliveryRecorded",
-    "DefaultRecorded",
-    "IndexParamsUpdated",
-    "PrintRecorded",
-    "IndexUpdateFailed",
-    "RoleGranted",
-    "RoleRevoked",
-  ],
-  ReferenceFeed: ["ReferenceUpdated", "LabelUpdated", "RoleGranted", "RoleRevoked"],
-  EASGate: ["AttestationLinked", "AttesterUpdated", "RoleGranted", "RoleRevoked"],
-  RegistryGate: ["ParticipantSet", "ParticipantRevoked", "RoleGranted", "RoleRevoked"],
-  EAS: ["Attested", "Revoked"],
-  TimelockController: ["CallScheduled", "CallSalt", "CallExecuted", "Cancelled", "MinDelayChange", "RoleGranted", "RoleRevoked"],
-  CUToken: ["Transfer"],
-};
 
-for (const [contractName, events] of Object.entries(CONTRACTS)) {
+for (const [contractName, events] of Object.entries(CONTRACT_EVENTS)) {
   for (const eventName of events) {
     on(`${contractName}:${eventName}`, async ({ event, context }) => {
       const args = { ...event.args };
       if ((eventName === "Attested" || eventName === "Revoked") && typeof args.data !== "string" && deployment.easAddress) {
-        const attestation = await context.client.readContract({
+        const attestation = await latestClient.readContract({
           address: deployment.easAddress,
           abi: easAbi,
           functionName: "getAttestation",
