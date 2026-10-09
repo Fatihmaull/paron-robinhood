@@ -28,7 +28,7 @@ import {
   STATEMENT_UNAVAILABLE,
   TAPE_UNAVAILABLE,
 } from "./onchain";
-import type { GpuRow, Holding, LoadResult, Meta, Participant, Snap, StatementRow, TimelockOp } from "./types";
+import type { GpuRow, Holding, LoadResult, Meta, Participant, Redemption, Snap, StatementRow, TimelockOp } from "./types";
 
 export class ApiError extends Error {
   code: string;
@@ -159,12 +159,26 @@ export function loadHoldings(snap: Snap, source: "mock" | "live", client?: Publi
   }, client);
 }
 
-export function loadProviderRedemptions(snap: Snap, source: "mock" | "live", client?: PublicClient) {
+export const DEMO_PROVIDER = "0x1111111111111111111111111111111111111111";
+
+/** Which redemptions to list: one provider's queue, one holder's, or every open default/final/ruling (keepers). */
+export type QueueScope = { provider: string } | { holder: string } | "keepers";
+
+export function queuePath(scope: QueueScope): string {
+  if (scope === "keepers") return "/redemptions?state=DEFAULTABLE,DELIVERED,DISPUTED&limit=100";
+  if ("provider" in scope) return `/redemptions?provider=${scope.provider}&limit=100`;
+  return `/redemptions?holder=${scope.holder}&limit=100`;
+}
+
+export function loadProviderRedemptions(snap: Snap, source: "mock" | "live", client?: PublicClient, scope: QueueScope = "keepers") {
+  if (source === "live" && typeof scope === "object" && !("provider" in scope ? scope.provider : scope.holder)) {
+    return Promise.resolve<LoadResult<Redemption[]>>({ data: [], meta: localMeta(), origin: "live" });
+  }
   return withFallback(
     snap,
     source,
     () => providerRedemptions(snap),
-    "/provider/redemptions",
+    queuePath(scope),
     async () => {
       throw new OnchainUnavailable("The provider queue needs the Paron API. Open a request by id to read it on-chain.");
     },
@@ -172,8 +186,8 @@ export function loadProviderRedemptions(snap: Snap, source: "mock" | "live", cli
   );
 }
 
-export function loadProvider(snap: Snap, source: "mock" | "live", client?: PublicClient) {
-  return withFallback(snap, source, () => providerAccount(snap), "/providers/0x1111111111111111111111111111111111111111", async () => {
+export function loadProvider(snap: Snap, source: "mock" | "live", client?: PublicClient, address: string = DEMO_PROVIDER) {
+  return withFallback(snap, source, () => providerAccount(snap), `/providers/${address}`, async () => {
     throw new OnchainUnavailable("Provider totals need the Paron API.");
   }, client);
 }
@@ -188,9 +202,11 @@ export function loadPrints(snap: Snap, source: "mock" | "live", client?: PublicC
   }, client);
 }
 
-export function loadStatement(snap: Snap, source: "mock" | "live"): Promise<LoadResult<StatementRow[]>> {
+export function loadStatement(snap: Snap, source: "mock" | "live", address?: string): Promise<LoadResult<StatementRow[]>> {
   if (source === "mock") return Promise.resolve({ ...statementOf(), origin: "mock" });
-  return liveGet<StatementRow[]>("/statements")
+  // No wallet connected: the statement is per account, so no request is made.
+  if (!address) return Promise.resolve({ data: [], meta: localMeta(), origin: "live" as const });
+  return liveGet<StatementRow[]>(`/accounts/${address}/statement`)
     .then((env) => ({ ...env, origin: "live" as const }))
     .catch(() => {
       throw new OnchainUnavailable(STATEMENT_UNAVAILABLE);
@@ -204,7 +220,7 @@ export function loadGpus(snap: Snap, source: "mock" | "live"): Promise<LoadResul
 
 export function loadTimelock(source: "mock" | "live"): Promise<LoadResult<TimelockOp[]>> {
   if (source === "mock") return Promise.resolve({ ...timelock(), origin: "mock" });
-  return liveGet<TimelockOp[]>("/admin/timelock").then((env) => ({ ...env, origin: "live" as const }));
+  return liveGet<TimelockOp[]>("/timelock/operations").then((env) => ({ ...env, origin: "live" as const }));
 }
 
 export function loadParticipant(address: string, source: "mock" | "live"): Promise<LoadResult<Participant>> {
@@ -217,7 +233,7 @@ export function loadKyb(source: "mock" | "live"): Promise<LoadResult<unknown[]>>
     const env = kybPendingApps() as { data: unknown[]; meta: Meta; next_cursor?: string | null };
     return Promise.resolve({ ...env, origin: "mock" });
   }
-  return liveGet<unknown[]>("/verifier/applications?status=PENDING").then((env) => ({ ...env, origin: "live" as const }));
+  return liveGet<unknown[]>("/kyb/applications?status=PENDING").then((env) => ({ ...env, origin: "live" as const }));
 }
 
 export function loadReference() {
