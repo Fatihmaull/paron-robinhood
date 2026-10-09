@@ -5,6 +5,10 @@ import { ColorType, createChart, LineSeries, type UTCTimestamp } from "lightweig
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
 import type { PrintRow } from "@/lib/types";
 
+function cssVar(name: string): string {
+  return getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+}
+
 export function PrintChart({ prints }: { prints: PrintRow[] }) {
   const ref = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -12,11 +16,11 @@ export function PrintChart({ prints }: { prints: PrintRow[] }) {
     if (!node) return;
     const chart = createChart(node, {
       height: 220,
-      layout: { background: { type: ColorType.Solid, color: "#101317" }, textColor: "#A3ABB8" },
-      grid: { vertLines: { color: "#1F252E" }, horzLines: { color: "#1F252E" } },
+      layout: { background: { type: ColorType.Solid, color: cssVar("--chart-bg") }, textColor: cssVar("--chart-text") },
+      grid: { vertLines: { color: cssVar("--chart-grid") }, horzLines: { color: cssVar("--chart-grid") } },
       timeScale: { timeVisible: true },
     });
-    const series = chart.addSeries(LineSeries, { color: "#F07A2A" });
+    const series = chart.addSeries(LineSeries, { color: cssVar("--chart-line") });
     const points = [...prints]
       .sort((a, b) => a.ts_ms - b.ts_ms)
       .map((print) => ({ time: Math.floor(print.ts_ms / 1000) as UTCTimestamp, value: Number(print.cu_price) }));
@@ -45,9 +49,9 @@ export function BondChart({ balance, released, slashed }: { balance: string; rel
     <div style={{ height: 140 }}>
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data}>
-          <XAxis dataKey="name" stroke="#838C9B" />
-          <YAxis stroke="#838C9B" />
-          <Bar dataKey="value" fill="#3CC68A" />
+          <XAxis dataKey="name" stroke="var(--chart-axis)" />
+          <YAxis stroke="var(--chart-axis)" />
+          <Bar dataKey="value" fill="var(--chart-bar)" />
         </BarChart>
       </ResponsiveContainer>
     </div>

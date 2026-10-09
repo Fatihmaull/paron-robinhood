@@ -15,7 +15,7 @@ export function WalletConnect() {
   if (!isConnected || !address) {
     return (
       <button
-        className="btn"
+        className="btn chrome"
         type="button"
         disabled={!injected || isPending}
         onClick={() => injected && connect({ connector: injected })}
