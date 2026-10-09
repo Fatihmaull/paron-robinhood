@@ -1,0 +1,25 @@
+{
+  "data": [
+    {
+      "order_id": "1",
+      "series_id": "4",
+      "symbol": "CU-JKT-H100-2610",
+      "maker": "0x3333333333333333333333333333333333333333",
+      "side": "ASK",
+      "price": "3.200000",
+      "qty_initial": "5",
+      "qty_remaining": "0",
+      "status": "FILLED",
+      "created_at_ms": 1791601260000,
+      "updated_at_ms": 1791601265000,
+      "tx_hash": "0xc4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4c4"
+    }
+  ],
+  "next_cursor": null,
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100250,
+    "indexed_at_ms": 1791601265000,
+    "server_now_ms": 1791601265000
+  }
+}

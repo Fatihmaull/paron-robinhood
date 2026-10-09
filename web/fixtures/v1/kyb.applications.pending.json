@@ -1,0 +1,27 @@
+{
+  "data": [
+    {
+      "uid": "0xc1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1c1",
+      "applicant": "0x6666666666666666666666666666666666666666",
+      "entity_id": "0xe6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6e6",
+      "role": {
+        "code": 2,
+        "name": "Buyer"
+      },
+      "country": "ID",
+      "data_hash": "0xd6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6d6",
+      "submitted_at_ms": 1791601500000,
+      "status": "PENDING",
+      "approval": null,
+      "tx_hash": "0xf0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0",
+      "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xf0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0f0"
+    }
+  ],
+  "next_cursor": null,
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601500000,
+    "server_now_ms": 1791601500000
+  }
+}

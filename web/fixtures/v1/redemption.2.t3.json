@@ -1,0 +1,73 @@
+{
+  "data": {
+    "req_id": "2",
+    "series_id": "4",
+    "symbol": "CU-JKT-H100-2610",
+    "holder": "0x2222222222222222222222222222222222222222",
+    "provider": "0x1111111111111111111111111111111111111111",
+    "amount_cu": "10",
+    "claim_usd": "45.000000",
+    "state": "DEFAULTED",
+    "stored_state": "DEFAULTED",
+    "requested_at_ms": 1791601380000,
+    "ack_deadline_ms": 1791601440000,
+    "acknowledged_at_ms": null,
+    "delivery_deadline_ms": null,
+    "delivered_at_ms": null,
+    "dispute_deadline_ms": null,
+    "disputed_at_ms": null,
+    "ruling_deadline_ms": null,
+    "resolved_at_ms": 1791601441000,
+    "next_deadline_ms": null,
+    "delivery_ref": "0xd2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2d2",
+    "receipt_hash": null,
+    "dispute_bond": null,
+    "ruling": null,
+    "payout": "45.000000",
+    "bond_released": null,
+    "voluntary": false,
+    "via_dispute": false,
+    "auto_finalized": null,
+    "default_caller": "0x4444444444444444444444444444444444444444",
+    "refunded_after_window": null,
+    "reopened_from_req_id": null,
+    "reopened_to_req_id": null,
+    "actions": [],
+    "timeline": [
+      {
+        "event": "RedemptionRequested",
+        "ts_ms": 1791601380000,
+        "tx_hash": "0xcacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaca",
+        "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xcacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaca",
+        "args": {
+          "amount_cu": "10"
+        }
+      },
+      {
+        "event": "Defaulted",
+        "ts_ms": 1791601441000,
+        "tx_hash": "0xcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb",
+        "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb",
+        "args": {
+          "payout": "45.000000",
+          "caller": "0x4444444444444444444444444444444444444444"
+        }
+      },
+      {
+        "event": "BondSlashed",
+        "ts_ms": 1791601441000,
+        "tx_hash": "0xcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb",
+        "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb",
+        "args": {
+          "amount": "45.000000"
+        }
+      }
+    ]
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

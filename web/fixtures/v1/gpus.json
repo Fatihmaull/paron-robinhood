@@ -1,0 +1,41 @@
+{
+  "data": [
+    {
+      "gpu": "H100",
+      "gpu_type": "H100-SXM-80GB",
+      "factor": "1.0000",
+      "updated_at_ms": 1791601200000
+    },
+    {
+      "gpu": "H200",
+      "gpu_type": "H200-SXM-141GB",
+      "factor": "1.4000",
+      "updated_at_ms": 1791601200000
+    },
+    {
+      "gpu": "B200",
+      "gpu_type": "B200-SXM-180GB",
+      "factor": "2.5000",
+      "updated_at_ms": 1791601200000
+    },
+    {
+      "gpu": "GB200",
+      "gpu_type": "GB200-NVL72",
+      "factor": "3.5000",
+      "updated_at_ms": 1791601200000
+    },
+    {
+      "gpu": "A100",
+      "gpu_type": "A100-SXM-80GB",
+      "factor": "0.4500",
+      "updated_at_ms": 1791601200000
+    }
+  ],
+  "next_cursor": null,
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

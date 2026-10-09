@@ -1,0 +1,10 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="-1 -1 134 30" width="268" height="60" role="img" aria-label="Paron" color="#E6E9EE">
+  <title>Paron wordmark</title>
+  <g fill="none" stroke="currentColor" stroke-width="4.25" stroke-linecap="butt" stroke-linejoin="miter" stroke-miterlimit="1.4">
+    <path d="M2 26 V2 H12 A7 7 0 0 1 12 16 H2"/>
+    <path d="M29 26 L38 2 L47 26 M33 17 H43"/>
+    <path d="M57 26 V2 H67 A7 7 0 0 1 67 16 H57 M66 16 L73 26"/>
+    <ellipse cx="93" cy="14" rx="9" ry="12"/>
+    <path d="M114 26 V2 L130 26 V2"/>
+  </g>
+</svg>
