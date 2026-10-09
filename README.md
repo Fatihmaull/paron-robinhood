@@ -160,13 +160,11 @@ This lane does not edit the workspace root package, `contracts/`, `web/`, `index
 Paron was built during ETHJKT 2026. Third-party code: OpenZeppelin Contracts (MIT),
 Ethereum Attestation Service, Foundry, wagmi/viem. GPU conversion factors are derived
 from public NVIDIA datasheets and public rental-price benchmarks (sources in docs).
-Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners.
-Deployed on Robinhood Chain Testnet (fallback: Arbitrum Sepolia). Not affiliated with or
-endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners.
+Deployed on Robinhood Chain Testnet (fallback: Arbitrum Sepolia).
 
 Built by Fatih Maulana with help from Grok Bot.
 
-Also used, and not a partnership: Safe 1.4.1, Ponder, Hono, Next.js, React, RainbowKit, TanStack Query, Tailwind, shadcn/ui. Robinhood Chain is the network this build is deployed on. Paron is not affiliated with or endorsed by Robinhood Markets, Inc., Offchain Labs, or the Arbitrum Foundation.
+Also used: Safe 1.4.1, Ponder, Hono, Next.js, React, RainbowKit, TanStack Query, Tailwind, shadcn/ui. Robinhood Chain is the network this build is deployed on.
 
 ## Team
 
