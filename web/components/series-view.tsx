@@ -46,20 +46,8 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
         <Link href={`/trade/${seriesId}`} data-active={tab === "trade"}>Trade</Link>
         <Link href="/trade/leverage">Leverage</Link>
       </div>
-      <div className="grid two">
-        <div className="grid">
-          {detail ? (
-            <Panel title="Market">
-              <div className="row"><span>Primary</span><span>{formatUsd(detail.primary_price)}/CU</span></div>
-              <div className="row"><span>Native</span><span>{formatUsd(detail.native_primary_price)}/{detail.gpu}-hour</span></div>
-              <div className="row"><span>Last</span><span>{detail.last_price ? `${formatUsd(detail.last_price)}/CU` : "—"}</span></div>
-              <div className="row"><span>Bond / CU</span><span>{formatUsd(detail.bond_per_cu)}</span></div>
-              <div className="row"><span>Coverage</span><span>{formatCoverage(detail.coverage)}</span></div>
-              <div className="row"><span>Sold / supply</span><span>{formatCu(detail.sold_supply)} / {formatCu(detail.max_supply)}</span></div>
-              <div className="row"><span>Outstanding</span><span>{formatCu(detail.total_supply)}</span></div>
-              <div className="row"><span>Sale</span><span>{detail.sale_open ? "Open" : "Closed"}{detail.paused ? " · paused" : ""}</span></div>
-            </Panel>
-          ) : null}
+      <div className="terminal">
+        <div className="t-chart">
           <Panel title="Prints">
             {onchainTape ? <p>{TAPE_UNAVAILABLE}</p> : null}
             {tape.length > 0 ? <PrintChart prints={tape} /> : <p className="muted">No prints for this series in the current snapshot.</p>}
@@ -79,11 +67,26 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
             </table>
             </div>
           </Panel>
-          {tab !== "buy" ? <OrderBookPanel seriesId={seriesId} asks={book.data?.data.asks ?? []} bids={book.data?.data.bids ?? []} /> : null}
         </div>
-        <div className="grid">
-          {detail && (tab === "overview" || tab === "buy") ? <BuyBox seriesId={seriesId} price={detail.primary_price} saleOpen={detail.sale_open} /> : null}
-          {detail && (tab === "overview" || tab === "trade") ? <TradeBox seriesId={seriesId} token={detail.token} /> : null}
+        <div className="t-book">
+          <OrderBookPanel seriesId={seriesId} asks={book.data?.data.asks ?? []} bids={book.data?.data.bids ?? []} />
+        </div>
+        <div className="t-ticket">
+          {detail ? <Ticket seriesId={seriesId} detail={detail} initial={tab === "trade" ? "order" : "buy"} /> : null}
+        </div>
+        <div className="t-info">
+          {detail ? (
+            <Panel title="Market">
+              <div className="row"><span>Primary</span><span>{formatUsd(detail.primary_price)}/CU</span></div>
+              <div className="row"><span>Native</span><span>{formatUsd(detail.native_primary_price)}/{detail.gpu}-hour</span></div>
+              <div className="row"><span>Last</span><span>{detail.last_price ? `${formatUsd(detail.last_price)}/CU` : "—"}</span></div>
+              <div className="row"><span>Bond / CU</span><span>{formatUsd(detail.bond_per_cu)}</span></div>
+              <div className="row"><span>Coverage</span><span>{formatCoverage(detail.coverage)}</span></div>
+              <div className="row"><span>Sold / supply</span><span>{formatCu(detail.sold_supply)} / {formatCu(detail.max_supply)}</span></div>
+              <div className="row"><span>Outstanding</span><span>{formatCu(detail.total_supply)}</span></div>
+              <div className="row"><span>Sale</span><span>{detail.sale_open ? "Open" : "Closed"}{detail.paused ? " · paused" : ""}</span></div>
+            </Panel>
+          ) : null}
           {detail?.bond ? (
             <Panel title="Bond">
               <BondBar deposited={detail.bond.deposited} balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
@@ -125,6 +128,23 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
   );
 }
 
+function Ticket({ seriesId, detail, initial }: { seriesId: string; detail: NonNullable<ReturnType<typeof useSeries>["data"]>["data"]; initial: "buy" | "order" }) {
+  const [mode, setMode] = useState<"buy" | "order">(initial);
+  return (
+    <div>
+      <div className="tabs" role="tablist" aria-label="Ticket">
+        <button type="button" role="tab" aria-selected={mode === "buy"} data-active={mode === "buy"} onClick={() => setMode("buy")}>Buy</button>
+        <button type="button" role="tab" aria-selected={mode === "order"} data-active={mode === "order"} onClick={() => setMode("order")}>Place order</button>
+      </div>
+      {mode === "buy" ? (
+        <BuyBox seriesId={seriesId} price={detail.primary_price} saleOpen={detail.sale_open} />
+      ) : (
+        <TradeBox seriesId={seriesId} token={detail.token} />
+      )}
+    </div>
+  );
+}
+
 function OrderBookPanel({ seriesId, bids, asks }: { seriesId: string; bids: { price: string; qty_cu: string }[]; asks: { price: string; qty_cu: string }[] }) {
   const askRows = [...asks].sort((a, b) => Number(a.price) - Number(b.price));
   const bidRows = [...bids].sort((a, b) => Number(b.price) - Number(a.price));
@@ -134,7 +154,7 @@ function OrderBookPanel({ seriesId, bids, asks }: { seriesId: string; bids: { pr
   const spread = bestAsk != null && bestBid != null ? bestAsk - bestBid : null;
   return (
     <Panel title={`Book · series ${seriesId}`}>
-      {askRows.length === 0 && bidRows.length === 0 ? <p className="muted">Empty</p> : null}
+      {askRows.length === 0 && bidRows.length === 0 ? <p className="muted">No orders. Place the first bid.</p> : null}
       {askRows.map((level) => (
         <BookRow key={`a-${level.price}`} side="ask" price={level.price} qty={level.qty_cu} max={max} />
       ))}

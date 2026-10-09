@@ -342,13 +342,30 @@ td .pill { height: 18px; }
 .key.released { background: var(--bond-bar-released); }
 .key.slashed { background: var(--bond-bar-slashed); }
 .bond-bar .slashed { background: var(--bond-bar-slashed); }
+.terminal {
+  display: grid;
+  grid-template-columns: repeat(12, minmax(0, 1fr));
+  grid-template-areas: "chart chart chart chart chart chart book book book ticket ticket ticket" "info info info info info info info info info info info info";
+  gap: var(--space-4);
+  align-items: start;
+}
+.t-chart { grid-area: chart; } .t-book { grid-area: book; } .t-ticket { grid-area: ticket; }
+.t-info { grid-area: info; display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: var(--space-4); align-items: start; }
+.t-chart .table-scroll { max-height: 200px; overflow-y: auto; }
+.t-ticket .tabs { margin-bottom: var(--space-3); }
+@media (max-width: 1279px) {
+  .terminal { grid-template-columns: 2fr 1fr; grid-template-areas: "ticket ticket" "chart book" "info info"; }
+}
+@media (max-width: 859px) {
+  .terminal { grid-template-columns: minmax(0, 1fr); grid-template-areas: "ticket" "chart" "book" "info"; }
+}
 .book-row {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  height: 28px;
+  height: var(--table-row-height-dense);
   padding: 0 8px;
-  font-size: var(--text-xs);
+  font-size: var(--text-book);
   background: linear-gradient(to left, var(--depth-color) var(--depth), transparent var(--depth));
 }
 .book-row.ask { --depth-color: var(--book-ask-depth); }
