@@ -6,6 +6,7 @@ import { useAccount, usePublicClient, useSignTypedData } from "wagmi";
 import { conversionTableAbi, erc20Abi, seriesFactoryAbi } from "@/lib/abi";
 import { ZERO_ADDRESS, chainId, contractAddress, demoPresets } from "@/lib/config";
 import { canonicalAddress, formatFactor, formatUsd } from "@/lib/format";
+import { gpuModelId } from "@/lib/gpu-model";
 import { useGpus } from "@/lib/hooks";
 import { signErc2612 } from "@/lib/permit";
 import { factorBps, seriesBondRaw, uint256Of } from "@/lib/settlement";
@@ -88,7 +89,7 @@ export function ListingWizard() {
           address: table,
           abi: conversionTableAbi,
           functionName: "factorOf",
-          args: [stringToHex(draft.gpu, { size: 32 })],
+          args: [gpuModelId(draft.gpu)],
         });
         const raw = uint256Of(onchain, 0n);
         if (raw > 0n) return raw;
@@ -283,7 +284,7 @@ export function ListingWizard() {
 
 function buildParams(draft: Draft) {
   return {
-    gpuModel: stringToHex(draft.gpu, { size: 32 }),
+    gpuModel: gpuModelId(draft.gpu),
     gpuHours: BigInt(draft.hours || "0"),
     primaryPrice: parseUnits(draft.price || "0", 6),
     bondPerCU: parseUnits(draft.bond || "0", 6),

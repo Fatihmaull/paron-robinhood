@@ -1,8 +1,5 @@
 import {
   hexToString,
-  keccak256,
-  toBytes,
-  stringToHex,
   type Address,
   type PublicClient,
 } from "viem";
@@ -16,6 +13,7 @@ import {
 } from "./abi";
 import { contractAddress, contractsConfigured } from "./config";
 import { canonicalAddress, formatRaw6 } from "./format";
+import { gpuModelId } from "./gpu-model";
 import type { IndexStrip, OrderBook, Redemption, SeriesDetail, SeriesRow } from "./types";
 
 export class OnchainUnavailable extends Error {
@@ -64,7 +62,7 @@ function factorString(raw: number | bigint): string {
 }
 
 const GPU_KEYS = ["H100-SXM-80GB", "H200-SXM-141GB", "B200-SXM-180GB", "GB200-NVL72", "A100-SXM-80GB"];
-const GPU_BY_HASH = new Map<string, string>(GPU_KEYS.map((key) => [keccak256(toBytes(key)).toLowerCase(), key]));
+const GPU_BY_HASH = new Map<string, string>(GPU_KEYS.map((key) => [gpuModelId(key).toLowerCase(), key]));
 
 /** Seeded series store keccak256(gpuKey), not the string. Resolve known keys, else keep the old decode. */
 function gpuKeyOf(model: `0x${string}`): string {
@@ -350,7 +348,7 @@ export async function readRedemption(client: PublicClient, reqId: string): Promi
 
 export async function readIndex(client: PublicClient, gpu = "H100-SXM-80GB"): Promise<IndexStrip> {
   const index = requireAddr("printIndex");
-  const key = stringToHex(gpu, { size: 32 });
+  const key = gpuModelId(gpu);
   const statusRound = (await client.readContract({
     address: index,
     abi: printIndexAbi,
