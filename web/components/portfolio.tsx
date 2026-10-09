@@ -3,7 +3,6 @@
 import Link from "next/link";
 import { formatCu, formatUsd, formatWib, shortId } from "@/lib/format";
 import { useHolderQueue, useHoldings, useKeeperQueue, useStatement } from "@/lib/hooks";
-import { useData } from "./providers";
 import { Panel } from "./ui";
 
 const TABS = [
@@ -14,13 +13,10 @@ const TABS = [
 ] as const;
 
 export function Portfolio({ tab }: { tab: string }) {
-  const { snap } = useData();
   return (
     <div>
       <h1>Portfolio</h1>
-      <p className="lede">
-        Fixture account 0x2222…2222 (buyer) in snapshot {snap}. Connect a wallet on the live API to read your own balances.
-      </p>
+      <p className="lede">Connect a wallet to read your own balances.</p>
       <div className="tabs">
         {TABS.map(([id, label]) => (
           <Link key={id} href={id === "holdings" ? "/portfolio" : `/portfolio?tab=${id}`} data-active={tab === id}>
@@ -60,7 +56,7 @@ function Holdings() {
         </tbody>
       </table>
       </div>
-      {rows.length === 0 ? <p className="muted">No holdings in this snapshot.</p> : null}
+      {rows.length === 0 ? <p className="muted">No holdings.</p> : null}
     </Panel>
   );
 }
@@ -72,7 +68,7 @@ function RedemptionList({ claimsOnly }: { claimsOnly: boolean }) {
   const rows = (query.data?.data ?? []).filter((row) => (claimsOnly ? row.state === "DEFAULTABLE" || row.actions.includes("CLAIM_DEFAULT") : true));
   return (
     <Panel title={claimsOnly ? "Claimable defaults" : "Redemptions"}>
-      {rows.length === 0 ? <p className="muted">Nothing in this snapshot.</p> : null}
+      {rows.length === 0 ? <p className="muted">{claimsOnly ? "No claims." : "No redemptions."}</p> : null}
       {rows.map((row) => (
         <div className="row" key={row.req_id}>
           <span>

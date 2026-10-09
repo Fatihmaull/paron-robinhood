@@ -22,7 +22,6 @@ import { demoChecks } from "@/lib/demo";
 import { errorCopy } from "@/lib/errors";
 import { formatFactor, formatWib, shortId } from "@/lib/format";
 import { useKeeperQueue, useKyb, useTimelock } from "@/lib/hooks";
-import { useData } from "./providers";
 import { useSend } from "./tx";
 import { Field, Panel, TxButton } from "./ui";
 
@@ -143,7 +142,7 @@ export function KeepersPage() {
             </Row>
           ))}
         </Queue>
-        <Queue title="finalizeSeries" empty="Windows in this snapshot are still open.">
+        <Queue title="finalizeSeries" empty="No series window has ended.">
           <p className="muted">Call finalizeSeries once windowEnd has passed.</p>
           <TxButton onClick={() => void send("fs", { address: contractAddress("seriesFactory"), abi: seriesFactoryAbi, functionName: "finalizeSeries", args: [4n] })}>Finalize series 4</TxButton>
         </Queue>
@@ -371,16 +370,15 @@ function OpPill({ status }: { status: string }) {
 }
 
 export function DemoPage() {
-  const { snap, source } = useData();
-  const checks = demoChecks(snap);
+  const checks = demoChecks();
   return (
     <div>
       <h1>Demo</h1>
-      <p className="lede">Checklist derived from indexed events in snapshot {snap}. Source: {source === "mock" ? "fixtures" : "API"}.</p>
+      <p className="lede">Walk through the live demo series.</p>
       <Panel>
         {checks.map((item) => (
           <div className="row" key={item.id}>
-            <span>{item.done ? "Done" : "Pending"} · {item.label}</span>
+            <span>{item.label}</span>
             <Link href={item.href}>Open</Link>
           </div>
         ))}

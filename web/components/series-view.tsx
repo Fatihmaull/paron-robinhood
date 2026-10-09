@@ -115,7 +115,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
             </Panel>
           ) : detail ? (
             <Panel title="Bond">
-              <p className="muted">Vault totals for this series are not in the current fixture. Series 4 carries the full bond record. Bond per CU is {formatUsd(detail.bond_per_cu)}.</p>
+              <p className="muted">Bond totals are not listed for this series. Bond per CU is {formatUsd(detail.bond_per_cu)}.</p>
             </Panel>
           ) : null}
           
