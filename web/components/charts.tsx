@@ -16,7 +16,11 @@ export function PrintChart({ prints }: { prints: PrintRow[] }) {
     if (!node) return;
     const chart = createChart(node, {
       height: 160,
-      layout: { background: { type: ColorType.Solid, color: cssVar("--chart-bg") }, textColor: cssVar("--chart-text") },
+      layout: {
+        background: { type: ColorType.Solid, color: cssVar("--chart-bg") },
+        textColor: cssVar("--chart-text"),
+        attributionLogo: false,
+      },
       grid: { vertLines: { color: cssVar("--chart-grid") }, horzLines: { color: cssVar("--chart-grid") } },
       timeScale: { timeVisible: true },
     });
