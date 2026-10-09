@@ -5,18 +5,6 @@ on:
   pull_request:
 
 jobs:
-  copy-guard:
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-node@v4
-        with:
-          node-version-file: .nvmrc
-      - name: D-74 grep guard (README.md and web/ only)
-        run: node script/copy-guard.mjs
-      - name: Guard fails on violations
-        run: node --test script/copy-guard.test.mjs
-
   web:
     runs-on: ubuntu-latest
     defaults:

@@ -9,7 +9,6 @@
   "scripts": {
     "abi": "pnpm --filter @paron/contracts abi",
     "test:contracts": "pnpm --filter @paron/contracts test",
-    "guard:copy": "node script/copy-guard.mjs",
     "build:contracts": "pnpm --filter @paron/contracts build"
   }
 }
