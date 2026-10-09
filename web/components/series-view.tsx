@@ -8,6 +8,7 @@ import { useAccount, usePublicClient, useSignTypedData } from "wagmi";
 import { erc20Abi, orderBookAbi, primarySaleAbi, redemptionManagerAbi } from "@/lib/abi";
 import { ZERO_ADDRESS, chainId, contractAddress } from "@/lib/config";
 import { formatCoverage, formatCu, formatFactor, formatMaxCost, formatUsd, formatWib, isWholeCu, quotePrimary, shortId } from "@/lib/format";
+import { FitAddress } from "./address";
 import type { SeriesDetail } from "@/lib/types";
 import { useBook, usePrints, useSeries } from "@/lib/hooks";
 import { signErc2612 } from "@/lib/permit";
@@ -52,7 +53,8 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
           {detail.country ? ` · country ${detail.country}` : ""}
           {seriesId ? ` · ID ${seriesId}` : ""}
           {` · window ${detail.delivery_window || "—"}`}
-          {` · provider ${shortId(detail.provider.address)}`}
+          {" · provider "}
+          <FitAddress value={detail.provider.address} />
         </p>
       ) : null}
       <div className="tabs">

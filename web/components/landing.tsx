@@ -21,7 +21,7 @@ import {
 export function Landing() {
   const index = useIndex();
   const reference = index.data?.data.reference?.value;
-  const price = formatUsd(reference);
+  const price = reference ? formatUsd(reference) : null;
 
   useEffect(() => {
     const root = document.querySelector(".landing");
@@ -83,7 +83,11 @@ export function Landing() {
             <div className="index">
               <div className="bar" />
               <div className="row">
-                <div className="serif num" aria-label={`${landingIndexNote}: ${price}`}>{price}</div>
+                {price ? (
+                  <div className="serif num" aria-label={`${landingIndexNote}: ${price}`}>{price}</div>
+                ) : (
+                  <div className="fallback" role="status">{index.isFetched ? "No reference yet" : "Loading reference"}</div>
+                )}
                 <div className="mono tag">H100 index<br />{landingIndexNote}</div>
               </div>
               <p className="lede">A marketplace for tokenized GPU compute. One unit, one hour of H100-equivalent compute, backed by a posted bond.</p>

@@ -97,6 +97,13 @@ export function shortId(value: string | null | undefined): string {
   return `${value.slice(0, 6)}…${value.slice(-4)}`;
 }
 
+/** Full EIP-55 split so a narrow column can ellipsize the middle and keep the checksum tail. */
+export function addressParts(value: string | null | undefined): { full: string; head: string; tail: string } | null {
+  if (!value || !isAddress(value)) return null;
+  const full = canonicalAddress(value);
+  return { full, head: full.slice(0, -4), tail: full.slice(-4) };
+}
+
 export function formatWib(ms: number): string {
   const fmt = new Intl.DateTimeFormat("en-GB", {
     timeZone: "Asia/Jakarta",

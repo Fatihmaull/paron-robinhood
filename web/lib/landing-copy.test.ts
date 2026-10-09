@@ -71,6 +71,14 @@ test("facts and the bond ledger stay testnet-accurate", () => {
   assert.match(landingLedger.map((row) => row.value).join(" "), /\$4\.50 \/ CU/);
 });
 
+test("landing headline stays sans and a missing reference has fallback copy", () => {
+  const view = readFileSync(new URL("../components/landing.tsx", import.meta.url), "utf8");
+  const css = readFileSync(new URL("../app/landing.css", import.meta.url), "utf8");
+  assert.match(view, /No reference yet/);
+  assert.match(css, /\.landing \.hero h1 \{[^}]*--font-inter-tight/s);
+  assert.match(css, /\.landing \.nav \{[^}]*display:\s*block/s);
+});
+
 test("landing motion is 38-64s and glass stays off the dashboard", () => {
   const css = readFileSync(new URL("../app/landing.css", import.meta.url), "utf8");
   assert.match(css, /38s/);
