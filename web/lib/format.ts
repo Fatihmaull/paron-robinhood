@@ -19,7 +19,18 @@ export function formatRaw6(raw: bigint): string {
   return `${neg ? "-" : ""}${whole.toString()}.${frac}`;
 }
 
-/** Display USD. Two decimals, or up to 6 when digits 3–6 are nonzero. */
+function groupThousands(whole: string): string {
+  return whole.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+}
+
+/** Half-up a 6-decimal raw amount to cents (2 decimal places). */
+function roundCents(raw: bigint): { neg: boolean; cents: bigint } {
+  const neg = raw < 0n;
+  const abs = neg ? -raw : raw;
+  return { neg, cents: (abs + 5_000n) / 10_000n };
+}
+
+/** Display USD as $3,240.00. Always 2 decimals, with thousands separators. */
 export function formatUsd(amount: string | null | undefined): string {
   if (amount == null || amount === "") return "—";
   let raw: bigint;
@@ -28,18 +39,24 @@ export function formatUsd(amount: string | null | undefined): string {
   } catch {
     return amount;
   }
+  const { neg, cents } = roundCents(raw);
+  const whole = groupThousands((cents / 100n).toString());
+  const frac = (cents % 100n).toString().padStart(2, "0");
+  return `${neg ? "-" : ""}$${whole}.${frac}`;
+}
+
+/**
+ * Max-cost field: 2 decimal places, no symbol.
+ * Ceil so the cap still covers a quote that is not an exact cent.
+ */
+export function formatMaxCost(amount: string): string {
+  const raw = parseUsd6(amount);
   const neg = raw < 0n;
   const abs = neg ? -raw : raw;
-  const whole = (abs / SCALE6).toString();
-  const six = (abs % SCALE6).toString().padStart(6, "0");
-  let end = 2;
-  for (let i = 5; i >= 2; i--) {
-    if (six[i] !== "0") {
-      end = i + 1;
-      break;
-    }
-  }
-  return `${neg ? "-" : ""}$${whole}.${six.slice(0, end)}`;
+  const cents = (abs + 9_999n) / 10_000n;
+  const whole = (cents / 100n).toString();
+  const frac = (cents % 100n).toString().padStart(2, "0");
+  return `${neg ? "-" : ""}${whole}.${frac}`;
 }
 
 export function formatCu(amount: string | null | undefined): string {

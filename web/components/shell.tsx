@@ -6,6 +6,7 @@ import { useEffect, useState } from "react";
 import { useAccount, useBalance, useBlockNumber, useChainId, useSwitchChain } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { formatUsd } from "@/lib/format";
+import { catchupBanner, type HealthSnapshot } from "@/lib/indexer-banner";
 import { apiBase, chainId, deployLabel, walletConnectId, wrongNetworkCopy } from "@/lib/config";
 import { formatCu } from "@/lib/format";
 import { useIndex } from "@/lib/hooks";
@@ -38,7 +39,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
   });
   const balance = useBalance({ address });
   const [open, setOpen] = useState(false);
-  const [syncing, setSyncing] = useState(false);
+  const [health, setHealth] = useState<HealthSnapshot | null>(null);
   const [healthBlock, setHealthBlock] = useState<number | null>(null);
   useEffect(() => {
     if (source !== "live" || !apiBase()) return;
@@ -48,15 +49,15 @@ export function Shell({ children }: { children: React.ReactNode }) {
       const timer = setTimeout(() => ctrl.abort(), 4000);
       try {
         const res = await fetch(`${apiBase()}/health`, { signal: ctrl.signal });
-        const body = (await res.json()) as { data?: { synced?: boolean; indexed_block?: number } };
+        const body = (await res.json()) as { data?: HealthSnapshot };
         if (!res.ok) throw new Error(`health ${res.status}`);
         if (!dead) {
-          setSyncing(body.data?.synced === false);
+          setHealth(body.data ?? null);
           setHealthBlock(typeof body.data?.indexed_block === "number" ? body.data.indexed_block : null);
         }
       } catch {
         if (!dead) {
-          setSyncing(false);
+          setHealth(null);
           setHealthBlock(null);
         }
       } finally {
@@ -75,15 +76,14 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const wrong = isConnected && walletChain !== chainId();
   const lowGas = balance.data != null && balance.data.value < 5_000_000_000_000_000n;
   const head = block.data != null ? Number(block.data) : null;
-  const lag = !syncing && source === "live" && origin === "live" && head != null && indexedBlock != null && head > indexedBlock;
+  const catchup = source === "live" ? catchupBanner(health) : null;
   const devMock = source === "mock" && process.env.NODE_ENV !== "production";
   const banner = devMock
     ? `Mock data (fixtures). Transactions are disabled. Snapshot ${snap}.`
     : origin === "onchain"
       ? "Live data unavailable. Showing onchain reads only."
-      : lag
-        ? `Indexer catching up (block ${indexedBlock} of ${head}). Onchain actions still work; lists may lag a few seconds.`
-        : null;
+      : catchup;
+  const bannerTone = devMock ? "mock" : catchup && banner === catchup ? "info" : "warn";
 
   return (
     <div className="shell">
@@ -122,13 +122,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </span>
       </div>
       {banner ? (
-        <div className={`banner ${devMock ? "mock" : "warn"}`} data-testid="mock-banner">
+        <div
+          className={`banner ${bannerTone}`}
+          data-testid={bannerTone === "info" ? "indexer-banner" : "mock-banner"}
+          role={bannerTone === "info" ? "status" : undefined}
+        >
           {banner}
-        </div>
-      ) : null}
-      {syncing ? (
-        <div className="banner info" data-testid="syncing-banner" role="status">
-          Indexer syncing, data may be delayed.
         </div>
       ) : null}
       {wrong ? (
