@@ -34,7 +34,9 @@ test("address casing matches between API lowercase and onchain checksum", () => 
   const lower = "0x5aaeb6053f3e94c9b9a09f33669435e7ef1beaed";
   const checksum = "0x5aAeb6053F3E94C9b9A09f33669435E7Ef1BeAed";
   assert.equal(shortId(lower), shortId(checksum));
-  assert.equal(shortId(lower), "0x5aAe…eAed");
+  assert.equal(shortId(lower), checksum);
+  const hidden = "0xda147f898cf5f1a0c891cf40d8b9e7f772491d0f";
+  assert.equal(shortId(hidden), "0xda147F898Cf5F1A0c891cf40D8B9e7f772491d0f");
   const hash = `0x${"ab".repeat(32)}`;
   assert.equal(shortId(hash), "0xabab…abab");
 });

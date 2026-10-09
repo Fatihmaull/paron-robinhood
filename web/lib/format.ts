@@ -90,9 +90,11 @@ export function canonicalAddress(value: string): string {
 
 export function shortId(value: string | null | undefined): string {
   if (!value) return "—";
-  const shown = canonicalAddress(value);
-  if (shown.length < 12) return shown;
-  return `${shown.slice(0, 6)}…${shown.slice(-4)}`;
+  // A 4+4 slice of an EIP-55 address can hide every uppercase letter (0xda14…1d0f).
+  // Show the full checksum for 20-byte addresses. Hashes stay abbreviated.
+  if (isAddress(value)) return canonicalAddress(value);
+  if (value.length < 12) return value;
+  return `${value.slice(0, 6)}…${value.slice(-4)}`;
 }
 
 export function formatWib(ms: number): string {
