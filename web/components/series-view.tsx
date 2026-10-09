@@ -90,8 +90,8 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
               <BondChart balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
               <div className="row"><span>Deposited</span><span>{formatUsd(detail.bond.deposited)}</span></div>
               <div className="row"><span>Balance</span><span>{formatUsd(detail.bond.balance)}</span></div>
-              <div className="row"><span>Released to provider</span><span>{formatUsd(detail.bond.released)}</span></div>
-              <div className="row"><span>Paid to holders</span><span>{formatUsd(detail.bond.slashed)}</span></div>
+              <div className="row"><span><i className="key released" aria-hidden="true" />Released to provider</span><span>{formatUsd(detail.bond.released)}</span></div>
+              <div className="row"><span><i className="key slashed" aria-hidden="true" />Paid to holders</span><span>{formatUsd(detail.bond.slashed)}</span></div>
               <div className="row"><span>Health</span><span>{detail.bond.health}</span></div>
             </Panel>
           ) : detail ? (

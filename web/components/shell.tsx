@@ -6,7 +6,7 @@ import { useEffect, useState } from "react";
 import { useAccount, useBalance, useBlockNumber, useChainId, useSwitchChain } from "wagmi";
 import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { formatUsd } from "@/lib/format";
-import { apiBase, chainFooterLine, chainId, deployLabel, walletConnectId, wrongNetworkCopy } from "@/lib/config";
+import { apiBase, chainId, deployLabel, walletConnectId, wrongNetworkCopy } from "@/lib/config";
 import { formatCu } from "@/lib/format";
 import { useIndex } from "@/lib/hooks";
 import type { Snap } from "@/lib/types";
@@ -34,7 +34,6 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const block = useBlockNumber({ watch: source === "live" });
   const balance = useBalance({ address });
   const [open, setOpen] = useState(false);
-  const [footerOpen, setFooterOpen] = useState(false);
   const [syncing, setSyncing] = useState(false);
   useEffect(() => {
     if (source !== "live" || !apiBase()) return;
@@ -91,7 +90,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="nav-spacer" />
-        <span className="chip"><span className="dot" />{chainId() === 421614 ? "Testnet · 421614" : "Testnet · 46630"}</span>
+        <span className="chip"><span className="dot" /><span className="chip-wide">{chainId() === 421614 ? "Arbitrum Sepolia" : "Robinhood Chain Testnet"}</span><span className="chip-narrow">{`Testnet · ${chainId()}`}</span></span>
         {walletConnectId() ? <ConnectButton label="Connect wallet" /> : <WalletConnect />}
       </header>
       <div className="strip">
@@ -141,35 +140,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </div>
       ) : null}
       <main className="main" id="main" tabIndex={-1}>{children}</main>
-      <footer className={`footer ${footerOpen ? "open" : ""}`} data-testid="footer-disclaimer">
-        <p>
-          Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners.{" "}
-          <button className="footer-toggle" type="button" onClick={() => setFooterOpen((v) => !v)} aria-label="Expand disclaimer">…</button>
-        </p>
-        <div className="footer-more">
-          <p>Not affiliated with or endorsed by Ornn AI Inc. Ornn and OCPI are trademarks of their owners.</p>
-          <p>{chainFooterLine()}</p>
-        </div>
-        <div className="footer-row">
-          <span>
-            <Link href="/docs/contracts">Docs</Link>
-            {" · "}
-            <Link href="/data">API</Link>
-            {" · "}
-            <a href="https://github.com/Fatihmaull/paron-robinhood">GitHub</a>
-            {" · "}
-            <Link href="/verifier">Verifier</Link>
-            {" · "}
-            <Link href="/admin">Admin</Link>
-            {" · "}
-            <Link href="/ops/keepers">Keepers</Link>
-            {" · "}
-            <Link href="/legal/disclaimer">Disclaimer</Link>
-          </span>
-          <span>
-            Build {deployLabel()} · Chain {chainId()} · Block {source === "mock" ? (indexedBlock ?? "—") : (head ?? "—")}
-          </span>
-        </div>
+      <footer className="utilbar" data-testid="utilbar">
+        <span />
+        <span className="num">
+          Build {deployLabel()} · Chain {chainId()} · Block {source === "mock" ? (indexedBlock ?? "—") : (head ?? "—")}
+        </span>
       </footer>
     </div>
   );
