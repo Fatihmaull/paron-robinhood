@@ -235,7 +235,7 @@
 
   /* Buttons */
   --btn-radius: var(--radius-sm);
-  --btn-height: var(--size-control-md);
+  --btn-height: var(--size-control-lg);
   --btn-px: var(--space-4);
   --btn-font-size: var(--text-md);
   --btn-weight: var(--weight-semibold);
