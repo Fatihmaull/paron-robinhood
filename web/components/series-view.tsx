@@ -7,7 +7,7 @@ import { keccak256, parseUnits, stringToHex } from "viem";
 import { useAccount, usePublicClient, useSignTypedData } from "wagmi";
 import { erc20Abi, orderBookAbi, primarySaleAbi, redemptionManagerAbi } from "@/lib/abi";
 import { ZERO_ADDRESS, chainId, contractAddress } from "@/lib/config";
-import { formatCoverage, formatCu, formatFactor, formatUsd, formatWib, isWholeCu, quotePrimary, shortId } from "@/lib/format";
+import { formatCoverage, formatCu, formatFactor, formatMaxCost, formatUsd, formatWib, isWholeCu, quotePrimary, shortId } from "@/lib/format";
 import { useBook, usePrints, useSeries } from "@/lib/hooks";
 import { signErc2612 } from "@/lib/permit";
 import { bidUsdcAllowance, uint256Of } from "@/lib/settlement";
@@ -206,7 +206,7 @@ function BuyBox({ seriesId, price, saleOpen }: { seriesId: string; price: string
   const { signTypedDataAsync } = useSignTypedData();
   const whole = isWholeCu(qty);
   const quote = useMemo(() => (whole ? quotePrimary(qty, price) : null), [whole, qty, price]);
-  const shownMax = maxCost || (quote ? quote.cost : "");
+  const shownMax = maxCost || (quote ? formatMaxCost(quote.cost) : "");
 
   async function buy() {
     const sale = contractAddress("primarySale");
@@ -273,7 +273,7 @@ function BuyBox({ seriesId, price, saleOpen }: { seriesId: string; price: string
       <div className="row"><span>Cost</span><span>{quote ? formatUsd(quote.cost) : "—"}</span></div>
       <div className="row"><span>Fee (1%)</span><span>{quote ? formatUsd(quote.fee) : "—"}</span></div>
       <Field label="Max cost (USDC, required)">
-        <input value={shownMax} onChange={(event) => setMaxCost(event.target.value)} />
+        <input value={shownMax} inputMode="decimal" onChange={(event) => setMaxCost(event.target.value)} />
       </Field>
       {!saleOpen ? <p className="warn">The primary sale is closed.</p> : null}
       <TxButton
@@ -284,7 +284,6 @@ function BuyBox({ seriesId, price, saleOpen }: { seriesId: string; price: string
         {pending === "buy" ? "Buying…" : "Buy"}
       </TxButton>
       {error ? <p className="bad">{error}</p> : null}
-      <p className="help">The preview is local. Live mode reads PrimarySale.quote, signs a permit for that cost, and calls buyWithPermit. A rejected permit falls back to approve and buy. maxCost is never zero.</p>
     </Panel>
   );
 }

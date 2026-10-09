@@ -194,7 +194,7 @@ export function VerifierPage() {
       <p className="lede">Manual EAS attest. The signer is the verifier EOA. Revoke stays on this page once an attestation uid is known.</p>
       <div className="grid two">
       <Panel title="Applications">
-        {list.length === 0 ? <p className="muted">No pending applications in this fixture.</p> : null}
+        {list.length === 0 ? <p className="muted">No pending applications.</p> : null}
         <div className="actions" aria-label="KYB statuses">
           <KybPill status="PENDING" />
           <KybPill status="APPROVED" />
@@ -294,6 +294,7 @@ export function AdminPage() {
         <Panel title="Timelock delay"><b className="stat-value">{Math.floor(delay / 60)}:{String(delay % 60).padStart(2, "0")}</b></Panel>
       </div>
       <Panel title="Ready operations">
+        {rows.length === 0 ? <p className="muted">No operations ready to execute. Schedule a factor change below.</p> : null}
         {rows.map((op) => (
           <div key={op.operation_id}>
             <div className="row"><span>{op.target_name}.{op.decoded.function}</span><OpPill status={op.status} /></div>
