@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { useEffect } from "react";
 import { formatUsd } from "@/lib/format";
+import { indexQuote } from "@/lib/index-quote";
 import { useIndex } from "@/lib/hooks";
 import {
   landingAnnounce,
@@ -20,8 +21,9 @@ import {
 
 export function Landing() {
   const index = useIndex();
-  const reference = index.data?.data.reference?.value;
-  const price = reference ? formatUsd(reference) : null;
+  const quote = indexQuote(index.data?.data);
+  const price = quote.amount ? formatUsd(quote.amount) : null;
+  const note = quote.label === "Reference" ? landingIndexNote : "Index";
 
   useEffect(() => {
     const root = document.querySelector(".landing");
@@ -84,11 +86,11 @@ export function Landing() {
               <div className="bar" />
               <div className="row">
                 {price ? (
-                  <div className="serif num" aria-label={`${landingIndexNote}: ${price}`}>{price}</div>
+                  <div className="serif num" aria-label={`${note}: ${price}`}>{price}</div>
                 ) : (
                   <div className="fallback" role="status">{index.isFetched ? "No reference yet" : "Loading reference"}</div>
                 )}
-                <div className="mono tag">H100 index<br />{landingIndexNote}</div>
+                <div className="mono tag">H100 index<br />{note}</div>
               </div>
               <p className="lede">A marketplace for tokenized GPU compute. One unit, one hour of H100-equivalent compute, backed by a posted bond.</p>
               <div className="cta">

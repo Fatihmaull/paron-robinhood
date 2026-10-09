@@ -22,11 +22,7 @@
       "alpha": null,
       "methodology": "METHODOLOGY.md"
     },
-    "reference": {
-      "value": "3.000000",
-      "label": "synthetic demo data",
-      "observed_at_ms": 1791601200000
-    }
+    "reference": null
   },
   "meta": {
     "chain_id": 46630,

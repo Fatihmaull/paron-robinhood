@@ -82,7 +82,17 @@ test("facts and the bond ledger stay testnet-accurate", () => {
 test("landing headline stays sans and a missing reference has fallback copy", () => {
   const view = readFileSync(new URL("../components/landing.tsx", import.meta.url), "utf8");
   const css = readFileSync(new URL("../app/landing.css", import.meta.url), "utf8");
+  const charts = readFileSync(new URL("../components/charts.tsx", import.meta.url), "utf8");
+  const legal = readFileSync(new URL("../app/legal/risk/page.tsx", import.meta.url), "utf8");
+  const globals = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.match(view, /No reference yet/);
+  assert.match(view, /indexQuote/);
+  assert.match(charts, /attributionLogo:\s*false/);
+  assert.equal(globals.includes("tv-attr-logo"), false);
+  assert.equal(charts.includes("tradingview.com"), false);
+  assert.match(legal, /Lightweight Charts/);
+  assert.match(legal, /https:\/\/www\.tradingview\.com\//);
+  assert.equal(/<img/i.test(legal), false);
   assert.match(css, /\.landing \.hero h1 \{[^}]*--font-inter-tight/s);
   assert.match(css, /\.landing \.nav \{[^}]*display:\s*block/s);
 });
