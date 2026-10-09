@@ -1,0 +1,582 @@
+{
+  "schemaVersion": "paron-deployments/v1",
+  "label": "stage-1",
+  "chainId": 46630,
+  "chainKey": "robinhoodTestnet",
+  "paramSet": "demo",
+  "params": {
+    "label": "demo",
+    "bondFloorBps": 15000,
+    "primaryFeeBps": 100,
+    "takerFeeBps": 15,
+    "maxTakerFeeBps": 100,
+    "leadTime": 0,
+    "allowOpenWindow": true,
+    "enforceCalendarMonth": true,
+    "maxFillsPerTx": 10,
+    "maxLevels": 10,
+    "tick": 10000,
+    "cuLot": "1000000000000000000",
+    "rulingWindow": 120,
+    "disputeBondBps": 500,
+    "minDisputeBond": 5000000,
+    "bounds": {
+      "minAck": 60,
+      "maxAck": 259200,
+      "minDelivery": 60,
+      "maxDelivery": 604800,
+      "minDispute": 90,
+      "maxDispute": 604800
+    },
+    "index": {
+      "windowLength": 86400,
+      "minVolume": "1000000000000000000",
+      "minParticipants": 2,
+      "maxCarryForward": 259200
+    },
+    "factors": {
+      "H100-SXM-80GB": 10000,
+      "H200-SXM-141GB": 14000,
+      "B200-SXM-180GB": 25000,
+      "GB200-NVL72": 35000,
+      "A100-SXM-80GB": 4500
+    },
+    "timelockDelay": 300,
+    "printIndex": {
+      "windowLength": 86400,
+      "minVolume": "1000000000000000000",
+      "minParticipants": 2,
+      "maxCarryForward": 259200
+    },
+    "panelThreshold": 2,
+    "makerFeeBps": 0
+  },
+  "deployer": "0xfAB1bb1f3de24231E61B814decA106dAc892716f",
+  "nonceStart": null,
+  "git": {
+    "commit": null,
+    "dirty": null
+  },
+  "toolchain": {
+    "forge": "1.8.5",
+    "solc": [
+      "0.8.37",
+      "0.8.29"
+    ],
+    "ozVersion": "5.6.1",
+    "easContracts": "1.9.0",
+    "forgeStd": null
+  },
+  "startBlock": 131496617,
+  "deployedAt": {
+    "block": 131496617,
+    "timestampUtc": "2026-10-09T06:14:51.986Z"
+  },
+  "infraRef": "infra.json",
+  "contracts": {
+    "EASGate": {
+      "address": "0xcfb4de7949afdd92193126e8c36b732c8fc2f503",
+      "txHash": "0x977908162f4e5ca0f60afa2f0a5d30d4b1041caf741955bff81867c774bdc39c",
+      "block": 131496617,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0xcfb4de7949afdd92193126e8c36b732c8fc2f503"
+    },
+    "ConversionTable": {
+      "address": "0x147fcaf30928e42496b2e25072d2856ad67d9fca",
+      "txHash": "0xbc838f4adc20e7bf65273f056decabc8f37eddaa9f0968262ecb83c2e9aeeef1",
+      "block": 131496631,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0x147fcaf30928e42496b2e25072d2856ad67d9fca"
+    },
+    "ProviderRegistry": {
+      "address": "0xac3cad1fbfe4600186349ff6331947403548a948",
+      "txHash": "0x7038b515268ed596d8f3941c82673ec5e4ad956493d71a6f8a1bed52c23669b3",
+      "block": 131496645,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0xac3cad1fbfe4600186349ff6331947403548a948"
+    },
+    "BondVault": {
+      "address": "0x5e4b1235263fd50227c32f6018d859de9f07361a",
+      "txHash": "0xa93c472ff1ab7745b3ee868fb55439b00ae563fce7c8a61308dc2c7235462174",
+      "block": 131496658,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0x5e4b1235263fd50227c32f6018d859de9f07361a"
+    },
+    "CUToken": {
+      "address": "0xeee256347a0a70b75f0da2c6a32ad8c971d17464",
+      "txHash": "0xfd5fb4f29ba02c45dc2a063867e9f6bfb9e663dadc4562e74ecee866ead69bd0",
+      "block": 131496664,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0xeee256347a0a70b75f0da2c6a32ad8c971d17464"
+    },
+    "PrintIndex": {
+      "address": "0xb094986c6fb21bfc22d0be672283db6b981dd120",
+      "txHash": "0xf44e2fe280d4973f16383b510a050b652d92e87388ce525f73f36df38e815736",
+      "block": 131496679,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0xb094986c6fb21bfc22d0be672283db6b981dd120"
+    },
+    "SeriesFactory": {
+      "address": "0xe7d64ff70c16d4a44f918cae9739e7450c671757",
+      "txHash": "0x7c701b9efa33d5b3b910efbff01d4dee0a965256ae7ee73b5217aeff2a747a12",
+      "block": 131496692,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0xe7d64ff70c16d4a44f918cae9739e7450c671757"
+    },
+    "PrimarySale": {
+      "address": "0x185f854a564708e9196f956f09955bafa9466839",
+      "txHash": "0x7070fc5ec852060069116e715b839a0bbfcdbe856d49c96d566bc52005f76bbf",
+      "block": 131496702,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0x185f854a564708e9196f956f09955bafa9466839"
+    },
+    "OrderBook": {
+      "address": "0xb8b531d529bb0d7061f8c54940b6182e31e87879",
+      "txHash": "0x9cdfab4b783737676811b107062d6e6f76b9cfa24b24ec0937a945f8bf28840e",
+      "block": 131496713,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0xb8b531d529bb0d7061f8c54940b6182e31e87879"
+    },
+    "RedemptionManager": {
+      "address": "0x4bdd6ab3f78933bf802d5288d1226f049fde2209",
+      "txHash": "0x65e8917738e40fff53249199c255329de2c63a138a13459577bea0d1d7f5dafb",
+      "block": 131496725,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0x4bdd6ab3f78933bf802d5288d1226f049fde2209"
+    },
+    "PanelArbitrator": {
+      "address": "0x0081ad8ef69e7f6b30e29a639207861b2c065f60",
+      "txHash": "0x86237df75280b87b486aa262c09d1974451d20f56fabb207f96d41ee2b8a2ebf",
+      "block": 131496739,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0x0081ad8ef69e7f6b30e29a639207861b2c065f60"
+    },
+    "TimelockController": {
+      "address": "0xcd1e14d003d027b5c435fa0c38b796a89c1c82fe",
+      "txHash": "0xc8878f33d2c3ef3e3dc2122ce575d9733bcfdd6ccbcbb1ae84b0a49e2e9dc782",
+      "block": 131496781,
+      "verified": false,
+      "explorerUrl": "https://explorer.testnet.chain.robinhood.com/address/0xcd1e14d003d027b5c435fa0c38b796a89c1c82fe"
+    }
+  },
+  "roles": {
+    "timelock": "0xcd1e14d003d027b5c435fa0c38b796a89c1c82fe",
+    "safe": null,
+    "treasury": "0xfAB1bb1f3de24231E61B814decA106dAc892716f",
+    "panelMembers": [
+      "0x45d00b87a4Acc780158556db03A1a8e9D742206F",
+      "0xBb3595583B01C73FF42D42E2D91a457732B0d040"
+    ],
+    "panelThreshold": 2,
+    "feedSigner": null,
+    "minter": "0xfAB1bb1f3de24231E61B814decA106dAc892716f",
+    "adminMode": "allowlist",
+    "verifier": "0xfAB1bb1f3de24231E61B814decA106dAc892716f",
+    "adminEoa": "0xfAB1bb1f3de24231E61B814decA106dAc892716f",
+    "timelockProposers": [
+      "0xfAB1bb1f3de24231E61B814decA106dAc892716f",
+      "0xfAB1bb1f3de24231E61B814decA106dAc892716f",
+      "0xfAB1bb1f3de24231E61B814decA106dAc892716f"
+    ],
+    "timelockExecutor": "0x0000000000000000000000000000000000000000"
+  },
+  "seed": {
+    "mode": "stage",
+    "phasesCompleted": [
+      1,
+      2
+    ],
+    "actors": {},
+    "series": {},
+    "orders": {},
+    "attestations": {},
+    "reference": {}
+  },
+  "log": [
+    {
+      "step": "mock-usdc",
+      "txHash": "0xb0e5f416a2d25f00d391e0b87c3162f1eca9213f34e784bd36a0bfbfc9ecd0ab",
+      "status": "success"
+    },
+    {
+      "step": "eas-schema",
+      "txHash": "0xce34a8120dc36f11bc649e26e3f4d238242194c5b5d84abfc87588f3f0f00b37",
+      "status": "success"
+    },
+    {
+      "step": "eas-schema",
+      "txHash": "0x890093536aae0c4726ebd87c98c29e85024b9bcdeb881af095d9012e6285b37f",
+      "status": "success"
+    },
+    {
+      "step": "eas-schema",
+      "txHash": "0x3853914660b3feb064e1be9fda9ad7936cc5abe5569dff456899746034f00a36",
+      "status": "success"
+    },
+    {
+      "step": "eas-schema",
+      "txHash": "0x90c95442620ea346643be665cdd069b98ca2fcf3ce7e07e4eb7791e0f4842721",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0x977908162f4e5ca0f60afa2f0a5d30d4b1041caf741955bff81867c774bdc39c",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0xbc838f4adc20e7bf65273f056decabc8f37eddaa9f0968262ecb83c2e9aeeef1",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0x7038b515268ed596d8f3941c82673ec5e4ad956493d71a6f8a1bed52c23669b3",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0xa93c472ff1ab7745b3ee868fb55439b00ae563fce7c8a61308dc2c7235462174",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0xfd5fb4f29ba02c45dc2a063867e9f6bfb9e663dadc4562e74ecee866ead69bd0",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0xf44e2fe280d4973f16383b510a050b652d92e87388ce525f73f36df38e815736",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0x7c701b9efa33d5b3b910efbff01d4dee0a965256ae7ee73b5217aeff2a747a12",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0x7070fc5ec852060069116e715b839a0bbfcdbe856d49c96d566bc52005f76bbf",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0x9cdfab4b783737676811b107062d6e6f76b9cfa24b24ec0937a945f8bf28840e",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0x65e8917738e40fff53249199c255329de2c63a138a13459577bea0d1d7f5dafb",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0x86237df75280b87b486aa262c09d1974451d20f56fabb207f96d41ee2b8a2ebf",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0x367a1e76ff6f4a303347556c40a4cc272aefe0216cd32cca8922008ab0d44bcc",
+      "status": "success"
+    },
+    {
+      "step": "core",
+      "txHash": "0xf811d7365c1b32daea3df05dc24b5d691b4abf1db64a0052afeb9514d2f30592",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0xc8878f33d2c3ef3e3dc2122ce575d9733bcfdd6ccbcbb1ae84b0a49e2e9dc782",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x6dbe4cb209db8b4d64ea2923d6e47b72d81c33d07a65691b6a0b493f5e27164c",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x5c4ff6b65d214604e9fbc105ad8753446ba42ba4de4ccf02d613781ff9615f97",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x19cad7566d996bdee368278d7a927bb9f6790f7da6b142b54c5f4e4cc5ecb4ff",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x2c756e36f63ff3e286cd48aa855ccaa4d30b1e162d1d8957faf7b074e4601be9",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x79c8f587eaaf0631cea2cba7ff51a4cc5dfc936bd302c70a93d56029c88379e3",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x47c3481aaca81cf441895782e5995cb2be1fe39c05c28dde10c41c005d699e49",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0xecc440ab137d6afeb8bdb48914037ce9fccd4903b15fc577c0bedc5f87a92dac",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0xbd47ab0c0dc2ded147387b419f087d8bbdadcbfa0925061016600acb94a6d9ed",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x4ef54424964105306992d83da344e3836484f7eff31b20bf6b3f3cc5c16aedc2",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x9497f7a11f8b3d8410cd8cc93c5b6bb4b61fce5b48b7f82fb640fed66d27fede",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x7e5094887219c3ff396cf5c5b06c537344caf848a81a183db0665f8efb381140",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0xc3eb1777fcf2c55120ce628d800edc8b1eb932ca329cf59a536852edca9ad9fa",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x50568c039b45fe53f9f3d2fcf26d85f107922f9905a6beb16acebd66fe69d01e",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0xc254be0be58ec6f06405150303dd69afce834dc834fdaf178d73a6109c754085",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x9d133b3744f70fe0867f2db7e7124e1ff2f64d56acfec6d9caf8031b2f27cf1e",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x56e3694bb02e04caf5fe5872852e102d99dd7b588e4ffdea1c7674c30cb1bbdd",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0xcb0bfe6e062b0d0a2bc6c435d3c55957b68ea02d4678f980d6360b1d942304a4",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x73344240cbf068851c6ce44a1702a90a72eaf06af5cb3772eaec379aafc23b6a",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x077e74d2ca53fb1f63a1299c69f27159accddfb2ee3286149f184e434916e7a3",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x708ae321d3bf4108e711024a1c0a258dd8e98ac3db5d71ab62ab3bb03e14ab42",
+      "status": "success"
+    },
+    {
+      "step": "roles",
+      "txHash": "0x104d7817a8573ec3d2a855afd9813f95dd1fcaaf9b7ef8dd9568d19118065ffd",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xd6bf06ccc223a35f39df9516d71921085def8555f2bbb5dc197f9f71d64327ee",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xc34a0f02256516a7594030035704b73efc5ca7d5739e2b4ae8fe7150e5630d81",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x49a5fac896c40c8493c2b1c541240f8ead92bad37ff18539b2c7e480aa48e97b",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x783e0e36baa26df9b2800bb0e437d1e1a824a4b3cb155a445e3a472d3cdbecff",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x9e10d83bd71a4701c757e44b834bbcee8834d95e44ec43c78b937e8ecd23d00a",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x54ca716160656f93520927ad595752d2e3bd5fa2638f8f90dc9017d72b2cc3f9",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x2f0f26c0e2cc3fa2d56faf0965fb5f2142807cd7d2016cc95da86fd1515d5374",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x0d01bb427687174657d890c3ccfcbe3d09bab0873f93eefdd98ecf63c96b6d24",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x656508620eef9ef9688a0d7530a355a017feb0e9fb61ec71cef7c3af33b3fe8d",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x7c2978c877e4b037824614d9a9c07aa495ad643e12a8ee89dac59ae70b24cfb3",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x3eacda06c0bfb03b3e9bc658e1ab0c677782a7fa856c5cb36fcae6cff510aeba",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x17b00c77bc9ffdf16e370617061c6f9a9d0b70a1fa663ce1d024b59418279751",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xd5d815f035f0ce92b7087d38270f7cc58cc754257fc8b90a2e0a445a8619fd3b",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xd35b03c2adbca370c332f1c6b35ec2a8534818914ca819cdea11a7b7d9b4ebff",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xbcd773515347acca676ab0dc76efc2401855ca401b94cd19b9daf874a4f7c52d",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x857ad5159486cf644d4b64b46e55b53ca737d77200190fa1d2a3f026bfe7636d",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x228439a02c2655be690337c31aaff19d1f9cc5fc208d3fd2d47f572647fe40f9",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x937f5a79a1ec1cb2800d5679b30f225db0e2492e37fcd857768fe9eba1f5cf44",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xbda2e9fca164bc259827b7ec76a30db23f0e2c7199aea840b9f47d996ce9bd2d",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x0b9448187e2d332551e722cb6b2cc371787f68509497e4709a14df84fb76cb3e",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xcbd154c87fbbc7d8aa74b79e78be732dac64836879059d9df66a9b9eccaf5679",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x05155b7005395e3c60265ab71294533378d0cd391fc24269de0868d5cec9d3e9",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x580d32cf140e14ebb26b9b8cc052dd290f300797579f23e416182c0f6c5eac7d",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xcace85114091c8b3ce6151356a127bf517b936db2512830b5a526e8174268835",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x27ae9ce51f55ce9fa35bd6d0c4e9211ab658e12fe495528616f9554c2bc1ab21",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x0de785b1966c0b121843c86d95ec6f161c63e2577e3722a3ac1efd78c2a33fdb",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xd1a56756f98bc0ff4895720a8bb3a63e2bde2761f724fc6714f8384f629497ee",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x289c2be753577c798bc8c990455ba9277dc0533756d30ee5f92829b0399860d7",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xc811e93fb6f306d215a364f01d4fc871da87408bf6ea9de37301a13f1d7da5f9",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xa9965fc31b999799acf74acd8bd087c70ee41cc83a9826075c6deb57a8ce63c9",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x9c19adba194020ba3394d137be7f63301a8b8c4f534cc2dfe81bf2929a559961",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xe9edc91efead48dbe1ce516ba90662283f1bcab8893940c740955236a838a9c1",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xbc92d34823918f108ecd40d13431d18b585a55ca3f387288d922b0f9092ead05",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0xd092400085346d2aa972141cf376f003c9d8f763439f82a8c8e48a7d863886a3",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x96884371c5c4dced30bdbccdc750d8ba82d2975f278ebc86fff74979a5b29714",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x23abdc7d92bfa558e3c020b078e0ead56afcedcb5dc3c84f9130cbdb908a2301",
+      "status": "success"
+    },
+    {
+      "step": "seed",
+      "txHash": "0x46164e79077577c7c4a5a63c70ad554dfd26cf3d33136542f9d75416f7137b40",
+      "status": "success"
+    }
+  ]
+}
