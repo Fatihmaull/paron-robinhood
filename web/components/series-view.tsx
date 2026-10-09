@@ -4,10 +4,13 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { keccak256, parseUnits, stringToHex } from "viem";
-import { orderBookAbi, primarySaleAbi, redemptionManagerAbi } from "@/lib/abi";
-import { contractAddress } from "@/lib/config";
+import { useAccount, usePublicClient, useSignTypedData } from "wagmi";
+import { erc20Abi, orderBookAbi, primarySaleAbi, redemptionManagerAbi } from "@/lib/abi";
+import { ZERO_ADDRESS, chainId, contractAddress } from "@/lib/config";
 import { formatCoverage, formatCu, formatFactor, formatUsd, formatWib, isWholeCu, quotePrimary, shortId } from "@/lib/format";
 import { useBook, usePrints, useSeries } from "@/lib/hooks";
+import { signErc2612 } from "@/lib/permit";
+import { bidUsdcAllowance, uint256Of } from "@/lib/settlement";
 import { TAPE_UNAVAILABLE } from "@/lib/onchain";
 import { Panel, TxButton, Field } from "./ui";
 import { useSend } from "./tx";
@@ -78,7 +81,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
         </div>
         <div className="grid">
           {detail && (tab === "overview" || tab === "buy") ? <BuyBox seriesId={seriesId} price={detail.primary_price} saleOpen={detail.sale_open} /> : null}
-          {detail && (tab === "overview" || tab === "trade") ? <TradeBox seriesId={seriesId} /> : null}
+          {detail && (tab === "overview" || tab === "trade") ? <TradeBox seriesId={seriesId} token={detail.token} /> : null}
           {detail?.bond ? (
             <Panel title="Bond">
               <BondBar deposited={detail.bond.deposited} balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
@@ -168,9 +171,69 @@ function BuyBox({ seriesId, price, saleOpen }: { seriesId: string; price: string
   const [qty, setQty] = useState("1");
   const [maxCost, setMaxCost] = useState("");
   const { send, pending, error } = useSend();
+  const { source } = useData();
+  const { address } = useAccount();
+  const client = usePublicClient();
+  const { signTypedDataAsync } = useSignTypedData();
   const whole = isWholeCu(qty);
   const quote = useMemo(() => (whole ? quotePrimary(qty, price) : null), [whole, qty, price]);
   const shownMax = maxCost || (quote ? quote.cost : "");
+
+  async function buy() {
+    const sale = contractAddress("primarySale");
+    const usdc = contractAddress("usdc");
+    const qtyRaw = BigInt(qty) * CU;
+    const max = parseUnits(shownMax, 6);
+    let cost = max;
+    if (source !== "mock" && client && sale !== ZERO_ADDRESS) {
+      try {
+        const quoted = (await client.readContract({
+          address: sale,
+          abi: primarySaleAbi,
+          functionName: "quote",
+          args: [BigInt(seriesId), qtyRaw],
+        })) as readonly [bigint, bigint];
+        cost = quoted[0];
+      } catch {
+        /* max cost still caps the trade */
+      }
+    }
+    if (source !== "mock" && client && address && usdc !== ZERO_ADDRESS && sale !== ZERO_ADDRESS) {
+      try {
+        const permit = await signErc2612({
+          client,
+          sign: signTypedDataAsync,
+          token: usdc,
+          owner: address,
+          spender: sale,
+          value: cost,
+          chainId: chainId(),
+        });
+        const bought = await send("buy", {
+          address: sale,
+          abi: primarySaleAbi,
+          functionName: "buyWithPermit",
+          args: [BigInt(seriesId), qtyRaw, max, permit.deadline, permit.v, permit.r, permit.s],
+        });
+        if (bought) return;
+      } catch {
+        /* approve, then buy */
+      }
+      const approved = await send("approve", {
+        address: usdc,
+        abi: erc20Abi,
+        functionName: "approve",
+        args: [sale, cost],
+      });
+      if (!approved) return;
+    }
+    await send("buy", {
+      address: sale,
+      abi: primarySaleAbi,
+      functionName: "buy",
+      args: [BigInt(seriesId), qtyRaw, max],
+    });
+  }
 
   return (
     <Panel title="Buy primary">
@@ -187,32 +250,67 @@ function BuyBox({ seriesId, price, saleOpen }: { seriesId: string; price: string
       <TxButton
         disabled={!whole || !shownMax || !saleOpen}
         reason={pending ?? undefined}
-        onClick={() => {
-          const cost = parseUnits(shownMax, 6);
-          void send("buy", {
-            address: contractAddress("primarySale"),
-            abi: primarySaleAbi,
-            functionName: "buy",
-            args: [BigInt(seriesId), BigInt(qty) * CU, cost],
-          });
-        }}
+        onClick={() => void buy()}
       >
         {pending === "buy" ? "Buying…" : "Buy"}
       </TxButton>
       {error ? <p className="bad">{error}</p> : null}
-      <p className="help">Quote is computed locally in mock mode. Live mode reads PrimarySale.quote before sending. maxCost is never zero.</p>
+      <p className="help">The preview is local. Live mode reads PrimarySale.quote, signs a permit for that cost, and calls buyWithPermit. A rejected permit falls back to approve and buy. maxCost is never zero.</p>
     </Panel>
   );
 }
 
-function TradeBox({ seriesId }: { seriesId: string }) {
+function TradeBox({ seriesId, token }: { seriesId: string; token: string }) {
   const [side, setSide] = useState<"0" | "1">("1");
   const [price, setPrice] = useState("3.20");
   const [qty, setQty] = useState("1");
   const [ioc, setIoc] = useState(false);
   const { send, pending, error } = useSend();
+  const { source } = useData();
+  const client = usePublicClient();
   const whole = isWholeCu(qty);
   const priceOk = /^\d+(\.\d{1,2})?$/.test(price);
+
+  async function place() {
+    const book = contractAddress("orderBook");
+    const usdc = contractAddress("usdc");
+    const qtyRaw = BigInt(qty) * CU;
+    const priceRaw = parseUnits(price, 6);
+    if (source !== "mock" && client && book !== ZERO_ADDRESS) {
+      if (side === "0" && usdc !== ZERO_ADDRESS) {
+        let feeBps = 15n;
+        try {
+          feeBps = uint256Of(
+            await client.readContract({ address: book, abi: orderBookAbi, functionName: "takerFeeBps" }),
+            15n,
+          );
+        } catch {
+          /* demo taker fee */
+        }
+        const approved = await send("approve", {
+          address: usdc,
+          abi: erc20Abi,
+          functionName: "approve",
+          args: [book, bidUsdcAllowance(qtyRaw, priceRaw, feeBps)],
+        });
+        if (!approved) return;
+      } else if (side === "1" && /^0x[0-9a-fA-F]{40}$/.test(token) && token.toLowerCase() !== ZERO_ADDRESS) {
+        const approved = await send("approve", {
+          address: token as `0x${string}`,
+          abi: erc20Abi,
+          functionName: "approve",
+          args: [book, qtyRaw],
+        });
+        if (!approved) return;
+      }
+    }
+    await send("order", {
+      address: book,
+      abi: orderBookAbi,
+      functionName: "placeOrder",
+      args: [BigInt(seriesId), Number(side), priceRaw, qtyRaw, ioc],
+    });
+  }
 
   return (
     <Panel title="Place order">
@@ -234,18 +332,12 @@ function TradeBox({ seriesId }: { seriesId: string }) {
       </label>
       <TxButton
         disabled={!whole || !priceOk}
-        onClick={() => {
-          void send("order", {
-            address: contractAddress("orderBook"),
-            abi: orderBookAbi,
-            functionName: "placeOrder",
-            args: [BigInt(seriesId), Number(side), parseUnits(price, 6), BigInt(qty) * CU, ioc],
-          });
-        }}
+        onClick={() => void place()}
       >
         {pending === "order" ? "Placing…" : "Place order"}
       </TxButton>
       {error ? <p className="bad">{error}</p> : null}
+      <p className="help">Bids approve mUSDC for the escrow plus the taker fee. Asks approve the series CU token.</p>
       <RedeemLink seriesId={seriesId} />
     </Panel>
   );

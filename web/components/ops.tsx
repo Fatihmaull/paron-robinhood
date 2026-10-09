@@ -17,6 +17,7 @@ import {
   timelockAbi,
 } from "@/lib/abi";
 import { contractAddress } from "@/lib/config";
+import { asBytes32 } from "@/lib/settlement";
 import { demoChecks } from "@/lib/demo";
 import { errorCopy } from "@/lib/errors";
 import { formatFactor, formatWib, shortId } from "@/lib/format";
@@ -41,7 +42,9 @@ export function FaucetPage() {
               address: contractAddress("usdc"),
               abi: mockUsdcAbi,
               functionName: "faucet",
-            }).then(() => setDone(true));
+            }).then((ok) => {
+              if (ok) setDone(true);
+            });
           }}
         >
           {pending === "faucet" ? "Sending…" : "Get test USDC"}
@@ -73,7 +76,7 @@ export function KybPage() {
           disabled={!uid.startsWith("0x") || uid.length !== 66}
           onClick={() =>
             void send("link", {
-              address: contractAddress("eas"),
+              address: contractAddress("gate"),
               abi: easGateAbi,
               functionName: "linkAttestation",
               args: [uid as `0x${string}`],
@@ -236,7 +239,7 @@ export function VerifierPage() {
               functionName: "attest",
               args: [
                 {
-                  schema: contractAddress("easSchema").padEnd(66, "0") as `0x${string}`,
+                  schema: asBytes32(contractAddress("easSchema")),
                   data: {
                     recipient: applicant as `0x${string}`,
                     expirationTime: BigInt(expiry),

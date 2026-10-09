@@ -11,7 +11,7 @@
     "build": "next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
-    "test": "node --experimental-strip-types --test lib/clock.test.ts lib/format.test.ts lib/fixtures.test.ts lib/manifest.test.ts"
+    "test": "node --experimental-strip-types --test lib/clock.test.ts lib/format.test.ts lib/fixtures.test.ts lib/settlement.test.ts lib/manifest.test.ts"
   },
   "dependencies": {
     "@rainbow-me/rainbowkit": "2.2.11",

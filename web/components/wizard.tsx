@@ -2,11 +2,13 @@
 
 import { useState } from "react";
 import { keccak256, parseUnits, stringToHex } from "viem";
-import { useAccount, useSignTypedData } from "wagmi";
-import { erc20Abi, seriesFactoryAbi } from "@/lib/abi";
-import { chainId, contractAddress, demoPresets } from "@/lib/config";
+import { useAccount, usePublicClient, useSignTypedData } from "wagmi";
+import { conversionTableAbi, erc20Abi, seriesFactoryAbi } from "@/lib/abi";
+import { ZERO_ADDRESS, chainId, contractAddress, demoPresets } from "@/lib/config";
 import { formatFactor, formatUsd } from "@/lib/format";
 import { useGpus } from "@/lib/hooks";
+import { signErc2612 } from "@/lib/permit";
+import { factorBps, seriesBondRaw, uint256Of } from "@/lib/settlement";
 import { useData } from "./providers";
 import { useSend } from "./tx";
 import { Field, Panel, TxButton } from "./ui";
@@ -62,9 +64,14 @@ const PRESET: Draft = {
 
 export function ListingWizard() {
   const gpus = useGpus();
+  const panel = contractAddress("panel");
   const [step, setStep] = useState(0);
-  const [draft, setDraft] = useState<Draft>(EMPTY);
+  const [draft, setDraft] = useState<Draft>({
+    ...EMPTY,
+    arbitrator: panel !== ZERO_ADDRESS ? panel : EMPTY.arbitrator,
+  });
   const { address } = useAccount();
+  const client = usePublicClient();
   const { signTypedDataAsync } = useSignTypedData();
   const { send, pending, error, note } = useSend();
   const { source } = useData();
@@ -73,45 +80,59 @@ export function ListingWizard() {
   };
   const factor = (gpus.data?.data ?? []).find((gpu) => gpu.gpu_type === draft.gpu)?.factor;
 
+  async function listedFactor(): Promise<bigint> {
+    const table = contractAddress("conversionTable");
+    if (client && table !== ZERO_ADDRESS) {
+      try {
+        const onchain = await client.readContract({
+          address: table,
+          abi: conversionTableAbi,
+          functionName: "factorOf",
+          args: [stringToHex(draft.gpu, { size: 32 })],
+        });
+        const raw = uint256Of(onchain, 0n);
+        if (raw > 0n) return raw;
+      } catch {
+        /* use the displayed factor */
+      }
+    }
+    return factorBps(factor);
+  }
+
   async function create() {
     const params = buildParams(draft);
     const usdc = contractAddress("usdc");
     const vault = contractAddress("bondVault");
     const factory = contractAddress("seriesFactory");
-    const bondRaw = parseUnits(draft.bond || "0", 6) * BigInt(draft.hours || "0");
-    if (address && source !== "mock") {
+    const bondRaw = seriesBondRaw(parseUnits(draft.bond || "0", 6), BigInt(draft.hours || "0"), await listedFactor());
+    if (address && client && source !== "mock" && usdc !== ZERO_ADDRESS && vault !== ZERO_ADDRESS) {
       try {
-        const deadline = BigInt(Math.floor(Date.now() / 1000) + 3600);
-        const signature = await signTypedDataAsync({
-          domain: { name: "Mock USDC", version: "1", chainId: chainId(), verifyingContract: usdc },
-          types: {
-            Permit: [
-              { name: "owner", type: "address" },
-              { name: "spender", type: "address" },
-              { name: "value", type: "uint256" },
-              { name: "nonce", type: "uint256" },
-              { name: "deadline", type: "uint256" },
-            ],
-          },
-          primaryType: "Permit",
-          message: { owner: address, spender: vault, value: bondRaw, nonce: 0n, deadline },
+        const permit = await signErc2612({
+          client,
+          sign: signTypedDataAsync,
+          token: usdc,
+          owner: address,
+          spender: vault,
+          value: bondRaw,
+          chainId: chainId(),
         });
-        const { v, r, s } = split(signature);
-        await send("create", {
+        const created = await send("create", {
           address: factory,
           abi: seriesFactoryAbi,
           functionName: "createSeriesWithPermit",
-          args: [params, deadline, v, r, s],
+          args: [params, permit.deadline, permit.v, permit.r, permit.s],
         });
-        return;
+        if (created) return;
       } catch {
-        await send("approve", {
-          address: usdc,
-          abi: erc20Abi,
-          functionName: "approve",
-          args: [vault, bondRaw],
-        });
+        /* approve, then createSeries */
       }
+      const approved = await send("approve", {
+        address: usdc,
+        abi: erc20Abi,
+        functionName: "approve",
+        args: [vault, bondRaw],
+      });
+      if (!approved) return;
     }
     await send("create", {
       address: factory,
@@ -134,7 +155,7 @@ export function ListingWizard() {
         ))}
       </div>
       {demoPresets() ? (
-        <button className="btn ghost" type="button" onClick={() => setDraft(PRESET)}>
+        <button className="btn ghost" type="button" onClick={() => setDraft((prev) => ({ ...PRESET, arbitrator: prev.arbitrator }))}>
           Demo preset · 2610 · 500h · $3.00 · bond $4.50 · 60/60/90
         </button>
       ) : null}
@@ -279,14 +300,5 @@ function buildParams(draft: Draft) {
     continent: CONTINENTS.indexOf(draft.continent),
     institutional: draft.institutional,
     symbol: draft.symbol,
-  };
-}
-
-function split(signature: `0x${string}`) {
-  const raw = signature.slice(2);
-  return {
-    r: `0x${raw.slice(0, 64)}` as `0x${string}`,
-    s: `0x${raw.slice(64, 128)}` as `0x${string}`,
-    v: Number(`0x${raw.slice(128, 130)}`),
   };
 }
