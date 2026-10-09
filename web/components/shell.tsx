@@ -141,7 +141,18 @@ export function Shell({ children }: { children: React.ReactNode }) {
       ) : null}
       <main className="main" id="main" tabIndex={-1}>{children}</main>
       <footer className="utilbar" data-testid="utilbar">
-        <span />
+        <span className="utilbar-links">
+          <Link href="/docs/contracts">Docs</Link>
+          {" · "}
+          {apiBase() ? <a href={`${apiBase()}/health`}>API</a> : <Link href="/data">API</Link>}
+          {" · "}
+          <a href="https://github.com/Fatihmaull/paron-robinhood">GitHub</a>
+          <span className="utilbar-note">
+            {chainId() === 421614
+              ? "Deployed on Arbitrum Sepolia (fallback). Testnet demo: tokens have no monetary value."
+              : "Deployed on Robinhood Chain Testnet. Testnet demo: tokens have no monetary value."}
+          </span>
+        </span>
         <span className="num">
           Build {deployLabel()} · Chain {chainId()} · Block {source === "mock" ? (indexedBlock ?? "—") : (head ?? "—")}
         </span>
