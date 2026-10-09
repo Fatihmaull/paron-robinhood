@@ -93,6 +93,10 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 - D-82 APPROVED: nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (`CU-JKT-H100-2610` di panggung) tetap historis; yang digantikan hanya penamaan live. `series_id`, window, dan input skrip seed/forge di 03, 05, 06, 09 tidak ditulis ulang.
 - D-64 menggantikan footer "not affiliated" di UI/README (hanya pitch deck/slide); teks lama di UI/README ditandai historis atau `[SUPERSEDED D-64]`. Footnote slide tetap.
 
+## Usulan PENDING (belum konfirmasi Fatih)
+- D-83: Safe multisig masuk roadmap, rencana kalau Paron live di mainnet. Sampai freeze kontrak, peran admin tetap seperti sekarang (D-54): tanpa EOA kedua, tanpa pindah ke Safe. Tercatat di 07 §17 dan 08 §7.1. Bentuk Safe pada produk penuh tetap di product-plan §4.10.
+- Aturan setelah freeze (08 §7.2, disebut di 09 §1.2): setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya bug blocker jalur demo S0; setelah 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu. Jam freeze, tag `freeze-contracts` / `freeze-ui`, dan merge saat test hijau sudah ada di baris Deadline di bawah, 08 §0, dan izin merge ~11:27 WIB.
+
 ## Hosting/infra (catatan kronologis, Jum 9 Okt 2026; tanpa nilai env)
 - ~13:08 WIB: Vercel project `paron` (root `web`) https://paron.vercel.app; Railway project `paron`, service `paron-robinhood` (root `indexer`, port 42069) https://paron-robinhood-production.up.railway.app.
 - ~13:25 WIB: stage-1 ter-deploy di Robinhood Chain Testnet (46630); 3 seed series.

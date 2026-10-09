@@ -108,6 +108,7 @@ Kolom "Hackathon" memakai tier solo dari sitemap §9.1: **S0** jalur demo (Jum s
 - **Hackathon:** S1 `/admin` dengan tab (proposals, parameters, gate, treasury, dll.) + eksekusi; **satu perubahan timelock dieksekusi dari UI (never cut)**, delay demo 5 menit (D-20 [APPROVED]).
 - **Kejujuran governance (PG-7):** di testnet, owner Safe 2-of-3, arbiter panel (W-ARB-1..3), dan verifier semuanya dipegang Fatih (D-08). Wording README/Q&A: "single operator in testnet; independent signers in P3". Jangan klaim terdesentralisasi.
 - **EN-2 [APPROVED Fatih, Jum 9 Okt ~11:06]:** verifier = EOA, proposer timelock = EOA di samping Safe, executor terbuka, supaya approve KYB dan eksekusi timelock (dua never-cut) tidak bergantung pada tanda tangan Safe 2-of-3 di dalam app.
+- **[D-83, PENDING]:** Safe multisig adalah rencana roadmap untuk saat Paron live di mainnet. Sampai freeze kontrak, peran admin tetap seperti EN-2/D-54 (tanpa EOA kedua, tanpa pindah ke Safe). Rincian operasional: 08 §7.1.
 - **Later:** penandatangan independen, kebijakan treasury, tidak ada governance token (di luar lingkup).
 
 ### 4.11 Ops dan keeper

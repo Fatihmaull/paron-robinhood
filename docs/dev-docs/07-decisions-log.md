@@ -928,3 +928,13 @@ Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): ite
 | D-80 | **APPROVED (sama). P6 Beranda.** Isi beranda dipadatkan: kurangi ruang kosong, terutama mobile 390 px; connect wallet satu baris. | 06 S1; design.md |
 | D-81 | **DIBATALKAN. Guard CI grep `affiliated\|endorsed by` (butir terakhir D-74).** Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Status: awaiting Fatih's direct confirmation in group. | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md |
 | D-82 | **APPROVED (sama). Nama series demo yang live = `CU-JKT-H100-2611`.** Seed kontrak series 1 tidak diubah. D-19 (series panggung `CU-JKT-H100-2610`) dan D-25 tetap catatan historis; yang digantikan hanya penamaan series demo yang live. `series_id`, window, dan input skrip seed/forge tidak ditulis ulang. | 03, 05, 06, 09 |
+
+---
+
+## 17. Usulan PENDING: Safe di roadmap mainnet (D-83)
+
+Belum dikonfirmasi Fatih. Bukan bagian approval ~15:34 WIB.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-83 | **PENDING.** Safe multisig masuk roadmap: rencana kalau Paron live di mainnet. Sampai freeze kontrak (Sab 06:00 WIB), peran admin tetap seperti sekarang (D-54): tanpa EOA kedua, tanpa pindah ke Safe. Arsitektur Safe pada produk penuh sudah di product-plan §4.10; bagian ini tidak mengulanginya. | 08 §7.1; CONTEXT-INDEX |

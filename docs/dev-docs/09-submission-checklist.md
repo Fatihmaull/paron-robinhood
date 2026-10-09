@@ -64,6 +64,8 @@ Jendela build = Jum 09:00 → Sab 12:00 = **27 jam** (notes §2). Boleh terus me
 
 **Tim solo (Jum 9 Okt):** semua milestone di bawah dipegang Fatih. Tenggat yang dikunci: **Sab 06:00** freeze kontrak + video backup v1, **Sab 09:00** freeze UI, **Sab 11:30** submit internal, **Sab 12:00** tenggat keras. Rincian per jam, blok tidur, dan cut ladder: `08-team-tasks.md`.
 
+**[PENDING, menunggu konfirmasi Fatih; rincian 08 §7.2]** Usulan batas kode setelah freeze. Jam, tag `freeze-contracts` / `freeze-ui`, dan merge saat test hijau tetap seperti tabel di bawah dan 04 §9.2. Yang diajukan: setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya perbaikan bug yang memblokir jalur demo S0; setelah submit internal 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu.
+
 | Waktu (WIB) | Milestone | Pemilik | Sumber | Buffer / catatan |
 |---|---|---|---|---|
 | Kam 8 Okt (hari ini) | Prasyarat non-kode: wallet baru didanai di kedua chain, key Alchemy + Etherscan V2, toolchain terpasang, keystore deployer, owner Safe | Fatih | design §11.2, 04 §10 | tidak ada repo dan tidak ada deploy publik Paron sebelum Jum 09:00 |
