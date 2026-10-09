@@ -1,0 +1,23 @@
+{
+  "data": [
+    {
+      "series_id": "4",
+      "symbol": "CU-JKT-H100-2610",
+      "gpu": "H100",
+      "month": "2026-10",
+      "delivered_cu": "8",
+      "delivered_gpu_hours": "8",
+      "defaulted_cu": "10",
+      "default_count": 1,
+      "finalized_count": 1,
+      "default_rate": "0.556"
+    }
+  ],
+  "next_cursor": null,
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "data": {
+    "address": "0x4444444444444444444444444444444444444444",
+    "verified": false,
+    "entity_id": null,
+    "role": null,
+    "country": null,
+    "expiry_ms": null,
+    "source": null,
+    "attestation_uid": null,
+    "attester": null,
+    "revoked": false,
+    "explorer_url": null
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

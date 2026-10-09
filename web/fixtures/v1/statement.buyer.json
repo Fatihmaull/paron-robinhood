@@ -1,0 +1,90 @@
+{
+  "data": [
+    {
+      "ts_ms": 1791601240000,
+      "ts_iso": "2026-10-10T03:00:40Z",
+      "kind": "PRIMARY_BUY",
+      "series_id": "4",
+      "symbol": "CU-JKT-H100-2610",
+      "req_id": null,
+      "order_id": null,
+      "usdc_delta": "-60.000000",
+      "cu_delta": "20",
+      "counterparty": "0x1111111111111111111111111111111111111111",
+      "tx_hash": "0xc2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2",
+      "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xc2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2"
+    },
+    {
+      "ts_ms": 1791601290000,
+      "ts_iso": "2026-10-10T03:01:30Z",
+      "kind": "REDEMPTION_LOCK",
+      "series_id": "4",
+      "symbol": "CU-JKT-H100-2610",
+      "req_id": "1",
+      "order_id": null,
+      "usdc_delta": "0.000000",
+      "cu_delta": "-8",
+      "counterparty": "0x9999999999999999999999999999999999999999",
+      "tx_hash": "0xc6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6",
+      "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xc6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6c6"
+    },
+    {
+      "ts_ms": 1791601320000,
+      "ts_iso": "2026-10-10T03:02:00Z",
+      "kind": "REDEMPTION_BURN",
+      "series_id": "4",
+      "symbol": "CU-JKT-H100-2610",
+      "req_id": "1",
+      "order_id": null,
+      "usdc_delta": "0.000000",
+      "cu_delta": "0",
+      "counterparty": "0x1111111111111111111111111111111111111111",
+      "tx_hash": "0xc9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9",
+      "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xc9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9c9"
+    },
+    {
+      "ts_ms": 1791601380000,
+      "ts_iso": "2026-10-10T03:03:00Z",
+      "kind": "REDEMPTION_LOCK",
+      "series_id": "4",
+      "symbol": "CU-JKT-H100-2610",
+      "req_id": "2",
+      "order_id": null,
+      "usdc_delta": "0.000000",
+      "cu_delta": "-10",
+      "counterparty": "0x9999999999999999999999999999999999999999",
+      "tx_hash": "0xcacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaca",
+      "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xcacacacacacacacacacacacacacacacacacacacacacacacacacacacacacacaca"
+    },
+    {
+      "ts_ms": 1791601441000,
+      "ts_iso": "2026-10-10T03:04:01Z",
+      "kind": "DEFAULT_PAYOUT",
+      "series_id": "4",
+      "symbol": "CU-JKT-H100-2610",
+      "req_id": "2",
+      "order_id": null,
+      "usdc_delta": "45.000000",
+      "cu_delta": "0",
+      "counterparty": "0x1111111111111111111111111111111111111111",
+      "tx_hash": "0xcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb",
+      "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcbcb"
+    }
+  ],
+  "summary": {
+    "usdc_in": "45.000000",
+    "usdc_out": "60.000000",
+    "fees_paid": "0.000000",
+    "cu_bought": "20",
+    "cu_sold": "0",
+    "cu_redeemed": "18",
+    "default_payouts": "45.000000"
+  },
+  "next_cursor": null,
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

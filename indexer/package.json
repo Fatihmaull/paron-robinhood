@@ -10,7 +10,7 @@
   },
   "scripts": {
     "dev": "ponder dev",
-    "start": "ponder start --port ${PORT:-42069}",
+    "start": "ponder start --schema ${DATABASE_SCHEMA:-paron} --port ${PORT:-42069}",
     "codegen": "ponder codegen",
     "typecheck": "tsc --noEmit",
     "test": "vitest run"

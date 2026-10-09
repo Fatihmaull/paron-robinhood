@@ -1,0 +1,17 @@
+{
+  "data": {
+    "gpu": "H100",
+    "value": "3.000000",
+    "unit": "USD per CU (H100-equivalent GPU-hour)",
+    "observed_at_ms": 1791601200000,
+    "round_id": "1",
+    "label": "synthetic demo data",
+    "synthetic": true
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

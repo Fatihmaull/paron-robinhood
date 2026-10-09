@@ -1,0 +1,24 @@
+{
+  "data": {
+    "address": "0x2223222322232223222322232223222322232223",
+    "verified": true,
+    "entity_id": "0xe2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2e2",
+    "role": {
+      "code": 2,
+      "name": "Buyer"
+    },
+    "country": "ID",
+    "expiry_ms": 1822953600000,
+    "source": "EAS",
+    "attestation_uid": "0xabababababababababababababababababababababababababababababababab",
+    "attester": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "revoked": false,
+    "explorer_url": "https://explorer.testnet.chain.robinhood.com/tx/0xc2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2c2"
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

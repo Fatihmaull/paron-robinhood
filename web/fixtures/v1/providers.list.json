@@ -1,0 +1,45 @@
+{
+  "data": [
+    {
+      "address": "0x1111111111111111111111111111111111111111",
+      "entity_id": "0xe1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1",
+      "status": "ACTIVE",
+      "verified": true,
+      "reputation": {
+        "delivered_cu": "8",
+        "defaulted_cu": "10",
+        "voluntary_defaulted_cu": "0",
+        "disputes_lost": 0,
+        "strikes": 1
+      },
+      "series_count": 2,
+      "active_series_count": 2,
+      "registered_at_ms": 1791600000000,
+      "updated_at_ms": 1791601441000
+    },
+    {
+      "address": "0x7777777777777777777777777777777777777777",
+      "entity_id": "0xe4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4e4",
+      "status": "ACTIVE",
+      "verified": true,
+      "reputation": {
+        "delivered_cu": "0",
+        "defaulted_cu": "0",
+        "voluntary_defaulted_cu": "0",
+        "disputes_lost": 0,
+        "strikes": 0
+      },
+      "series_count": 1,
+      "active_series_count": 1,
+      "registered_at_ms": 1791590000000,
+      "updated_at_ms": 1791590000000
+    }
+  ],
+  "next_cursor": null,
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

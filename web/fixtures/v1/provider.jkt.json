@@ -1,0 +1,89 @@
+{
+  "data": {
+    "address": "0x1111111111111111111111111111111111111111",
+    "entity_id": "0xe1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1e1",
+    "status": "ACTIVE",
+    "verified": true,
+    "reputation": {
+      "delivered_cu": "8",
+      "defaulted_cu": "10",
+      "voluntary_defaulted_cu": "0",
+      "disputes_lost": 0,
+      "strikes": 1
+    },
+    "series": [
+      {
+        "series_id": "4",
+        "symbol": "CU-JKT-H100-2610",
+        "token": "0xa4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4a4",
+        "gpu": "H100",
+        "gpu_type": "H100-SXM-80GB",
+        "factor": "1.0000",
+        "region": "AS",
+        "country": "ID",
+        "delivery_window": "2026-10",
+        "window_start_ms": 1790812800000,
+        "window_end_ms": 1793491200000,
+        "primary_price": "3.000000",
+        "native_primary_price": "3.000000",
+        "max_supply": "500",
+        "paused": false,
+        "finalized": false,
+        "institutional": false,
+        "sale_open": true,
+        "last_price": "3.200000",
+        "volume_24h_cu": "5",
+        "volume_24h_usd": "16.000000",
+        "bond_per_cu": "4.500000",
+        "coverage": "1.50",
+        "sold_supply": "30",
+        "total_supply": "12"
+      },
+      {
+        "series_id": "1",
+        "symbol": "CU-JKT-H100-2611",
+        "token": "0xa1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1a1",
+        "gpu": "H100",
+        "gpu_type": "H100-SXM-80GB",
+        "factor": "1.0000",
+        "region": "AS",
+        "country": "ID",
+        "delivery_window": "2026-11",
+        "window_start_ms": 1793491200000,
+        "window_end_ms": 1796083200000,
+        "primary_price": "3.000000",
+        "native_primary_price": "3.000000",
+        "last_price": null,
+        "volume_24h_cu": "0",
+        "volume_24h_usd": "0.000000",
+        "bond_per_cu": "4.500000",
+        "coverage": "1.50",
+        "max_supply": "720",
+        "sold_supply": "0",
+        "total_supply": "0",
+        "paused": false,
+        "finalized": false,
+        "sale_open": true,
+        "institutional": false
+      }
+    ],
+    "bond": {
+      "deposited": "5490.000000",
+      "balance": "5409.000000",
+      "released": "36.000000",
+      "slashed": "45.000000"
+    },
+    "proceeds": {
+      "gross": "90.000000",
+      "fees": "0.900000",
+      "net": "89.100000"
+    },
+    "open_requests": 0
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}
