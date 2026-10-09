@@ -286,6 +286,17 @@ tr:hover td { background: var(--table-row-hover); }
   text-transform: uppercase;
   font-weight: 500;
 }
+.home-hero {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: var(--space-4);
+  margin-bottom: var(--space-3);
+}
+.home-hero h1 { margin: 0 0 4px; }
+.home-hero .kicker { margin: 0 0 2px; }
+.home-hero .lede { margin: 0; }
+.home-hero .actions { margin: 0; flex: 0 0 auto; }
 .menu { position: relative; }
 .menu-pop {
   position: absolute;
@@ -413,6 +424,7 @@ input, select, textarea {
 input:focus, select:focus, textarea:focus { border-color: var(--input-border-focus); }
 
 @media (max-width: 860px) {
+  .home-hero { flex-direction: column; align-items: flex-start; }
   .grid.two, .grid.three, .stat-grid, .stat-grid.three, .wizard-grid { grid-template-columns: 1fr; }
   .btn.menu-toggle { display: inline-flex; white-space: nowrap; }
   .nav { padding: 0 12px; gap: 8px; flex-wrap: nowrap; }
