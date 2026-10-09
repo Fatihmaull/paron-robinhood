@@ -5,7 +5,9 @@ WORKDIR /app
 
 RUN corepack enable && corepack prepare pnpm@12.9.1 --activate
 
-COPY package.json pnpm-lock.yaml ./
+# pnpm 12 reads allowBuilds only from pnpm-workspace.yaml. The package.json
+# "pnpm" field is ignored, so esbuild's postinstall fails without this file.
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .

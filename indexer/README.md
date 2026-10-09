@@ -16,7 +16,7 @@ pnpm dev
 
 Leave `DATABASE_URL` empty. Ponder uses PGlite and does not need Postgres. `DATABASE_SCHEMA` is ignored in that mode.
 
-`pnpm dev` serves the API on port 42069. `GET /v1/health` and `GET /health` report sync status.
+`pnpm dev` serves the API on port 42069. `GET /v1/health` reports sync status.
 
 `pnpm test` replays the dev-doc 03 demo through the same reducer the chain handlers use. It does not need a chain or a database.
 
@@ -33,7 +33,7 @@ Create one Railway service from this monorepo.
 | Healthcheck path | `/v1/health` |
 | Healthcheck timeout | 300 seconds |
 
-`GET /health` returns the same body as `GET /v1/health`. The health route stays up while the indexer is backfilling (`synced: false`, HTTP 200) so Railway does not kill the process. Other `/v1/*` routes return `503 INDEXER_SYNCING` until the indexed head is within 5 blocks of the chain head. If the RPC head check fails, an indexed block greater than 0 still counts as synced so a local process without a working RPC can serve.
+Ponder reserves `GET /health`, `/ready`, `/status`, `/metrics`, and `/client`, so this API does not register those paths. Railway's healthcheck is `GET /v1/health`. That route stays up while the indexer is backfilling (`synced: false`, HTTP 200) so Railway does not kill the process. Other `/v1/*` routes return `503 INDEXER_SYNCING` until the indexed head is within 5 blocks of the chain head. If the RPC head check fails, an indexed block greater than 0 still counts as synced so a local process without a working RPC can serve. Ponder's own `GET /health` is an empty 200 and does not report sync.
 
 Attach a Railway Postgres plugin. It injects `DATABASE_URL` at deploy time. Do not commit that URL.
 
@@ -59,10 +59,14 @@ The schema has to stay stable per deployment. One Railway service, one schema na
 | `DEPLOY_LABEL` | no | Manifest label, default `stage-1` |
 | `PARAM_SET` | no | `demo` or `prod` |
 | `PORT` | set by Railway | Listen port |
-| `API_CORS_ORIGIN` | no | Default `*` |
+| `API_CORS_ORIGIN` | no | Comma-separated browser origins. Unset, blank, or `*` allows every origin |
 | `API_PUBLIC_BASE_URL` | no | Public base, no custom domain |
 | `API_NOW_SOURCE` | no | `server` (wall clock) or `chain` (last indexed block, anvil) |
 | `TIMELOCK_INDEXED` | no | Index timelock and role events |
+
+`API_CORS_ORIGIN` is read when the process starts. A single origin or a comma-separated list is reflected back on matching requests (`https://paron.vercel.app,http://localhost:3000`). Any other `Origin` gets `Access-Control-Allow-Origin: null`, which replaces the `*` Ponder's own server adds. Leave the variable unset to allow every origin.
+
+`pnpm install` needs `pnpm-workspace.yaml` in the build context. pnpm 12.9.1 does not read `onlyBuiltDependencies` from `package.json`; it allows build scripts only through `allowBuilds` in that file. esbuild is listed because Vite's postinstall selects the platform binary. `@electric-sql/pglite` has no install script.
 
 Chain metadata is read from `config/chains.json` at the repo root when that file exists, otherwise from `indexer/config/chains.json`. Contract addresses and `startBlock` are read from `deployments/<chainId>/<DEPLOY_LABEL>.json` and `deployments/<chainId>/infra.json` when lane L4 has written them. Until then the service boots against placeholder addresses and `startBlock: "latest"`.
 
@@ -79,7 +83,7 @@ Chain metadata is read from `config/chains.json` at the repo root when that file
 - Bond health is floored to 3 decimal places (`2169/2250` → `"0.964"`). Coverage is floored to 2 (P3-30). `default_rate` is half-up to 3 because the approved example is `"0.556"` for 10/18.
 - A series with no reference of its own uses the H100 reference (coverage is in H100-equivalent units).
 - The offchain headline is a trailing `window_secs` VWAP. With alpha unset, winsorized VWAP equals VWAP. `IndexUpdated` does not carry a tumbling `windowStart`, so a true onchain tumbling window is not reconstructed. One eligible print makes both readings match.
-- Timelock rows are stored as `operationId-index` because one batch has several indexes and the table primary key cannot be `operation_id` alone. The API field `operation_id` is the `CallScheduled` id.
+- Timelock rows are stored as `operationId-index` because one batch has several indexes. The stored column is `timelockId` because Ponder reserves the SQL name `operation_id`. The API field `operation_id` is still the `CallScheduled` id.
 - D-45 through D-58 are applied as the proposed text. `OrderPlaced` is only the resting remainder (D-51). `declineAndPay` actions disappear once `now_s > deadline` (D-47). A same-transaction `RedemptionReopened` removes the refund's `REDEMPTION_UNLOCK` (D-46). `Defaulted.caller` is stored as emitted, which is the arbitrator address when `via_dispute` is true (D-56). `GET /v1/health` includes `index_update_failures`, the count of `IndexUpdateFailed` logs (D-53).
 - E10 `state` and `actions` use the contract's strict `now_s > deadline`. The extra 2 seconds before the client enables Claim default is a UI rule on top of `meta.server_now_ms` (D-48). The approved DEFAULTABLE example is only 1 second past the deadline and already lists `CLAIM_DEFAULT`.
 - `event_log` stays on so redemption timelines work.
