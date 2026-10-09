@@ -27,6 +27,7 @@ const PUBLIC_ENV: Record<string, string | undefined> = {
   NEXT_PUBLIC_DATA_SOURCE: process.env.NEXT_PUBLIC_DATA_SOURCE,
   NEXT_PUBLIC_CHAIN_ID: process.env.NEXT_PUBLIC_CHAIN_ID,
   NEXT_PUBLIC_RPC_URL: process.env.NEXT_PUBLIC_RPC_URL,
+  NEXT_PUBLIC_RPC_URL_BACKUP: process.env.NEXT_PUBLIC_RPC_URL_BACKUP,
   NEXT_PUBLIC_API_BASE_URL: process.env.NEXT_PUBLIC_API_BASE_URL,
   NEXT_PUBLIC_DEPLOY_LABEL: process.env.NEXT_PUBLIC_DEPLOY_LABEL,
   NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID: process.env.NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID,
@@ -71,6 +72,11 @@ export function chainId(): number {
 
 export function rpcUrl(): string {
   return read("NEXT_PUBLIC_RPC_URL", "https://rpc.testnet.chain.robinhood.com");
+}
+
+/** Optional second RPC. Empty = none. */
+export function rpcUrlBackup(): string {
+  return read("NEXT_PUBLIC_RPC_URL_BACKUP", "");
 }
 
 export function apiBase(): string {

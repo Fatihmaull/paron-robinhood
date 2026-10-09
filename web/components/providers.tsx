@@ -4,7 +4,7 @@ import { RainbowKitProvider, getDefaultConfig } from "@rainbow-me/rainbowkit";
 import "@rainbow-me/rainbowkit/styles.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { createContext, useCallback, useContext, useEffect, useMemo, useRef, useState } from "react";
-import { http, type PublicClient } from "viem";
+import { fallback, http, type PublicClient } from "viem";
 import { WagmiProvider, createConfig, usePublicClient } from "wagmi";
 import { injected } from "wagmi/connectors";
 import { median, syncOffset } from "@/lib/clock";
@@ -16,6 +16,7 @@ import {
   dataSource,
   robinhoodTestnet,
   rpcUrl,
+  rpcUrlBackup,
   walletConnectId,
 } from "@/lib/config";
 import { snapServerNow } from "@/lib/fixtures";
@@ -24,9 +25,13 @@ import type { Meta, Snap } from "@/lib/types";
 const projectId = walletConnectId();
 const chains = [activeChain(), activeChain().id === 46630 ? arbitrumSepolia : robinhoodTestnet] as const;
 
+// The public RPC fails intermittently (TLS/SNI alerts), so every call retries with backoff,
+// and a second RPC (NEXT_PUBLIC_RPC_URL_BACKUP) is used when one is configured.
+const rpcHttp = (url: string) => http(url, { retryCount: 3, retryDelay: 400, timeout: 8000 });
+const robinhoodUrls = [rpcUrl(), rpcUrlBackup()].filter(Boolean);
 const transports = {
-  [robinhoodTestnet.id]: http(rpcUrl()),
-  [arbitrumSepolia.id]: http("https://sepolia-rollup.arbitrum.io/rpc"),
+  [robinhoodTestnet.id]: robinhoodUrls.length > 1 ? fallback(robinhoodUrls.map(rpcHttp)) : rpcHttp(robinhoodUrls[0]),
+  [arbitrumSepolia.id]: rpcHttp("https://sepolia-rollup.arbitrum.io/rpc"),
 } as const;
 
 const wagmiConfig = projectId
