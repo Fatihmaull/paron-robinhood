@@ -1,5 +1,5 @@
 import { describe, expect, it } from "vitest";
-import { createApp, resolveNow } from "../src/api/create-app.js";
+import { corsOriginSetting, createApp, resolveNow } from "../src/api/create-app.js";
 import type { Snapshot } from "../src/api/snapshot.js";
 import { applyLog } from "../src/handlers/apply.js";
 import { MemoryStore } from "../src/store/memory.js";
@@ -584,6 +584,37 @@ describe("API-17 server clock", () => {
     } finally {
       if (previous === undefined) delete process.env.API_NOW_SOURCE;
       else process.env.API_NOW_SOURCE = previous;
+    }
+  });
+});
+
+describe("API_CORS_ORIGIN", () => {
+  it("allows every origin when unset and reflects a comma-separated list", async () => {
+    expect(corsOriginSetting(undefined)).toBe("*");
+    expect(corsOriginSetting("  ")).toBe("*");
+    expect(corsOriginSetting("*")).toBe("*");
+    expect(corsOriginSetting("https://paron.vercel.app, http://localhost:3000")).toEqual([
+      "https://paron.vercel.app",
+      "http://localhost:3000",
+    ]);
+
+    const store = await replay("end");
+    const previous = process.env.API_CORS_ORIGIN;
+    try {
+      delete process.env.API_CORS_ORIGIN;
+      const open = await appAt(store);
+      const openResponse = await open.request("/v1/health", { headers: { origin: "https://app.example" } });
+      expect(openResponse.headers.get("access-control-allow-origin")).toBe("*");
+
+      process.env.API_CORS_ORIGIN = "https://paron.vercel.app, http://localhost:3000";
+      const limited = await appAt(store);
+      const allowed = await limited.request("/v1/health", { headers: { origin: "http://localhost:3000" } });
+      expect(allowed.headers.get("access-control-allow-origin")).toBe("http://localhost:3000");
+      const denied = await limited.request("/v1/health", { headers: { origin: "https://evil.example" } });
+      expect(denied.headers.get("access-control-allow-origin")).toBeNull();
+    } finally {
+      if (previous === undefined) delete process.env.API_CORS_ORIGIN;
+      else process.env.API_CORS_ORIGIN = previous;
     }
   });
 });

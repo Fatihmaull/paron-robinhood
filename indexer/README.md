@@ -59,10 +59,14 @@ The schema has to stay stable per deployment. One Railway service, one schema na
 | `DEPLOY_LABEL` | no | Manifest label, default `stage-1` |
 | `PARAM_SET` | no | `demo` or `prod` |
 | `PORT` | set by Railway | Listen port |
-| `API_CORS_ORIGIN` | no | Default `*` |
+| `API_CORS_ORIGIN` | no | Comma-separated browser origins. Unset, blank, or `*` allows every origin |
 | `API_PUBLIC_BASE_URL` | no | Public base, no custom domain |
 | `API_NOW_SOURCE` | no | `server` (wall clock) or `chain` (last indexed block, anvil) |
 | `TIMELOCK_INDEXED` | no | Index timelock and role events |
+
+`API_CORS_ORIGIN` is read when the process starts. A single origin or a comma-separated list is reflected back on matching requests (`https://paron.vercel.app,http://localhost:3000`). Anything else gets no `Access-Control-Allow-Origin` header. Leave the variable unset to allow every origin.
+
+`pnpm install` needs `pnpm-workspace.yaml` in the build context. pnpm 12.9.1 does not read `onlyBuiltDependencies` from `package.json`; it allows build scripts only through `allowBuilds` in that file. esbuild is listed because Vite's postinstall selects the platform binary. `@electric-sql/pglite` has no install script.
 
 Chain metadata is read from `config/chains.json` at the repo root when that file exists, otherwise from `indexer/config/chains.json`. Contract addresses and `startBlock` are read from `deployments/<chainId>/<DEPLOY_LABEL>.json` and `deployments/<chainId>/infra.json` when lane L4 has written them. Until then the service boots against placeholder addresses and `startBlock: "latest"`.
 

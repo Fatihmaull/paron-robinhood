@@ -83,10 +83,21 @@ export function resolveNow(indexedAtSec: bigint): number {
   return Date.now();
 }
 
+/** Comma-separated `API_CORS_ORIGIN`. Unset, blank, or `*` allows every origin. */
+export function corsOriginSetting(raw = process.env.API_CORS_ORIGIN): string | string[] {
+  const value = raw?.trim() ?? "";
+  if (value === "" || value === "*") return "*";
+  const origins = value
+    .split(",")
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+  if (origins.length === 0 || origins.includes("*")) return "*";
+  return origins;
+}
+
 export function createApp(options: CreateAppOptions) {
   const app = new Hono<{ Variables: Vars }>();
-  const origin = process.env.API_CORS_ORIGIN || "*";
-  app.use("*", cors({ origin }));
+  app.use("*", cors({ origin: corsOriginSetting() }));
 
   app.use("*", async (c, next) => {
     const snap = await options.load();
