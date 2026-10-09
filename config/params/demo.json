@@ -3,7 +3,7 @@
   "bondFloorBps": 15000,
   "primaryFeeBps": 100,
   "takerFeeBps": 15,
-  "maxTakerFeeBps": 50,
+  "maxTakerFeeBps": 100,
   "leadTime": 0,
   "allowOpenWindow": true,
   "enforceCalendarMonth": true,
@@ -11,7 +11,7 @@
   "maxLevels": 10,
   "tick": 10000,
   "cuLot": "1000000000000000000",
-  "rulingWindow": 60,
+  "rulingWindow": 120,
   "disputeBondBps": 500,
   "minDisputeBond": 5000000,
   "bounds": {
@@ -35,5 +35,5 @@
     "GB200-NVL72": 35000,
     "A100-SXM-80GB": 4500
   },
-  "timelockDelay": 60
+  "timelockDelay": 300
 }
