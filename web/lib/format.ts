@@ -59,7 +59,7 @@ export function formatFactor(factor: string | null | undefined): string {
 }
 
 export function formatCoverage(coverage: string | null | undefined): string {
-  if (!coverage) return "—";
+  if (!coverage || !/^\d+(\.\d+)?$/.test(coverage)) return "—";
   const [whole, frac = ""] = coverage.split(".");
   return `${whole}.${(frac + "00").slice(0, 2)}×`;
 }

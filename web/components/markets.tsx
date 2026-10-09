@@ -65,10 +65,10 @@ export function Markets({ headline = false }: { headline?: boolean }) {
                 }}
               >
                 <td>
-                  <span className="sym">{row.symbol}</span>
-                  <div className="pills">
+                  <span className="cell-inline">
+                    <span className="sym">{row.symbol}</span>
                     <SalePill row={row} />
-                  </div>
+                  </span>
                 </td>
                 <td>
                   {row.provider.verified ? <span className="ok">✓ </span> : null}
@@ -83,9 +83,13 @@ export function Markets({ headline = false }: { headline?: boolean }) {
                 <td className="num">{formatCu(row.volume_24h_cu)}</td>
                 <td className="num">
                   {formatUsd(row.bond_per_cu)}
-                  {Number(row.coverage) >= 2 ? <span className="pill outline">200% backed</span> : null}
                 </td>
-                <td className="num">{formatCoverage(row.coverage)}</td>
+                <td className="num">
+                  <span className="cell-inline end">
+                    {Number(row.coverage) >= 2 ? <span className="pill outline">200% backed</span> : null}
+                    {formatCoverage(row.coverage)}
+                  </span>
+                </td>
                 <td className="num">
                   {row.provider.delivered_cu} /{" "}
                   <span className={Number(row.provider.defaulted_cu) > 0 ? "bad" : undefined}>{row.provider.defaulted_cu}</span>
