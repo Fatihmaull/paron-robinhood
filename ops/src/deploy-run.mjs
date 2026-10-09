@@ -157,7 +157,9 @@ export async function runDeployStep(stepId, deps) {
     lines.push(`mockUsdc already recorded at ${state.infra.mockUsdc.address}. Nothing sent.`);
     return { exitCode: 0, mode, lines, send: false, wrote: false };
   }
-  if (stepId === "core" && state.labelExisted) {
+  // mock-usdc and eas-schema create the label file first, so existence alone is not "core done".
+  const coreDone = Object.keys(state.label?.contracts || {}).length > 0;
+  if (stepId === "core" && coreDone) {
     lines.push(`Refusing to overwrite deployments/${chain.chainId}/${labelName}.json.`);
     return { exitCode: 2, mode, lines, send: false, wrote: false };
   }
