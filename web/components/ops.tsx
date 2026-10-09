@@ -21,6 +21,7 @@ import { asBytes32 } from "@/lib/settlement";
 import { demoChecks } from "@/lib/demo";
 import { errorCopy } from "@/lib/errors";
 import { formatFactor, formatWib, shortId } from "@/lib/format";
+import { gpuModelId } from "@/lib/gpu-model";
 import { useKeeperQueue, useKyb, useTimelock } from "@/lib/hooks";
 import { useSend } from "./tx";
 import { Field, Panel, TxButton } from "./ui";
@@ -147,7 +148,7 @@ export function KeepersPage() {
           <TxButton onClick={() => void send("fs", { address: contractAddress("seriesFactory"), abi: seriesFactoryAbi, functionName: "finalizeSeries", args: [4n] })}>Finalize series 4</TxButton>
         </Queue>
         <Queue title="poke" empty="">
-          <TxButton onClick={() => void send("poke", { address: contractAddress("printIndex"), abi: printIndexAbi, functionName: "poke", args: [stringToHex("H100-SXM-80GB", { size: 32 })] })}>
+          <TxButton onClick={() => void send("poke", { address: contractAddress("printIndex"), abi: printIndexAbi, functionName: "poke", args: [gpuModelId("H100-SXM-80GB")] })}>
             {pending === "poke" ? "Poking…" : "Poke H100"}
           </TxButton>
         </Queue>
