@@ -1,0 +1,437 @@
+[
+    {
+        "type": "constructor",
+        "inputs": [
+            {
+                "name": "settlementToken_",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "factory_",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "redemptionManager_",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "bondOf",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [
+            {
+                "name": "",
+                "type": "tuple",
+                "internalType": "struct SeriesBond",
+                "components": [
+                    {
+                        "name": "provider",
+                        "type": "address",
+                        "internalType": "address"
+                    },
+                    {
+                        "name": "deposited",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "balance",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "released",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "slashed",
+                        "type": "uint256",
+                        "internalType": "uint256"
+                    },
+                    {
+                        "name": "finalized",
+                        "type": "bool",
+                        "internalType": "bool"
+                    },
+                    {
+                        "name": "withdrawn",
+                        "type": "bool",
+                        "internalType": "bool"
+                    }
+                ]
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "deposit",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "provider",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "factory",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "markFinalized",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "redemptionManager",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "address"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "release",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "reqId",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "settlementToken",
+        "inputs": [],
+        "outputs": [
+            {
+                "name": "",
+                "type": "address",
+                "internalType": "contract IERC20"
+            }
+        ],
+        "stateMutability": "view"
+    },
+    {
+        "type": "function",
+        "name": "slash",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "recipient",
+                "type": "address",
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "reqId",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "withdrawRemaining",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "event",
+        "name": "BondDeposited",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "indexed": true,
+                "internalType": "uint256"
+            },
+            {
+                "name": "provider",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "BondFinalized",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "indexed": true,
+                "internalType": "uint256"
+            },
+            {
+                "name": "balance",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "BondReleased",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "indexed": true,
+                "internalType": "uint256"
+            },
+            {
+                "name": "provider",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            },
+            {
+                "name": "reqId",
+                "type": "uint256",
+                "indexed": true,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "BondSlashed",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "indexed": true,
+                "internalType": "uint256"
+            },
+            {
+                "name": "recipient",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            },
+            {
+                "name": "reqId",
+                "type": "uint256",
+                "indexed": true,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "event",
+        "name": "BondWithdrawn",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "indexed": true,
+                "internalType": "uint256"
+            },
+            {
+                "name": "provider",
+                "type": "address",
+                "indexed": true,
+                "internalType": "address"
+            },
+            {
+                "name": "amount",
+                "type": "uint256",
+                "indexed": false,
+                "internalType": "uint256"
+            }
+        ],
+        "anonymous": false
+    },
+    {
+        "type": "error",
+        "name": "AlreadyDeposited",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "AlreadyFinalized",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "AlreadyWithdrawn",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "InsufficientBond",
+        "inputs": [
+            {
+                "name": "have",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "need",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "NotFinalized",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "NotSeriesProvider",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "OnlyFactory",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "OnlyRedemptionManager",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "ReentrancyGuardReentrantCall",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "SafeERC20FailedOperation",
+        "inputs": [
+            {
+                "name": "token",
+                "type": "address",
+                "internalType": "address"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "UnknownSeries",
+        "inputs": [
+            {
+                "name": "seriesId",
+                "type": "uint256",
+                "internalType": "uint256"
+            }
+        ]
+    },
+    {
+        "type": "error",
+        "name": "ZeroAddress",
+        "inputs": []
+    },
+    {
+        "type": "error",
+        "name": "ZeroAmount",
+        "inputs": []
+    }
+]

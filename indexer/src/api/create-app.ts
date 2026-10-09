@@ -1469,8 +1469,8 @@ function presentTimelock(snap: Snapshot, row: TimelockRow, nowSec: bigint) {
 function decodeCall(data: Hex): { function: string; args: Record<string, unknown> } | null {
   try {
     const decoded = decodeFunctionData({ abi: conversionTableAbi, data });
-    if (decoded.functionName === "setFactor") {
-      const [gpuModel, factor] = decoded.args;
+    if (decoded.functionName === "setFactor" && decoded.args) {
+      const [gpuModel, factor] = decoded.args as readonly [Hex, number];
       const gpu = shortOfModel(gpuModel);
       return { function: "setFactor", args: { gpu: gpu ?? gpuModel, factor: formatFactor(factor) } };
     }

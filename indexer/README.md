@@ -74,7 +74,7 @@ Chain metadata is read from `config/chains.json` at the repo root when that file
 
 - Add `indexer` to the root `pnpm-workspace.yaml`.
 - `config/chains.json` and `deployments/` belong to L1/L4. This package ships a chain file and reads the root copies when they exist.
-- Replace `src/abi/temporary-event-abis.ts` with L1's `shared/abi` export. The temporary file is derived from dev doc 01.
+- `src/abi/temporary-event-abis.ts` loads the JSON copied from `shared/abi` into `src/abi/shared`. Railway's root directory is this package, so the copy is what the image builds. `node script/sync-shared-abi.mjs` refreshes it from the repo-root `shared/abi`. EAS and the timelock are not Paron contracts and stay as fragments in that module.
 - `fixtures/v1/` at the repo root is the frontend mock (dev doc 03 §4). API tests live in `indexer/test`.
 - `METHODOLOGY.md` at the repo root is where the winsorization alpha belongs (T3-04). The API reports `alpha: null` and `methodology: "METHODOLOGY.md"`.
 

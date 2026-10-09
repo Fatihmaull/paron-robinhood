@@ -1,0 +1,38 @@
+[
+    {
+        "type": "function",
+        "name": "onDisputeOpened",
+        "inputs": [
+            {
+                "name": "reqId",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "rulingDeadline",
+                "type": "uint64",
+                "internalType": "uint64"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    },
+    {
+        "type": "function",
+        "name": "rule",
+        "inputs": [
+            {
+                "name": "reqId",
+                "type": "uint256",
+                "internalType": "uint256"
+            },
+            {
+                "name": "outcome",
+                "type": "uint8",
+                "internalType": "enum Ruling"
+            }
+        ],
+        "outputs": [],
+        "stateMutability": "nonpayable"
+    }
+]
