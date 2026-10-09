@@ -146,13 +146,6 @@ export function activeChain() {
   return chainId() === 421614 ? arbitrumSepolia : robinhoodTestnet;
 }
 
-export function chainFooterLine(): string {
-  if (chainId() === 421614) {
-    return "Deployed on Arbitrum Sepolia (fallback). Testnet demo: tokens have no monetary value.";
-  }
-  return "Deployed on Robinhood Chain Testnet. Testnet demo: tokens have no monetary value.";
-}
-
 export function wrongNetworkCopy(): string {
   if (chainId() === 421614) {
     return "Your wallet is on another network. Paron runs on Arbitrum Sepolia (421614).";

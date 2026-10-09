@@ -16,9 +16,9 @@ export function Markets({ headline = false }: { headline?: boolean }) {
       {headline ? (
         <>
           <p className="kicker">Compute-hour markets</p>
-          <h1>Buy GPU capacity that a provider bond stands behind.</h1>
+          <h1>Where compute is forged into one standard.</h1>
           <p className="lede">
-            Primary sales, a secondary book, and redemptions with a public default claim. Testnet demo only.
+            Physical GPU compute, sold forward. 1 CU = 1 H100-equivalent GPU-hour. Every CU is bonded.
           </p>
           <div className="actions">
             <Link className="btn" href="/markets">Browse markets</Link>

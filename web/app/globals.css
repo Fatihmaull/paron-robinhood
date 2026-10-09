@@ -118,25 +118,22 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
   margin: 0 auto;
   padding: var(--space-6) 0 var(--space-12);
 }
-.footer {
-  border-top: 1px solid var(--color-border-default);
-  background: var(--footer-bg);
-  color: var(--footer-fg);
-  font-size: var(--text-2xs);
-  line-height: 1.6;
-  padding: var(--space-5) var(--space-8) var(--space-6);
-}
-.footer p { margin: 0; max-width: 820px; }
-.footer-row {
+.utilbar {
   display: flex;
   justify-content: space-between;
-  gap: 16px;
+  align-items: center;
+  gap: var(--space-4);
   flex-wrap: wrap;
-  margin-top: var(--space-3);
+  min-height: 32px;
+  padding: var(--space-2) var(--space-8);
+  border-top: 1px solid var(--color-border-default);
+  background: var(--utilbar-bg);
+  color: var(--utilbar-fg);
+  font-size: var(--text-2xs);
 }
-.footer a { color: var(--color-text-secondary); text-decoration: none; }
-.footer-more { display: contents; }
-.footer-toggle { display: none; background: none; border: 0; color: var(--color-text-secondary); padding: 0; }
+.utilbar { justify-content: flex-end; }
+.chip-narrow { display: none; }
+.chip, .nav .btn { white-space: nowrap; }
 
 h1 {
   font-size: var(--text-2xl);
@@ -331,6 +328,9 @@ td .pill { height: 18px; }
 .bond-bar { display: flex; height: var(--bond-bar-height); background: var(--bond-bar-track); border-radius: var(--bond-bar-radius); overflow: hidden; margin: 8px 0 12px; }
 .bond-bar .fill { background: var(--bond-bar-fill); }
 .bond-bar .released { background: var(--bond-bar-released); }
+.key { display: inline-block; width: 8px; height: 8px; border-radius: 2px; margin-right: 8px; background: var(--bond-bar-fill); }
+.key.released { background: var(--bond-bar-released); }
+.key.slashed { background: var(--bond-bar-slashed); }
 .bond-bar .slashed { background: var(--bond-bar-slashed); }
 .book-row {
   display: flex;
@@ -382,7 +382,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
   .main { width: min(100% - 32px, var(--size-content-max)); }
   .clock { font-size: var(--countdown-size-hero); text-align: center; }
   .btn.danger { min-height: var(--size-control-touch); width: 100%; }
-  .footer-more { display: none; }
-  .footer.open .footer-more { display: block; }
-  .footer-toggle { display: inline; }
+  .utilbar { padding: var(--space-2) var(--space-4); }
+  .chip-wide { display: none; }
+  .chip-narrow { display: inline; }
 }
