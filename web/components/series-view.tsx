@@ -37,7 +37,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
       {detail ? (
         <p className="lede">
           {detail.gpu_type} · factor {formatFactor(detail.factor)} · {detail.country} · window {detail.delivery_window || "—"} · provider {shortId(detail.provider.address)}
-          {detail.provider.verified ? " · Verified by Paron demo verifier" : ""}
+          {detail.provider.verified ? <>{" "}<span className="pill ok">Verified by Paron demo verifier</span></> : null}
         </p>
       ) : null}
       <div className="tabs">

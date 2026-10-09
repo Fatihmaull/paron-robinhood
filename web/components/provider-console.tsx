@@ -57,9 +57,9 @@ export function ProviderConsole({ focus }: { focus?: string }) {
         <Link className="btn" href="/provider/series/new">List capacity</Link>
       </div>
       <div className="tabs">
-        {["requests", "series", "bond", "agent"].map((id) => (
+        {(["requests", "series", "bond", "agent"] as const).map((id) => (
           <button key={id} type="button" data-active={tab === id} onClick={() => setTab(id)}>
-            {id}
+            {id[0]!.toUpperCase() + id.slice(1)}
           </button>
         ))}
       </div>
