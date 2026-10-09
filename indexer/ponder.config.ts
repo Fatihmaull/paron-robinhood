@@ -25,13 +25,11 @@ import { contractAddressOf, loadDeployment } from "./src/config/load.js";
  *
  * Ponder stores indexed tables in the Postgres schema named by DATABASE_SCHEMA.
  * That name must stay the same for the life of a deployment. A new value makes
- * Ponder backfill into a different schema.
+ * Ponder backfill into a different schema. `ponder start` refuses to boot
+ * without a schema (even on PGlite), so it defaults to "paron" here, in the
+ * Dockerfile, and in the `start` script.
  */
-if (process.env.DATABASE_URL && !process.env.DATABASE_SCHEMA) {
-  throw new Error(
-    'DATABASE_SCHEMA is required when DATABASE_URL is set. Use a stable name such as "paron" and do not change it between Railway deploys.',
-  );
-}
+process.env.DATABASE_SCHEMA ||= "paron";
 
 const deployment = loadDeployment();
 const address = (name: string) => contractAddressOf(deployment, name);
