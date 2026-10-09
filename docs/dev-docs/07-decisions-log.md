@@ -23,10 +23,11 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §13 Approval keenam Jum 9 Okt 2026 13:35 WIB (Fatih): D-65 (`UtilityBar` tipis APPROVED sebagai pengganti footer)
 - §14 Catatan hosting dan D-66 (~14:02 WIB)
 - §15 Approval ketujuh 14:40 WIB (D-67..D-74)
-- §16 Approval kedelapan ~15:34 WIB (D-75..D-80 dan D-82 APPROVED; D-81 bukan approval)
-- §17 Usulan PENDING Safe (D-83) dan aturan setelah freeze tetap PENDING
+- §16 Approval kedelapan ~15:34 WIB (D-75..D-80 dan D-82 APPROVED; D-81 saat itu belum approval, dikonfirmasi di §20)
+- §17 Safe (D-83): saat ditulis PENDING; APPROVED di §20. Aturan setelah freeze dibatalkan di §20 (D-90)
 - §18 Approval 2026-10-09 16:39 WIB (D-84..D-88, Fatih langsung)
 - §19 Hardening RPC (D-89, APPROVED handler)
+- §20 Approval 2026-10-09 17:01 WIB (Fatih langsung): D-81 APPROVED, D-83 APPROVED, D-90 membatalkan freeze
 
 ---
 
@@ -901,7 +902,7 @@ Fatih di grup (14:40 WIB): "setujui semua, sesuai rekomendasi kalian, sinkronkan
 | #13 | Banner dev-only tidak muncul di build produksi | **D-71** |
 | LR-6 | Kontras teks kecil ≥ 4.5:1 | **D-72** |
 | LR-8 | Tab Provider console | **D-73** |
-| "Also adopt" di `approved-ui-changes.md` | `tokens.v2.css`, `<title>` per route, skip link. Grep CI: dibatalkan di D-81 | **D-74** |
+| "Also adopt" di `approved-ui-changes.md` | `tokens.v2.css`, `<title>` per route, skip link. Grep CI: dibatalkan di D-81 (APPROVED 17:01 WIB, §20) | **D-74** |
 
 Catatan pemetaan: LR-5 beririsan penuh dengan #9 sehingga digabung (satu D). LR-6 **bukan** bagian #12 (petunjuk awal Designer "mirip #12" tidak dipakai; #12 adalah tabel mobile, LR-6 adalah kontras). #5 (status pills) sudah selesai sebelumnya; #1-#4 = D-60..D-63; #6-#8 = D-64/D-65/D-60.
 
@@ -914,7 +915,7 @@ Catatan pemetaan: LR-5 beririsan penuh dengan #9 sehingga digabung (satu D). LR-
 | D-71 | **Banner dev-only (#13):** banner mock dan pemilih snapshot hanya dirender kalau `NEXT_PUBLIC_DATA_SOURCE=mock` **dan** bukan build produksi. Vercel produksi tidak menampilkan keduanya | 06 §1.6, §11.3 |
 | D-72 | **Kontras teks kecil (LR-6).** Nilai token sudah lolos (`contrast-report.md`: tertiary `#838C9B` di `#0A0C0F` ≥ 4.5:1); tampilan live lebih redup karena ada override. Ganti warna hard-coded atau teks ber-opacity (utility bar, "Spot reference (synthetic demo data)", header tabel, helper text) dengan `--color-text-tertiary` (minimum) atau `--color-text-secondary`; tidak ada `opacity` di bawah 1 pada teks; `--color-text-disabled` tidak dipakai untuk teks yang harus terbaca. Acceptance: kontras warna terhitung vs latar terhitung ≥ 4.5:1 untuk semua teks ≤ 13 px | 06 §0.2, §12 |
 | D-73 | **Tab Provider console (LR-8).** Label Title Case ("Requests", "Series", "Bond", "Agent"), 13 px, weight medium; tab aktif bergaris bawah ember dengan teks primer, tab tidak aktif teks sekunder; ring fokus keyboard sesuai token; target minimal 44 px di mobile | 06 §6.1, §6.5 |
-| D-74 | **Adopsi tambahan berisiko rendah dari audit Designer:** impor `tokens.v2.css` (dan `theme.v2.css`) menggantikan `tokens.css` (alias lama tetap, tanpa rename); tinggi baris tabel Markets 32 px dengan pill status sebaris; `<title>` per route dan skip link (`<a class="skip" href="#main">`). Butir grep CI `affiliated|endorsed by` **dibatalkan oleh D-81** (bukan butir yang masih berlaku). Sumber visual terbaru: `design.md` terbaru di `docs/design/` | 06 §0.2, §2.2, §12; 08 §2.2 |
+| D-74 | **Adopsi tambahan berisiko rendah dari audit Designer:** impor `tokens.v2.css` (dan `theme.v2.css`) menggantikan `tokens.css` (alias lama tetap, tanpa rename); tinggi baris tabel Markets 32 px dengan pill status sebaris; `<title>` per route dan skip link (`<a class="skip" href="#main">`). Butir grep CI `affiliated|endorsed by` **dibatalkan oleh D-81** (bukan butir yang masih berlaku; pembatalan APPROVED Fatih langsung 2026-10-09 17:01 WIB, §20). Sumber visual terbaru: `design.md` terbaru di `docs/design/` | 06 §0.2, §2.2, §12; 08 §2.2 |
 
 **Catatan:** PE menerapkan D-67..D-74 dalam satu PR kecil sebelum freeze UI Sab 09:00 WIB (08 §2.2). Verifikasi akhir: Designer memotret ulang live pada 1280 dan 390 px untuk `/`, `/markets`, `/markets/1`, `/portfolio`, `/provider`, dan detail redemption (tanpa scroll horizontal di 390, tanpa link biru, kontras ≥ 4.5:1). Tidak ada item ini yang mengubah daftar never-cut (tetap 3 butir, D-64).
 
@@ -922,7 +923,7 @@ Catatan pemetaan: LR-5 beririsan penuh dengan #9 sehingga digabung (satu D). LR-
 
 ## 16. Approval kedelapan: Jum 9 Okt 2026 ~15:34 WIB (Fatih, via handler)
 
-Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): item UI Designer P1–P6 (D-75..D-80) dan nama series demo yang live (D-82). Pengecualian nama pihak ketiga (Ornn, ICE, Robinhood) untuk dokumen dan footnote slide sudah dicatat di CONTEXT-INDEX pada jam yang sama. D-81 bukan approval.
+Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): item UI Designer P1–P6 (D-75..D-80) dan nama series demo yang live (D-82). Pengecualian nama pihak ketiga (Ornn, ICE, Robinhood) untuk dokumen dan footnote slide sudah dicatat di CONTEXT-INDEX pada jam yang sama. Pada jam ini D-81 belum approval; konfirmasi langsung Fatih ada di §20 (2026-10-09 17:01 WIB).
 
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
@@ -932,20 +933,20 @@ Fatih menyetujui lewat handler (~15:34 WIB, "lanjutkan dengan rekomendasi"): ite
 | D-78 | **APPROVED (sama). P4 Tiket Buy.** Hapus copy implementasi dari tiket Buy. Yang tampil hanya copy produk. | 06 §4 tiket Buy |
 | D-79 | **APPROVED (sama). P5 Format angka.** Uang ditulis `$3,240.00` (pemisah ribuan, 2 desimal). Max cost 2 desimal. | 06 format angka; design.md |
 | D-80 | **APPROVED (sama). P6 Beranda.** Isi beranda dipadatkan: kurangi ruang kosong, terutama mobile 390 px; connect wallet satu baris. | 06 S1; design.md |
-| D-81 | **DIBATALKAN. Guard CI grep `affiliated\|endorsed by` (butir terakhir D-74).** Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Status: PENDING (awaiting Fatih's direct confirmation in group). | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md |
+| D-81 | **DIBATALKAN, dan pembatalan itu APPROVED (Fatih langsung, 2026-10-09 17:01 WIB, §20).** Guard CI grep `affiliated\|endorsed by` (butir terakhir D-74) tidak berlaku. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Pada ~15:34 WIB statusnya masih menunggu konfirmasi langsung. | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md |
 | D-82 | **APPROVED (sama). Nama series demo yang live = `CU-JKT-H100-2611`.** Seed kontrak series 1 tidak diubah. D-19 (series panggung `CU-JKT-H100-2610`) dan D-25 tetap catatan historis; yang digantikan hanya penamaan series demo yang live. `series_id`, window, dan input skrip seed/forge tidak ditulis ulang. | 03, 05, 06, 09 |
 
 ---
 
-## 17. Usulan PENDING: Safe di roadmap mainnet (D-83)
+## 17. Safe di roadmap mainnet (D-83) — APPROVED 2026-10-09 17:01 WIB
 
-Belum dikonfirmasi Fatih. Bukan bagian approval ~15:34 WIB.
+Saat bagian ini pertama ditulis, D-83 masih PENDING dan bukan bagian approval ~15:34 WIB. Fatih menyetujui langsung pada 2026-10-09 17:01 WIB (§20).
 
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
-| D-83 | **PENDING.** Safe multisig masuk roadmap: rencana kalau Paron live di mainnet. Sampai freeze kontrak (Sab 06:00 WIB), peran admin tetap seperti sekarang (D-54): tanpa EOA kedua, tanpa pindah ke Safe. Arsitektur Safe pada produk penuh sudah di product-plan §4.10; bagian ini tidak mengulanginya. | 08 §7.1; CONTEXT-INDEX |
+| D-83 | **APPROVED (Fatih langsung, 2026-10-09 17:01 WIB).** Safe multisig masuk roadmap: rencana kalau Paron live di mainnet nanti. Peran admin tidak berubah (D-54): tanpa EOA kedua, tanpa pindah ke Safe. Tidak ada batas freeze. Arsitektur Safe pada produk penuh sudah di product-plan §4.10; bagian ini tidak mengulanginya. | 08 §7.1; product-plan §4.10; CONTEXT-INDEX |
 
-Aturan setelah freeze (08 §7.2, disebut di 09 §1.2) tetap **PENDING**. Bagian ini tidak mengubah jam freeze, tag, atau izin merge.
+Aturan setelah freeze (08 §7.2, disebut di 09 §1.2) **SUPERSEDED / CANCELLED oleh D-90** (§20). Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Teks usulan lama tidak dihapus; lihat 08 §7.2.
 
 ---
 
@@ -956,7 +957,7 @@ Fatih menyetujui langsung pada 2026-10-09 16:39 WIB. Status D-84..D-88 = **APPRO
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
 | D-84 | **APPROVED (Fatih, langsung, 2026-10-09 16:39 WIB).** Banner syncing, warna info. Kalimat persis (copy UI bahasa Inggris): "Indexer is catching up to the latest blocks; data may lag briefly." Muncul hanya jika `/v1/health` `synced:false` atau lag > 20 blok. Ini kalimat banner yang live (diverifikasi Designer). Syarat tampil tetap D-75. | 06 §1.6; CONTEXT-INDEX; approved-ui-changes |
-| D-85 | **APPROVED (sama).** Tab series mengikuti D-67: Bond, Terms, Redemptions, Reputation. Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap, dan sisa itu dicatat di dokumen. Pada `main` `93f8e60`, tab di halaman series masih Overview, Buy, Trade, Leverage. Freeze belum lewat saat catatan ini ditulis. | 06 §0, §4; D-67 |
+| D-85 | **APPROVED (sama).** Tab series mengikuti D-67: Bond, Terms, Redemptions, Reputation. Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap, dan sisa itu dicatat di dokumen. Pada `main` `93f8e60`, tab di halaman series masih Overview, Buy, Trade, Leverage. Freeze belum lewat saat catatan ini ditulis. Syarat jam 09:00 itu [SUPERSEDED D-90, §20]. | 06 §0, §4; D-67 |
 | D-86 | **APPROVED (sama).** Pesan tidak ketemu, copy persis: "Request not found." di `/redemptions/1` dan `/disputes/1`. | 06 §0 |
 | D-87 | **APPROVED (sama).** Pita data demo sintetis tetap. Teks pita: "Reference price (demo data)". | 06 §1.1 |
 | D-88 | **APPROVED (sama).** Pratinjau PR #47 (beranda) belum ditinjau. Designer memeriksa produksi setelah rebase dan merge. | approved-ui-changes |
@@ -970,3 +971,21 @@ Dicatat karena perilaku RPC di PR #48 (`93f8e60`) mengubah spec env dan tampilan
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
 | D-89 | **APPROVED (handler).** Panggilan RPC publik diulang dengan jeda 400 ms, lalu 800 ms, lalu 1600 ms (batas berikutnya 8000 ms). Kegagalan RPC publik tampil sebagai teks redup, bukan error merah. Nama env `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` **final**. Kosong = hanya URL utama. Nilai URL tidak ditulis di dokumen. | 04 §3.2, §4.3–§4.5, §8, §9.1; 03 §0, §2.1, §3.1; 05 §3.1, §4.7–§4.8; 06 §1.6, §2.2, §9.1, §11.2; 09 §7 |
+
+---
+
+## 20. Approval 2026-10-09 17:01 WIB (Fatih, langsung)
+
+Fatih memutuskan langsung pada 2026-10-09 17:01 WIB. Semua butir di bawah **APPROVED**. Bukan usulan yang menunggu keberatan. Chain tetap testnet.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-81 | **APPROVED (Fatih langsung, 2026-10-09 17:01 WIB).** Pembatalan guard CI grep `affiliated\|endorsed by` (butir terakhir D-74) dikonfirmasi. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md; CONTEXT-INDEX |
+| D-83 | **APPROVED (sama).** Safe multisig = roadmap untuk mainnet nanti. Peran admin tidak berubah (D-54): tanpa EOA kedua, tanpa pindah ke Safe. | 08 §7.1; product-plan §4.10; CONTEXT-INDEX |
+| D-90 | **APPROVED (sama). Aturan freeze dihapus.** Tidak ada aturan freeze kontrak. Tidak ada aturan freeze UI. Tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. **Tenggat keras submission tetap Sab 2026-10-10 12:00 WIB.** Catatan lama di 08 §0, 08 §2, 08 §7.2, 09 §1.2, 04 §9.2, dan CONTEXT-INDEX ditandai historis atau SUPERSEDED/CANCELLED; tidak dihapus. Syarat "sebelum freeze UI 09:00" pada D-85 ikut tidak mengikat. | 08 §0, §2, §7.2; 09 §1.2; 04 §9.2; CONTEXT-INDEX |
+
+**Penugasan pemilik (rincian di 09 dan CONTEXT-INDEX):** video demo ditangani agen evergreen video editor yang sudah ada (tidak ada bot baru). Fatih sendiri yang menekan submit di HackQuest. Fatih sendiri yang membuat pitch deck.
+
+**Hosting (rincian di 04 §8 dan CONTEXT-INDEX; tanpa secret atau token):** project Vercel hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam), jadi `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota.
+
+**PR UI di `main`:** #47, #51, #53, #54 sudah merge (CI hijau) dan belum tampil di web.

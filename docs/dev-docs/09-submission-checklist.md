@@ -33,12 +33,13 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (
 
 ## 0. Ringkasan
 
-- **Satu-satunya tenggat keras: Sab 10 Okt 2026, 12:00 WIB** (submission ditutup, notes §2). Target internal **Sab 11:30** (design §7.3).
+- **Satu-satunya tenggat keras: Sab 10 Okt 2026, 12:00 WIB** (submission ditutup, notes §2). Target internal Sab 11:30 (design §7.3) adalah catatan historis dan tidak mengikat [D-90].
 - Submission lewat HackQuest ("official submission platform"); isian menurut notes §1: deskripsi proyek, problem & solution, repo GitHub, demo / aplikasi ter-deploy, tech stack, use case RWA, video demo **atau** materi presentasi, info tim. Nama field persis dan batas karakternya **tidak** ada di dokumen → [TBD T9-01].
 - **Batas durasi video tidak disebut** di dokumen kanonik → [TBD T9-02]. Rekomendasi: video submission = rekaman naskah ter-retime 2:30 (05 P5-06), maks ~3 menit [APPROVED P9-05].
 - Demo Day **Min 11 Okt 10:00–21:00 WIB** hanya untuk tim terpilih; judging berakhir 15:00 WIB; waktu pengumuman shortlist dan pemenang tidak dipublikasikan (notes §2).
 - Aturan inti: dibangun dari nol selama periode resmi; commit pertama ≥ Jum 09:00 WIB; atribusi pihak ketiga wajib (OQR §5; 04 §9.2).
 - **[D-64, 13:30 WIB]** Footnote "not affiliated" hanya di pitch deck / slide yang menyebut Ornn/ICE/OCPI/Robinhood (teks di §3.2). Penyebutan di footer situs dan README: historis [D-64].
+- **Penugasan pemilik [APPROVED Fatih langsung, 2026-10-09 17:01 WIB]:** video demo = agen evergreen video editor yang sudah ada (tidak ada bot baru; §4.6). Submit HackQuest = Fatih sendiri yang menekan submit. Pitch deck = Fatih sendiri yang membuatnya.
 
 ---
 
@@ -60,11 +61,11 @@ Jendela build = Jum 09:00 → Sab 12:00 = **27 jam** (notes §2). Boleh terus me
 
 ### 1.2 Jadwal internal (design §7.3, 04 §10, 05 §4.6) + buffer
 
-**[APPROVED D-59 / D-57, Jum 9 Okt ~11:05 WIB]** Baris Jumat di tabel ini (go/no-go 10:30, blok 10:30–20:00, dst.) digantikan rencana 4 lane di 08 §1 dengan **T0 = "go" Fatih = Jum 9 Okt 11:14 WIB**: go/no-go 11:14–11:59 (gagal → langsung Arbitrum Sepolia), G2 16:14, G3 / S0 selesai 19:14, S1 selesai Sab 01:14 + buffer G4 sampai 02:00. Baris Sabtu (freeze 06:00/09:00, submit 11:30, tenggat 12:00) tetap.
+**[APPROVED D-59 / D-57, Jum 9 Okt ~11:05 WIB]** Baris Jumat di tabel ini (go/no-go 10:30, blok 10:30–20:00, dst.) digantikan rencana 4 lane di 08 §1 dengan **T0 = "go" Fatih = Jum 9 Okt 11:14 WIB**: go/no-go 11:14–11:59 (gagal → langsung Arbitrum Sepolia), G2 16:14, G3 / S0 selesai 19:14, S1 selesai Sab 01:14 + buffer G4 sampai 02:00. Baris Sabtu untuk freeze 06:00, freeze UI 09:00, dan submit 11:30 adalah catatan historis [D-90] dan tidak mengikat. Tenggat 12:00 tetap.
 
-**Tim solo (Jum 9 Okt):** semua milestone di bawah dipegang Fatih. Tenggat yang dikunci: **Sab 06:00** freeze kontrak + video backup v1, **Sab 09:00** freeze UI, **Sab 11:30** submit internal, **Sab 12:00** tenggat keras. Rincian per jam, blok tidur, dan cut ladder: `08-team-tasks.md`.
+**Tim solo (Jum 9 Okt):** semua milestone di bawah dipegang Fatih. **Tenggat yang dikunci: Sab 12:00 WIB.** Jam Sab 06:00 (freeze kontrak + video backup v1), Sab 09:00 (freeze UI), dan Sab 11:30 (submit internal) tidak mengikat [D-90]. Rincian per jam, blok tidur, dan cut ladder: `08-team-tasks.md`. Yang menekan submit di HackQuest = Fatih sendiri.
 
-**[PENDING, menunggu konfirmasi Fatih; rincian 08 §7.2]** Usulan batas kode setelah freeze. Jam, tag `freeze-contracts` / `freeze-ui`, dan merge saat test hijau tetap seperti tabel di bawah dan 04 §9.2. Yang diajukan: setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya perbaikan bug yang memblokir jalur demo S0; setelah submit internal 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu.
+**[SUPERSEDED / CANCELLED D-90; sebelumnya PENDING, rincian 08 §7.2]** Usulan batas kode setelah freeze tidak berlaku. Tidak ada aturan freeze kontrak, tidak ada aturan freeze UI, dan tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Teks usulan dipertahankan di 08 §7.2 sebagai riwayat: setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya perbaikan bug yang memblokir jalur demo S0; setelah submit internal 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu. Jam itu tidak mengikat. Izin merge saat test hijau (04 §9.2) tidak dibatalkan oleh D-90.
 
 | Waktu (WIB) | Milestone | Pemilik | Sumber | Buffer / catatan |
 |---|---|---|---|---|
@@ -75,18 +76,18 @@ Jendela build = Jum 09:00 → Sab 12:00 = **27 jam** (notes §2). Boleh terus me
 | Jum 10:30–20:00 | Kontrak inti, frontend S1–S4, naskah + angka (C) | Fatih | design §7.3 | **Jum 20:00** = titik keputusan fallback order book ("list at price, take") kalau tertinggal (design §8) |
 | Jum 20:00–24:00 | Deploy + verify + seed (deployment **latihan**); README + diagram arsitektur | Fatih | design §7.3, 05 §4.6 | draft README v1 selesai di blok ini [APPROVED P9-01] |
 | Sab 00:00–06:00 | Bug fixing; polish UI; **rekam video backup** | Fatih | design §7.3, §8 | video backup paling lambat **Sab 06:00** (design §8, PK §11.1, 05 §0) |
-| **Sab 06:00** | **Freeze kontrak**; tag `freeze-contracts`; buat deployment **panggung** dari kode beku (fase 0–2 saja) | Fatih | design §7.3, 04 §9.2, 05 §4.6 | `git.commit` manifest `stage-1` = commit bertag |
+| **Sab 06:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze kontrak; tag `freeze-contracts` tidak dipakai; buat deployment panggung dari kode beku (fase 0–2 saja). Jam ini tidak mengikat | Fatih | design §7.3, 04 §9.2, 05 §4.6 | `git.commit` manifest `stage-1` = commit bertag (syarat tag historis, D-90) |
 | Sab 06:00–10:00 | Gladi demo ×3 (di deployment latihan atau anvil, **bukan** panggung) | Fatih | design §7.3, 05 §4.6 | |
 | Sab 08:00 | README final (alamat panggung dari `DEPLOYMENTS.md`) | Fatih | usulan | buffer 3,5 jam sebelum tenggat [APPROVED P9-01] |
-| **Sab 09:00** | **Freeze UI**; tag `freeze-ui` | Fatih | design §7.3, 04 §9.2 | build frontend final menunjuk manifest `stage-1` |
-| Sab 10:00 | Semua teks isian HackQuest final; video submission terunggah dan bisa diputar tanpa login | Fatih | usulan | [APPROVED P9-02] |
+| **Sab 09:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze UI; tag `freeze-ui` tidak dipakai. Jam ini tidak mengikat | Fatih | design §7.3, 04 §9.2 | build frontend final menunjuk manifest `stage-1` |
+| Sab 10:00 | Semua teks isian HackQuest final; video submission terunggah dan bisa diputar tanpa login | Fatih | usulan | [APPROVED P9-02]. Video: agen evergreen video editor yang sudah ada (§4.6) |
 | Sab 10:00–11:15 | Checklist pra-submit (§7): link, verifikasi, repo publik, tag | Fatih | usulan | |
-| **Sab 11:30** | **Submit** di HackQuest; tag `submission`; simpan tangkapan layar konfirmasi | Fatih | design §7.3, 04 §9.2 | 30 menit buffer sampai tenggat |
-| **Sab 12:00** | Tenggat keras | — | notes §2 | setelah ini deployment panggung tidak disentuh, kecuali push referensi (F-5) dan cek baca (05 §4.6) |
+| **Sab 11:30** | **[HISTORIS D-90]** Submit di HackQuest; tag `submission`; simpan tangkapan layar konfirmasi. Jam 11:30 tidak mengikat. Yang menekan submit = Fatih sendiri | Fatih | design §7.3, 04 §9.2 | 30 menit buffer sampai tenggat (catatan lama) |
+| **Sab 12:00** | **Tenggat keras** (tetap mengikat) | — | notes §2 | setelah ini deployment panggung tidak disentuh, kecuali push referensi (F-5) dan cek baca (05 §4.6) |
 | Sab sore (T−24 jam dari demo) | Checklist pra-demo T−24 | Fatih | 05 §4.7 | video backup di 2 perangkat |
 | Min 11 Okt, T−60 / T−10 menit | Checklist pra-demo T−60, T−10 | Fatih | 05 §4.7 | slot demo [TBD T9-04] |
 
-**Divergensi kecil:** 05 §4.6 butir 3 menjadwalkan rekaman video backup di blok Sab 06–10, sedangkan design §7.3/§8, PK §11.1 dan 05 §0 meminta paling lambat Sab 06:00. Rekomendasi: video **v1 wajib selesai Sab 06:00** (deployment latihan, kode pra-freeze), video **v2 opsional** Sab 06–10 setelah freeze kalau UI berubah terlihat [APPROVED P9-03] (§9 X9-1).
+**Divergensi kecil (historis):** 05 §4.6 butir 3 menjadwalkan rekaman video backup di blok Sab 06–10, sedangkan design §7.3/§8, PK §11.1 dan 05 §0 meminta paling lambat Sab 06:00. Rekomendasi lama: video **v1 wajib selesai Sab 06:00** (deployment latihan, kode pra-freeze), video **v2 opsional** Sab 06–10 setelah freeze kalau UI berubah terlihat [APPROVED P9-03] (§9 X9-1). Jam 06:00 dan batas freeze di kalimat ini tidak mengikat [D-90]. Video demo sekarang dipegang agen evergreen video editor yang sudah ada (§4.6).
 
 ---
 
@@ -104,7 +105,7 @@ Nama field persis, urutan, wajib/opsional, batas karakter, dan format unggahan *
 | 4 | Demo / deployed application | URL frontend = `https://paron.vercel.app` (D-10; Vercel project `paron`, root `web/`, commit `b18b3d4`; tanpa domain kustom); URL API = `https://paron-robinhood-production.up.railway.app/v1` (D-58; health 200, `synced:false` sampai kontrak di-deploy); chain + chain ID + link explorer, link `DEPLOYMENTS.md` | stack §4.5, 04 §7/§8, 06 §0.5; Scout ~13:08 WIB | B (URL web), C (API) | 🟦 (URL terisi ~13:08 WIB) |
 | 5 | Tech stack | Solidity 0.8.37 + Foundry 1.8.5 + OpenZeppelin 5.6.1; EAS (self-deploy 1.9.0 di RH / existing di Arbitrum Sepolia); Safe 1.4.1; Ponder 0.17.12 + Hono; Next.js 16.3.8 + wagmi 2.19.5 + viem 2.57.3 + RainbowKit 2.2.11 + Tailwind/shadcn; Node 24 agents; Robinhood Chain Testnet (46630), fallback Arbitrum Sepolia (421614) | stack §4, 04 §2 | A | 🟨 (konfirmasi versi akhir dari manifest `toolchain`) |
 | 6 | RWA use case | Kapasitas GPU sebagai aset dunia nyata: forward fisik yang bisa dikirim, berjaminan kolateral, dengan KYB partisipan. Dari daftar use case notes §1 yang paling dekat: "onchain infra for traditional assets", "identity, compliance & verification", "commodities" [APPROVED P9-04: kategori yang dipilih kalau form memakai dropdown] | notes §1, design §7.6, PK §10.2 | C | 🟨 |
-| 7 | Demo video **atau** presentation materials | Rekomendasi: **keduanya**: link video (§4) + deck (PDF) dengan footnote | notes §1, §4 dokumen ini | C (produksi video per arahan tim, lihat §4.6) | 🟦 |
+| 7 | Demo video **atau** presentation materials | Rekomendasi: **keduanya**: link video (§4) + deck (PDF) dengan footnote | notes §1, §4 dokumen ini | Video: agen evergreen video editor yang sudah ada (bukan bot baru, §4.6). Pitch deck: Fatih sendiri. Submit: Fatih sendiri | 🟦 |
 | 8 | Team information | Nama anggota, peran, kontak; maks 4 orang per tim; anggota harus dicantumkan akurat (notes §1 aturan 4) | notes §1, 07 D-08 | Fatih | 🟨 tim = Fatih solo [D-08 APPROVED] |
 
 **Teks tambahan yang disarankan di deskripsi atau README (bukan field yang disebut notes):**
@@ -278,7 +279,15 @@ Kalau listing molor, potong callout integritas dulu, lalu persingkat "Paron Prin
 
 ### 4.6 Produksi video
 
-Per arahan tugas ini, produksi video ditangani oleh peran "Video Taker". Dokumen ini **tidak** menghubungi peran tersebut; checklist §4.2–§4.5 diserahkan apa adanya lewat agen induk. Penanggung jawab isi (naskah, angka, disclaimer) tetap C.
+Per arahan tugas lama, produksi video sempat ditugaskan ke peran "Video Taker". Dokumen ini tidak menghubungi peran itu. **[APPROVED Fatih langsung, 2026-10-09 17:01 WIB]** Video demo ditangani oleh agen evergreen video editor yang sudah ada. Tidak ada bot baru. Checklist §4.2–§4.5 tetap. Naskah dan angka tetap di dokumen ini.
+
+**Penugasan pemilik (sama, 17:01 WIB):**
+
+| Kerja | Pemilik |
+|---|---|
+| Video demo | Agen evergreen video editor yang sudah ada. Tidak ada bot baru |
+| Submit di HackQuest | Fatih. Fatih sendiri yang menekan submit |
+| Pitch deck | Fatih. Fatih sendiri yang membuat pitch deck |
 
 ---
 
@@ -329,7 +338,9 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 
 ---
 
-## 7. Checklist final pra-submit (Sab 10:00–11:30)
+## 7. Checklist final pra-submit (jendela lama Sab 10:00–11:30)
+
+Jam 11:30 tidak mengikat [D-90]. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Yang menekan submit = Fatih sendiri. Verifikasi UI hanya setelah merge ke `main`; `main` terbaru belum live (04 hosting).
 
 **Link (semua dibuka dari jendela private/incognito, tanpa login)**
 - [ ] URL repo GitHub https://github.com/Fatihmaull/paron-robinhood terbuka dan publik [APPROVED P9-14: publik; notes hanya mewajibkan repo "required" dan bisa diperiksa juri].
@@ -342,7 +353,7 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 **Hari demo: reachability RPC (catatan ~14:15 WIB)**
 - [ ] Cek RPC publik `https://rpc.testnet.chain.robinhood.com` bisa dijangkau dari browser dan wifi yang dipakai demo (intermiten untuk sebagian koneksi, `ERR_SSL_UNRECOGNIZED_NAME_ALERT`; lihat 04 §4.2). Nama env cadangan final: `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` [D-89]. Kosong = hanya URL utama. Kegagalan RPC publik di UI = teks redup, bukan merah. Video backup (§4.5) tetap fallback.
 
-**Penyesuaian UI Designer (D-67..D-74, APPROVED 14:40 WIB; cek di URL Vercel produksi setelah freeze UI 09:00).** **[D-81]** Guard CI grep `affiliated|endorsed by` dibatalkan (awaiting Fatih's direct confirmation in group). Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah.
+**Penyesuaian UI Designer (D-67..D-74, APPROVED 14:40 WIB).** Cek di URL Vercel hanya setelah merge ke `main`. Jam freeze UI 09:00 tidak mengikat [SUPERSEDED D-90]. `main` terbaru belum live sampai Fatih menyelesaikan kuota build Vercel (04 hosting). **[D-81, APPROVED Fatih langsung 2026-10-09 17:01 WIB]** Guard CI grep `affiliated|endorsed by` dibatalkan. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah.
 - [ ] `/markets/1`: series page muat satu viewport di 1280 px, tanpa celah kosong; judul tidak menampilkan "ID" kosong; pill Verified tidak wrap di tengah teks; tidak ada link biru browser (D-67).
 - [ ] Detail redemption: jumlah state 36 px mono, baris aksi tunggal, "Default paid. $45.00 sent to 0x2222...2222." teks terbesar (D-68).
 - [ ] Header: "Connect wallet" sekunder; satu aksi ember per halaman (D-69).
@@ -350,17 +361,17 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 - [ ] Build produksi tidak menampilkan banner mock maupun pemilih snapshot (D-71).
 - [ ] Kontras teks ≤ 13 px ≥ 4.5:1; tidak ada teks ber-opacity (D-72).
 - [ ] Tab Provider: "Requests", "Series", "Bond", "Agent", aktif bergaris bawah ember (D-73).
-- [ ] `tokens.v2.css` terpasang; `<title>` per route; skip link (D-74). Guard CI grep `affiliated|endorsed by` tidak dicek: dibatalkan (D-81).
+- [ ] `tokens.v2.css` terpasang; `<title>` per route; skip link (D-74). Guard CI grep `affiliated|endorsed by` tidak dicek: dibatalkan (D-81, APPROVED 2026-10-09 17:01 WIB).
 
 **Kontrak dan deployment**
 - [ ] Semua kontrak inti di `stage-1.json` ber-`verified: true` (atau dicatat alasannya, mis. EAS self-deploy, 04 §6.4).
 - [ ] `DEPLOYMENTS.md` dibangkitkan ulang dari manifest terakhir dan sama dengan tabel README.
-- [ ] `git.commit` di `stage-1.json` = commit bertag `freeze-contracts` (04 §9.2).
+- [ ] `git.commit` di `stage-1.json` = commit bertag `freeze-contracts` (04 §9.2). **[SUPERSEDED / CANCELLED D-90]** Tag `freeze-contracts` tidak dipakai. Baris ini historis.
 - [ ] Peran sudah diserahkan ke Timelock/Safe (atau allowlist di fallback), sesuai `roles` manifest (04 §6.3).
 - [ ] Deployment panggung belum tercemar: tidak ada `CU-JKT-H100-2610`, H100 `THIN`, tidak ada redemption (05 §4.7).
 
 **Repo dan tag**
-- [ ] Tag `go-nogo`, `freeze-contracts`, `freeze-ui` ada; tag `submission` dibuat tepat saat submit (04 §9.2).
+- [ ] Tag `go-nogo` ada. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai **[SUPERSEDED / CANCELLED D-90]**. Tag `submission` disebut di rencana lama (04 §9.2); jam 11:30 tidak mengikat.
 - [ ] CI hijau di `main` untuk job MUST (`contracts`, `invariants`, `ts`) (04 §9.1).
 - [ ] Tidak ada `.env`, keystore, atau private key di riwayat git (04 §4.1).
 - [ ] **Author semua commit = Fatih** (`Fatih Maulana` / `fatihmaulanamail@gmail.com`); tidak ada commit ber-author identitas cloud agent (04 §9.2) [APPROVED ~11:05 WIB].

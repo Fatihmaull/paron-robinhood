@@ -567,6 +567,8 @@ Semua cek jalan di Robinhood Chain Testnet antara 09:00 dan 10:30 (design §11.3
 
 **Hosting [D-58, APPROVED ~11:12 WIB; ownership ~11:29 WIB; detail ~11:32 WIB; URL terisi ~13:08 WIB]:** Vercel tidak bisa menjalankan Ponder (proses panjang + Postgres). **Host (Scout, delegasi Fatih):** frontend di **Vercel** project `paron` (root directory = `web/`, layout §1; D-10); Ponder + API + Postgres di **Railway** project `paron` (service root = `indexer/`; service Postgres terpisah; Railway tidak tidur seperti free tier Render, aman untuk penjurian async Sab 12:00 → Min). **URL produksi (Scout ~13:08 WIB):** frontend `https://paron.vercel.app` (production, commit `b18b3d4`, build Ready); API `https://paron-robinhood-production.up.railway.app/v1` (health 200; kontrak `stage-1` sudah di-deploy ~13:20 WIB — indexer menunggu redeploy Scout dengan `DEPLOY_LABEL=stage-1` supaya `indexed_block` naik). **Env Vercel yang dipakai:** hanya `NEXT_PUBLIC_RPC_URL` dan `NEXT_PUBLIC_API_BASE_URL` — **jangan** set `NEXT_PUBLIC_DATA_SOURCE=mock` (build menolak saat `VERCEL=1`; `live` opsional). **`API_CORS_ORIGIN` (Scout ~13:20 WIB):** diset ke `https://paron.vercel.app` (menggantikan 'kosong dulu' PE ~13:09; menunggu konfirmasi redeploy). **Deploy kontrak ~13:20 WIB (PE):** label `stage-1`, `startBlock` = `131496617`; Railway env: `DEPLOY_LABEL=stage-1`, `INDEXER_RPC_URL` = RPC publik Robinhood sementara; Vercel/web baca alamat dari manifest (tanpa `NEXT_PUBLIC_ADDR_*`). **Ownership:** Hackathon Scout menyiapkan akun + project di komputer Scout dengan login GitHub Fatih (`Fatihmaull`); **Vercel dan Railway sudah login di komputer Scout (~11:32 WIB); tidak perlu kartu.** Key RPC Alchemy opsional lewat secret input, tidak di chat. Indexer menarik `DATABASE_URL` lewat referensi variable Railway `${{Postgres.DATABASE_URL}}` — **nilai mentah `DATABASE_URL` tidak dioper ke PE atau siapa pun**. Setelah kontrak di-deploy: PE mengirim ke Scout env Railway lainnya (RPC URL, chain id, alamat kontrak, start block, `DATABASE_SCHEMA` (per build `paron_<sha8>`, bukan `paron` tetap; lihat catatan ~14:02 WIB); daftar lengkap mengikuti README package indexer dari L3) dan Scout yang mengisi di Railway; PE mengisi env Vercel. Deploy/broadcast tetap dari mesin PE; L4 hanya menyiapkan script (catatan ~11:27 WIB). Blok 30 menit di 08 tetap ±18:44–19:14 (sebelum G3 = 19:14). Menjawab T4-02 (versi Postgres = yang disediakan Railway). Mode fallback onchain frontend (05 P5-23) S0-kritis.
 
+**Status Vercel 2026-10-09 17:01 WIB (Fatih, langsung; tanpa secret atau token):** project Vercel sekarang hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam), jadi `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota. PR UI #47, #51, #53, dan #54 sudah di `main` (CI hijau) dan belum tampil di web. Chain tetap Robinhood Chain Testnet.
+
 ---
 
 ## 9. CI dan konvensi git
@@ -587,7 +589,7 @@ Semua cek jalan di Robinhood Chain Testnet antara 09:00 dan 10:30 (design §11.3
 
 CI tidak pernah memegang key deployer dan tidak pernah broadcast ke testnet [P4-17]. Deploy selalu manual dengan keystore dari **mesin PE** (sebelumnya "laptop A"); cloud agent / lane L4 hanya menyiapkan `DeployAll`, seed, dan manifest, tidak menjalankan broadcast (§4.1 butir 6).
 
-**[D-81]** Guard CI grep `affiliated|endorsed by` (butir terakhir D-74) dibatalkan. Tidak ada job grep itu di CI. Status: PENDING (awaiting Fatih's direct confirmation in group). `web/lib/copy-guard.test.ts` tetap dan bukan guard ini.
+**[D-81, APPROVED Fatih langsung 2026-10-09 17:01 WIB]** Guard CI grep `affiliated|endorsed by` (butir terakhir D-74) dibatalkan. Tidak ada job grep itu di CI. `web/lib/copy-guard.test.ts` tetap dan bukan guard ini.
 
 **[D-89]** Tes web (`web/lib/rpc.test.ts`) dan indexer (`indexer/test/rpc-retry.spec.ts`) memeriksa jeda 400/800/1600 ms dan env cadangan yang kosong. CI tidak menulis URL RPC. Kegagalan RPC publik di UI = teks redup, bukan error merah.
 
@@ -598,10 +600,10 @@ CI tidak pernah memegang key deployer dan tidak pernah broadcast ke testnet [P4-
 - **Commit pertama ≥ Jum 9 Okt 09:00 WIB** (OQR §5). Dev docs pra-hackathon disalin ke `docs/dev/` dengan catatan "riset/desain sebelum hackathon; kode dibuat selama hackathon" (aturan 2: "clearly identify what was newly developed").
 - **Tag:**
   - `go-nogo` (10:30, chain terpilih);
-  - `freeze-contracts` (Sab 06:00, design §7.3);
-  - `freeze-ui` (Sab 09:00);
-  - `submission` (Sab 11:30).
-  - Deployment `stage-1` dibuat dari commit bertag `freeze-contracts` (05 §4.6), dan field `git.commit` manifest harus sama.
+  - `freeze-contracts` (Sab 06:00, design §7.3) **[SUPERSEDED / CANCELLED D-90]**. Tag ini tidak dipakai.
+  - `freeze-ui` (Sab 09:00) **[SUPERSEDED / CANCELLED D-90]**. Tag ini tidak dipakai.
+  - `submission` (rencana lama Sab 11:30). Jam 11:30 tidak mengikat [D-90]. Nama tag ini bukan tag freeze.
+  - Deployment `stage-1` dibuat dari commit bertag `freeze-contracts` (05 §4.6), dan field `git.commit` manifest harus sama. **[SUPERSEDED / CANCELLED D-90]** Syarat tag `freeze-contracts` tidak dipakai. Baris ini historis.
 - **Atribusi** pihak ketiga (OZ, EAS self-deploy, Safe) di README (aturan 10, design §7.5).
 - **Atribusi pembangunan [APPROVED Jum 9 Okt ~11:05 WIB; teks kerja ~11:12 WIB, Fatih: "bilang saja ini dibantu oleh grokbot"]:** README memuat baris "Built by Fatih Maulana with help from Grok Bot" (versi Indonesia: "Dibangun oleh Fatih Maulana dengan bantuan Grok Bot"). Detail di 09 (§3.2, R5).
 - **Author commit [APPROVED Jum 9 Okt ~11:05 WIB, Fatih; nilai diisi ~11:12 WIB]:** semua commit, termasuk dari agent cloud di lane L1–L4 (08 §1), di-author sebagai **Fatih**, bukan agent: `user.name` = `Fatih Maulana`, `user.email` = `fatihmaulanamail@gmail.com`. Remote: https://github.com/Fatihmaull/paron-robinhood. Dicek sebelum push pertama tiap lane dan di checklist pra-submit 09 §7 (`git log` tidak memuat author lain).
@@ -700,7 +702,7 @@ Semua P4-01..P4-19 disetujui. P4-12 dan P4-13 sudah diterapkan di 01 (§6.3/§6.
 | P4-15 | Executor Timelock = proposer; admin opsional Timelock = alamat nol. **Di-override untuk hackathon oleh D-54 (APPROVED ~11:05 WIB):** executor = `address(0)`, proposer = Safe + `W-ADMIN` | §6.2 DP-5 |
 | P4-16 | Verifikasi EAS gagal = lulus sebagian, dengan atribusi + link source di README | §6.4 |
 | P4-17 | Outline CI §9.1; CI tidak pernah memegang key atau broadcast | §9.1 |
-| P4-18 | Trunk-based + Conventional Commits + tag `go-nogo`/`freeze-*`/`submission` | §9.2 |
+| P4-18 | Trunk-based + Conventional Commits + tag `go-nogo`/`freeze-*`/`submission`. Tag `freeze-*` **[SUPERSEDED / CANCELLED D-90]** dan tidak dipakai | §9.2 |
 | P4-19 | Fallback cek 3: baca EAS langsung kalau `EASGate` minimal belum siap | §10 |
 
 ## 13. Register TBD baru (T4-xx)

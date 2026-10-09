@@ -1,7 +1,7 @@
 # Paron: indeks dokumen konteks (master: Hackathon Scout; sekarang PO/project handler)
 
 Sumber kebenaran: repo `docs/knowledge-base/` (mirror dari folder kerja Scout di box; path box lama tidak dipakai).
-Terakhir diperbarui: Jumat 9 Okt 2026, ~15:34 WIB
+Terakhir diperbarui: Jumat 9 Okt 2026, 17:01 WIB
 
 **Urutan mulai:** `SESSION_HANDOFF_HACKATHON.md` (state terkini) → file ini → `HANDOFF-BRIEF.md` (urutan baca, tugas pertama, prioritas, aturan), lalu `paron-product-plan.md` (gambaran produk penuh: semua modul, aplikasi, arsitektur akhir, roadmap P0–P5, batas lingkup hackathon).
 
@@ -33,7 +33,7 @@ Terakhir diperbarui: Jumat 9 Okt 2026, ~15:34 WIB
 | 5 | dev-docs/05-demo-seed.md | Skenario + spec script seed demo (500 CU, buy 20, ask $3.20, default 10 CU) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
 | 6 | dev-docs/06-screens-wireframes.md | Wireframe teks + copy per screen | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
 | 7 | dev-docs/07-decisions-log.md | Open questions §9 + treasury/fee + D-41..D-44 → keputusan (rekomendasi disetujui Fatih Jum 9 Okt ~09:40 WIB) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 8 | dev-docs/08-team-tasks.md | Timeline solo per jam (T0 Jum 11:14; freeze kontrak Sab 06:00; freeze UI 09:00; submit internal 11:30; tenggat keras 12:00 WIB), cut ladder, daftar never-cut, slot ukur PENDING teknis | SELESAI (4 lane agent, D-59) |
+| 8 | dev-docs/08-team-tasks.md | Timeline solo per jam (T0 Jum 11:14; jam 06:00 / 09:00 / 11:30 Sab historis [D-90]; tenggat keras 12:00 WIB), cut ladder, daftar never-cut, slot ukur PENDING teknis | SELESAI (4 lane agent, D-59) |
 | 9 | dev-docs/09-submission-checklist.md | Field HackQuest, README + disclaimer, video demo | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
 
 ## Keputusan terakhir Fatih (Jum 9 Okt ~10:34 WIB, APPROVED)
@@ -83,29 +83,38 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 - (2026-10-09 13:35 WIB) Fatih approved UtilityBar (Docs · API · GitHub, testnet note, Build · Chain · Block; no disclaimer text) as footer replacement in the D-64 PR. Designer items 5-13 still NOT approved.
 - (2026-10-09 ~14:01 WIB) Fatih approved D-66 (syncing state copy: neutral "Indexer is syncing. Series will appear shortly.", 3 skeleton rows, hide "0 series." while syncing, red only for real /v1 errors). Indexer healthy since 13:59 (PR #30, schema paron_<sha8>), 3 seed series.
 - (2026-10-09 ~14:40 WIB) Fatih: approve ALL pending designer items (spec-change-requests #9-#13, LR-5, LR-6, LR-8) per recommendations; sync all docs; archive everything; push archive + knowledge base to GitHub under docs/.
-- (2026-10-09 ~14:50 WIB) D-67..D-74 APPROVED (Fatih 14:40): #9+LR-5=D-67, #10=D-68, #11=D-69, #12=D-70, #13=D-71, LR-6 contrast=D-72, LR-8 Provider tabs=D-73, also-adopt (tokens.v2.css, route titles, skip link)=D-74. Butir grep CI pada D-74 dibatalkan di D-81 (awaiting Fatih's direct confirmation in group). PE priority if short on time: D-70,71,72,69,73,68,67. Docs pass 1 merged to repo docs/ (PR #37).
+- (2026-10-09 ~14:50 WIB) D-67..D-74 APPROVED (Fatih 14:40): #9+LR-5=D-67, #10=D-68, #11=D-69, #12=D-70, #13=D-71, LR-6 contrast=D-72, LR-8 Provider tabs=D-73, also-adopt (tokens.v2.css, route titles, skip link)=D-74. Butir grep CI pada D-74 dibatalkan di D-81 (pada jam ini masih menunggu konfirmasi langsung; APPROVED 17:01 WIB, bagian di bawah). PE priority if short on time: D-70,71,72,69,73,68,67. Docs pass 1 merged to repo docs/ (PR #37).
 
 ## Keputusan Fatih Jum 9 Okt 2026 ~15:34 WIB [APPROVED, disampaikan lewat handler; "lanjutkan dengan rekomendasi"]
 - Satu PR docs (`docs/audit-2026-10-09`): draf audit Scout + temuan Spec Writer; boleh di-merge kalau tidak ada konflik dan tidak menyentuh kode.
 - Nama pihak ketiga (Ornn, ICE, Robinhood) dikecualikan eksplisit dari aturan "nama proyek lama" untuk dokumen dan footnote slide.
 - D-75..D-80 APPROVED (P1–P6, Fatih), 07 §16 dan `design/approved-ui-changes.md`: D-75 banner syncing hanya jika `synced:false` atau lag >20 blok, warna info, kalimat live di D-84; D-76 skeleton pulse opacity, "0 series." tetap tersembunyi saat loading; D-77 tab Leverage di `/markets/[id]` berlabel "Coming soon", tanpa aksi; D-78 tiket Buy hanya copy produk; D-79 uang `$3,240.00` (pemisah ribuan, 2 desimal) dan max cost 2 desimal; D-80 beranda dipadatkan (mobile 390 px, connect wallet satu baris).
-- D-81: guard CI grep `affiliated|endorsed by` (butir terakhir D-74) DIBATALKAN. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Status: PENDING (awaiting Fatih's direct confirmation in group).
+- D-81: guard CI grep `affiliated|endorsed by` (butir terakhir D-74) DIBATALKAN. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Pada ~15:34 WIB statusnya masih menunggu konfirmasi langsung. **APPROVED** Fatih langsung 2026-10-09 17:01 WIB (bagian di bawah).
 - D-82 APPROVED: nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (`CU-JKT-H100-2610` di panggung) tetap historis; yang digantikan hanya penamaan live. `series_id`, window, dan input skrip seed/forge di 03, 05, 06, 09 tidak ditulis ulang.
 - D-64 menggantikan footer "not affiliated" di UI/README (hanya pitch deck/slide); teks lama di UI/README ditandai historis atau `[SUPERSEDED D-64]`. Footnote slide tetap.
 
 ## Keputusan Fatih 2026-10-09 16:39 WIB [APPROVED, langsung]
 - D-84..D-88 APPROVED (07 §18, `design/approved-ui-changes.md`).
 - D-84 banner syncing, warna info, hanya jika `synced:false` atau lag > 20 blok. Kalimat persis: "Indexer is catching up to the latest blocks; data may lag briefly."
-- D-85 tab series mengikuti D-67 (Bond, Terms, Redemptions, Reputation). Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap dan sisa itu dicatat di dokumen. Pada `main` `93f8e60` tab series masih yang lama.
+- D-85 tab series mengikuti D-67 (Bond, Terms, Redemptions, Reputation). Kalau belum selesai sebelum freeze UI Sab 2026-10-10 09:00 WIB, tab lama (Overview, Buy, Trade, Leverage) tetap dan sisa itu dicatat di dokumen. Pada `main` `93f8e60` tab series masih yang lama. Syarat jam 09:00 itu [SUPERSEDED D-90]. PR #51 kemudian membawa tab Bond, Terms, Redemptions, Reputation ke `main` (belum live di web).
 - D-86 pesan tidak ketemu "Request not found." di `/redemptions/1` dan `/disputes/1`.
 - D-87 pita data demo sintetis tetap, teks "Reference price (demo data)".
 - D-88 pratinjau PR #47 (beranda) belum ditinjau. Designer memeriksa produksi setelah rebase dan merge.
 - D-89 APPROVED (handler, 07 §19): ulang RPC jeda 400/800/1600 ms; gagal RPC publik = teks redup, bukan error merah; nama `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` final (kosong = hanya URL utama). Nilai URL tidak ditulis di dokumen.
 
-## Usulan PENDING (belum konfirmasi Fatih)
-- D-81 tetap PENDING (lihat bagian ~15:34 WIB).
-- D-83: Safe multisig masuk roadmap, rencana kalau Paron live di mainnet. Sampai freeze kontrak, peran admin tetap seperti sekarang (D-54): tanpa EOA kedua, tanpa pindah ke Safe. Tercatat di 07 §17 dan 08 §7.1. Bentuk Safe pada produk penuh tetap di product-plan §4.10.
-- Aturan setelah freeze (08 §7.2, disebut di 09 §1.2): setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya bug blocker jalur demo S0; setelah 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu. Jam freeze, tag `freeze-contracts` / `freeze-ui`, dan merge saat test hijau sudah ada di baris Deadline di bawah, 08 §0, dan izin merge ~11:27 WIB. Status tetap PENDING.
+## Keputusan Fatih 2026-10-09 17:01 WIB [APPROVED, langsung]
+- D-81 APPROVED. Guard CI grep `affiliated|endorsed by` (butir terakhir D-74) tetap DIBATALKAN. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Konfirmasi langsung Fatih menutup status menunggu di bagian ~15:34 WIB. Tercatat di 07 §20, 04 §9, 06 §0.6, 09, design.md, guidelines.md, approved-ui-changes.md, docs/README.md.
+- D-83 APPROVED. Safe multisig = roadmap kalau Paron live di mainnet nanti. Peran admin tidak berubah (D-54): tanpa EOA kedua, tanpa pindah ke Safe. 07 §17, 08 §7.1, product-plan §4.10.
+- D-90 APPROVED (nomor bebas berikutnya setelah D-89). Aturan freeze dihapus: tidak ada freeze kontrak, tidak ada freeze UI, tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. Teks lama di 08 §0, 08 §7.2, 09 §1.2, 04 §9.2, dan bagian historis di bawah ditandai SUPERSEDED/CANCELLED atau historis; tidak dihapus. **Tenggat keras submission tetap Sab 2026-10-10 12:00 WIB.**
+- Penugasan pemilik (09): video demo = agen evergreen video editor yang sudah ada (tidak ada bot baru); submit HackQuest = Fatih sendiri yang menekan submit; pitch deck = Fatih sendiri yang membuatnya.
+- Hosting Vercel (04 bagian hosting, tanpa secret atau token): project hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam). `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota.
+- PR UI #47, #51, #53, #54 sudah merge ke `main` (CI hijau) dan belum tampil di web. Ujung `main` saat catatan ini: `0366ec6`.
+
+## Usulan yang ditutup 2026-10-09 17:01 WIB (riwayat, jangan dipakai sebagai status)
+Sebelum 17:01 WIB bagian ini mencatat tiga butir sebagai PENDING. Ketiganya ditutup oleh keputusan langsung Fatih pada jam itu. Teks lama dipertahankan di bawah.
+- D-81 sempat PENDING (lihat bagian ~15:34 WIB). Status sekarang: APPROVED, guard tetap dibatalkan.
+- D-83 sempat PENDING: Safe multisig masuk roadmap, rencana kalau Paron live di mainnet. Kalimat "sampai freeze kontrak, peran admin tetap" [SUPERSEDED D-90]. Status sekarang: APPROVED; admin tidak berubah (D-54), tanpa EOA kedua, tanpa pindah ke Safe. Tercatat di 07 §17 dan 08 §7.1. Bentuk Safe pada produk penuh tetap di product-plan §4.10.
+- Aturan setelah freeze (08 §7.2, disebut di 09 §1.2) sempat PENDING: setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya bug blocker jalur demo S0; setelah 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu. Tag `freeze-contracts` / `freeze-ui` disebut di 08 §0 dan 04 §9.2. **[SUPERSEDED / CANCELLED D-90]** Aturan dan tag itu tidak dipakai. Izin merge saat test hijau (~11:27 WIB) tidak dibatalkan.
 
 ## Hosting/infra (catatan kronologis, Jum 9 Okt 2026; tanpa nilai env)
 - ~13:08 WIB: Vercel project `paron` (root `web`) https://paron.vercel.app; Railway project `paron`, service `paron-robinhood` (root `indexer`, port 42069) https://paron-robinhood-production.up.railway.app.
@@ -113,5 +122,6 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 - ~14:02 WIB: tiap build Railway memakai schema `paron_<sha8>` (PR #30); 503 INDEXER_SYNCING ~1 menit setelah deploy itu normal.
 - ~14:15 WIB: risiko RPC publik intermiten di browser; nama cadangan saat itu masih PENDING. **[D-89]** nama `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` sekarang final.
 - 15:15 dan 15:31 WIB (cek live): /v1/health synced:true chain 46630; /v1/series = 3 seed; RPC cadangan belum terpasang, menunggu RPC kedua dari Fatih.
+- 17:01 WIB (Fatih, langsung; tanpa secret atau token): Vercel hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam). `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota. PR UI #47, #51, #53, #54 sudah di `main` (CI hijau) dan belum tampil di web.
 - Env (nama saja): DATABASE_URL, DATABASE_SCHEMA, CHAIN, PORT, DEPLOY_LABEL, INDEXER_RPC_URL, INDEXER_RPC_URL_BACKUP (belum), API_CORS_ORIGIN, NEXT_PUBLIC_RPC_URL, NEXT_PUBLIC_RPC_URL_BACKUP (belum), NEXT_PUBLIC_API_BASE_URL.
-- Deadline WIB: freeze kontrak Sab 10 Okt 06:00; freeze UI 09:00; submit internal 11:30; tenggat keras 12:00.
+- Deadline WIB: jam freeze kontrak 06:00, freeze UI 09:00, dan submit internal 11:30 pada Sab 10 Okt adalah catatan historis [SUPERSEDED D-90] dan tidak mengikat. Tenggat keras tetap Sab 10 Okt 12:00.

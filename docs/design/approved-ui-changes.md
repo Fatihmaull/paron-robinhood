@@ -35,7 +35,7 @@ Map: spec-change-requests.md #9-#13 and live-review LR-5, LR-6, LR-8.
 ## Also adopt (low risk, from the audit)
 - Import `tokens.v2.css` instead of `tokens.css` in `globals.css` (legacy aliases preserved). Markets row height 32px with status pill inline.
 - Per-route `<title>` and a skip link (`<a class="skip" href="#main">`).
-- CI grep guard `affiliated|endorsed by`: cancelled (D-81). Status: awaiting Fatih's direct confirmation in group. There is no such grep in CI. `web/lib/copy-guard.test.ts` is unchanged and is not that grep.
+- CI grep guard `affiliated|endorsed by`: cancelled (D-81). Status: APPROVED (Fatih, direct, 2026-10-09 17:01 WIB). There is no such grep in CI. `web/lib/copy-guard.test.ts` is unchanged and is not that grep.
 
 ## Verification (Designer will re-check on live after deploy)
 Screenshots at 1280 and 390 for `/`, `/markets`, `/markets/1`, `/portfolio`, `/provider`, redemption detail; no horizontal scroll at 390; no blue links; contrast >= 4.5:1.
@@ -43,7 +43,7 @@ Screenshots at 1280 and 390 for `/`, `/markets`, `/markets/1`, `/portfolio`, `/p
 ## Decision map (07 §15, APPROVED by Fatih 9 Oct 2026 14:40 WIB)
 #9 + LR-5 = D-67, #10 = D-68, #11 = D-69, #12 = D-70, #13 = D-71, LR-6 (contrast) = D-72, LR-8 (Provider tabs) = D-73, "Also adopt" (tokens.v2.css, per-route title, skip link) = D-74. The CI grep item formerly listed under D-74 is cancelled by D-81.
 If time is short, implement in this order: D-70, D-71, D-72, D-69, D-73, D-68, D-67.
-Status: D-67..D-74 APPROVED except the grep item (D-81). Designer verification on live pending.
+Status: D-67..D-74 APPROVED. The grep item stays cancelled, and that cancellation is APPROVED (D-81, Fatih direct, 2026-10-09 17:01 WIB). Designer verification on live waits until the site on `main` is up (04 hosting).
 
 ## P1–P6 and demo series name (07 §16, Fatih via handler, 9 Oct 2026 ~15:34 WIB)
 
@@ -55,7 +55,7 @@ Status: D-67..D-74 APPROVED except the grep item (D-81). Designer verification o
 | D-78 | P4 Buy ticket: remove implementation copy. Product copy only. | APPROVED |
 | D-79 | P5 Numbers: money as `$3,240.00` (thousands separator, 2 decimals). Max cost uses 2 decimals. | APPROVED |
 | D-80 | P6 Home: fill the page, less empty space, especially at 390 px. Connect wallet stays on one line. | APPROVED |
-| D-81 | CI grep `affiliated` / `endorsed by` (last item of D-74) is cancelled. No such grep in CI. `copy-guard.test.ts` is unchanged. | PENDING (awaiting Fatih's direct confirmation in group) |
+| D-81 | CI grep `affiliated` / `endorsed by` (last item of D-74) is cancelled. No such grep in CI. `copy-guard.test.ts` is unchanged. | APPROVED (Fatih, direct, 2026-10-09 17:01 WIB) |
 | D-82 | Live demo series name is `CU-JKT-H100-2611`. Contract seed series 1 is unchanged. D-19/D-25 stay historical records; only the live name is superseded. | APPROVED |
 
 ## D-84..D-88 (07 §18, APPROVED by Fatih directly 2026-10-09 16:39 WIB)
@@ -63,10 +63,12 @@ Status: D-67..D-74 APPROVED except the grep item (D-81). Designer verification o
 | ID | Decision | Status |
 |---|---|---|
 | D-84 | Syncing banner, info color. Exact sentence: "Indexer is catching up to the latest blocks; data may lag briefly." Shows only when `synced:false` or lag is over 20 blocks. UI copy is English. | APPROVED |
-| D-85 | Series tabs follow D-67: Bond, Terms, Redemptions, Reputation. If that is not done before the UI freeze Sat 2026-10-10 09:00 WIB, the old tabs (Overview, Buy, Trade, Leverage) stay and the leftover is noted in the docs. On `main` `93f8e60` those old tabs are still the ones on the series page. | APPROVED |
+| D-85 | Series tabs follow D-67: Bond, Terms, Redemptions, Reputation. If that is not done before the UI freeze Sat 2026-10-10 09:00 WIB, the old tabs (Overview, Buy, Trade, Leverage) stay and the leftover is noted in the docs. On `main` `93f8e60` those old tabs are still the ones on the series page. That 09:00 condition is superseded (D-90). | APPROVED |
 | D-86 | Not-found message, exact copy: "Request not found." on `/redemptions/1` and `/disputes/1`. | APPROVED |
 | D-87 | The synthetic demo data ribbon stays. Ribbon text: "Reference price (demo data)". | APPROVED |
 | D-88 | PR #47 (homepage) preview was not reviewed. Designer checks production after rebase and merge. | APPROVED |
+
+**Status 2026-10-09 17:01 WIB:** UI PRs #47, #51, #53, and #54 are merged to `main` (CI green). They are not live on the web yet. UI checks happen only after merge to `main`, and the latest `main` stays offline until Fatih resolves the Vercel build quota (04 hosting, CONTEXT-INDEX). The 09:00 UI freeze named in D-85 is superseded (D-90).
 
 ## RPC failure tone (07 §19, D-89, APPROVED by handler)
 
