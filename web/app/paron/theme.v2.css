@@ -17,35 +17,35 @@
   --font-mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
 
   /* Surfaces */
-  --color-bg-canvas: #0A0C0F;
-  --color-bg-surface: #101317;
-  --color-bg-raised: #161A21;
-  --color-bg-sunken: #0D1013;
-  --color-bg-hover: #1B2029;
-  --color-bg-selected: #222833;
+  --color-bg-canvas: #000;
+  --color-bg-surface: #000;
+  --color-bg-raised: #000;
+  --color-bg-sunken: #000;
+  --color-bg-hover: #141414;
+  --color-bg-selected: #141414;
 
   /* Text */
-  --color-text-primary: #E6E9EE;
-  --color-text-secondary: #A3ABB8;
-  --color-text-tertiary: #838C9B;
-  --color-text-disabled: #6B7380;
-  --color-text-inverse: #0A0C0F;
-  --color-text-link: #6AA8F5;
+  --color-text-primary: #f3f3f3;
+  --color-text-secondary: #a6a6a6;
+  --color-text-tertiary: #8c8c8c;
+  --color-text-disabled: #8c8c8c;
+  --color-text-inverse: #000;
+  --color-text-link: #f1d3a6;
 
   /* Borders */
-  --color-border-subtle: #1F252E;
-  --color-border-default: #2A313C;
-  --color-border-strong: #3A4250;
-  --color-border-input: #646E7E;
-  --color-focus-ring: #F07A2A;
+  --color-border-subtle: rgba(255, 255, 255, 0.09);
+  --color-border-default: rgba(255, 255, 255, 0.16);
+  --color-border-strong: rgba(255, 255, 255, 0.16);
+  --color-border-input: rgba(255, 255, 255, 0.16);
+  --color-focus-ring: #d9a066;
 
   /* Brand */
-  --color-accent: #F07A2A;
-  --color-accent-hover: #FF8F45;
-  --color-accent-press: #D2621A;
-  --color-accent-text: #F28A45;
-  --color-accent-ink: #1A0D04;
-  --color-accent-subtle: rgba(240, 122, 42, 0.12);
+  --color-accent: #d9a066;
+  --color-accent-hover: #bc854d;
+  --color-accent-press: #5a3515;
+  --color-accent-text: #f1d3a6;
+  --color-accent-ink: #000;
+  --color-accent-subtle: rgba(217, 160, 102, 0.16);
 
   /* Market + state */
   --color-bid: #3CC68A;
@@ -69,7 +69,7 @@
   --color-neutral-subtle: #1B2029;
 
   /* v2 additions */
-  --color-chart-line: #F07A2A;
+  --color-chart-line: #d9a066;
   --color-chart-grid: #1F252E;
   --text-book: 0.75rem; --text-book--line-height: 1rem;
   --animate-skeleton: skeleton 1.2s ease-in-out infinite;
@@ -99,9 +99,9 @@
   --radius-lg: 10px;
 
   /* Elevation */
-  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.45);
-  --shadow-3: 0 16px 48px rgba(0, 0, 0, 0.55);
+  --shadow-1: none;
+  --shadow-2: none;
+  --shadow-3: none;
 
   /* Motion */
   --ease-standard: cubic-bezier(0.2, 0, 0, 1);
@@ -110,7 +110,7 @@
   /* Print flash for new tape rows (06 §4.5: highlight 2 s) */
   --animate-print-flash: print-flash 2s var(--ease-standard);
   @keyframes print-flash {
-    0% { background-color: rgba(240, 122, 42, 0.18); }
+    0% { background-color: rgba(217, 160, 102, 0.18); }
     100% { background-color: transparent; }
   }
 }

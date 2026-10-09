@@ -46,33 +46,33 @@
   --p-violet-900:#221C3A;
 
   /* ---------- 2. Semantic: surfaces, text, borders ---------- */
-  --color-bg-canvas:   var(--p-graphite-950); /* page */
-  --color-bg-surface:  var(--p-graphite-900); /* panels, cards, tables */
-  --color-bg-raised:   var(--p-graphite-850); /* modals, popovers, sticky header */
-  --color-bg-sunken:   #0D1013;               /* inputs, code, strip */
-  --color-bg-hover:    var(--p-graphite-800);
-  --color-bg-selected: var(--p-graphite-750);
+  --color-bg-canvas:   #000; /* page */
+  --color-bg-surface:  #000; /* panels, cards, tables */
+  --color-bg-raised:   #000; /* modals, popovers, sticky header */
+  --color-bg-sunken:   #000; /* inputs, code, strip */
+  --color-bg-hover:    #141414;
+  --color-bg-selected: #141414;
 
-  --color-text-primary:   var(--p-steel-100);
-  --color-text-secondary: var(--p-steel-300);
-  --color-text-tertiary:  var(--p-steel-400); /* captions, column headers */
-  --color-text-disabled:  #6B7380;
-  --color-text-inverse:   var(--p-graphite-950);
-  --color-text-link:      var(--p-blue-400);
+  --color-text-primary:   #f3f3f3;
+  --color-text-secondary: #a6a6a6;
+  --color-text-tertiary:  #8c8c8c; /* captions, column headers */
+  --color-text-disabled:  #8c8c8c;
+  --color-text-inverse:   #000;
+  --color-text-link:      #f1d3a6;
 
-  --color-border-subtle:  #1F252E; /* row dividers */
-  --color-border-default: var(--p-graphite-700); /* panel edges */
-  --color-border-strong:  var(--p-graphite-600);
-  --color-border-input:   var(--p-graphite-500); /* >= 3:1 vs surface */
-  --color-focus-ring:     var(--p-ember-500);
+  --color-border-subtle:  rgba(255, 255, 255, 0.09); /* row dividers */
+  --color-border-default: rgba(255, 255, 255, 0.16); /* panel edges */
+  --color-border-strong:  rgba(255, 255, 255, 0.16);
+  --color-border-input:   rgba(255, 255, 255, 0.16);
+  --color-focus-ring:     #d9a066;
 
   /* ---------- 3. Semantic: brand + state ---------- */
-  --color-accent:        var(--p-ember-500);
-  --color-accent-hover:  var(--p-ember-400);
-  --color-accent-press:  var(--p-ember-600);
-  --color-accent-text:   var(--p-ember-450);
-  --color-accent-ink:    var(--p-ember-ink);
-  --color-accent-subtle: rgba(240, 122, 42, 0.12);
+  --color-accent:        #d9a066;
+  --color-accent-hover:  #bc854d;
+  --color-accent-press:  #5a3515;
+  --color-accent-text:   #f1d3a6;
+  --color-accent-ink:    #000;
+  --color-accent-subtle: rgba(217, 160, 102, 0.16);
 
   --color-bid:        var(--p-green-400);
   --color-bid-subtle: rgba(60, 198, 138, 0.10);  /* depth bar */
@@ -165,9 +165,9 @@
 
   /* ---------- 6. Elevation (dark UIs use borders + slight lift, not big shadows) ---------- */
   --shadow-0: none;
-  --shadow-1: 0 1px 0 rgba(255, 255, 255, 0.03) inset, 0 1px 2px rgba(0, 0, 0, 0.4);
-  --shadow-2: 0 8px 24px rgba(0, 0, 0, 0.45);   /* popovers, drawers */
-  --shadow-3: 0 16px 48px rgba(0, 0, 0, 0.55);  /* modals */
+  --shadow-1: none;
+  --shadow-2: none;
+  --shadow-3: none;
   --shadow-focus: 0 0 0 2px var(--color-bg-canvas), 0 0 0 4px var(--color-focus-ring);
 
   /* ---------- 7. Motion ---------- */
@@ -262,7 +262,7 @@
   --input-bg: var(--color-bg-sunken);
   --input-fg: var(--color-text-primary);
   --input-border: var(--color-border-input);
-  --input-border-hover: var(--p-steel-400);
+  --input-border-hover: #a6a6a6;
   --input-border-focus: var(--color-focus-ring);
   --input-border-invalid: var(--color-danger);
   --input-placeholder: var(--color-text-tertiary);
@@ -278,7 +278,7 @@
   --card-shadow: var(--shadow-1);
 
   /* Shell */
-  --header-bg: rgba(10, 12, 15, 0.92);
+  --header-bg: #000;
   --strip-bg: var(--color-bg-sunken);
   --footer-bg: var(--color-bg-canvas);
   --footer-fg: var(--color-text-tertiary);
@@ -305,8 +305,8 @@
   --utilbar-fg: var(--color-text-tertiary);
 
   /* Skeleton loading */
-  --skeleton-bg: var(--p-graphite-800);
-  --skeleton-shine: var(--p-graphite-750);
+  --skeleton-bg: #141414;
+  --skeleton-shine: #1a1a1a;
   --skeleton-duration: 1200ms;
 
   /* Book / tape row text */

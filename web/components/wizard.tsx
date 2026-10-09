@@ -60,7 +60,7 @@ const PRESET: Draft = {
   bond: "4.50",
   windowStart: "1790812800",
   windowEnd: "1793491200",
-  symbol: "CU-JKT-H100-2611",
+  symbol: "CU-JKT-H100-2610",
 };
 
 export function ListingWizard() {
