@@ -1,6 +1,6 @@
 # Paron: checklist submission ETHJKT 2026 (dev doc 09)
 
-> **[D-82, APPROVED Fatih Jum 9 Okt 2026 ~15:34 WIB, via handler]:** nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (series `CU-JKT-H100-2610` yang di-forge, window, `series_id`, field `seed.series`) tetap historis; yang digantikan hanya penamaan live. String `2610` yang mengikat window atau data seed tidak ditulis ulang di dokumen ini.
+> **[D-82, diperjelas oleh D-92, APPROVED Fatih 2026-10-09 18:10 WIB, "rekomendasimu saja", dicatat Scout]:** seed = `CU-JKT-H100-2611` (series 1). Series panggung/demo/rekaman = `CU-JKT-H100-2610` (series 4). Catatan D-19/D-25 untuk series yang di-forge, window, `series_id`, dan field `seed.series` tetap berlaku, bukan historis. Rekaman memakai putaran baru di series 4. String `2610` yang mengikat window atau data seed tidak ditulis ulang di dokumen ini.
 
 
 Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (Jum 9 Okt 2026 ~09:40 WIB); disinkronkan Jum 9 Okt ~10:30 WIB untuk tim solo (D-08) dan jadwal 08. Cadangan: `.bak-2026-10-09-pre-approval/`. Isinya timeline, daftar isian, outline README, checklist video, pemetaan kriteria juri, checklist aturan, dan daftar item terbuka. Tidak ada kode, script, atau secret. Tidak ada pengecekan eksternal: semua fakta diambil dari dokumen kanonik, dan yang tidak ada di sana ditandai **[TBD]**. Disusun Kamis 8 Okt 2026, ~21:40 WIB.
@@ -179,14 +179,14 @@ Kolom: **Contract** · **Address** · **Explorer** (`explorerUrl`) · **Verified
 |---|---|---|
 | Inti Paron | `ProviderRegistry`, `ConversionTable`, `SeriesFactory`, `CUToken` (implementasi), `BondVault`, `PrimarySale`, `OrderBook`, `RedemptionManager`, `PanelArbitrator`, `PrintIndex`, `ReferenceFeed`, `EASGate` atau `RegistryGate`, `TimelockController` | `<label>.json` → `contracts` |
 | Infrastruktur | `MockUSDC`, `EAS` + `SchemaRegistry` (self-deploy di RH, existing di Arbitrum Sepolia), schema UID `ParticipantVerified`, Safe tim | `infra.json` → `mockUsdc`, `eas`, `schemas`, `safe` |
-| Token series | `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612` (seed) dan `CU-JKT-H100-2610` (di-forge live; belum ada saat submission) [D-19] [D-25]. Penamaan series demo yang live: D-82 (`CU-JKT-H100-2611`); token `2610` di sel ini catatan historis | `<label>.json` → `seed.series` |
+| Token series | `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612` (seed) dan `CU-JKT-H100-2610` (di-forge live; series 4, panggung/demo) [D-19] [D-25]. D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB): token `2610` di sel ini berlaku, bukan catatan historis. Rekaman memakai putaran baru di series 4 | `<label>.json` → `seed.series` |
 | Peran | treasury, panel (anggota + threshold), feed signer, minter, `adminMode` | `<label>.json` → `roles` |
 
 Catatan:
 - Alamat yang dicantumkan = deployment **panggung** `stage-1` (05 §4.6 butir 4), bukan latihan.
 - Clone `CUToken` per series tidak diverifikasi satu per satu; tampilkan implementasi + catatan [TBD 04 T4-05].
 - Kalau verifikasi EAS self-deploy gagal: tulis atribusi + link source EAS dan tandai "unverified" (04 §6.4, P4-16).
-- Series 2610 baru ada setelah demo live; README menyebut "forged live on stage; see video" agar juri tidak mencarinya di manifest submission [APPROVED P9-10]. **[D-82]** Nama series demo yang sudah live = `CU-JKT-H100-2611` (seed series 1, tidak diubah). Kalimat `2610` di atas tetap catatan D-19.
+- Series 2610 baru ada setelah forge di panggung; README menyebut "forged live on stage; see video" agar juri tidak mencarinya di manifest submission [APPROVED P9-10]. **[D-82, diperjelas oleh D-92, APPROVED 18:10 WIB]** Series demo/rekaman = `CU-JKT-H100-2610` (series 4). Seed series 1 tetap `CU-JKT-H100-2611`. Rekaman memakai putaran baru di series 4. Kalimat `2610` di atas tetap D-19 dan berlaku.
 
 ### 3.4 Cara menjalankan (prosa, mengikuti 04)
 
@@ -423,7 +423,7 @@ Jam 11:30 tidak mengikat [D-90]. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Y
 | # | Divergensi | Sumber | Penanganan |
 |---|---|---|---|
 | X9-1 | Waktu rekaman video backup: "paling lambat Sab 06:00" vs "Sab 06–10 + rekam video backup" | design §7.3, §8; PK §11.1; 05 §0 vs 05 §4.6 butir 3 | v1 wajib Sab 06:00, v2 opsional Sab 06–10 (P9-03) |
-| X9-2 | Naskah video mengikuti 05 §2.3 (ter-retime, 2610), bukan design §7.4 / PK §11.1 (2611, default di 1:45). Penamaan live demo: D-82; baris divergensi ini historis | 05 P5-06, 07 D-19 | ikuti 05 |
+| X9-2 | Naskah video mengikuti 05 §2.3 (ter-retime, 2610, series 4), bukan design §7.4 / PK §11.1 (2611, default di 1:45). D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB); baris ini berlaku. Rekaman memakai putaran baru di series 4 | 05 P5-06, 07 D-19 | ikuti 05 |
 | X9-3 | Blok atribusi design §7.5 hanya menyebut OZ, EAS, Foundry, wagmi/viem; stack memakai lebih banyak pihak ketiga yang juga perlu diatribusi (aturan 10) | design §7.5 vs stack §4, OQR §5 aturan 10 | blok tetap kata per kata + daftar tambahan (P9-07) |
 | X9-4 | Blok atribusi menyebut "Deployed on Robinhood Chain Testnet (fallback: Arbitrum Sepolia)", sedangkan design §11.3 meminta baris chain README diganti saat no-go | design §7.5 vs §11.3 | kalimat tambahan di bawah blok (P9-08) |
 | X9-5 | notes §1 hanya mewajibkan "demo video **or** presentation materials"; dokumen ini merekomendasikan keduanya | notes §1 | rekomendasi, bukan kewajiban |
@@ -447,9 +447,9 @@ Jam 11:30 tidak mengikat [D-90]. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Y
 | D-13 | "fees go to the team multisig" | §3.1 #9 |
 | D-16 | kalimat VWAP onchain vs winsorized API | §3.1 #8, §3.5 |
 | D-17 | 10 level order book (feasibility, limitation) | §3.5, §5.1 |
-| D-19 | series panggung 2610 + flag `allowOpenWindow`. Penamaan live: D-82 (`CU-JKT-H100-2611`); baris ini historis | §3.3, §3.5, §4.2 |
+| D-19 | series panggung 2610 + flag `allowOpenWindow`. D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB): baris ini berlaku; seed series 1 tetap 2611 | §3.3, §3.5, §4.2 |
 | D-20 | tabel "demo parameters" vs prod | §3.1 #7, §3.5 |
-| D-25 | 4 series (3 seed + 1 live) di tabel alamat. Penamaan live: D-82; baris ini historis | §3.3 |
+| D-25 | 4 series (3 seed, series 1 = 2611, + 1 live 2610) di tabel alamat. D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB); baris ini berlaku | §3.3 |
 | D-26 | receipt hash + mock GPU output berlabel | §3.5 |
 | D-30 | listing permit + 1 tx (adegan video) | §4.2 |
 | D-31 | klaim default dari wallet tanpa KYB (demo walkthrough, video) | §3.1 #4, §4.2, §4.4 |
@@ -474,7 +474,7 @@ Semua D-xx di atas **APPROVED** di 07 (Jum 9 Okt 2026 ~09:40 WIB, Fatih); D-10 A
 | P9-07 | Daftar atribusi tambahan di bawah blok design §7.5 | §3.1, §6 R5 |
 | P9-08 | Kalimat tambahan di bawah blok atribusi kalau live di Arbitrum Sepolia | §3.2 |
 | P9-09 | README memuat tabel alamat ringkas + link `DEPLOYMENTS.md` | §3.3 |
-| P9-10 | README menjelaskan series 2610 di-forge live (tidak ada di manifest submission). Historis (D-19); nama series demo yang live = D-82 `CU-JKT-H100-2611` | §3.3 |
+| P9-10 | README menjelaskan series 2610 di-forge live (tidak ada di manifest submission). D-19 berlaku. D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB): series demo/rekaman = `CU-JKT-H100-2610` (series 4, putaran baru); seed series 1 tetap 2611 | §3.3 |
 | P9-11 | Rekam 1920×1080 dengan zoom browser yang terbaca | §4.3 |
 | P9-12 | Potongan waktu countdown hanya dengan overlay eksplisit | §4.4 |
 | P9-13 | Penanda waktu per adegan di video backup | §4.5 |

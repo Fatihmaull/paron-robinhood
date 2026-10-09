@@ -841,7 +841,7 @@ Pola umum: aksi yang **lewat timelock** dibuat sebagai proposal (`TimelockContro
 - **Tujuan:** panduan demo terpandu untuk juri: langkah-langkah script 2:30 (PK §11.1) dengan link ke layar asli, status live tiap langkah, dan persona wallet.
 - **Gate:** Publik.
 - **Komponen/aksi:**
-  - checklist 6 langkah (List → Buy → Trade → Redeem → Default → Close) yang **dicentang otomatis dari event indexer** (bukan hardcode);
+  - checklist 6 langkah (List → Buy → Trade → Redeem → Default → Close) yang **dicentang otomatis dari event indexer** (bukan hardcode). **[D-92, APPROVED 2026-10-09 18:10 WIB]** Series pada checklist ini = series panggung `CU-JKT-H100-2610` (series 4). Seed di Markets tetap `CU-JKT-H100-2611` (series 1). Rekaman memakai putaran baru di series 4. Preset wizard PR #53 masih mengisi `2611`; handler menggantinya ke `2610` di PR UI mendatang;
   - tombol "Open screen" per langkah; stopwatch listing;
   - panel "Try it yourself": `/faucet` → `/onboarding/kyb` → `/buy` → claim default;
   - alamat kontrak + explorer.
@@ -968,7 +968,7 @@ Hasil: **59 aksi, 0 tanpa layar.** Aksi arbiter (#37, #38, #40) ada di S7, yang 
 
 ## 8. Checklist anti-mock
 
-Wajib lolos sebelum submit (Sab 10 Okt, freeze UI 09:00 WIB):
+Wajib lolos sebelum submit (Sab 10 Okt, freeze UI 09:00 WIB). **HISTORICAL, superseded by D-90:** jam freeze UI 09:00 WIB tidak mengikat. Tenggat keras Sab 2026-10-10 12:00 WIB tetap.
 
 - [ ] **Tidak ada data hardcode di UI.** Semua angka berasal dari kontrak testnet (viem `readContract`) atau indexer Ponder (`/v1/*`). Satu-satunya pengecualian: **ReferenceFeed sintetis**, yang selalu berlabel "Spot reference (synthetic demo data)".
 - [ ] **Fixture mock 03 §4 (`fixtures/v1/`) hanya untuk dev paralel.** Env `NEXT_PUBLIC_DATA_SOURCE` (04 §4.5, nilai `mock` | `live`, default `live`) dipaksa `live` di Vercel production, dan CI menggagalkan build produksi kalau nilainya `mock`. Di mode `mock`, 06 §11.3 sudah mewajibkan banner "Mock data (fixtures). Transactions are disabled." dan semua tombol tx disabled, jadi mode ini tidak pernah boleh tampil ke juri.
@@ -979,7 +979,7 @@ Wajib lolos sebelum submit (Sab 10 Okt, freeze UI 09:00 WIB):
 - [ ] **`/demo` mencentang langkah dari event indexer**, bukan dari state lokal.
 - [ ] **Empty state jujur:** "No data yet", bukan angka contoh.
 - [ ] **Satu tx timelock dieksekusi live** dari `/admin/proposals` (delay demo 5 menit, dijadwalkan sebelum giliran demo).
-- [ ] **`/status` hijau** (RPC + indexer) sebelum naik panggung. Rekam video cadangan sebelum Sab 06:00 (design §7.3).
+- [ ] **`/status` hijau** (RPC + indexer) sebelum naik panggung. Rekam video cadangan sebelum Sab 06:00 (design §7.3). **HISTORICAL, superseded by D-90:** jam 06:00 itu tidak mengikat.
 - [ ] **Footnote** Ornn/Robinhood ada di footer semua halaman. OCPI tidak tampil di app.
 
 ---
@@ -1007,7 +1007,7 @@ Wajib lolos sebelum submit (Sab 10 Okt, freeze UI 09:00 WIB):
 
 ### 9.1 Tier build SOLO (berlaku)
 
-Penanda: ⚠️ = tier sitemap yang tidak realistis untuk solo, dengan usulan trim. Waktu = jendela target mengikuti urutan design §7.3: kontrak freeze Sab 06:00, UI freeze Sab 09:00, submit Sab 11:30. Ini estimasi, bukan jaminan.
+Penanda: ⚠️ = tier sitemap yang tidak realistis untuk solo, dengan usulan trim. Waktu = jendela target mengikuti urutan design §7.3: kontrak freeze Sab 06:00, UI freeze Sab 09:00, submit Sab 11:30. Ini estimasi, bukan jaminan. **HISTORICAL, superseded by D-90:** jam 06:00, 09:00, dan 11:30 tidak mengikat. Tenggat keras Sab 2026-10-10 12:00 WIB tetap.
 
 | Tier solo | Target | Isi (route → bentuk build) | Catatan |
 |---|---|---|---|

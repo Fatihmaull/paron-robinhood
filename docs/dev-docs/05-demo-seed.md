@@ -1,6 +1,6 @@
 # Paron: skenario demo + spesifikasi seed (dev doc 05)
 
-> **[D-82, APPROVED Fatih Jum 9 Okt 2026 ~15:34 WIB, via handler]:** nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (series panggung `CU-JKT-H100-2610`, window, `series_id`, input skrip seed/forge) tetap historis; yang digantikan hanya penamaan live. String `2610` yang mengikat window, `series_id`, atau input skrip tidak ditulis ulang di dokumen ini.
+> **[D-82, diperjelas oleh D-92, APPROVED Fatih 2026-10-09 18:10 WIB, "rekomendasimu saja", dicatat Scout]:** seed = `CU-JKT-H100-2611` (series 1). Series panggung/demo = `CU-JKT-H100-2610` (series 4). Catatan D-19/D-25 untuk panggung, window, `series_id`, dan input skrip seed/forge tetap berlaku, bukan historis. Preset wizard di PR #53 masih mengisi `2611`; handler menggantinya ke `2610` di PR UI mendatang. Rekaman memakai putaran baru di series 4. String `2610` pada window, `series_id`, dan input skrip tidak ditulis ulang di dokumen ini.
 
 
 Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P5-xx disetujui Fatih (Jum 9 Okt 2026 ~09:40 WIB); disinkronkan Jum 9 Okt ~10:30 WIB (event `ReputationUpdated` dengan `strikes`, tim solo, X-6/X-7 selesai). Cadangan: `.bak-2026-10-09-pre-approval/`. Isinya prosa dan langkah semu bernomor. **Tidak ada script dalam bahasa apa pun.** Disusun Kamis 8 Okt 2026, ~21:20 WIB. Kode (termasuk `script/Seed.s.sol`, stack §4.4) baru ditulis mulai Jumat 9 Okt 09:00 WIB.
@@ -30,7 +30,7 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P5-xx disetujui Fatih (
 | Lingkungan | (a) anvil lokal/fork untuk latihan dengan warp waktu; (b) deployment latihan di testnet; (c) **deployment panggung** yang hanya di-seed sekali lalu tidak disentuh | [APPROVED P5-20] |
 | Cadangan | Window 60 dtk, wallet yang sudah didanai, video backup paling lambat Sab 06:00 | PK §11.1, design §8 |
 
-**Catatan D-82:** series demo yang ada di deployment live bernama `CU-JKT-H100-2611`. Baris "Series di panggung" di atas, tabel A1/A3 (§2.1), dan baris D-19/D-25 di §5 tetap catatan historis. Seed series 1, window, dan input skrip tidak diubah.
+**Catatan D-82, diperjelas oleh D-92 (APPROVED 18:10 WIB):** baris "Series di panggung" di atas tetap `CU-JKT-H100-2610` (series 4) dan berlaku, bersama tabel A1/A3 (§2.1) dan baris D-19/D-25 di §5. Seed series 1 tetap `CU-JKT-H100-2611`. Window dan input skrip tidak diubah. Rekaman memakai putaran baru di series 4.
 
 **Temuan utama (detail di §2.2 dan §8):**
 1. ⚠ ARITMETIKA: adegan default di design hanya 30 dtk (1:45–2:15), padahal countdown ack minimum 60 dtk ([D-20]). Naskah harus diatur ulang (§2.3).
@@ -521,7 +521,7 @@ Di RH Testnet, deploy ulang boleh memakai ulang instance `EAS` + `SchemaRegistry
 **T−10 menit**
 - [ ] Blok chain bergerak (timestamp blok terakhir < 10 dtk lalu).
 - [ ] `/v1/series` menampilkan 3 series; tidak ada `CU-JKT-H100-2610` (kalau ada → deployment tercemar → pakai fallback level 4 atau video).
-- [ ] Wizard S2 sudah berisi preset 2610 (500 jam H100, $3.00, bond $4.50, window Okt, 60/60/90).
+- [ ] Wizard S2 sudah berisi preset 2610 (500 jam H100, $3.00, bond $4.50, window Okt, 60/60/90). **[D-92, APPROVED 18:10 WIB]** PR #53 masih mengisi preset `CU-JKT-H100-2611`. Handler menggantinya ke `2610` di PR UI mendatang. Bukan bagian dokumen ini.
 - [ ] Nonce wallet bersih (tidak ada tx pending).
 
 ### 4.8 Rencana fallback saat demo
@@ -557,12 +557,12 @@ Semua D-xx di bawah **APPROVED** (Jum 9 Okt 2026 ~09:40 WIB) dengan opsi rekomen
 | D-15 | Status `THIN` → `OK` di adegan trade; parameter demo | Dua status saja → tetap jalan; parameter lain bisa membuat 1 fill tidak cukup untuk `OK` |
 | D-17 | Order book ≤ 10 level | — |
 | D-18 | Assert invariant bond §3.5 | — |
-| D-19 | Series panggung `CU-JKT-H100-2610`, `allowOpenWindow`. Penamaan live: D-82 (`CU-JKT-H100-2611`); teks ini historis | Kalau ditolak: redeem/default di panggung tidak mungkin (window Nov) |
+| D-19 | Series panggung `CU-JKT-H100-2610`, `allowOpenWindow`. D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB): teks ini berlaku; seed series 1 tetap `2611` | Kalau ditolak: redeem/default di panggung tidak mungkin (window Nov) |
 | D-20 | 60/60/90/120 dtk | Kalau batas prod dipakai: demo default live mustahil |
 | D-21 | D-04a: dispute bond → provider | Split dengan arbitrator → saldo D-04a berubah |
 | D-22 | Isi event `Trade` S-06 | Tanpa field tambahan → assert print lewat API saja |
 | D-23, D-24 | EASGate/RegistryGate, satu schema role 1–3 | Schema `ProviderVerified` terpisah → A-3 bertambah |
-| D-25 | 3 seed + 1 live. Penamaan live: D-82; teks ini historis | 3 series saja → series 2610 menggantikan salah satu |
+| D-25 | 3 seed (series 1 = `2611`) + 1 live `2610`. D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB); teks ini berlaku | 3 series saja → series 2610 menggantikan salah satu |
 | D-26 | `receiptHash` saja (S-09) | Receipt EAS → tambah attestation per delivery |
 | D-29 | `refunded_after_window` (D-04c) | — |
 | D-30 | Listing 1 tx dengan permit (S-01) | Tanpa permit → 2 tx, stopwatch makin ketat |

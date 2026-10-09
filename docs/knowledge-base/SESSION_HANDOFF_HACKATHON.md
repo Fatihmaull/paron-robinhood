@@ -5,7 +5,7 @@ Written 2026-10-09 ~14:40 WIB. Each agent appends its own section under "## Agen
 - Paron: collateral-backed tokenized GPU compute units (1 CU = 1 hr H100-equivalent), MockUSDC settlement, bond >= 1.5x primary price per CU.
 - Chain: Robinhood Chain Testnet (id 46630) primary; Arbitrum Sepolia (421614) fallback. Go/no-go was GO.
 - Repo: https://github.com/Fatihmaull/paron-robinhood (git author Fatih Maulana <fatihmaulanamail@gmail.com>; PE may merge PRs when tests are green).
-- Deadlines (WIB): T0 Fri 9 Oct 11:14; contract freeze Sat 06:00; UI freeze Sat 09:00; internal submit Sat 11:30; hard deadline Sat 12:00.
+- Deadlines (WIB): T0 Fri 9 Oct 11:14; contract freeze Sat 06:00; UI freeze Sat 09:00; internal submit Sat 11:30; hard deadline Sat 12:00. **HISTORICAL, superseded by D-90:** the 06:00 contract freeze, the 09:00 UI freeze, and the 11:30 internal submit are no longer binding. The hard deadline Sat 2026-10-10 12:00 WIB stays.
 - Source of truth: this folder; start at CONTEXT-INDEX.md, then canonical docs, then dev-docs/01-09. Never use archive files (section C) or .bak-* folders.
 
 ## 1. Agent sections
@@ -72,7 +72,7 @@ Catatan jujur: hanya 06 dan 07 yang menyebut D-66 secara eksplisit; 01-05, 08, 0
 
 **Tugas pertama Spec Writer di sesi baru:**
 1. Catat pilihan Fatih atas temuan Designer sebagai D-67+ di `07-decisions-log.md`, terapkan ke `06-screens-wireframes.md`.
-2. Jaga `08-team-tasks.md` selaras progres nyata (T0 = Jum 9 Okt 11:14 WIB; freeze kontrak Sab 06:00; freeze UI Sab 09:00; submit 11:30; tenggat keras Sab 12:00).
+2. Jaga `08-team-tasks.md` selaras progres nyata (T0 = Jum 9 Okt 11:14 WIB; freeze kontrak Sab 06:00; freeze UI Sab 09:00; submit 11:30; tenggat keras Sab 12:00). **HISTORICAL, superseded by D-90:** jam 06:00, 09:00, dan 11:30 tidak mengikat. Tenggat keras Sab 2026-10-10 12:00 WIB tetap.
 3. Sinkronkan 04 dan 09 begitu RPC cadangan atau domain diputuskan.
 4. Backup sebelum tiap edit dan jalankan grep kata terlarang atas 01-09.
 5. Kirim update singkat ke grup setelah tiap perubahan dokumen.
@@ -84,7 +84,7 @@ Catatan jujur: hanya 06 dan 07 yang menyebut D-66 secara eksplisit; 01-05, 08, 0
 - Standing permissions from Fatih: merge Paron PRs when tests are green; fix incidents directly and report after; ask only for real decisions.
 - Commits authored as `Fatih Maulana <fatihmaulanamail@gmail.com>`, no co-author trailers. README says built with help of Grok Bot.
 - Spec conflicts go to Paron Spec Writer; product questions go to Hackathon Scout.
-- Deadline Sat 10 Oct 2026 12:00 WIB (internal submit 11:30), UI freeze Sat 09:00 WIB, contract freeze 06:00. Build log: `docs/build/STATUS.md`; `AUDIT.md` tidak ada di repo (arsip box); `DEPLOYMENTS.md`.
+- Deadline Sat 10 Oct 2026 12:00 WIB (internal submit 11:30), UI freeze Sat 09:00 WIB, contract freeze 06:00. **HISTORICAL, superseded by D-90:** 06:00, 09:00, and 11:30 are no longer binding. The hard deadline Sat 2026-10-10 12:00 WIB stays. Build log: `docs/build/STATUS.md`; `AUDIT.md` tidak ada di repo (arsip box); `DEPLOYMENTS.md`.
 - Anti-scope: no secrets in group or repo; testnet only.
 
 **Architecture / ADR.**
@@ -111,9 +111,9 @@ Catatan jujur: hanya 06 dan 07 yang menyebut D-66 secara eksplisit; 01-05, 08, 0
 **Action plan for the new session (Principal Engineer).**
 1. Run the full S0 demo end-to-end on live (buy 20 CU, ask $3.20, default 10 CU, claim default from any wallet, live KYB approve from verifier UI, one timelock change executed from /admin) and fix breakages directly.
 2. Decide admin roles: move to Safe (ops/scripts roles step with SAFE_ADDRESS) or keep deployer for the demo; record decision with Spec Writer.
-3. Apply Designer items 5, 6, 8 once Fatih approves, before UI freeze Sat 09:00 WIB.
+3. Apply Designer items 5, 6, 8 once Fatih approves, before UI freeze Sat 09:00 WIB. **HISTORICAL, superseded by D-90:** that 09:00 clock is not binding.
 4. Get a backup RPC from Fatih/Scout and set the backup env vars (Vercel + Railway), then redeploy.
-5. Rehearsal S0 target 19:14 WIB; keep buffers to the 11:30 internal submit; support final README and submission with Scout.
+5. Rehearsal S0 target 19:14 WIB; keep buffers to the 11:30 internal submit (**HISTORICAL, superseded by D-90:** 11:30 is not binding); support final README and submission with Scout. Hard deadline stays Sat 2026-10-10 12:00 WIB.
 
 
 #### Paron Product Designer

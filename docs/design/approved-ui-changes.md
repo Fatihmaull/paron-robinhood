@@ -56,7 +56,7 @@ Status: D-67..D-74 APPROVED. The grep item stays cancelled, and that cancellatio
 | D-79 | P5 Numbers: money as `$3,240.00` (thousands separator, 2 decimals). Max cost uses 2 decimals. | APPROVED |
 | D-80 | P6 Home: fill the page, less empty space, especially at 390 px. Connect wallet stays on one line. | APPROVED |
 | D-81 | CI grep `affiliated` / `endorsed by` (last item of D-74) is cancelled. No such grep in CI. `copy-guard.test.ts` is unchanged. | APPROVED (Fatih, direct, 2026-10-09 17:01 WIB) |
-| D-82 | Live demo series name is `CU-JKT-H100-2611`. Contract seed series 1 is unchanged. D-19/D-25 stay historical records; only the live name is superseded. | APPROVED |
+| D-82 | Live demo series name was recorded as `CU-JKT-H100-2611`. Contract seed series 1 is unchanged. Clarified by D-92 (APPROVED 18:10 WIB): seed = 2611; stage/demo series = 2610 (series 4). D-19/D-25 stage rows stay in force. | APPROVED, clarified by D-92 |
 
 ## D-84..D-88 (07 §18, APPROVED by Fatih directly 2026-10-09 16:39 WIB)
 
@@ -73,3 +73,21 @@ Status: D-67..D-74 APPROVED. The grep item stays cancelled, and that cancellatio
 ## RPC failure tone (07 §19, D-89, APPROVED by handler)
 
 Public RPC failure is dim text, not a red error. Retries wait 400 ms, then 800 ms, then 1600 ms. `INDEXER_RPC_URL_BACKUP` and `NEXT_PUBLIC_RPC_URL_BACKUP` are final names. An empty value means the primary URL only. The URL value is not written in this doc.
+
+## Landing hero (07 §21, D-91, APPROVED)
+
+Fatih approved the prototype. Recorded via Paron Designer and Scout. Source: Designer's `/workspace/paron-landing/design.md` on Designer's computer.
+
+The hero on landing `/` is gold and glass, plus limited amber accents on the dashboard (numbers, small tags, active states, 1px lines). The dashboard gets no gradient and no full glass.
+
+Tokens: black `#000`, text `#f3f3f3`, secondary text `#a6a6a6` and `#8c8c8c`, amber-100 `#f1d3a6`, amber-300 `#d9a066`, amber-500 `#bc854d`, amber-800 `#5a3515`. Lines are 1px `rgba(255,255,255,.16)`, soft variant `rgba(255,255,255,.09)`. Glass is only on the landing hero and the numbers panel (radius 8px, under text that overlays amber light), with no box-shadow. Motion runs 38 to 64 seconds and is off under `prefers-reduced-motion`.
+
+The earlier ban on gradient and glass in `design.md` is allowed only on the landing hero and its numbers panel. Still banned: purple or cyan, blobs, gradient on text (except the 1.5× number), heavy shadows, fake cards or fake stats. Content rules are unchanged (no third-party logos, no forbidden words). Review must not flag this hero as a regression.
+
+## Series names (07 §22, D-92, APPROVED 2026-10-09 18:10 WIB)
+
+Fatih approved the recommendation for the demo series ("rekomendasimu saja"). Scout recorded it at 18:10 WIB. This clarifies D-82: seed = 2611, stage/demo series = 2610 (series 4).
+
+Live facts: seed series 1–3 are `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612`. Series 4 `CU-JKT-H100-2610` was created by the S0 test and matches D-19. The series for the demo and the recording is series 4. `2611` stays seed data on Markets.
+
+Impact: the wizard preset (PR #53) fills `2611`. The handler will change it to `2610` in a later UI PR. The recording uses a new run on series 4.

@@ -283,6 +283,8 @@ Three ways we expand the market Ornn leads, all without a partnership:
 | Sat 06–10 | Freeze contracts at 06:00 | Freeze UI at 09:00 | Rehearse the demo ×3 |
 | Sat 10–12 | Submit by 11:30 (deadline 12:00) | — | — |
 
+**HISTORICAL, superseded by D-90.** The Saturday 06:00 contract freeze, 09:00 UI freeze, and 11:30 internal submit in the two rows above are no longer binding. The hard deadline Sat 2026-10-10 12:00 WIB stays. The rows are kept.
+
 ### 7.4 Demo script (2:30), with the wow moment
 - **0:00–0:20 Hook.** "Compute is becoming a commodity. Ornn built the first benchmark from printed trades, and futures are lining up at ICE and CME. But the deliverable GPU-hour itself is still sold in private deals. We made it an open, collateral-backed onchain unit." (S1, with the reference strip visible.)
 - **0:20–0:50 List in 3 clicks.** A Jakarta provider (verified badge) forges `CU-JKT-H100-2611`: 500 CU at $3.00, bond **$2,250** locked ($4.50/CU × 500). Start a stopwatch on screen and launch in under 40 seconds. "Listing is as easy as pump.fun. The difference is that every unit is backed by collateral before it exists."

@@ -17,7 +17,7 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P6-xx disetujui Fatih (
 - **Tier build = sitemap §9.1 (solo S0–S3)**, bukan kolom MUST/NICE saja (X6-19 APPROVED). Urutan jam per jam: `08-team-tasks.md`.
 - **MUST / NICE** mengikuti design §7.1 dan §10.4. S6 dan S7 = NICE (design §7.2); sitemap §9 menaruhnya di Tier 2 / Tier 1 (lihat §17 X6-19).
 - Teks di dalam tanda kutip pada tabel copy = **copy UI persis** (bahasa Inggris, lihat §0.1). Placeholder ditulis `{nama}`.
-- Semua angka contoh = CONTOH DATA dari naskah 05 (series panggung 4 `CU-JKT-H100-2610`). **[D-82]** Nama series demo yang live = `CU-JKT-H100-2611`. Simbol `2610` pada contoh layar tetap, karena mengikat window Oktober, `series_id` 4, dan naskah forge (catatan D-19, historis). Seed series 1 tidak diubah.
+- Semua angka contoh = CONTOH DATA dari naskah 05 (series panggung 4 `CU-JKT-H100-2610`). **[D-82, diperjelas oleh D-92, APPROVED 2026-10-09 18:10 WIB]** Simbol `2610` pada contoh layar adalah series panggung/demo (series 4), bukan catatan historis. Seed series 1 tetap `CU-JKT-H100-2611`. Preset wizard PR #53 masih mengisi `2611`; handler menggantinya ke `2610` di PR UI mendatang. Rekaman memakai putaran baru di series 4.
 - Wireframe = desktop 1440 px kecuali disebut mobile. Hanya tata letak, bukan desain visual (tema gelap "terminal", stack §4.3).
 
 ---
@@ -130,7 +130,7 @@ Diselaraskan dengan `paron-sitemap.md` **(sitemap §x)** pada Kamis 8 Okt 2026, 
 
 **Route sitemap yang tidak di-wireframe di 06** (spesifikasi tujuan, gate, fungsi, dan state ada di sitemap §4; 06 hanya menyediakan aturan global §0–§1, §9–§11 yang berlaku juga untuk halaman ini): `/how-it-works`, `/providers`, `/providers/{providerId}`, `/transparency/{seriesId}`, `/docs`, `/docs/methodology`, `/docs/contracts`, `/legal/terms`, `/status`, `/onboarding`, `/account`, `/account/notifications`, `/account/api-keys`, `/buy`, `/disputes`, `/trade`, `/trade/orders`, `/trade/history`, `/trade/positions`, `/trade/leverage`, `/provider/series`, `/provider/redemptions`, `/provider/disputes`, `/provider/payouts`, `/provider/team`, semua `/verifier/*`, semua `/admin/*`, `/ops`, `/ops/keepers`, `/ops/events`, `/demo`.
 
-**[APPROVED D-54, Jum 9 Okt ~11:05 WIB, hackathon saja]** `/verifier` (terbit/cabut KYB live) ditandatangani `W-VERIFIER` (EOA) dengan label "Paron demo verifier (team-operated)"; `/admin` menjadwalkan `setFactor` dari `W-ADMIN` (atau Safe) dan tombol Execute boleh ditekan wallet mana pun (executor Timelock terbuka). Tidak ada integrasi Safe protocol-kit di frontend. **PG-2 DITOLAK (Fatih, Jum 9 Okt ~11:05 WIB):** `/demo` tidak punya jalur sandbox; isinya hanya naskah adegan + tautan ke layar live.
+**[APPROVED D-54, Jum 9 Okt ~11:05 WIB, hackathon saja]** `/verifier` (terbit/cabut KYB live) ditandatangani `W-VERIFIER` (EOA) dengan label "Paron demo verifier (team-operated)"; `/admin` menjadwalkan `setFactor` dari `W-ADMIN` (atau Safe) dan tombol Execute boleh ditekan wallet mana pun (executor Timelock terbuka). Tidak ada integrasi Safe protocol-kit di frontend. **PG-2 DITOLAK (Fatih, Jum 9 Okt ~11:05 WIB):** `/demo` tidak punya jalur sandbox; isinya hanya naskah adegan + tautan ke layar live. **[D-92, APPROVED 18:10 WIB]** Checklist `/demo` memakai series panggung `CU-JKT-H100-2610` (series 4). Seed di Markets tetap `CU-JKT-H100-2611` (series 1). Rekaman memakai putaran baru di series 4.
 
 Layar admin, verifier, dan keeper **ada** di produk: sitemap §1 prinsip 1 ("setiap aksi setiap aktor punya UI") dan §8 checklist anti-mock menggantikan catatan lama 06 "aksi admin lewat Safe/script". Script tetap boleh sebagai otomasi tambahan. Auditor memakai `/statements` dan `/data` (PK §6.6).
 
@@ -1513,7 +1513,7 @@ Kode: **M** = sumber utama, **o** = opsional/NICE, **·** = tidak dipakai.
 | D-15, D-16 | status dan metode indeks di strip dan S6 | §1.1, §8.1 |
 | D-17 | maks 10 level order book, copy `TooManyPriceLevels` | §4.4, §9.2 |
 | D-18 | baris "Covers {n} CU outstanding" | §4.6 |
-| D-19 | wizard demo menawarkan bulan berjalan; preset 2610. Penamaan live: D-82 (`CU-JKT-H100-2611`); preset dan window di baris ini historis | §3.2, §14 |
+| D-19 | wizard demo menawarkan bulan berjalan; preset 2610. D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB): preset dan window di baris ini berlaku. PR #53 masih mengisi 2611 sampai PR UI handler | §3.2, §14 |
 | D-20 | batas window di wizard, countdown 60/60/90 s | §3.3 |
 | D-21 | copy hasil dispute | §5.5 |
 | D-22 | field print untuk tape/S6, decode ABI | §4.5, §9.2 |
@@ -1588,7 +1588,7 @@ Semua D-xx di atas **APPROVED** di 07 (Jum 9 Okt 2026 ~09:40 WIB, Fatih), termas
 
 | # | Divergensi | Sumber | Penanganan |
 |---|---|---|---|
-| X6-1 | Preset listing memakai `CU-JKT-H100-2610`, bukan `CU-JKT-H100-2611` seperti naskah design §7.4. Penamaan live demo: D-82; baris divergensi ini historis | design §7.4 vs 07 D-19, 05 §2.3 | ikuti D-19/05 |
+| X6-1 | Preset listing memakai `CU-JKT-H100-2610` (series panggung/demo), bukan `CU-JKT-H100-2611` (seed series 1, dan juga simbol di naskah design §7.4). D-82 diperjelas oleh D-92 (APPROVED 18:10 WIB); baris ini berlaku. Rekaman memakai putaran baru di series 4 | design §7.4 vs 07 D-19, 05 §2.3 | ikuti D-19/05: preset panggung = 2610 |
 | X6-2 | "Redemption detail" diberi route sendiri `/redemptions/{reqId}`, padahal PK menyebutnya bagian S4, bukan layar terpisah | PK §6 peta layar vs 05 §2.4 "S4 publik" untuk HP juri | komponen sama (R-CARD); hanya route publik tambahan |
 | X6-3 | Listing = 1 tanda tangan permit + 1 tx, bukan "satu transaksi approve USDC + createSeries" | PK §6.1, design §2 Flow A vs D-30 | ikuti D-30 dengan fallback 2 tx |
 | X6-4 | Kolom "Record" S1 menambah "declined" | design §7.2 S1 (delivered/defaulted) vs D-33 | ikuti D-33 |
