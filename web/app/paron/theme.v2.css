@@ -1,8 +1,8 @@
 /* =====================================================================
-   Paron v1 · Tailwind CSS v4 theme (repo uses tailwindcss 4.3.3, CSS-first config)
+   Paron v2 · Tailwind CSS v4 theme (repo uses tailwindcss 4.3.3, CSS-first config)
    Usage in web/app/globals.css:
        @import "tailwindcss";
-       @import "./paron/tokens.css";   // runtime values (unlayered: wins, supports light theme)
+       @import "./paron/tokens.v2.css";   // runtime values (unlayered: wins, supports light theme)
        @import "./paron/theme.css";    // this file: registers names so utilities exist
    The values below are dark-theme fallbacks only. Real values come from tokens.css,
    whose unlayered :root overrides Tailwind's @layer theme, so [data-theme="light"] works.
@@ -68,6 +68,13 @@
   --color-neutral: #A3ABB8;
   --color-neutral-subtle: #1B2029;
 
+  /* v2 additions */
+  --color-chart-line: #F07A2A;
+  --color-chart-grid: #1F252E;
+  --text-book: 0.75rem; --text-book--line-height: 1rem;
+  --animate-skeleton: skeleton 1.2s ease-in-out infinite;
+  @keyframes skeleton { 0%,100% { opacity: .55 } 50% { opacity: 1 } }
+
   /* Type scale (overrides Tailwind defaults on purpose: dense data UI) */
   --text-2xs: 0.6875rem;  --text-2xs--line-height: 1rem;
   --text-xs: 0.75rem;     --text-xs--line-height: 1rem;
@@ -79,7 +86,7 @@
   --text-3xl: 2.25rem;    --text-3xl--line-height: 2.5rem;
   --text-countdown: 3.5rem; --text-countdown--line-height: 1;
 
-  --tracking-overline: 0.08em;
+  --tracking-overline: 0.06em;
   --tracking-wordmark: 0.22em;
 
   /* Spacing: Tailwind v4 multiplier (p-1 = 4px ... p-4 = 16px), same grid as --space-* */

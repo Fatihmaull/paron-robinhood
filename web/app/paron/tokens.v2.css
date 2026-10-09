@@ -1,5 +1,5 @@
 /* =====================================================================
-   Paron design tokens v1  ·  "Forged graphite + ember"
+   Paron design tokens v2 (v1 + targeted changes; see audit/tokens-v2-diff.md)  ·  "Forged graphite + ember"
    Paron Product Designer · Fri 9 Oct 2026
    Dark theme is the default (trading UI). Light theme: <html data-theme="light">.
    Pure CSS custom properties: no build step, works with Tailwind v4 (see theme.css).
@@ -129,7 +129,7 @@
   --weight-semibold: 600;
   --tracking-tight: -0.015em;
   --tracking-normal: 0;
-  --tracking-overline: 0.08em; /* uppercase panel labels */
+  --tracking-overline: 0.06em; /* v2: was 0.08em. Uppercase panel labels only; anti-slop R-06 flags wide-tracked caps */
   --tracking-wordmark: 0.22em;
 
   /* ---------- 5. Space, size, radius, border ---------- */
@@ -191,8 +191,8 @@
 
   /* ---------- 9. Component tokens ---------- */
   /* Table */
-  --table-row-height: 2.25rem;      /* 36 */
-  --table-row-height-dense: 1.75rem;/* 28: order book, tape */
+  --table-row-height: 2rem;         /* v2: 32 (was 36). Benchmarks run 24-32px rows */
+  --table-row-height-dense: 1.5rem; /* v2: 24 (was 28). Order book, tape */
   --table-cell-px: var(--space-3);
   --table-header-fg: var(--color-text-tertiary);
   --table-header-bg: var(--color-bg-surface);
@@ -283,6 +283,35 @@
   --footer-bg: var(--color-bg-canvas);
   --footer-fg: var(--color-text-tertiary);
 
+  /* ---------- v2 additions ---------- */
+  /* Charts: JS libs (lightweight-charts, recharts) cannot read Tailwind classes; read these with getComputedStyle once on mount. */
+  --chart-bg: var(--color-bg-surface);
+  --chart-text: var(--color-text-secondary);
+  --chart-axis: var(--color-text-tertiary);
+  --chart-grid: var(--color-border-subtle);
+  --chart-line: var(--color-accent);          /* single series: last price */
+  --chart-ref: var(--color-text-tertiary);    /* dashed reference line */
+  --chart-up: var(--color-bid);
+  --chart-down: var(--color-ask);
+  --chart-bar: var(--color-ok);
+
+  /* Header chrome: the global Connect-wallet button is a secondary button so the page keeps exactly one ember primary */
+  --btn-chrome-bg: transparent;
+  --btn-chrome-fg: var(--color-text-primary);
+  --btn-chrome-border: var(--color-border-strong);
+
+  /* Page-bottom utility bar (replaces DisclaimerFooter; no legal copy) */
+  --utilbar-bg: var(--color-bg-canvas);
+  --utilbar-fg: var(--color-text-tertiary);
+
+  /* Skeleton loading */
+  --skeleton-bg: var(--p-graphite-800);
+  --skeleton-shine: var(--p-graphite-750);
+  --skeleton-duration: 1200ms;
+
+  /* Book / tape row text */
+  --text-book: var(--text-xs);   /* 12px mono, tabular */
+
   /* ---------- 10. Legacy aliases for the L2 scaffold (PR #2 web/app/globals.css) ----------
      Lets L2 adopt v1 by importing this file BEFORE their rules and deleting their :root block.
      Remove once components read the semantic names directly. */
@@ -351,5 +380,5 @@
 .tnum, [data-num] { font-variant-numeric: tabular-nums; font-feature-settings: var(--font-numeric-features); }
 
 @media (prefers-reduced-motion: reduce) {
-  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; --duration-print-flash: 600ms; }
+  :root { --duration-fast: 0ms; --duration-base: 0ms; --duration-slow: 0ms; --duration-print-flash: 600ms; --skeleton-duration: 0ms; }
 }
