@@ -1,0 +1,28 @@
+{
+  "name": "@paron/indexer",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "description": "Paron Ponder indexer and Hono read API (/v1). Testnet only.",
+  "packageManager": "pnpm@12.9.1",
+  "engines": {
+    "node": "24.21.0"
+  },
+  "scripts": {
+    "dev": "ponder dev",
+    "start": "ponder start --port ${PORT:-42069}",
+    "codegen": "ponder codegen",
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "hono": "4.13.13",
+    "ponder": "0.17.12",
+    "viem": "2.57.3"
+  },
+  "devDependencies": {
+    "@types/node": "24.7.2",
+    "typescript": "5.9.3",
+    "vitest": "5.0.3"
+  }
+}

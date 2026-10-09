@@ -1,0 +1,13 @@
+# Railway service for the Paron indexer + /v1 API.
+# In the Railway project, set Root Directory to `indexer` (this package, not the monorepo root).
+# Frontend stays on Vercel and is not part of this service.
+
+[build]
+builder = "DOCKERFILE"
+dockerfilePath = "Dockerfile"
+
+[deploy]
+startCommand = "pnpm start"
+healthcheckPath = "/v1/health"
+healthcheckTimeout = 300
+restartPolicyType = "ON_FAILURE"
