@@ -374,20 +374,18 @@ td .pill { height: 18px; }
 .terminal {
   display: grid;
   grid-template-columns: repeat(12, minmax(0, 1fr));
-  grid-template-areas: "chart chart chart chart chart book book book ticket ticket ticket ticket" "info info info info info info info info ticket ticket ticket ticket";
+  grid-template-areas: "chart chart chart chart chart chart book book book ticket ticket ticket" "info info info info info info info info info info info info";
   gap: var(--space-3);
   align-items: start;
 }
 .t-chart { grid-area: chart; } .t-book { grid-area: book; } .t-ticket { grid-area: ticket; }
-.t-info { grid-area: info; display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-3); align-items: start; }
-.info-col { display: grid; gap: var(--space-3); align-content: start; min-width: 0; }
+.t-info { grid-area: info; display: grid; gap: var(--space-3); align-content: start; min-width: 0; }
 .terminal .panel { padding: var(--space-3); }
 .terminal .panel h2 { margin-bottom: 6px; }
 .terminal .row { padding: 3px 0; }
 .t-chart .table-scroll { max-height: 140px; overflow-y: auto; }
 .t-ticket .tabs { margin-bottom: var(--space-3); }
 @media (max-width: 1279px) {
-  .t-info { grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); }
   .terminal { grid-template-columns: 2fr 1fr; grid-template-areas: "ticket ticket" "chart book" "info info"; }
 }
 @media (max-width: 859px) {

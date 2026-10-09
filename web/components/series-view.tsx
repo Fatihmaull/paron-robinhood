@@ -23,7 +23,11 @@ const BondChart = dynamic(() => import("./charts").then((mod) => mod.BondChart),
 
 const CU = 10n ** 18n;
 
+const INFO_TABS = ["Bond", "Terms", "Redemptions", "Reputation"] as const;
+type InfoTab = (typeof INFO_TABS)[number];
+
 export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview" | "buy" | "trade" }) {
+  const [infoTab, setInfoTab] = useState<InfoTab>("Bond");
   const series = useSeries(seriesId);
   const book = useBook(seriesId);
   const prints = usePrints();
@@ -86,7 +90,6 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
           {detail ? <Ticket seriesId={seriesId} detail={detail} initial={tab === "trade" ? "order" : "buy"} /> : null}
         </div>
         <div className="t-info">
-          <div className="info-col">
           {detail ? (
             <Panel title="Market">
               <div className="row"><span>Primary</span><span>{formatUsd(detail.primary_price)}/CU</span></div>
@@ -99,47 +102,64 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
               <div className="row"><span>Sale</span><span>{detail.sale_open ? "Open" : "Closed"}{detail.paused ? " · paused" : ""}</span></div>
             </Panel>
           ) : null}
-          <Panel title="Reputation">
-            <p>{detail ? `${detail.provider.delivered_cu} delivered · ${detail.provider.defaulted_cu} defaulted · ${detail.provider.voluntary_defaulted_cu} voluntary` : "—"}</p>
-            <p className="help">Provider-wide record, so both Jakarta rows share it.</p>
-          </Panel>
+          <div className="tabs" role="tablist" aria-label="Series record">
+            {INFO_TABS.map((label) => (
+              <button key={label} type="button" role="tab" aria-selected={infoTab === label} data-active={infoTab === label} onClick={() => setInfoTab(label)}>
+                {label}
+              </button>
+            ))}
           </div>
-          <div className="info-col">
-          {detail?.bond ? (
-            <Panel title="Bond">
-              <BondBar deposited={detail.bond.deposited} balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
-              <BondChart balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
-              <div className="row"><span>Deposited</span><span>{formatUsd(detail.bond.deposited)}</span></div>
-              <div className="row"><span>Balance</span><span>{formatUsd(detail.bond.balance)}</span></div>
-              <div className="row"><span><i className="key released" aria-hidden="true" />Released to provider</span><span>{formatUsd(detail.bond.released)}</span></div>
-              <div className="row"><span><i className="key slashed" aria-hidden="true" />Paid to holders</span><span>{formatUsd(detail.bond.slashed)}</span></div>
-              <div className="row"><span>Health</span><span>{detail.bond.health}</span></div>
-            </Panel>
-          ) : detail ? (
-            <Panel title="Bond">
-              <p className="muted">Bond totals are not listed for this series. Bond per CU is {formatUsd(detail.bond_per_cu)}.</p>
-            </Panel>
+          {infoTab === "Bond" ? (
+            detail?.bond ? (
+              <Panel title="Bond">
+                <BondBar deposited={detail.bond.deposited} balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
+                <BondChart balance={detail.bond.balance} released={detail.bond.released} slashed={detail.bond.slashed} />
+                <div className="row"><span>Deposited</span><span>{formatUsd(detail.bond.deposited)}</span></div>
+                <div className="row"><span>Balance</span><span>{formatUsd(detail.bond.balance)}</span></div>
+                <div className="row"><span><i className="key released" aria-hidden="true" />Released to provider</span><span>{formatUsd(detail.bond.released)}</span></div>
+                <div className="row"><span><i className="key slashed" aria-hidden="true" />Paid to holders</span><span>{formatUsd(detail.bond.slashed)}</span></div>
+                <div className="row"><span>Health</span><span>{detail.bond.health}</span></div>
+              </Panel>
+            ) : (
+              <Panel title="Bond">
+                <p className="muted">{detail ? `Bond totals are not listed for this series. Bond per CU is ${formatUsd(detail.bond_per_cu)}.` : "—"}</p>
+              </Panel>
+            )
           ) : null}
-          
-          </div>
-          <div className="info-col">
-          {detail?.terms ? (
+          {infoTab === "Terms" ? (
             <Panel title="Terms">
-              <div className="row"><span>Ack / delivery / dispute</span><span>{detail.terms.ack_window_secs}s / {detail.terms.delivery_window_secs}s / {detail.terms.dispute_window_secs}s</span></div>
-              <div className="row"><span>Min redemption</span><span>{formatCu(detail.terms.min_redemption_cu)}</span></div>
-              <div className="row"><span>Arbitrator</span><span>{shortId(detail.terms.arbitrator)}</span></div>
-              <div className="row"><span>Spec hash</span><span>{shortId(detail.terms.spec_hash)}</span></div>
+              {detail?.terms ? (
+                <>
+                  <div className="row"><span>Ack / delivery / dispute</span><span>{detail.terms.ack_window_secs}s / {detail.terms.delivery_window_secs}s / {detail.terms.dispute_window_secs}s</span></div>
+                  <div className="row"><span>Min redemption</span><span>{formatCu(detail.terms.min_redemption_cu)}</span></div>
+                  <div className="row"><span>Arbitrator</span><span>{shortId(detail.terms.arbitrator)}</span></div>
+                  <div className="row"><span>Spec hash</span><span>{shortId(detail.terms.spec_hash)}</span></div>
+                </>
+              ) : (
+                <p className="muted">No terms listed for this series.</p>
+              )}
             </Panel>
           ) : null}
-          {detail?.redemption_stats ? (
+          {infoTab === "Redemptions" ? (
             <Panel title="Redemptions">
-              <div className="row"><span>Delivered</span><span>{formatCu(detail.redemption_stats.delivered_cu)}</span></div>
-              <div className="row"><span>Defaulted</span><span>{formatCu(detail.redemption_stats.defaulted_cu)}</span></div>
-              <div className="row"><span>Open</span><span>{detail.redemption_stats.open_requests}</span></div>
-              <Link href={`/redemptions/new?series=${seriesId}`}>Redeem</Link>
+              {detail?.redemption_stats ? (
+                <>
+                  <div className="row"><span>Delivered</span><span>{formatCu(detail.redemption_stats.delivered_cu)}</span></div>
+                  <div className="row"><span>Defaulted</span><span>{formatCu(detail.redemption_stats.defaulted_cu)}</span></div>
+                  <div className="row"><span>Open</span><span>{detail.redemption_stats.open_requests}</span></div>
+                  <Link href={`/redemptions/new?series=${seriesId}`}>Redeem</Link>
+                </>
+              ) : (
+                <p className="muted">No redemption record for this series.</p>
+              )}
             </Panel>
           ) : null}
-          </div>
+          {infoTab === "Reputation" ? (
+            <Panel title="Reputation">
+              <p>{detail ? `${detail.provider.delivered_cu} delivered · ${detail.provider.defaulted_cu} defaulted · ${detail.provider.voluntary_defaulted_cu} voluntary` : "—"}</p>
+              <p className="help">Provider-wide record, so both Jakarta rows share it.</p>
+            </Panel>
+          ) : null}
         </div>
       </div>
     </div>
