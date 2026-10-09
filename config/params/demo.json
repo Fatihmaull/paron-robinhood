@@ -1,0 +1,39 @@
+{
+  "label": "demo",
+  "bondFloorBps": 15000,
+  "primaryFeeBps": 100,
+  "takerFeeBps": 15,
+  "maxTakerFeeBps": 50,
+  "leadTime": 0,
+  "allowOpenWindow": true,
+  "enforceCalendarMonth": true,
+  "maxFillsPerTx": 10,
+  "maxLevels": 10,
+  "tick": 10000,
+  "cuLot": "1000000000000000000",
+  "rulingWindow": 60,
+  "disputeBondBps": 500,
+  "minDisputeBond": 5000000,
+  "bounds": {
+    "minAck": 60,
+    "maxAck": 259200,
+    "minDelivery": 60,
+    "maxDelivery": 604800,
+    "minDispute": 90,
+    "maxDispute": 604800
+  },
+  "index": {
+    "windowLength": 86400,
+    "minVolume": "1000000000000000000",
+    "minParticipants": 2,
+    "maxCarryForward": 259200
+  },
+  "factors": {
+    "H100-SXM-80GB": 10000,
+    "H200-SXM-141GB": 14000,
+    "B200-SXM-180GB": 25000,
+    "GB200-NVL72": 35000,
+    "A100-SXM-80GB": 4500
+  },
+  "timelockDelay": 60
+}
