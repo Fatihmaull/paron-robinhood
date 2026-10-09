@@ -4,6 +4,9 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
 import {
+  DEMO_PROVIDER,
+  type QueueScope,
+  queuePath,
   loadBook,
   loadGpus,
   loadHoldings,
@@ -56,14 +59,33 @@ export function useHoldings() {
   return useNoted(["holdings", snap, source, address ?? null], () => loadHoldings(snap, source, client, address), source !== "live" || Boolean(address));
 }
 
-export function useProviderQueue() {
+function useQueue(scope: QueueScope, enabled = true) {
   const { snap, source, client } = useData();
-  return useNoted(["provider-queue", snap, source], () => loadProviderRedemptions(snap, source, client));
+  return useNoted(["redemption-queue", snap, source, queuePath(scope)], () => loadProviderRedemptions(snap, source, client, scope), enabled);
+}
+
+/** The connected provider's queue (demo provider when no wallet is connected). */
+export function useProviderQueue() {
+  const { address } = useAccount();
+  return useQueue({ provider: address ?? DEMO_PROVIDER });
+}
+
+/** Open defaults, deliveries and rulings across all providers (keepers, claim list). */
+export function useKeeperQueue() {
+  return useQueue("keepers");
+}
+
+/** Redemptions the connected wallet holds. */
+export function useHolderQueue() {
+  const { address } = useAccount();
+  const { source } = useData();
+  return useQueue({ holder: address ?? "" }, source !== "live" || Boolean(address));
 }
 
 export function useProviderAccount() {
   const { snap, source, client } = useData();
-  return useNoted(["provider", snap, source], () => loadProvider(snap, source, client));
+  const { address } = useAccount();
+  return useNoted(["provider", snap, source, address ?? null], () => loadProvider(snap, source, client, address ?? DEMO_PROVIDER));
 }
 
 export function useIndex() {
@@ -78,7 +100,8 @@ export function usePrints() {
 
 export function useStatement() {
   const { snap, source } = useData();
-  return useNoted(["statement", snap, source], () => loadStatement(snap, source));
+  const { address } = useAccount();
+  return useNoted(["statement", snap, source, address ?? null], () => loadStatement(snap, source, address), source !== "live" || Boolean(address));
 }
 
 export function useGpus() {

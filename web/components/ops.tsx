@@ -21,7 +21,7 @@ import { asBytes32 } from "@/lib/settlement";
 import { demoChecks } from "@/lib/demo";
 import { errorCopy } from "@/lib/errors";
 import { formatFactor, formatWib, shortId } from "@/lib/format";
-import { useKyb, useProviderQueue, useTimelock } from "@/lib/hooks";
+import { useKeeperQueue, useKyb, useTimelock } from "@/lib/hooks";
 import { useData } from "./providers";
 import { useSend } from "./tx";
 import { Field, Panel, TxButton } from "./ui";
@@ -108,7 +108,7 @@ export function KybPage() {
 }
 
 export function KeepersPage() {
-  const queue = useProviderQueue();
+  const queue = useKeeperQueue();
   const { send, pending } = useSend();
   const rows = queue.data?.data ?? [];
   const claims = rows.filter((row) => row.state === "DEFAULTABLE" || row.actions.includes("CLAIM_DEFAULT"));

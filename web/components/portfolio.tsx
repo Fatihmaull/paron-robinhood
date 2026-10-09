@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { formatCu, formatUsd, formatWib, shortId } from "@/lib/format";
-import { useHoldings, useProviderQueue, useStatement } from "@/lib/hooks";
+import { useHolderQueue, useHoldings, useKeeperQueue, useStatement } from "@/lib/hooks";
 import { useData } from "./providers";
 import { Panel } from "./ui";
 
@@ -66,7 +66,9 @@ function Holdings() {
 }
 
 function RedemptionList({ claimsOnly }: { claimsOnly: boolean }) {
-  const query = useProviderQueue();
+  const keepers = useKeeperQueue();
+  const holder = useHolderQueue();
+  const query = claimsOnly ? keepers : holder;
   const rows = (query.data?.data ?? []).filter((row) => (claimsOnly ? row.state === "DEFAULTABLE" || row.actions.includes("CLAIM_DEFAULT") : true));
   return (
     <Panel title={claimsOnly ? "Claimable defaults" : "Redemptions"}>
