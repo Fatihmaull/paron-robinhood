@@ -118,7 +118,7 @@ Hard bans: purple or cyan accents, glassmorphism, gradient blobs or particle bac
 
 ## 11. Delivery checklist (run before each merge)
 
-- [ ] `grep -ri "affiliated\|endorsed by" web/` returns nothing
+- CI grep `affiliated|endorsed by`: cancelled (D-81). Status: awaiting Fatih's direct confirmation in group. This is not a CI check. `web/lib/copy-guard.test.ts` stays and is not that grep.
 - [ ] No hex colors in components or JS; tokens only
 - [ ] No horizontal scroll at 390px on any route
 - [ ] Every route: unique `<title>`, one `<h1>`, skip link, visible focus

@@ -1,6 +1,6 @@
 # Paron: skenario demo + spesifikasi seed (dev doc 05)
 
-> **[Update 9 Okt 2026 ~15:34 WIB, APPROVED Fatih via handler (CONTEXT-INDEX)]:** nama series demo = `CU-JKT-H100-2611` (sesuai live; seed kontrak tidak diubah). Penyebutan `CU-JKT-H100-2610` di dokumen ini dibaca sebagai `CU-JKT-H100-2611` untuk demo/slide; penulisan ulang detail (D-19, series ke-4 yang di-forge, nomor window) dilakukan Spec Writer sebagai usulan PENDING.
+> **[D-82, APPROVED Fatih Jum 9 Okt 2026 ~15:34 WIB, via handler]:** nama series demo yang live = `CU-JKT-H100-2611`. Seed kontrak series 1 tidak diubah. Catatan D-19/D-25 (series panggung `CU-JKT-H100-2610`, window, `series_id`, input skrip seed/forge) tetap historis; yang digantikan hanya penamaan live. String `2610` yang mengikat window, `series_id`, atau input skrip tidak ditulis ulang di dokumen ini.
 
 
 Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P5-xx disetujui Fatih (Jum 9 Okt 2026 ~09:40 WIB); disinkronkan Jum 9 Okt ~10:30 WIB (event `ReputationUpdated` dengan `strikes`, tim solo, X-6/X-7 selesai). Cadangan: `.bak-2026-10-09-pre-approval/`. Isinya prosa dan langkah semu bernomor. **Tidak ada script dalam bahasa apa pun.** Disusun Kamis 8 Okt 2026, ~21:20 WIB. Kode (termasuk `script/Seed.s.sol`, stack §4.4) baru ditulis mulai Jumat 9 Okt 09:00 WIB.
@@ -29,6 +29,8 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P5-xx disetujui Fatih (
 | Angka kunci | 500 CU @ $3.00, bond $2,250; buyer beli 20 CU; ask $3.20 diambil wallet ke-2 buyer; redeem 8 → bond $36 dilepas ke provider; default 10 CU → holder menerima $45; bond tersisa **$2,169**; coverage **1.50** | design §7.4, 03 §3.3 |
 | Lingkungan | (a) anvil lokal/fork untuk latihan dengan warp waktu; (b) deployment latihan di testnet; (c) **deployment panggung** yang hanya di-seed sekali lalu tidak disentuh | [APPROVED P5-20] |
 | Cadangan | Window 60 dtk, wallet yang sudah didanai, video backup paling lambat Sab 06:00 | PK §11.1, design §8 |
+
+**Catatan D-82:** series demo yang ada di deployment live bernama `CU-JKT-H100-2611`. Baris "Series di panggung" di atas, tabel A1/A3 (§2.1), dan baris D-19/D-25 di §5 tetap catatan historis. Seed series 1, window, dan input skrip tidak diubah.
 
 **Temuan utama (detail di §2.2 dan §8):**
 1. ⚠ ARITMETIKA: adegan default di design hanya 30 dtk (1:45–2:15), padahal countdown ack minimum 60 dtk ([D-20]). Naskah harus diatur ulang (§2.3).
@@ -106,7 +108,7 @@ Waktu relatif dari mulai bicara. Kolom "Tx" = transaksi onchain di adegan itu (l
 | 1:35–1:45 | **Integrity callout** (opsional) | `W-BUY` mencoba membeli ask `W-BUY2` di series 3 → revert `SelfMatch()` (S-12) | S3 series 3 | — | Pesan error `SelfMatch()`; tidak ada print baru |
 | 1:45–2:10 | "What if a provider ghosts you?" | — | S4 countdown | E10 | Countdown menuju 0; tombol "Claim default" muncul saat `actions` berisi `CLAIM_DEFAULT` (03 P3-33) |
 | ≈2:11–2:15 | **WOW: Claim default** | Juri menekan "Claim default" di HP `W-JUDGE` (S-13) | S4 → S3 | E10, E5, E12 | Buyer +$45.00 (beli $30, +50%); strike di series Jakarta; bond bar $2,214 → **$2,169**; series 1–3 tidak berubah. "No admin, no oracle, no insurance pool." |
-| 2:15–2:30 | **Close** | — | Slide | — | Pipeline GW Indonesia 2027; footnote "not affiliated" hanya di slide (bukan app, D-64) |
+| 2:15–2:30 | **Close** | — | Slide | — | Pipeline GW Indonesia 2027; footnote "not affiliated" hanya di slide [D-64] (penyebutan di app: historis [D-64]) |
 
 Risiko naskah ini: listing harus selesai ≤ 28 dtk (design menarget < 40 dtk). Kalau listing molor, potong callout integritas (1:35–1:45) lebih dulu, lalu dipersingkat kalimat "Paron Prints". Konfirmasi #1 terjadi **setelah** request #2, jadi urutan event berbeda dari timeline gladi 03 §3.3 (angka akhir sama, §8 X-5).
 
@@ -555,12 +557,12 @@ Semua D-xx di bawah **APPROVED** (Jum 9 Okt 2026 ~09:40 WIB) dengan opsi rekomen
 | D-15 | Status `THIN` → `OK` di adegan trade; parameter demo | Dua status saja → tetap jalan; parameter lain bisa membuat 1 fill tidak cukup untuk `OK` |
 | D-17 | Order book ≤ 10 level | — |
 | D-18 | Assert invariant bond §3.5 | — |
-| D-19 | Series panggung `CU-JKT-H100-2610`, `allowOpenWindow` | Kalau ditolak: redeem/default di panggung tidak mungkin (window Nov) |
+| D-19 | Series panggung `CU-JKT-H100-2610`, `allowOpenWindow`. Penamaan live: D-82 (`CU-JKT-H100-2611`); teks ini historis | Kalau ditolak: redeem/default di panggung tidak mungkin (window Nov) |
 | D-20 | 60/60/90/120 dtk | Kalau batas prod dipakai: demo default live mustahil |
 | D-21 | D-04a: dispute bond → provider | Split dengan arbitrator → saldo D-04a berubah |
 | D-22 | Isi event `Trade` S-06 | Tanpa field tambahan → assert print lewat API saja |
 | D-23, D-24 | EASGate/RegistryGate, satu schema role 1–3 | Schema `ProviderVerified` terpisah → A-3 bertambah |
-| D-25 | 3 seed + 1 live | 3 series saja → series 2610 menggantikan salah satu |
+| D-25 | 3 seed + 1 live. Penamaan live: D-82; teks ini historis | 3 series saja → series 2610 menggantikan salah satu |
 | D-26 | `receiptHash` saja (S-09) | Receipt EAS → tambah attestation per delivery |
 | D-29 | `refunded_after_window` (D-04c) | — |
 | D-30 | Listing 1 tx dengan permit (S-01) | Tanpa permit → 2 tx, stopwatch makin ketat |

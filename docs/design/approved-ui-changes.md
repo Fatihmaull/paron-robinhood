@@ -35,12 +35,25 @@ Map: spec-change-requests.md #9-#13 and live-review LR-5, LR-6, LR-8.
 ## Also adopt (low risk, from the audit)
 - Import `tokens.v2.css` instead of `tokens.css` in `globals.css` (legacy aliases preserved). Markets row height 32px with status pill inline.
 - Per-route `<title>` and a skip link (`<a class="skip" href="#main">`).
-- Keep grep guard `affiliated|endorsed by` in CI.
+- CI grep guard `affiliated|endorsed by`: cancelled (D-81). Status: awaiting Fatih's direct confirmation in group. There is no such grep in CI. `web/lib/copy-guard.test.ts` is unchanged and is not that grep.
 
 ## Verification (Designer will re-check on live after deploy)
 Screenshots at 1280 and 390 for `/`, `/markets`, `/markets/1`, `/portfolio`, `/provider`, redemption detail; no horizontal scroll at 390; no blue links; contrast >= 4.5:1.
 
 ## Decision map (07 §15, APPROVED by Fatih 9 Oct 2026 14:40 WIB)
-#9 + LR-5 = D-67, #10 = D-68, #11 = D-69, #12 = D-70, #13 = D-71, LR-6 (contrast) = D-72, LR-8 (Provider tabs) = D-73, "Also adopt" (tokens.v2.css, per-route title, skip link, CI grep guard) = D-74.
+#9 + LR-5 = D-67, #10 = D-68, #11 = D-69, #12 = D-70, #13 = D-71, LR-6 (contrast) = D-72, LR-8 (Provider tabs) = D-73, "Also adopt" (tokens.v2.css, per-route title, skip link) = D-74. The CI grep item formerly listed under D-74 is cancelled by D-81.
 If time is short, implement in this order: D-70, D-71, D-72, D-69, D-73, D-68, D-67.
-Status: all APPROVED; implementation by Principal Engineer in progress. Designer verification on live pending.
+Status: D-67..D-74 APPROVED except the grep item (D-81). Designer verification on live pending.
+
+## P1–P6 and demo series name (07 §16, Fatih via handler, 9 Oct 2026 ~15:34 WIB)
+
+| ID | Decision | Status |
+|---|---|---|
+| D-75 | P1 Syncing banner shows only when `/v1/health` is `synced:false` or lag is over 20 blocks. Info color, not amber. D-66 copy stays. | APPROVED |
+| D-76 | P2 Skeleton uses a pulse opacity animation, not a shimmer, per design.md §6. "0 series." stays hidden while loading (D-66). | APPROVED |
+| D-77 | P3 Leverage tab on `/markets/[id]` is labeled "Coming soon", with no action. | APPROVED |
+| D-78 | P4 Buy ticket: remove implementation copy. Product copy only. | APPROVED |
+| D-79 | P5 Numbers: money as `$3,240.00` (thousands separator, 2 decimals). Max cost uses 2 decimals. | APPROVED |
+| D-80 | P6 Home: fill the page, less empty space, especially at 390 px. Connect wallet stays on one line. | APPROVED |
+| D-81 | CI grep `affiliated` / `endorsed by` (last item of D-74) is cancelled. No such grep in CI. `copy-guard.test.ts` is unchanged. | awaiting Fatih's direct confirmation in group |
+| D-82 | Live demo series name is `CU-JKT-H100-2611`. Contract seed series 1 is unchanged. D-19/D-25 stay historical records; only the live name is superseded. | APPROVED |

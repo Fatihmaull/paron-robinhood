@@ -11,6 +11,8 @@ Status: **APPROVED-SYNCED, spec saja (bukan kode).** Keputusan 07 dan usulan P3-
 **Changelog Jum 9 Okt 2026 ~13:11 WIB (cadangan `.bak-2026-10-09-pre-1310/` sebagai `*.pre-cors-fix-1311.md`):** PE di grup ~13:09 WIB: `API_CORS_ORIGIN` **kosong dulu (historis; final: CORS = `https://paron.vercel.app` [D-58/D-10], `*` hanya default lokal)** (allow all origins; data publik); dikunci ke `https://paron.vercel.app` belakangan saat final (§0 Hosting, §3.1).
 **Catatan Jum 9 Okt 2026 ~14:02 WIB (PE di grup 13:59 WIB; cadangan `.bak-2026-10-09-pre-1402/`):** `DATABASE_SCHEMA` **tidak** lagi tetap `paron`. Penyebab kegagalan sebelumnya: Ponder menolak boot di schema `paron` yang dipakai build lama, sehingga Railway terus melayani container lama. Fix PR #30 (merge): tiap build memakai schema `paron_<sha8>` (8 karakter pertama commit sha). Indexer sehat: `/v1/health` 200 `synced:true`, `/v1/series` mengembalikan 3 series (`CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612`). Tiap deploy backfill ±1 menit, jadi `503 INDEXER_SYNCING` sebentar itu normal.
 
+**[D-82, APPROVED ~15:34 WIB]** Nama series demo yang live = `CU-JKT-H100-2611` (sudah yang dikembalikan `/v1/series`; seed kontrak series 1 tidak diubah). Contoh di bawah yang menulis `CU-JKT-H100-2610` tetap, bersama `series_id` 4 dan window 2026-10: itu catatan D-19 (historis), bukan seed series 1.
+
 **Sumber:** kanonik `paron-design.md` **(design §x)**, `paron-stack.md` **(stack §x)**, `paron-product-knowledge.md` **(PK §x)**, `paron-gaps.md` **(gaps Gx)**, `open-questions-research.md` **(OQR §x)**; plus konsistensi dengan dev doc **01** (`01-contract-interfaces.md`: event, tipe, P-xx) dan **07** (`07-decisions-log.md`: keputusan D-xx, semuanya APPROVED Jum 9 Okt ~09:40 WIB kecuali D-10).
 
 **Legenda:**
@@ -457,7 +459,7 @@ Endpoint yang tidak dibuat: kalkulasi harga primer, saldo USDC, `isSaleOpen`, `d
 
 ### 3.3 CONTOH DATA bersama (dipakai semua contoh di bawah)
 
-> **CONTOH DATA.** Angka produk dari naskah demo (design §7.4, PK §11.1). Simbol/urutan series dari 07 D-19/D-25 (urutan ID final ada di doc 05). Alamat, hash, nomor blok, `seriesId` 1–4, dan timestamp **fiktif**. Timeline = gladi Sabtu 10 Okt 2026, 10:00 WIB (03:00Z). Parameter waktu demo: ack 60 dtk, delivery 60 dtk, dispute 90 dtk ([D-20]).
+> **CONTOH DATA.** Angka produk dari naskah demo (design §7.4, PK §11.1). Simbol/urutan series dari 07 D-19/D-25 (urutan ID final ada di doc 05). Alamat, hash, nomor blok, `seriesId` 1–4, dan timestamp **fiktif**. Timeline = gladi Sabtu 10 Okt 2026, 10:00 WIB (03:00Z). Parameter waktu demo: ack 60 dtk, delivery 60 dtk, dispute 90 dtk ([D-20]). **[D-82]** Penamaan series demo yang live = `CU-JKT-H100-2611`. Baris series 4 dan payload yang menyertakan `series_id` serta window tidak ditulis ulang.
 
 | Label | Nilai |
 |---|---|
@@ -1143,7 +1145,7 @@ Semua D-xx di bawah **APPROVED** (Jum 9 Okt 2026 ~09:40 WIB) dengan opsi rekomen
 | D-15 | `status` 3 nilai, `thresholds`, `thin`, fixture DISRUPTED | Dua status: hapus `DISRUPTED` |
 | D-16 | `value` vs `onchain_vwap`, `method.alpha` | Winsorized onchain → `value = onchain_vwap` |
 | D-17 | E6 `depth` maks | 10 vs 20 |
-| D-19 | Contoh series 4 `CU-JKT-H100-2610` | Kalau tetap `2611`: contoh redemption tidak mungkin terjadi di Okt |
+| D-19 | Contoh series 4 `CU-JKT-H100-2610`. Penamaan live digantikan D-82 (`CU-JKT-H100-2611`); baris ini tetap catatan historis | Kalau tetap `2611`: contoh redemption tidak mungkin terjadi di Okt |
 | D-20 | `terms` (60/60/90 dtk) dan timeline contoh | — |
 | D-21, D-37 | `ledger_entry` dispute bond, E17 | Tujuan dispute bond menentukan baris statement |
 | D-22 | Hampir seluruh `print` (entity, `nativePrice`, `takerFee`, `eligible`) | Tanpa event diperluas: Ponder harus `readContract`/lookup per print, `eligible` dihitung offchain |

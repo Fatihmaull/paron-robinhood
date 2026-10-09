@@ -587,6 +587,8 @@ Semua cek jalan di Robinhood Chain Testnet antara 09:00 dan 10:30 (design §11.3
 
 CI tidak pernah memegang key deployer dan tidak pernah broadcast ke testnet [P4-17]. Deploy selalu manual dengan keystore dari **mesin PE** (sebelumnya "laptop A"); cloud agent / lane L4 hanya menyiapkan `DeployAll`, seed, dan manifest, tidak menjalankan broadcast (§4.1 butir 6).
 
+**[D-81]** Guard CI grep `affiliated|endorsed by` (butir terakhir D-74) dibatalkan. Tidak ada job grep itu di CI. Status: awaiting Fatih's direct confirmation in group. `web/lib/copy-guard.test.ts` tetap dan bukan guard ini.
+
 ### 9.2 Branch dan commit (singkat) [APPROVED P4-18]
 
 - **Trunk-based:** `main` selalu bisa build. Branch pendek per area (`contracts/<topik>`, `web/<topik>`, `indexer/<topik>`, `agents/<topik>`, `docs/<topik>`), merge cepat setelah CI hijau. **[APPROVED Fatih ~11:27 WIB, izin merge tetap]** PE boleh me-merge PR sendiri ke `main` kalau test/CI hijau, tanpa minta OK Fatih tiap kali (07 §10.5). Jangan force-push ke `main`.
