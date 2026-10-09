@@ -83,10 +83,31 @@ export function resolveNow(indexedAtSec: bigint): number {
   return Date.now();
 }
 
+/** Comma-separated `API_CORS_ORIGIN`. Unset, blank, or `*` allows every origin. */
+export function corsOriginSetting(raw = process.env.API_CORS_ORIGIN): string | string[] {
+  const value = raw?.trim() ?? "";
+  if (value === "" || value === "*") return "*";
+  const origins = value
+    .split(",")
+    .map((part) => part.trim())
+    .filter((part) => part.length > 0);
+  if (origins.length === 0 || origins.includes("*")) return "*";
+  return origins;
+}
+
 export function createApp(options: CreateAppOptions) {
   const app = new Hono<{ Variables: Vars }>();
-  const origin = process.env.API_CORS_ORIGIN || "*";
-  app.use("*", cors({ origin }));
+  app.use("*", cors({ origin: corsOriginSetting() }));
+  app.use("*", async (c, next) => {
+    await next();
+    const allowed = corsOriginSetting();
+    if (allowed === "*") return;
+    const requestOrigin = c.req.header("origin");
+    if (!requestOrigin || allowed.includes(requestOrigin)) return;
+    // Ponder's server sets Access-Control-Allow-Origin: * before this app runs.
+    // Omitting the header leaves that * in place, so a rejected origin overwrites it.
+    c.header("Access-Control-Allow-Origin", "null");
+  });
 
   app.use("*", async (c, next) => {
     const snap = await options.load();
@@ -118,7 +139,7 @@ export function createApp(options: CreateAppOptions) {
     );
   };
 
-  app.get("/health", health);
+  // Ponder reserves GET /health (and /ready, /status, /metrics, /client).
   app.get("/v1/health", health);
 
   app.get("/v1/prints", (c) => {
@@ -1427,7 +1448,7 @@ function timelockStatus(row: TimelockRow, nowSec: bigint): string {
 
 function presentTimelock(snap: Snapshot, row: TimelockRow, nowSec: bigint) {
   return {
-    operation_id: row.operationId,
+    operation_id: row.timelockId,
     target: row.target,
     target_name: snap.contractNames[row.target] ?? null,
     value: row.value.toString(),

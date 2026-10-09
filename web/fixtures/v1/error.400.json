@@ -1,0 +1,16 @@
+{
+  "error": {
+    "code": "INVALID_PARAM",
+    "message": "unknown gpu 'H900'",
+    "details": {
+      "param": "gpu",
+      "allowed": [
+        "H100",
+        "H200",
+        "B200",
+        "GB200",
+        "A100"
+      ]
+    }
+  }
+}

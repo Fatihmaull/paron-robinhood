@@ -363,7 +363,8 @@ export const eventLog = onchainTable(
 
 export const timelockOperation = onchainTable("timelock_operation", (t) => ({
   id: t.text().primaryKey(),
-  operationId: t.hex().notNull(),
+  // Ponder reserves the SQL name operation_id. The API still exposes operation_id.
+  timelockId: t.hex().notNull(),
   index: t.integer().notNull(),
   target: t.hex().notNull(),
   value: t.bigint().notNull(),

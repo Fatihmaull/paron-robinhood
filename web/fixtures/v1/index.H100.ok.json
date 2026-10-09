@@ -1,0 +1,37 @@
+{
+  "data": {
+    "gpu": "H100",
+    "gpu_type": "H100-SXM-80GB",
+    "unit": "USD per CU (H100-equivalent GPU-hour)",
+    "status": "OK",
+    "value": "3.200000",
+    "onchain_vwap": "3.200000",
+    "round_id": "1",
+    "updated_at_ms": 1791601265000,
+    "last_ok_at_ms": 1791601265000,
+    "window_secs": 86400,
+    "eligible_volume_cu": "5",
+    "participants": 2,
+    "thresholds": {
+      "min_volume_cu": "1",
+      "min_participants": 2,
+      "max_carry_forward_secs": 259200
+    },
+    "method": {
+      "type": "winsorized_vwap",
+      "alpha": null,
+      "methodology": "METHODOLOGY.md"
+    },
+    "reference": {
+      "value": "3.000000",
+      "label": "synthetic demo data",
+      "observed_at_ms": 1791601200000
+    }
+  },
+  "meta": {
+    "chain_id": 46630,
+    "indexed_block": 130100400,
+    "indexed_at_ms": 1791601450000,
+    "server_now_ms": 1791601450000
+  }
+}

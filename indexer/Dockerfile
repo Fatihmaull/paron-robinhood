@@ -5,12 +5,16 @@ WORKDIR /app
 
 RUN corepack enable && corepack prepare pnpm@12.9.1 --activate
 
-COPY package.json pnpm-lock.yaml ./
+# pnpm 12 reads allowBuilds only from pnpm-workspace.yaml. The package.json
+# "pnpm" field is ignored, so esbuild's postinstall fails without this file.
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml ./
 RUN pnpm install --frozen-lockfile
 
 COPY . .
 
 ENV PORT=42069
+# `ponder start` exits without a schema name. Override in Railway only if you must; keep it stable.
+ENV DATABASE_SCHEMA=paron
 EXPOSE 42069
 
 # `pnpm start` runs `ponder start` and binds $PORT (Railway injects PORT).

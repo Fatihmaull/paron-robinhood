@@ -40,8 +40,11 @@ type IndexArgs = {
 /**
  * Ponder's `on` is generic over the config's event union. Registering the full
  * list through one helper keeps the reducer (`applyLog`) as the only handler.
+ * Call it with `ponder` as `this`: the virtual registry pushes onto `this.fns`.
  */
-const on = ponder.on as unknown as (name: string, handler: (args: IndexArgs) => Promise<void>) => void;
+const on = (ponder.on as unknown as (name: string, handler: (args: IndexArgs) => Promise<void>) => void).bind(
+  ponder,
+);
 
 const CONTRACTS: Record<string, readonly string[]> = {
   SeriesFactory: [

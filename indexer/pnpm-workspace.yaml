@@ -1,2 +1,5 @@
+# pnpm 12.9.1 ignores the "pnpm" field in package.json. Build scripts run
+# only for names listed here. esbuild (via Vite) is the only dependency
+# with an install script. @electric-sql/pglite ships prebuilt WASM and does not.
 allowBuilds:
   esbuild: true
