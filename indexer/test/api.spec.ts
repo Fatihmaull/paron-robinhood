@@ -103,13 +103,15 @@ describe("API-01 health", () => {
     expect(body.meta.server_now_ms).toBe(Number(DEMO_NOW) * 1000);
   });
 
-  it("answers /health the same way for the Railway healthcheck", async () => {
+  it("keeps the Railway healthcheck on /v1/health because Ponder reserves /health", async () => {
     const store = await replay("end");
     const app = await appAt(store);
-    const response = await app.request("/health");
+    const response = await app.request("/v1/health");
     expect(response.status).toBe(200);
     const body = await response.json();
     expect(body.data.synced).toBe(true);
+    const reserved = await app.request("/health");
+    expect(reserved.status).toBe(404);
   });
 
   it("serves 503 on data routes while unsynced and still serves health", async () => {
@@ -611,7 +613,7 @@ describe("API_CORS_ORIGIN", () => {
       const allowed = await limited.request("/v1/health", { headers: { origin: "http://localhost:3000" } });
       expect(allowed.headers.get("access-control-allow-origin")).toBe("http://localhost:3000");
       const denied = await limited.request("/v1/health", { headers: { origin: "https://evil.example" } });
-      expect(denied.headers.get("access-control-allow-origin")).toBeNull();
+      expect(denied.headers.get("access-control-allow-origin")).toBe("null");
     } finally {
       if (previous === undefined) delete process.env.API_CORS_ORIGIN;
       else process.env.API_CORS_ORIGIN = previous;

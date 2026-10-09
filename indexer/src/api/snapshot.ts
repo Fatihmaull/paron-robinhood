@@ -282,7 +282,7 @@ export type EventRow = {
 
 export type TimelockRow = {
   id: string;
-  operationId: Hex;
+  timelockId: Hex;
   index: number;
   target: Hex;
   value: bigint;

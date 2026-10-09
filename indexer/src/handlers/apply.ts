@@ -1583,7 +1583,7 @@ async function onCallScheduled(store: Store, log: IndexedLog): Promise<void> {
   const id = `${operationId}-${index}`;
   await store.put("timelock_operation", id, {
     id,
-    operationId,
+    timelockId: operationId,
     index,
     target: addr(log.args.target),
     value: bi(log.args.value),
@@ -1604,9 +1604,9 @@ async function onCallScheduled(store: Store, log: IndexedLog): Promise<void> {
 
 async function onCallSalt(store: Store, log: IndexedLog): Promise<void> {
   const operationId = hex(log.args.id);
-  const rows = await store.list<{ id: string; operationId: Hex }>("timelock_operation");
+  const rows = await store.list<{ id: string; timelockId: Hex }>("timelock_operation");
   for (const row of rows) {
-    if (row.operationId === operationId) {
+    if (row.timelockId === operationId) {
       await store.put("timelock_operation", row.id, { ...row, salt: hex(log.args.salt) });
     }
   }
@@ -1622,9 +1622,9 @@ async function onCallExecuted(store: Store, log: IndexedLog): Promise<void> {
 
 async function onCancelled(store: Store, log: IndexedLog): Promise<void> {
   const operationId = hex(log.args.id);
-  const rows = await store.list<{ id: string; operationId: Hex }>("timelock_operation");
+  const rows = await store.list<{ id: string; timelockId: Hex }>("timelock_operation");
   for (const row of rows) {
-    if (row.operationId === operationId) {
+    if (row.timelockId === operationId) {
       await store.put("timelock_operation", row.id, { ...row, cancelledAt: log.blockTimestamp, cancelledTx: log.txHash });
     }
   }
