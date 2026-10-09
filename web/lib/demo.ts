@@ -4,23 +4,23 @@ export type DemoCheck = {
   href: string;
 };
 
-/** Live demo series is CU-JKT-H100-2611 (seed series 1). Steps are links, not a completion state. */
+/** Stage series is CU-JKT-H100-2610 (series 4). Seed series 1–3 stay 2611/2612. Steps are links, not a completion state. */
 export function demoChecks(): DemoCheck[] {
   return [
     {
       id: "series",
-      label: "CU-JKT-H100-2611 is listed",
-      href: "/markets/1",
+      label: "CU-JKT-H100-2610 is listed",
+      href: "/markets/4",
     },
     {
       id: "primary",
       label: "Primary buy of 20 CU by the buyer",
-      href: "/markets/1",
+      href: "/markets/4",
     },
     {
       id: "trade",
       label: "Secondary trade printed",
-      href: "/trade/1",
+      href: "/trade/4",
     },
     {
       id: "finalized",

@@ -1,6 +1,6 @@
 import assert from "node:assert/strict";
 import test from "node:test";
-import { disputeBond, formatMaxCost, formatUsd, isWholeCu, quotePrimary, shortId } from "./format.ts";
+import { addressParts, disputeBond, formatMaxCost, formatUsd, isWholeCu, quotePrimary, shortId } from "./format.ts";
 
 test("usd display is grouped and always two decimals", () => {
   assert.equal(formatUsd("60.000000"), "$60.00");
@@ -39,6 +39,11 @@ test("address casing matches between API lowercase and onchain checksum", () => 
   assert.equal(shortId(hidden), "0xda147F898Cf5F1A0c891cf40D8B9e7f772491d0f");
   const hash = `0x${"ab".repeat(32)}`;
   assert.equal(shortId(hash), "0xabab…abab");
+  const parts = addressParts(hidden);
+  assert.equal(parts?.full, "0xda147F898Cf5F1A0c891cf40D8B9e7f772491d0f");
+  assert.equal(`${parts?.head}${parts?.tail}`, parts?.full);
+  assert.equal(parts?.tail, "1d0f");
+  assert.equal(addressParts(hash), null);
 });
 
 test("dispute bond floors at five dollars", () => {

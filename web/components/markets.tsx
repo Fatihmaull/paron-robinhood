@@ -2,7 +2,8 @@
 
 import Link from "next/link";
 import { useRouter } from "next/navigation";
-import { canonicalAddress, formatCoverage, formatCu, formatFactor, formatUsd, shortId } from "@/lib/format";
+import { formatCoverage, formatCu, formatFactor, formatUsd } from "@/lib/format";
+import { FitAddress } from "./address";
 import { useSeriesList } from "@/lib/hooks";
 import { marketsNotice, showSeriesCount } from "@/lib/markets-state";
 import type { SeriesRow } from "@/lib/types";
@@ -89,7 +90,7 @@ export function Markets({ headline = false, heading = true }: { headline?: boole
                 </td>
                 <td>
                   {row.provider.verified ? <span className="ok">✓ </span> : null}
-                  <span className="num" title={canonicalAddress(row.provider.address)}>{shortId(row.provider.address)}</span>
+                  <FitAddress value={row.provider.address} />
                   {row.provider.status.toUpperCase() === "ACTIVE" ? null : <span className="pill danger">{row.provider.status}</span>}
                 </td>
                 <td>
