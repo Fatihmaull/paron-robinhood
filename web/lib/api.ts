@@ -28,7 +28,7 @@ import {
   STATEMENT_UNAVAILABLE,
   TAPE_UNAVAILABLE,
 } from "./onchain";
-import type { GpuRow, LoadResult, Meta, Participant, Snap, StatementRow, TimelockOp } from "./types";
+import type { GpuRow, Holding, LoadResult, Meta, Participant, Snap, StatementRow, TimelockOp } from "./types";
 
 export class ApiError extends Error {
   code: string;
@@ -149,8 +149,12 @@ export function loadRedemption(snap: Snap, source: "mock" | "live", reqId: strin
   );
 }
 
-export function loadHoldings(snap: Snap, source: "mock" | "live", client?: PublicClient) {
-  return withFallback(snap, source, () => holdingsOf(snap), "/portfolio/holdings", async () => {
+export function loadHoldings(snap: Snap, source: "mock" | "live", client?: PublicClient, address?: string) {
+  if (source === "live" && !address) {
+    // No wallet connected: nothing to query (the API is per account), so no request is made.
+    return Promise.resolve<LoadResult<Holding[]>>({ data: [], meta: localMeta(), origin: "live" });
+  }
+  return withFallback(snap, source, () => holdingsOf(snap), `/accounts/${address}/holdings`, async () => {
     throw new OnchainUnavailable("Holdings need the Paron API, or a connected wallet balance read.");
   }, client);
 }
