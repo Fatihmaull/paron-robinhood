@@ -8,7 +8,7 @@
     "node": "24.21.0"
   },
   "scripts": {
-    "test": "node --test test/keeper.test.mjs test/trader-bot.test.mjs",
+    "test": "node --test test/keeper.test.mjs test/trader-bot.test.mjs test/runtime.test.mjs",
     "keeper": "node src/keeper/run.mjs",
     "trader-bot": "node src/trader-bot/run.mjs"
   },
