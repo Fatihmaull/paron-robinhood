@@ -20,15 +20,17 @@ import {
   walletConnectId,
 } from "@/lib/config";
 import { snapServerNow } from "@/lib/fixtures";
+import { isPublicRpcFailure } from "@/lib/markets-state";
+import { RPC_RETRY_COUNT, rpcBackoffMs, rpcTransportOptions, rpcUrls } from "@/lib/rpc";
 import type { Meta, Snap } from "@/lib/types";
 
 const projectId = walletConnectId();
 const chains = [activeChain(), activeChain().id === 46630 ? arbitrumSepolia : robinhoodTestnet] as const;
 
-// The public RPC fails intermittently (TLS/SNI alerts), so every call retries with backoff,
-// and a second RPC (NEXT_PUBLIC_RPC_URL_BACKUP) is used when one is configured.
-const rpcHttp = (url: string) => http(url, { retryCount: 3, retryDelay: 400, timeout: 8000 });
-const robinhoodUrls = [rpcUrl(), rpcUrlBackup()].filter(Boolean);
+// The public RPC fails intermittently (TLS/SNI alerts). Each call retries with backoff.
+// NEXT_PUBLIC_RPC_URL_BACKUP is optional; an empty value leaves a single endpoint.
+const rpcHttp = (url: string) => http(url, rpcTransportOptions());
+const robinhoodUrls = rpcUrls(rpcUrl(), rpcUrlBackup());
 const transports = {
   [robinhoodTestnet.id]: robinhoodUrls.length > 1 ? fallback(robinhoodUrls.map(rpcHttp)) : rpcHttp(robinhoodUrls[0]),
   [arbitrumSepolia.id]: rpcHttp("https://sepolia-rollup.arbitrum.io/rpc"),
@@ -133,7 +135,12 @@ export function Providers({ children }: { children: React.ReactNode }) {
     () =>
       new QueryClient({
         defaultOptions: {
-          queries: { retry: false, refetchOnWindowFocus: false, networkMode: "always" },
+          queries: {
+            retry: (failureCount, error) => failureCount < RPC_RETRY_COUNT && isPublicRpcFailure(error),
+            retryDelay: (attemptIndex) => rpcBackoffMs(attemptIndex + 1),
+            refetchOnWindowFocus: false,
+            networkMode: "always",
+          },
         },
       }),
   );

@@ -40,6 +40,7 @@ export function Markets({ headline = false, heading = true }: { headline?: boole
       {headline || heading ? <div style={{ height: 16 }} /> : null}
       <Panel title="Series">
         {notice?.kind === "error" ? <p className="bad">{notice.text}</p> : null}
+        {notice?.kind === "degraded" ? <p className="muted" role="status" data-testid="rpc-degraded">{notice.text}</p> : null}
         {syncing ? <p role="status" data-testid="markets-syncing" style={{ color: "var(--color-info)" }}>{notice.text}</p> : null}
         {query.isLoading || syncing ? (
           <div role="status" aria-label="Loading series" data-testid="series-skeleton">

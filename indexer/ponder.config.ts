@@ -1,5 +1,6 @@
 import { createConfig, factory } from "ponder";
 import type { AbiEvent } from "viem";
+import { indexerRpcTransport } from "./src/rpc/retry.js";
 import {
   bondVaultAbi,
   conversionTableAbi,
@@ -55,9 +56,7 @@ export default createConfig({
   chains: {
     [deployment.chainKey]: {
       id: deployment.chainId,
-      rpc: process.env.INDEXER_RPC_URL_BACKUP
-        ? [deployment.rpcUrl, process.env.INDEXER_RPC_URL_BACKUP]
-        : deployment.rpcUrl,
+      rpc: indexerRpcTransport(deployment.rpcUrl, process.env.INDEXER_RPC_URL_BACKUP),
     },
   },
   contracts: {
