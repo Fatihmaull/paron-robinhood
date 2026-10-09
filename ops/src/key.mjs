@@ -30,7 +30,9 @@ export const SEED_SIGNER_ENV = {
   "W-P-JKT": "KEY_W_P_JKT",
   "W-P-BTM": "KEY_W_P_BTM",
   "W-P-SGP": "KEY_W_P_SGP",
+  "W-BUY": "KEY_W_BUY",
   "W-BUY2": "KEY_W_BUY2",
+  "W-TRD": "KEY_W_TRD",
   "W-FEED": "KEY_W_FEED",
 };
 
