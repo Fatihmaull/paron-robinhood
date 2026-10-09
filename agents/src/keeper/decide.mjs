@@ -14,30 +14,43 @@ export const RedemptionState = {
 /**
  * Keeper actions are permissionless. declineAndPay is the provider's call and
  * only legal before the deadline (D-47), so the keeper never selects it.
- * nowSeconds is the chain timestamp. The UI clock (D-48) is separate.
+ *
+ * nowSeconds is wall clock, the same clock as the claim-default button (D-48):
+ * past the deadline by 2 seconds. Do not pass the latest block timestamp.
+ * On a quiet ArbOS chain that timestamp stays frozen until a transaction is
+ * mined, which is the older P5-16 / P6-18 rule and is not used.
+ * A Requested or Acknowledged row whose stateOf() is not yet Defaultable is
+ * still armed; the transaction reverts if the included block is early.
  * resolveNoRuling covers a no-ruling refund and the one-time reopen (D-46, T12b).
+ * There is no refundedAfterWindow flag.
  */
+export const ARM_MARGIN_SECONDS = 2n;
+
 function asBig(value) {
   return typeof value === "bigint" ? value : BigInt(value);
+}
+
+function pastDeadline(now, deadline) {
+  return now > asBig(deadline) + ARM_MARGIN_SECONDS;
 }
 
 export function decideKeeper(request, nowSeconds) {
   const reqId = request.reqId;
   const state = Number(request.state);
   const now = asBig(nowSeconds);
-  if (state === RedemptionState.Requested && now > asBig(request.ackDeadline)) {
-    return { action: "claimDefault", reqId };
-  }
-  if (state === RedemptionState.Acknowledged && now > asBig(request.deliveryDeadline)) {
-    return { action: "claimDefault", reqId };
-  }
   if (state === RedemptionState.Defaultable) {
     return { action: "claimDefault", reqId };
   }
-  if (state === RedemptionState.Delivered && now > asBig(request.disputeDeadline)) {
+  if (state === RedemptionState.Requested && pastDeadline(now, request.ackDeadline)) {
+    return { action: "claimDefault", reqId };
+  }
+  if (state === RedemptionState.Acknowledged && pastDeadline(now, request.deliveryDeadline)) {
+    return { action: "claimDefault", reqId };
+  }
+  if (state === RedemptionState.Delivered && pastDeadline(now, request.disputeDeadline)) {
     return { action: "finalizeRedemption", reqId };
   }
-  if (state === RedemptionState.Disputed && now > asBig(request.rulingDeadline)) {
+  if (state === RedemptionState.Disputed && pastDeadline(now, request.rulingDeadline)) {
     return { action: "resolveNoRuling", reqId };
   }
   return { action: "wait", reqId };

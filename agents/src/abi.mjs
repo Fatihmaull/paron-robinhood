@@ -1,6 +1,9 @@
 /**
  * Provisional fragments from dev doc 01. Replace with shared/abi when lane L1 exports it.
  * SeriesParams field order follows 01 §5.1 input fields.
+ * D-51: OrderPlaced is only for a remainder that rests. A fully filled IOC
+ * taker does not emit it. D-55c: PanelArbitrator has no ARBITER_ROLE.
+ * D-56: Defaulted.caller on a ruling is the PanelArbitrator address.
  */
 export const abi = {
   redemptionManager: [

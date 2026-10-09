@@ -12,6 +12,7 @@ console.log(`Paron keeper dryRun=${dryRun} pollSeconds=${pollSeconds}`);
 console.log("No manifest is loaded yet, so this process does not poll a chain.");
 console.log("When deployments/<chainId>/<label>.json exists, the loop reads stateOf and follows planKeeper.");
 console.log("Demo rule: leave KEEPER_DRY_RUN=true. The judge sends claimDefault.");
+console.log("Clock for planKeeper is wall time, deadline plus 2 seconds (D-48), not the latest block timestamp.");
 
 const sample = planKeeper(
   [{ reqId: 2n, state: 1, ackDeadline: 100n, deliveryDeadline: 0n, disputeDeadline: 0n, rulingDeadline: 0n }],

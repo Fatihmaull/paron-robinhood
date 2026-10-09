@@ -33,7 +33,9 @@ Fallback spot-check, same run, not selected: Arbitrum Sepolia chain id **421614*
 
 Evidence: `deployments/46630/go-nogo.json` and `deployments/421614/go-nogo.json`. Re-run with `node ops/scripts/go-nogo.mjs`.
 
-**Choice recorded here.** Dev doc 04 §8 says a check that is not done by 11:59 WIB is a hard fail, which would switch the chain. Checks 1, 2, 3, and 5 cannot be finished without the deployer key, a Safe{Wallet} session, or a deployed contract. The task for this lane is read-only, and the deployer key is intentionally not available yet. Those signed steps are scripts below. They are not treated as a Robinhood outage. If a later broadcast reverts or Ponder cannot sync, set `config/chains.json` `active` to `arbitrumSepolia` and follow the switch list in 04 §8. Check 4 stays a soft fail: the demo path uses `W-VERIFIER` and an open timelock executor (D-54).
+**Choice recorded here.** Where docs 01, 02, 03, 05, 06, and 08 still print `[USULAN D-xx, PENDING]` beside older text, D-45 through D-58 are approved and the proposed text is the one in force. That drops `refundedAfterWindow` (D-46), `declineAndPay` after the deadline (D-47), the block-timestamp countdown (P5-16 / P6-18, replaced by D-48), `ARBITER_ROLE` (D-55c), an `OrderPlaced` event on a fully filled IOC (D-51), and a relayer or zero `Defaulted.caller` (D-56). Hosting and the on-chain fallback are required before 19:14 WIB (D-58).
+
+Dev doc 04 §8 says a check that is not done by 11:59 WIB is a hard fail, which would switch the chain. Checks 1, 2, 3, and 5 cannot be finished without the deployer key, a Safe{Wallet} session, or a deployed contract. The task for this lane is read-only, and the deployer key is intentionally not available yet. Those signed steps are scripts below. They are not treated as a Robinhood outage. If a later broadcast reverts or Ponder cannot sync, set `config/chains.json` `active` to `arbitrumSepolia` and follow the switch list in 04 §8. Check 4 stays a soft fail: the demo path uses `W-VERIFIER` and an open timelock executor (D-54).
 
 ## Demo walkthrough
 
@@ -46,7 +48,7 @@ Stage series is forged live: `CU-JKT-H100-2610`, 500 CU at $3.00, bond $2,250. T
 5. The kill switch stops the agent. The buyer redeems 10 CU. The ack countdown is 60 seconds.
 6. Anyone, including a wallet with no KYB, calls claim default after the deadline. The holder receives $45. Bond ends at **$2,169**. Coverage stays **1.50**.
 
-The claim-default button follows wall clock past `meta.server_now_ms` plus 2 seconds (D-48). The transaction is what decides. A quiet ArbOS chain may not mine empty blocks, so the button does not wait for a new block timestamp.
+The claim-default button follows wall clock past `meta.server_now_ms` plus 2 seconds (D-48). The keeper uses that same clock. The transaction is what decides. A quiet ArbOS chain may not mine empty blocks, so neither the button nor the keeper waits for a new block timestamp. If the API is down, the clock falls back to the HTTP `Date` header, then the device clock. A simulated `NotDefaultable` does not hide the button.
 
 ## Architecture
 
