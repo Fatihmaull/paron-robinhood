@@ -2,6 +2,7 @@
 
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useAccount } from "wagmi";
 import {
   loadBook,
   loadGpus,
@@ -20,12 +21,12 @@ import {
 import type { Meta } from "@/lib/types";
 import { useData } from "@/components/providers";
 
-function useNoted<T>(key: unknown[], queryFn: () => Promise<{ data: T; meta: Meta; origin: "mock" | "live" | "onchain" }>) {
+function useNoted<T>(key: unknown[], queryFn: () => Promise<{ data: T; meta: Meta; origin: "mock" | "live" | "onchain" }>, note = true) {
   const { noteMeta } = useData();
   const query = useQuery({ queryKey: key, queryFn });
   useEffect(() => {
-    if (query.data) noteMeta(query.data.meta, query.data.origin);
-  }, [query.data, noteMeta]);
+    if (note && query.data) noteMeta(query.data.meta, query.data.origin);
+  }, [note, query.data, noteMeta]);
   return query;
 }
 
@@ -51,7 +52,8 @@ export function useRedemption(reqId: string) {
 
 export function useHoldings() {
   const { snap, source, client } = useData();
-  return useNoted(["holdings", snap, source], () => loadHoldings(snap, source, client));
+  const { address } = useAccount();
+  return useNoted(["holdings", snap, source, address ?? null], () => loadHoldings(snap, source, client, address), source !== "live" || Boolean(address));
 }
 
 export function useProviderQueue() {
