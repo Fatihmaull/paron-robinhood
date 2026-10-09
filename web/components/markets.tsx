@@ -14,20 +14,28 @@ export function Markets({ headline = false, heading = true }: { headline?: boole
   const router = useRouter();
   const notice = marketsNotice(query.error);
   const syncing = notice?.kind === "syncing";
+  const visible = headline ? rows.slice(0, 3) : rows;
+  const seriesCount = !showSeriesCount(notice, query.isLoading)
+    ? null
+    : headline && rows.length > visible.length
+      ? ` ${visible.length} of ${rows.length} series.`
+      : ` ${rows.length} series.`;
   return (
-    <div>
+    <div className={headline ? "home" : undefined}>
       {headline ? (
-        <>
-          <p className="kicker">Compute-hour markets</p>
-          <h1>Where compute is forged into one standard.</h1>
-          <p className="lede">
-            Physical GPU compute, sold forward. 1 CU = 1 H100-equivalent GPU-hour. Every CU is bonded.
-          </p>
+        <div className="home-hero">
+          <div>
+            <p className="kicker">Compute-hour markets</p>
+            <h1>Where compute is forged into one standard.</h1>
+            <p className="lede">
+              Physical GPU compute, sold forward. 1 CU = 1 H100-equivalent GPU-hour. Every CU is bonded.
+            </p>
+          </div>
           <div className="actions">
             <Link className="btn" href="/markets">Browse markets</Link>
             <Link className="btn ghost" href="/provider/series/new">List capacity</Link>
           </div>
-        </>
+        </div>
       ) : heading ? (
         <div className="page-head">
           <div>
@@ -37,7 +45,7 @@ export function Markets({ headline = false, heading = true }: { headline?: boole
           <Link className="btn" href="/provider/series/new">List capacity</Link>
         </div>
       ) : null}
-      {headline || heading ? <div style={{ height: 16 }} /> : null}
+      {!headline && heading ? <div style={{ height: 16 }} /> : null}
       <Panel title="Series">
         {notice?.kind === "error" ? <p className="bad">{notice.text}</p> : null}
         {syncing ? <p role="status" data-testid="markets-syncing" style={{ color: "var(--color-info)" }}>{notice.text}</p> : null}
@@ -62,7 +70,7 @@ export function Markets({ headline = false, heading = true }: { headline?: boole
             </tr>
           </thead>
           <tbody>
-            {rows.map((row) => (
+            {visible.map((row) => (
               <tr
                 key={row.series_id}
                 className="click-row"
@@ -109,7 +117,7 @@ export function Markets({ headline = false, heading = true }: { headline?: boole
           </tbody>
         </table>
         </div>
-        <p className="help">Record = delivered CU / defaulted CU / voluntary defaults, counted across the provider. {showSeriesCount(notice, query.isLoading) ? ` ${rows.length} series.` : null}</p>
+        <p className="help">Record = delivered CU / defaulted CU / voluntary defaults, counted across the provider.{seriesCount}</p>
       </Panel>
     </div>
   );
