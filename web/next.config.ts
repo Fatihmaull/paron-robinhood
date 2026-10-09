@@ -18,6 +18,7 @@ if (process.env.VERCEL === "1" && process.env.NEXT_PUBLIC_DATA_SOURCE === "mock"
 const emptyModule = "./lib/empty-module.ts";
 
 const nextConfig: NextConfig = {
+  env: { NEXT_PUBLIC_ON_VERCEL: process.env.VERCEL === "1" ? "1" : "" },
   reactStrictMode: true,
   agentRules: false,
   // RainbowKit → wagmi baseAccount pulls optional Coinbase x402 imports that are not installed.

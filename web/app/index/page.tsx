@@ -18,6 +18,12 @@ export default function IndexPage() {
           <div className="row"><span>Entities</span><span>{row.participants}</span></div>
           <div className="row"><span>Eligible volume</span><span>{row.eligible_volume_cu} CU/24h</span></div>
         </section>
+      ) : query.isError ? (
+        <p className="muted" role="status" data-testid="index-unavailable">
+          {query.error instanceof Error && (query.error as { code?: string }).code === "INDEXER_SYNCING"
+            ? "Indexer syncing, the index will appear once it catches up."
+            : "Index unavailable right now. Retrying shortly."}
+        </p>
       ) : (
         <p className="muted">Loading index…</p>
       )}
