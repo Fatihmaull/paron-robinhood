@@ -8,9 +8,8 @@ for (const [key, value] of Object.entries(loadManifestAddresses(repoRoot, proces
   process.env[key] = value;
 }
 
-const dataSource = process.env.NEXT_PUBLIC_DATA_SOURCE ?? "mock";
-
-if (process.env.VERCEL === "1" && dataSource === "mock") {
+// Only an explicit mock request is refused on Vercel. Unset resolves to live (see lib/config.ts).
+if (process.env.VERCEL === "1" && process.env.NEXT_PUBLIC_DATA_SOURCE === "mock") {
   throw new Error(
     "Refusing to build: NEXT_PUBLIC_DATA_SOURCE=mock is not allowed when VERCEL=1.",
   );

@@ -26,7 +26,11 @@ function read(name: string, fallback = ""): string {
 }
 
 export function dataSource(): DataSource {
-  return read("NEXT_PUBLIC_DATA_SOURCE", "mock") === "live" ? "live" : "mock";
+  const raw = read("NEXT_PUBLIC_DATA_SOURCE", "");
+  if (raw === "live" || raw === "api") return "live";
+  if (raw === "mock") return "mock";
+  // Unset: live when an API base is configured (Vercel), otherwise local fixtures.
+  return apiBase() || process.env.VERCEL === "1" ? "live" : "mock";
 }
 
 export function chainId(): number {

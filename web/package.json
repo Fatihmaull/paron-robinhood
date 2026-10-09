@@ -2,6 +2,10 @@
   "name": "@paron/web",
   "version": "0.1.0",
   "private": true,
+  "packageManager": "pnpm@12.9.1",
+  "engines": {
+    "node": ">=22.18.0"
+  },
   "scripts": {
     "dev": "next dev",
     "build": "next build",

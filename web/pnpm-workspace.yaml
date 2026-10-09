@@ -1,0 +1,11 @@
+# Vercel root is this directory. The file stops pnpm from walking up to the
+# monorepo workspace and installing against a different lockfile.
+packages: []
+# pnpm 12 rejects a transitive package published inside the default release-age
+# window (baseline-browser-mapping). The lockfile already pins it.
+minimumReleaseAge: 0
+# Optional native addons. pnpm 12 fails the install if their scripts are ignored.
+allowBuilds:
+  bufferutil: true
+  keccak: true
+  utf-8-validate: true
