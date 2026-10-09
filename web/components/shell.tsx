@@ -91,6 +91,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
       : catchup;
   const bannerTone = devMock ? "mock" : catchup && banner === catchup ? "info" : "warn";
 
+  if (path === "/") return children;
+
   return (
     <div className="shell">
       <a className="skip" href="#main">Skip to content</a>
@@ -118,7 +120,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <span className="strip-main">
           <span style={{ color: "var(--color-text-primary)" }}>H100 index</span>
           {strip ? <span className={`pill ${strip.status === "OK" ? "ok" : strip.status === "THIN" ? "thin" : "dis"}`}>{strip.status}</span> : null}
-          <span className="num" style={{ color: "var(--color-text-primary)" }}>
+          <span className="num">
             {strip?.status === "OK" && strip.value ? `${formatUsd(strip.value)}/CU` : strip?.status === "THIN" && strip.value ? `last OK ${formatUsd(strip.value)}/CU` : strip?.status === "DISRUPTED" ? "do not use for settlement" : strip?.status === "THIN" ? "no eligible prints yet" : ""}
           </span>
           {strip?.status === "OK" ? <span>· {strip.participants} entities · <span className="num">{formatCu(strip.eligible_volume_cu).replace(" CU", "")}</span> CU/24h</span> : null}
@@ -126,7 +128,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <span className="strip-ref">
           <span className="sep" />
           Reference price (demo data)
-          <span className="num" style={{ color: "var(--color-text-primary)" }}>{ref ? formatUsd(ref) : ""}</span>
+          <span className="num">{ref ? formatUsd(ref) : ""}</span>
         </span>
       </div>
       {banner ? (

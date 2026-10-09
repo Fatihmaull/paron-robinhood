@@ -211,6 +211,7 @@ th {
 }
 td { height: var(--table-row-height); }
 td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-numeric: tabular-nums; }
+td.num, .stats-ribbon dd, .clock, .strip .num, .book-row .px { color: var(--color-accent); }
 tr:hover td { background: var(--table-row-hover); }
 
 .tabs { display: flex; gap: var(--space-4); margin: 12px 0; flex-wrap: wrap; border-bottom: 1px solid var(--color-border-subtle); }
@@ -399,7 +400,7 @@ td .pill { height: 18px; }
   height: var(--table-row-height-dense);
   padding: 0 8px;
   font-size: var(--text-book);
-  background: linear-gradient(to left, var(--depth-color) var(--depth), transparent var(--depth));
+  background: var(--depth-color) right / var(--depth, 0%) 100% no-repeat;
 }
 .book-row.ask { --depth-color: var(--book-ask-depth); }
 .book-row.bid { --depth-color: var(--book-bid-depth); }
@@ -488,7 +489,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
   font-family: var(--font-mono);
   font-variant-numeric: tabular-nums;
   font-size: var(--text-sm);
-  color: var(--color-text-primary);
+  color: var(--color-accent);
   white-space: nowrap;
 }
 .tab-with-pill { gap: 8px; }
