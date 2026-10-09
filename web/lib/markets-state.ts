@@ -15,7 +15,8 @@ export function marketsNotice(error: unknown): MarketsNotice {
   return { kind: "error", text: error instanceof Error ? error.message : FALLBACK };
 }
 
-// "N series." is shown only when the indexer is synced (no syncing notice).
-export function showSeriesCount(notice: MarketsNotice): boolean {
+// "N series." is hidden while loading or syncing. It shows once the indexer is synced, including a real zero.
+export function showSeriesCount(notice: MarketsNotice, loading = false): boolean {
+  if (loading) return false;
   return notice?.kind !== "syncing";
 }

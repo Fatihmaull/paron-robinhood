@@ -104,7 +104,9 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </nav>
         <div className="nav-spacer" />
         <span className="chip"><span className="dot" /><span className="chip-wide">{chainId() === 421614 ? "Arbitrum Sepolia" : "Robinhood Chain Testnet"}</span><span className="chip-narrow">{`Testnet · ${chainId()}`}</span></span>
-        {walletConnectId() ? <ConnectButton label="Connect wallet" /> : <WalletConnect />}
+        <span className="nav-wallet">
+          {walletConnectId() ? <ConnectButton label="Connect wallet" /> : <WalletConnect />}
+        </span>
       </header>
       <div className="strip">
         <span className="strip-main">
