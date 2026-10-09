@@ -11,8 +11,11 @@ function RedeemRoute() {
 
 export default function RedeemPage() {
   return (
-    <Suspense fallback={<p className="muted">Loading redemption form…</p>}>
-      <RedeemRoute />
-    </Suspense>
+    <div>
+      <h1>Redeem</h1>
+      <Suspense fallback={<p className="muted">Loading redemption form…</p>}>
+        <RedeemRoute />
+      </Suspense>
+    </div>
   );
 }

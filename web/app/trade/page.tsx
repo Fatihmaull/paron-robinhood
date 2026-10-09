@@ -7,7 +7,7 @@ export default function TradeIndexPage() {
     <div>
       <h1>Trade</h1>
       <p className="lede">Pick a series to open the order ticket.</p>
-      <Markets />
+      <Markets heading={false} />
     </div>
   );
 }

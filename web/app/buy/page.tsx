@@ -7,7 +7,7 @@ export default function BuyIndexPage() {
     <div>
       <h1>Buy</h1>
       <p className="lede">Pick a series to open the primary buy box.</p>
-      <Markets />
+      <Markets heading={false} />
     </div>
   );
 }

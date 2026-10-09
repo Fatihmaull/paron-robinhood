@@ -255,7 +255,7 @@
   --btn-sell-bg: var(--color-ask);
   --btn-sell-fg: #1F0507;
   --btn-disabled-bg: var(--p-graphite-800);
-  --btn-disabled-fg: var(--color-text-disabled);
+  --btn-disabled-fg: var(--color-text-tertiary);
 
   /* Inputs */
   --input-height: var(--size-control-md);
