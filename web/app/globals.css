@@ -318,6 +318,10 @@ tr:hover td { background: var(--table-row-hover); }
 .success { background: var(--color-ok-subtle); border-left: 3px solid var(--color-ok); }
 .pills { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 4px; }
 .click-row { cursor: pointer; }
+.cell-inline { display: inline-flex; align-items: center; gap: 8px; white-space: nowrap; }
+.cell-inline.end { justify-content: flex-end; }
+table td, table th { white-space: nowrap; }
+td .pill { height: 18px; }
 .click-row:focus-visible td { box-shadow: inset 0 0 0 1px var(--color-accent); }
 .page-head { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; flex-wrap: wrap; }
 .page-head .lede { margin-bottom: 0; }
