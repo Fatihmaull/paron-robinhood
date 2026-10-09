@@ -64,9 +64,16 @@ export function RedemptionView({ reqId }: { reqId: string }) {
         <StatePill state={row.state} />
         {row.stored_state !== row.state ? <span className="muted"> stored {row.stored_state}</span> : null}
       </p>
-      <div className="grid two">
-        <Panel>
+      <div className="grid two redemption-grid">
+        <Panel title="Summary">
           <StateCopy row={row} nowMs={nowMs} deadline={deadline} clockLabel={clockLabel} />
+          <dl className="facts" data-testid="redemption-facts">
+            <div><dt>Amount</dt><dd className="num">{formatCu(row.amount_cu)}</dd></div>
+            <div><dt>Holder</dt><dd className="num">{shortId(row.holder)}</dd></div>
+            <div><dt>Provider</dt><dd className="num">{shortId(row.provider)}</dd></div>
+            <div><dt>Deadline</dt><dd className="num">{deadline ? formatWib(deadline) : "—"}</dd></div>
+            {row.receipt_hash ? <div><dt>Receipt</dt><dd className="num">{shortId(row.receipt_hash)}</dd></div> : null}
+          </dl>
           <ClaimBlock row={row} nowMs={nowMs} deadline={deadline} clockLabel={clockLabel} />
           <HolderActions row={row} nowMs={nowMs} deadline={deadline} />
           <PublicActions row={row} nowMs={nowMs} deadline={deadline} />
@@ -80,8 +87,6 @@ export function RedemptionView({ reqId }: { reqId: string }) {
               <a href={event.explorer_url}>{shortId(event.tx_hash)}</a>
             </div>
           ))}
-          <div className="row"><span>Holder</span><span>{shortId(row.holder)}</span></div>
-          <div className="row"><span>Provider</span><span>{shortId(row.provider)}</span></div>
           <div className="row"><span>Server now</span><span>{formatWib(nowMs)} {clockLabel}</span></div>
         </Panel>
       </div>
@@ -101,9 +106,9 @@ function StateCopy({
   clockLabel: string;
 }) {
   if (row.state === "DEFAULTED") {
-    return <p className="bad">Default paid. {formatUsd(row.payout)} sent to {shortId(row.holder)}.</p>;
+    return <p className="hero ember" data-testid="payout-line">Default paid. {formatUsd(row.payout)} sent to {shortId(row.holder)}.</p>;
   }
-  if (row.state === "FINALIZED") return <p className="ok">Finalized. Bond released {formatUsd(row.bond_released)}.</p>;
+  if (row.state === "FINALIZED") return <p className="hero ok">Finalized. Bond released {formatUsd(row.bond_released)}.</p>;
   if (!deadline) return <p>{row.state}</p>;
   const remaining = formatCountdown(nowMs, deadline);
   const passed = nowMs > deadline;
