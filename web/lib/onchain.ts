@@ -1,5 +1,7 @@
 import {
   hexToString,
+  keccak256,
+  toBytes,
   stringToHex,
   type Address,
   type PublicClient,
@@ -61,8 +63,17 @@ function factorString(raw: number | bigint): string {
   return `${whole.toString()}.${frac}`;
 }
 
+const GPU_KEYS = ["H100-SXM-80GB", "H200-SXM-141GB", "B200-SXM-180GB", "GB200-NVL72", "A100-SXM-80GB"];
+const GPU_BY_HASH = new Map<string, string>(GPU_KEYS.map((key) => [keccak256(toBytes(key)).toLowerCase(), key]));
+
+/** Seeded series store keccak256(gpuKey), not the string. Resolve known keys, else keep the old decode. */
+function gpuKeyOf(model: `0x${string}`): string {
+  return GPU_BY_HASH.get(model.toLowerCase()) ?? hexToString(model, { size: 32 }).replace(/\0+$/g, "");
+}
+
 function gpuLabel(model: `0x${string}`): string {
-  const text = hexToString(model, { size: 32 }).replace(/\0+$/g, "");
+  const text = gpuKeyOf(model);
+  if (!/^[\x20-\x7e]*$/.test(text)) return "GPU";
   if (text.startsWith("H100")) return "H100";
   if (text.startsWith("H200")) return "H200";
   if (text.startsWith("B200")) return "B200";
@@ -147,7 +158,7 @@ export async function readSeries(client: PublicClient, seriesId: string): Promis
     symbol: stored.symbol,
     token: stored.token,
     gpu,
-    gpu_type: hexToString(stored.gpuModel, { size: 32 }).replace(/\0+$/g, ""),
+    gpu_type: gpuKeyOf(stored.gpuModel),
     factor: factorString(stored.factor),
     region: "—",
     country: countryCode(stored.country),
