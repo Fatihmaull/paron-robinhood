@@ -42,6 +42,7 @@ function Holdings() {
   if (query.isError) return <p className="bad">{query.error instanceof Error ? query.error.message : "Couldn't load holdings."}</p>;
   return (
     <Panel title="Holdings">
+      <div className="table-scroll">
       <table>
         <thead>
           <tr><th>Series</th><th>Balance</th><th>Locked</th><th>Value</th><th></th></tr>
@@ -58,6 +59,7 @@ function Holdings() {
           ))}
         </tbody>
       </table>
+      </div>
       {rows.length === 0 ? <p className="muted">No holdings in this snapshot.</p> : null}
     </Panel>
   );
@@ -88,6 +90,7 @@ function Statement() {
   if (query.isError) return <p className="bad">{query.error instanceof Error ? query.error.message : "Statements need the Paron API. Try again shortly."}</p>;
   return (
     <Panel title="Statement">
+      <div className="table-scroll">
       <table>
         <thead>
           <tr><th>Time</th><th>Kind</th><th>USDC</th><th>CU</th><th>Tx</th></tr>
@@ -104,6 +107,7 @@ function Statement() {
           ))}
         </tbody>
       </table>
+      </div>
     </Panel>
   );
 }

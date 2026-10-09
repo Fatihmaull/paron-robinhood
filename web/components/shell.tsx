@@ -75,6 +75,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
 
   return (
     <div className="shell">
+      <a className="skip" href="#main">Skip to content</a>
       <header className="nav">
         <Link className="brand" href="/">
           <img src="/brand/paron-lockup.svg" alt="Paron" height={24} />
@@ -90,7 +91,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           ))}
         </nav>
         <div className="nav-spacer" />
-        <span className="chip"><span className="dot" />{chainId() === 421614 ? "Arb Sepolia" : "RH Testnet"}</span>
+        <span className="chip"><span className="dot" />{chainId() === 421614 ? "Testnet · 421614" : "Testnet · 46630"}</span>
         {walletConnectId() ? <ConnectButton label="Connect wallet" /> : <WalletConnect />}
       </header>
       <div className="strip">
@@ -139,7 +140,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           ))}
         </div>
       ) : null}
-      <main className="main">{children}</main>
+      <main className="main" id="main" tabIndex={-1}>{children}</main>
       <footer className={`footer ${footerOpen ? "open" : ""}`} data-testid="footer-disclaimer">
         <p>
           Not affiliated with or endorsed by Robinhood Markets, Inc. Robinhood and Arbitrum are trademarks of their respective owners.{" "}

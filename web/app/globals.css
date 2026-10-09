@@ -52,7 +52,7 @@ button:focus-visible, a:focus-visible, input:focus-visible, select:focus-visible
 }
 .nav-links a:hover { color: var(--color-text-primary); text-decoration: none; }
 .nav-spacer { flex: 1; }
-.menu-toggle { display: none; }
+.btn.menu-toggle { display: none; }
 
 .chip {
   display: inline-flex;
@@ -147,6 +147,14 @@ h1 {
 h2 { font-size: var(--text-xs); margin: 0 0 10px; font-weight: 500; }
 .lede { color: var(--color-text-secondary); max-width: 68ch; margin: 0 0 18px; }
 .grid { display: grid; gap: var(--space-4); }
+.grid > *, .main > * { min-width: 0; }
+.table-scroll { overflow-x: auto; max-width: 100%; }
+.skip {
+  position: absolute; left: var(--space-4); top: -48px; z-index: var(--z-sticky);
+  background: var(--color-bg-raised, var(--color-bg-canvas)); color: var(--color-text-primary);
+  padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border-default); border-radius: var(--btn-radius);
+}
+.skip:focus { top: var(--space-2); }
 .grid.two { grid-template-columns: 1.4fr 0.8fr; }
 .grid.three { grid-template-columns: repeat(3, 1fr); }
 .panel {
@@ -350,7 +358,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
 
 @media (max-width: 860px) {
   .grid.two, .grid.three, .stat-grid, .stat-grid.three, .wizard-grid { grid-template-columns: 1fr; }
-  .menu-toggle { display: inline-flex; }
+  .btn.menu-toggle { display: inline-flex; }
   .nav { padding: 0 var(--space-4); }
   .nav-links { display: none; }
   .nav-links.open {

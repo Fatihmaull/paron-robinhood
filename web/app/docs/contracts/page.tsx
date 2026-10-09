@@ -29,6 +29,7 @@ export default function ContractsPage() {
           ? "Addresses from this build. A deploy manifest fills any that were left empty."
           : "Addresses load from the deploy manifest. None are configured in this build."}
       </p>
+      <div className="table-scroll">
       <table>
         <thead><tr><th>Contract</th><th>Address</th></tr></thead>
         <tbody>
@@ -40,6 +41,7 @@ export default function ContractsPage() {
           ))}
         </tbody>
       </table>
+      </div>
     </div>
   );
 }
