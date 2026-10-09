@@ -46,11 +46,11 @@ export function BondChart({ balance, released, slashed }: { balance: string; rel
     { name: "Slashed", value: Number(slashed) },
   ];
   return (
-    <div style={{ height: 100 }}>
+    <div style={{ height: 120 }}>
       <ResponsiveContainer width="100%" height="100%">
-        <BarChart data={data}>
-          <XAxis dataKey="name" stroke="var(--chart-axis)" />
-          <YAxis stroke="var(--chart-axis)" />
+        <BarChart data={data} margin={{ top: 8, right: 8, bottom: 4, left: 4 }}>
+          <XAxis dataKey="name" stroke="var(--chart-axis)" tick={{ fontSize: 11 }} interval={0} />
+          <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 11 }} width={48} tickCount={2} domain={[0, "auto"]} tickFormatter={(v: number) => (v >= 1000 ? `${Math.round(v / 100) / 10}k` : String(v))} />
           <Bar dataKey="value" fill="var(--chart-bar)" />
         </BarChart>
       </ResponsiveContainer>
