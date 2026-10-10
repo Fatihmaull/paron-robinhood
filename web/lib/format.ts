@@ -97,6 +97,14 @@ export function shortId(value: string | null | undefined): string {
   return `${value.slice(0, 6)}…${value.slice(-4)}`;
 }
 
+/** Header wallet label: 0x + 4 hex, ellipsis, last 4. Example 0x3F8f…6ae9. */
+export function shortAddress(value: string | null | undefined): string {
+  if (!value) return "—";
+  const full = isAddress(value) ? canonicalAddress(value) : value;
+  if (full.length <= 10) return full;
+  return `${full.slice(0, 6)}…${full.slice(-4)}`;
+}
+
 /** Full EIP-55 split so a narrow column can ellipsize the middle and keep the checksum tail. */
 export function addressParts(value: string | null | undefined): { full: string; head: string; tail: string } | null {
   if (!value || !isAddress(value)) return null;

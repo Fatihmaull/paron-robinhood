@@ -1,9 +1,20 @@
 "use client";
 
+import { ConnectButton } from "@rainbow-me/rainbowkit";
 import Link from "next/link";
 import { useState } from "react";
 import { useAccount, useConnect, useDisconnect } from "wagmi";
-import { canonicalAddress, shortId } from "@/lib/format";
+import { walletConnectId } from "@/lib/config";
+import { canonicalAddress, shortAddress } from "@/lib/format";
+
+function AccountButton({ address, onClick }: { address: string; onClick: () => void }) {
+  const full = canonicalAddress(address);
+  return (
+    <button className="btn ghost" type="button" title={full} onClick={onClick}>
+      {shortAddress(address)}
+    </button>
+  );
+}
 
 export function WalletConnect() {
   const { address, isConnected } = useAccount();
@@ -27,9 +38,7 @@ export function WalletConnect() {
 
   return (
     <div className="menu">
-      <button className="btn ghost" type="button" title={canonicalAddress(address)} onClick={() => setOpen((v) => !v)}>
-        {shortId(address)}
-      </button>
+      <AccountButton address={address} onClick={() => setOpen((v) => !v)} />
       {open ? (
         <div className="menu-pop">
           <Link href="/faucet" onClick={() => setOpen(false)}>Get test USDC</Link>
@@ -43,4 +52,26 @@ export function WalletConnect() {
       ) : null}
     </div>
   );
+}
+
+function RainbowHeaderWallet() {
+  return (
+    <ConnectButton.Custom>
+      {({ account, mounted, openAccountModal, openConnectModal }) => {
+        if (!mounted || !account) {
+          return (
+            <button className="btn chrome" type="button" disabled={!mounted} onClick={openConnectModal}>
+              Connect wallet
+            </button>
+          );
+        }
+        return <AccountButton address={account.address} onClick={openAccountModal} />;
+      }}
+    </ConnectButton.Custom>
+  );
+}
+
+export function HeaderWallet() {
+  if (walletConnectId()) return <RainbowHeaderWallet />;
+  return <WalletConnect />;
 }

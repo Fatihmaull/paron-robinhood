@@ -2,18 +2,18 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useAccount, useBalance, useBlockNumber, useChainId, useSwitchChain } from "wagmi";
-import { ConnectButton } from "@rainbow-me/rainbowkit";
 import { formatUsd } from "@/lib/format";
 import { catchupBanner, type HealthSnapshot } from "@/lib/indexer-banner";
+import { navNeedsMenu } from "@/lib/nav-fit";
 import { rpcBackoffMs } from "@/lib/rpc";
-import { apiBase, chainId, deployLabel, walletConnectId, wrongNetworkCopy } from "@/lib/config";
+import { apiBase, chainId, deployLabel, wrongNetworkCopy } from "@/lib/config";
 import { formatCu } from "@/lib/format";
 import { useIndex } from "@/lib/hooks";
 import type { Snap } from "@/lib/types";
 import { useData } from "./providers";
-import { WalletConnect } from "./wallet";
+import { HeaderWallet } from "./wallet";
 
 const LINKS = [
   ["/markets", "Markets"],
@@ -45,6 +45,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
   });
   const balance = useBalance({ address });
   const [open, setOpen] = useState(false);
+  const [fit, setFit] = useState<"pending" | "inline" | "menu">("pending");
+  const headerRef = useRef<HTMLElement>(null);
   const [health, setHealth] = useState<HealthSnapshot | null>(null);
   const [healthBlock, setHealthBlock] = useState<number | null>(null);
   useEffect(() => {
@@ -77,6 +79,47 @@ export function Shell({ children }: { children: React.ReactNode }) {
       clearInterval(id);
     };
   }, [source]);
+  useEffect(() => {
+    setOpen(false);
+  }, [path]);
+  useEffect(() => {
+    const header = headerRef.current;
+    if (!header || path === "/") return;
+    let dead = false;
+    const apply = () => {
+      if (dead) return;
+      const links = header.querySelector<HTMLElement>(".nav-links-measure");
+      const brand = header.querySelector<HTMLElement>(".brand");
+      const wallet = header.querySelector<HTMLElement>(".nav-wallet");
+      const chip = header.querySelector<HTMLElement>(":scope > .chip");
+      if (!links || !brand || !wallet) return;
+      const cs = getComputedStyle(header);
+      const gap = Number.parseFloat(cs.columnGap || "0") || 0;
+      const padding = (Number.parseFloat(cs.paddingLeft) || 0) + (Number.parseFloat(cs.paddingRight) || 0);
+      const chipVisible = !!chip && getComputedStyle(chip).display !== "none";
+      const menu = navNeedsMenu({
+        headerWidth: header.clientWidth,
+        padding,
+        gap,
+        gaps: chipVisible ? 4 : 3,
+        brand: brand.getBoundingClientRect().width,
+        links: links.scrollWidth,
+        chip: chipVisible ? chip.getBoundingClientRect().width : 0,
+        wallet: wallet.getBoundingClientRect().width,
+      });
+      setFit(menu ? "menu" : "inline");
+      if (!menu) setOpen(false);
+    };
+    apply();
+    const ro = new ResizeObserver(apply);
+    ro.observe(header);
+    const fonts = document.fonts?.ready.then(apply);
+    return () => {
+      dead = true;
+      ro.disconnect();
+      void fonts;
+    };
+  }, [path, address, isConnected]);
   const strip = index.data?.data;
   const ref = strip?.reference?.value;
   const wrong = isConnected && walletChain !== chainId();
@@ -96,14 +139,21 @@ export function Shell({ children }: { children: React.ReactNode }) {
   return (
     <div className="shell">
       <a className="skip" href="#main">Skip to content</a>
-      <header className="nav">
+      <header className="nav" data-fit={fit} ref={headerRef}>
         <Link className="brand" href="/">
           <img src="/brand/paron-lockup.svg" alt="Paron" height={24} />
         </Link>
-        <button className="btn ghost menu-toggle" type="button" onClick={() => setOpen((v) => !v)} aria-label="Menu">
+        <button className="btn ghost menu-toggle" type="button" aria-expanded={open} aria-controls="dashboard-nav" onClick={() => setOpen((v) => !v)}>
           Menu
         </button>
-        <nav className={`nav-links ${open ? "open" : ""}`}>
+        <nav className="nav-links nav-links-measure" aria-hidden="true">
+          {LINKS.map(([href, label]) => (
+            <Link key={href} href={href} tabIndex={-1}>
+              {label}
+            </Link>
+          ))}
+        </nav>
+        <nav className={`nav-links ${open ? "open" : ""}`} id="dashboard-nav">
           {LINKS.map(([href, label]) => (
             <Link key={href} href={href} data-active={path === href || path.startsWith(`${href}/`)}>
               {label}
@@ -113,7 +163,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         <div className="nav-spacer" />
         <span className="chip"><span className="dot" /><span className="chip-wide">{chainId() === 421614 ? "Arbitrum Sepolia" : "Robinhood Chain Testnet"}</span><span className="chip-narrow">{`Testnet · ${chainId()}`}</span></span>
         <span className="nav-wallet">
-          {walletConnectId() ? <ConnectButton label="Connect wallet" /> : <WalletConnect />}
+          <HeaderWallet />
         </span>
       </header>
       <div className="strip">
