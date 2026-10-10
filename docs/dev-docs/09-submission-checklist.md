@@ -481,6 +481,22 @@ Angka ini **estimasi dari handler pada 15:55 WIB 10 Okt 2026**. Bukan hitung ula
 - Pada 15:55 WIB, S0 B tercatat ~95%. Angka ~95% itu **HISTORICAL**. Faucet sukses dan teks cooldown faucet kemudian terbukti di produksi `d3081be`, jadi S0 B ~100%.
 - S1 B ~60%: bot keeper dan bot trader belum jalan di Railway, kill switch belum diuji. D-96 menyetujui mode live setelah wallet bot didanai. Sampai terbukti, bot **not active**. Status dana: **PENDING FUNDING**.
 - Never-cut: terbangun 3/3; terbukti lewat UI di produksi 3/3.
+- **HISTORICAL sebagai angka terbangun terkini untuk S1 dan S2:** S1 ~95% dan S2 ~95%. Angka terbukti pada tabel 15:55 tetap angka live sampai ada cek produksi baru.
+
+### Estimasi 19:12 WIB 10 Okt
+
+Angka ini estimasi pada 19:12 WIB 10 Okt 2026. Bukan hitung ulang per butir. Bukan audit baru. Tabel 15:55 tetap sebagai riwayat.
+
+| Kelompok | A (terbangun) | B (terbukti) |
+|---|---|---|
+| Keseluruhan | ~99% terbangun | ~85% terbukti |
+| S0 | ~100% | ~100% |
+| S1 | ~100% | ~60% |
+| S2 | ~100% | ~70% |
+
+- S1 dan S2 terbangun naik ke ~100% di working tree: daftar attestation yang sudah terbit di `/verifier` (`GET /v1/participants`, uid untuk revoke), halaman `/legal/disclaimer`, hitung mundur faucet dari `lastFaucetAt`, dan kartu tur langkah 4 yang dibingkai sebelum kamera bergerak. Belum tampil di produksi.
+- Kolom terbukti tidak berubah. Bot keeper dan bot trader belum jalan di Railway, kill switch belum diuji, dan halaman baru belum dicek di https://paron.vercel.app. D-96: bot tetap **not active** sampai wallet bot didanai. Status dana: **PENDING FUNDING**.
+- Never-cut tetap 3/3 terbangun dan 3/3 terbukti lewat UI di produksi.
 
 ### Cek di https://paron.vercel.app
 

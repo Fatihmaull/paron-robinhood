@@ -498,6 +498,16 @@ export function createApp(options: CreateAppOptions) {
     return c.json(ok(snap, clock(options, snap), presentProvider(snap, row, nowSec)));
   });
 
+  app.get("/v1/participants", (c) => {
+    const snap = c.get("snap");
+    const nowSec = sec(clock(options, snap));
+    const data = snap.participants
+      .filter((row) => row.attestationUid)
+      .sort((a, b) => cmpDesc(a.updatedAt, b.updatedAt) || a.address.localeCompare(b.address))
+      .map((row) => presentParticipant(snap, row.address, nowSec));
+    return c.json(list(snap, clock(options, snap), data, null));
+  });
+
   app.get("/v1/participants/:addr", (c) => {
     const addr = c.req.param("addr");
     if (!isAddress(addr)) return bad(c, "addr", "addr is not an address");

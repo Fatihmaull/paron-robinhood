@@ -209,6 +209,10 @@ export function Shell({ children }: { children: React.ReactNode }) {
           {apiBase() ? <a href={`${apiBase()}/health`}>API</a> : <Link href="/data">API</Link>}
           {" · "}
           <a href="https://github.com/Fatihmaull/paron-robinhood">GitHub</a>
+          {" · "}
+          <Link href="/legal/risk">Risk</Link>
+          {" · "}
+          <Link href="/legal/disclaimer">Disclaimer</Link>
           <span className="utilbar-note">
             {chainId() === 421614
               ? "Deployed on Arbitrum Sepolia (fallback). Testnet demo: tokens have no monetary value."

@@ -10,6 +10,7 @@ import {
   loadGpus,
   loadHoldings,
   loadIndex,
+  loadIssuedAttestations,
   loadKyb,
   loadPrints,
   loadProvider,
@@ -119,4 +120,9 @@ export function useTimelock() {
 export function useKyb() {
   const { source } = useData();
   return useNoted(["kyb", source], () => loadKyb(source));
+}
+
+export function useParticipants() {
+  const { source } = useData();
+  return useNoted(["participants", source], () => loadIssuedAttestations(source));
 }

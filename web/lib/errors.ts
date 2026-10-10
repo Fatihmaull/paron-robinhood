@@ -41,12 +41,21 @@ export function revertName(error: unknown): string | null {
   return REVERT_NAMES.find((name) => text.includes(name)) ?? null;
 }
 
+function cooldownLeft(nowMs: number, deadlineMs: number): string {
+  const delta = Math.max(0, Math.floor(deadlineMs / 1000) - Math.floor(nowMs / 1000));
+  const minutes = Math.floor(delta / 60);
+  const seconds = delta % 60;
+  return `${minutes}:${String(seconds).padStart(2, "0")}`;
+}
+
 function cooldownNextAt(raw: string): string {
-  const match = raw.match(/FaucetCooldown\D{0,24}(\d{10})/);
+  const match = raw.match(/FaucetCooldown[\s\S]{0,80}?(\d{10})/);
   if (!match) return "the next hour";
   const ms = Number(match[1]) * 1000;
   if (!Number.isFinite(ms)) return "the next hour";
-  return new Date(ms).toISOString().slice(11, 16) + " UTC";
+  const clock = new Date(ms).toISOString().slice(11, 16) + " UTC";
+  if (ms <= Date.now()) return clock;
+  return `${clock} (${cooldownLeft(Date.now(), ms)} left)`;
 }
 
 /** Short status line. Unknown failures stay "Transaction failed." */

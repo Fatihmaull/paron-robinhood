@@ -62,6 +62,22 @@ These figures are **estimates from the handler as of 15:55 WIB on 10 Oct 2026**.
 - At 15:55 WIB, S0 B was recorded as ~95%. That ~95% figure is **HISTORICAL**. Faucet success and the faucet cooldown text were later proven on production `d3081be`, so S0 B is ~100%.
 - S1 B ~60%: the keeper bot and the trader bot are not running on Railway, and the kill switch is untested. D-96 approves live mode once the bot wallet is funded. Until that run is proven, the bots are **not active**.
 - Never-cut: built 3/3; proven via the UI on production 3/3.
+- **HISTORICAL as the current built line:** S1 ~95% built and S2 ~95% built. See the 19:12 WIB estimate below. The proven column at 15:55 stays the live figure until a production check.
+
+## Estimates (19:12 WIB 10 Oct 2026)
+
+These figures are estimates as of 19:12 WIB on 10 Oct 2026. They were not recomputed item by item. They are not a new audit. The 15:55 table stays as history.
+
+| Group | A (built) | B (proven) |
+|---|---|---|
+| Overall | ~99% built | ~85% proven |
+| S0 | ~100% | ~100% |
+| S1 | ~100% | ~60% |
+| S2 | ~100% | ~70% |
+
+- S1 and S2 built move to ~100% in the working tree: issued attestations on `/verifier` (`GET /v1/participants`, revoke uid from that list), `/legal/disclaimer`, faucet cooldown read from `lastFaucetAt` with a countdown, and the tour step 4 card framed before the camera move. This is not on production yet.
+- Proven stays at the 15:55 column. The keeper bot and the trader bot are still not running, the kill switch is still untested, and the new pages are not proven on https://paron.vercel.app. D-96 still says the bots are **not active** until the bot wallet is funded.
+- Never-cut stays 3/3 built and 3/3 proven via the UI on production.
 
 ## Deadline
 

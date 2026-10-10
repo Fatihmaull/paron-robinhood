@@ -318,6 +318,27 @@ export function loadOpenDisputes(source: "mock" | "live"): Promise<LoadResult<Op
   return liveGet<OpenDispute[]>("/disputes?status=open").then((env) => ({ ...env, origin: "live" as const }));
 }
 
+export type IssuedAttestation = {
+  address: string;
+  verified: boolean;
+  revoked: boolean;
+  attestation_uid: string | null;
+  role: { code: number; name: string } | null;
+};
+
+/** Issued ParticipantVerified rows. Pending applications stay on loadKyb. */
+export function loadIssuedAttestations(source: "mock" | "live"): Promise<LoadResult<IssuedAttestation[]>> {
+  if (source === "mock") {
+    const now = Date.now();
+    return Promise.resolve({
+      data: [],
+      meta: { chain_id: chainId(), indexed_block: 0, indexed_at_ms: now, server_now_ms: now },
+      origin: "mock",
+    });
+  }
+  return liveGet<IssuedAttestation[]>("/participants").then((env) => ({ ...env, origin: "live" as const }));
+}
+
 export function loadKyb(source: "mock" | "live"): Promise<LoadResult<unknown[]>> {
   if (source === "mock") {
     const env = kybPendingApps() as { data: unknown[]; meta: Meta; next_cursor?: string | null };

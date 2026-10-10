@@ -212,6 +212,10 @@ export function startTour(root: HTMLElement, hooks: Hooks): () => void {
       if (dot) dot.className = "dot pend";
       if (state) state.textContent = "Pending";
       if (sub) sub.textContent = "Waiting for confirmation…";
+      if (tray && tray.offsetWidth > 0) {
+        const frame = fit(rect(tray), 1.55);
+        setCam(frame.tx, frame.ty, frame.z, 0);
+      }
     },
     "tx-success": () => {
       const tray = q("[data-tour='tray']");

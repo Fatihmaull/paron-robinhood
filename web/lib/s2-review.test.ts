@@ -36,6 +36,8 @@ test("a failed step names a known reason once", () => {
   const cool = failureReason(new Error("FaucetCooldown(1700000000)"));
   assert.match(cool, /^Faucet cooling down\. Try again at /);
   assert.equal(cool.includes("Transaction failed"), false);
+  const waiting = failureReason(new Error("FaucetCooldown(2000000000)"));
+  assert.match(waiting, /left\)/);
   assert.match(failureReason(new Error("SaleClosed()")), /primary sale is closed/);
   assert.equal(failureReason(new Error("execution reverted")), "Transaction failed.");
   const ops = read("../components/ops.tsx");
@@ -56,4 +58,15 @@ test("step 4 hides the buy form and inactive screens", () => {
   assert.match(css, /\.screen\.tx-focus > \.two \{ visibility: hidden/);
   assert.match(runner, /tx-focus/);
   assert.match(css, /\.screen\.tx-focus \.tray\.on \{[^}]*left: 440px/);
+  assert.match(runner, /tx-pending[\s\S]*setCam\(frame\.tx, frame\.ty, frame\.z, 0\)/);
+  const ops = read("../components/ops.tsx");
+  const verifier = ops.slice(ops.indexOf("function VerifierPage"), ops.indexOf("function AdminPage"));
+  assert.match(verifier, /Issued attestations/);
+  assert.match(verifier, /Use for revoke/);
+  assert.match(ops, /lastFaucetAt/);
+  assert.match(ops, /data-testid="faucet-cooldown"/);
+  const disclaimer = read("../app/legal/disclaimer/page.tsx");
+  assert.match(disclaimer, /<h1>Disclaimer<\/h1>/);
+  assert.match(disclaimer, /no monetary value/);
+  assert.equal(disclaimer.toLowerCase().includes("affili"), false);
 });

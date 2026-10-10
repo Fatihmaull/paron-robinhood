@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { encodeAbiParameters, encodeFunctionData, stringToHex } from "viem";
-import { useAccount } from "wagmi";
+import { useAccount, useReadContract } from "wagmi";
 import {
   conversionTableAbi,
   easAbi,
@@ -20,19 +20,46 @@ import { contractAddress, ZERO_ADDRESS } from "@/lib/config";
 import { asBytes32 } from "@/lib/settlement";
 import { demoChecks } from "@/lib/demo";
 import { errorCopy } from "@/lib/errors";
-import { formatFactor, formatWib, shortId } from "@/lib/format";
+import { formatCountdown, formatFactor, formatWib, shortId } from "@/lib/format";
 import { gpuModelId } from "@/lib/gpu-model";
 import { isDoneOp, isReadyOp, opStatusKey, scheduledFactor } from "@/lib/timelock-ops";
-import { useKeeperQueue, useKyb, useTimelock } from "@/lib/hooks";
+import { useKeeperQueue, useKyb, useParticipants, useTimelock } from "@/lib/hooks";
 import { TxStatus, useSend } from "./tx";
 import { OperatorLink } from "./operator-link";
 import { Field, Panel, TxButton } from "./ui";
 
 const ZERO32 = `0x${"0".repeat(64)}` as `0x${string}`;
 
+const faucetClockAbi = [
+  {
+    type: "function",
+    name: "lastFaucetAt",
+    stateMutability: "view",
+    inputs: [{ name: "account", type: "address" }],
+    outputs: [{ type: "uint64" }],
+  },
+] as const;
+
 export function FaucetPage() {
   const { send, pending, error, record } = useSend();
+  const { address } = useAccount();
   const [done, setDone] = useState(false);
+  const [now, setNow] = useState(() => Date.now());
+  const usdc = contractAddress("usdc");
+  const clock = useReadContract({
+    address: usdc,
+    abi: faucetClockAbi,
+    functionName: "lastFaucetAt",
+    args: address ? [address] : undefined,
+    query: { enabled: Boolean(address) && usdc !== ZERO_ADDRESS, refetchInterval: 15_000 },
+  });
+  useEffect(() => {
+    const id = window.setInterval(() => setNow(Date.now()), 1000);
+    return () => window.clearInterval(id);
+  }, []);
+  const nextSec = typeof clock.data === "bigint" ? Number(clock.data) : 0;
+  const nextMs = nextSec * 1000;
+  const cooling = nextSec > 0 && now < nextMs;
   return (
     <div>
       <h1>Get test USDC</h1>
@@ -53,6 +80,11 @@ export function FaucetPage() {
         </TxButton>
         {done && !error ? <p className="ok">5,000 test USDC added.</p> : null}
         <TxStatus record={record} />
+        {cooling ? (
+          <p className="help" data-testid="faucet-cooldown">
+            Faucet cooling down. Try again at {formatWib(nextMs)}. {formatCountdown(now, nextMs)} left.
+          </p>
+        ) : null}
         <p className="help">Low gas balance. Get testnet ETH from the chain faucet, then come back for mUSDC.</p>
       </Panel>
     </div>
@@ -182,6 +214,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 
 export function VerifierPage() {
   const apps = useKyb();
+  const issued = useParticipants();
   const { send, pending, error, record } = useSend();
   const [applicant, setApplicant] = useState("0x6666666666666666666666666666666666666666");
   const [entity, setEntity] = useState(`0x${"e6".repeat(32)}`);
@@ -192,6 +225,7 @@ export function VerifierPage() {
   const uidOk = /^0x[0-9a-fA-F]{64}$/.test(uid);
   const easReady = contractAddress("eas") !== ZERO_ADDRESS && asBytes32(contractAddress("easSchema")) !== ZERO32;
   const list = (apps.data?.data ?? []) as Array<{ uid: string; applicant: string; status: string; role?: { name: string } }>;
+  const attestations = (issued.data?.data ?? []).filter((row) => row.attestation_uid);
 
   return (
     <div>
@@ -216,6 +250,27 @@ export function VerifierPage() {
           <div className="row" key={item.uid}>
             <span>{shortId(item.applicant)} · {item.role?.name ?? "Applicant"}</span>
             <KybPill status={item.status} />
+          </div>
+        ))}
+      </Panel>
+      <Panel title="Issued attestations">
+        {issued.isError ? <p className="bad">Couldn&apos;t load issued attestations.</p> : null}
+        {!issued.isLoading && attestations.length === 0 && !issued.isError ? <p className="muted">No issued attestations.</p> : null}
+        {attestations.map((item) => (
+          <div className="row" key={item.attestation_uid ?? item.address}>
+            <span>
+              {shortId(item.address)} · {item.role?.name ?? "Participant"}
+              {item.revoked ? " · Revoked" : item.verified ? " · Verified" : ""}
+            </span>
+            <button
+              type="button"
+              className="btn ghost"
+              onClick={() => {
+                if (item.attestation_uid) setUid(item.attestation_uid);
+              }}
+            >
+              Use for revoke
+            </button>
           </div>
         ))}
       </Panel>
