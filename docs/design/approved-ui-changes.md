@@ -78,6 +78,8 @@ Public RPC failure is dim text, not a red error. Retries wait 400 ms, then 800 m
 
 Fatih approved the prototype. Recorded via Paron Designer and Scout. Source: Designer's `/workspace/paron-landing/design.md` on Designer's computer.
 
+**HISTORICAL for the landing hero, superseded by D-98.** The gold-and-glass hero below was the approved look until 10 Oct 2026. D-91 stays APPROVED as that decision. The live hero is the D-98 section.
+
 The hero on landing `/` is gold and glass, plus limited amber accents on the dashboard (numbers, small tags, active states, 1px lines). The dashboard gets no gradient and no full glass.
 
 Tokens: black `#000`, text `#f3f3f3`, secondary text `#a6a6a6` and `#8c8c8c`, amber-100 `#f1d3a6`, amber-300 `#d9a066`, amber-500 `#bc854d`, amber-800 `#5a3515`. Lines are 1px `rgba(255,255,255,.16)`, soft variant `rgba(255,255,255,.09)`. Glass is only on the landing hero and the numbers panel (radius 8px, under text that overlays amber light), with no box-shadow. Motion runs 38 to 64 seconds and is off under `prefers-reduced-motion`.
@@ -145,10 +147,21 @@ Scout constraints:
 - No link to `/demo`. `/demo` stays reachable only via "Launch demo" on the landing page (D-95).
 - Screenshots come from real on-chain data, not "Demo data".
 - The provider section and the operator section are short. They name the doors: "Become a provider" on the landing page, and the Operator tab in the footer, not the navbar.
-- Recheck the header at 1024, 1280, and 390 with a wallet connected. That Designer re-check is still **PENDING**.
-- Re-shooting tutorial images 01, 02, and 05 is still **PENDING**.
+- **HISTORICAL:** "Recheck the header at 1024, 1280, and 390" as still pending, and "re-shooting tutorial images 01, 02, and 05 is still pending." Designer re-check of production after `4639a4b` **PASSED** (no S0 or S1). Images 02 and 05 shipped in #80. Image 01 on production still shows the old hero. **Image 01 updated, PR pending merge** (`shots-v4/01-open-paron.png`, taken at `synced:true`, lag 2 blocks). Not live until that pull request merges. Images 02 and 05 are unchanged.
 
 `/docs/methodology` and `/docs/contracts` stay separate routes. The older `/docs` purpose (public product write-up and README) is **HISTORICAL** for this page. **HISTORICAL:** "Target merge of the build is before about 19:00 WIB." The page is already live.
+
+## Landing hero (07 §28, D-98, APPROVED 10 Oct 2026)
+
+Fatih requested this in a Designer 1:1 on 10 Oct 2026. It supersedes the gold-and-glass hero above. Navbar, brand, and Launch app stay.
+
+CRM-enterprise style: centered title, two buttons, a dashboard screenshot box, an ASCII city silhouette, and a dark brown/amber gradient.
+
+Shipped in #86 (`ef4d797`) and #87 (`87c7d89`). The code centers the title, sends Become a provider to `/provider` and Browse markets to `/markets`, frames `/hero/markets.webp` over an ASCII Jakarta skyline, and uses a dark gradient from `#000` through `#0c0a08` to `#1a0f06` with amber radial color. The header brand "Paron", the navbar, and the header Launch app button stay. The landing Launch demo button is gone. The announcement bar still says "See the demo path" and links to `#demo`. #87 replaces only the hero image so the address in the frame is shortened (`0xA1FA…95DF`), still 2880×1880.
+
+Designer re-check of production after `4639a4b` **PASSED**. No S0 or S1. Passed: the hero, buttons to `/provider` and `/markets`, images without full addresses, section order, navbar Docs first, the mobile menu at 390, one h1, no overflow, and the word "demo" only in the bar. Green light for the final video. Video v3 is about 2 minutes, recorded from production with the new hero, and it was sent to Fatih. Fatih uploads it.
+
+Two minor S2 items remain: at 390 the ASCII city silhouette is covered by the card; `/provider` shows only a Connect wallet gate, with a "Demo data" label in the app top bar, outside the landing page.
 
 ## Index route
 

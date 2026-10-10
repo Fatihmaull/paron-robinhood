@@ -35,6 +35,7 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §25 Arsitektur informasi per aktor (D-95, APPROVED ~11:07 WIB). Koreksi nav setelah #71: catatan Designer "For providers" di navbar aplikasi adalah HISTORICAL
 - §26 Bot keeper dan trader di Railway (D-96, APPROVED Sab 10 Okt 2026 ~15:00 WIB)
 - §27 Halaman tutorial `/docs` di navbar (D-97, APPROVED 10 Okt 2026, langsung di grup). Status bangun LIVE di `783b6be`. Kalimat "Status bangun PENDING" adalah **HISTORICAL**
+- §28 Hero landing CRM-enterprise (D-98, APPROVED 10 Okt 2026, Fatih lewat Designer 1:1). Menimpa bentuk hero D-91. D-91 tetap APPROVED
 
 ---
 
@@ -1001,6 +1002,8 @@ Fatih memutuskan langsung pada 2026-10-09 17:01 WIB. Semua butir di bawah **APPR
 
 ## 21. Hero emas dan kaca di landing: D-91 (APPROVED)
 
+**HISTORICAL untuk bentuk hero, ditimpa D-98 (§28).** D-91 tetap APPROVED sebagai keputusan pada jamnya. Hero yang live adalah §28.
+
 Fatih menyetujui prototipe. Dicatat lewat Paron Designer dan Scout. Bukan usulan. Chain tetap testnet. Nomor bebas berikutnya setelah D-90.
 
 Sumber prototipe: `design.md` di `/workspace/paron-landing/` pada komputer Designer. Tidak ada detail di luar tabel ini.
@@ -1089,7 +1092,7 @@ Fatih menyetujui langsung di grup pada 10 Okt 2026. Bukan usulan. Chain tetap te
 
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
-| D-97 | **APPROVED (Fatih, 10 Okt 2026, dinyatakan langsung di grup).** Tambah halaman `/docs` yang dicapai dari navbar aplikasi, tepat di kiri Markets. Isi: tutorial lengkap dari awal sampai selesai untuk memakai Paron. Tiap langkah punya satu judul, penjelasan singkat, dan satu tangkapan layar. Tanpa video. Isi ditulis Designer dan dibangun engineer. Status bangun: **LIVE** di produksi `783b6be` (PR #76; Scout READY; `/docs` 200). **HISTORICAL:** "Status bangun: PENDING, belum selesai." Cek ulang header Designer di 1024, 1280, dan 390, serta pengambilan ulang gambar tutorial 01, 02, dan 05, masih **PENDING**. | 06; sitemap; approved-ui-changes; 09; STATUS; CONTEXT-INDEX |
+| D-97 | **APPROVED (Fatih, 10 Okt 2026, dinyatakan langsung di grup).** Tambah halaman `/docs` yang dicapai dari navbar aplikasi, tepat di kiri Markets. Isi: tutorial lengkap dari awal sampai selesai untuk memakai Paron. Tiap langkah punya satu judul, penjelasan singkat, dan satu tangkapan layar. Tanpa video. Isi ditulis Designer dan dibangun engineer. Status bangun: **LIVE** di produksi `783b6be` (PR #76; Scout READY; `/docs` 200). **HISTORICAL:** "Status bangun: PENDING, belum selesai" dan "cek header serta gambar 01, 02, 05 masih PENDING" sebagai paket. Navbar landing dan langkah 5 live di #78. Gambar 02 dan 05 live di #80. Gambar 01 updated, PR pending merge, belum live. | 06; sitemap; approved-ui-changes; 09; STATUS; CONTEXT-INDEX |
 
 Urutan navbar pengguna (Launch app) sekarang: Docs, Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Kalimat D-95 yang menulis navbar mulai dari Markets, tanpa Docs, adalah **HISTORICAL** untuk ketiadaan tautan Docs. Larangan tautan Provider, Operator, dan Demo di navbar tetap (D-95, koreksi #71).
 
@@ -1102,3 +1105,25 @@ Batasan Scout, bagian dari keputusan yang sama:
 5. Header wajib dicek ulang di 1024, 1280, dan 390 dengan wallet tersambung.
 
 `/docs/methodology` dan `/docs/contracts` tidak diganti oleh tutorial ini. Tujuan lama `/docs` sebagai "dokumentasi produk + README publik" adalah **HISTORICAL** untuk halaman itu.
+
+Navbar landing Docs di kiri Markets **LIVE** di #78 (`e19d646`), termasuk menu di bawah 1024px. Langkah 5 di commit itu sudah memuat kalimat label testnet. Gambar 02 dan 05 live di #80. Gambar 01 di `main` masih hero lama. **Gambar 01 updated, PR pending merge** (`shots-v4/01-open-paron.png`, diambil saat `synced:true`, lag 2 blok). Belum live sampai merge. Gambar 02 dan 05 tidak berubah. **HISTORICAL:** "cek header dan pengambilan ulang gambar 01, 02, 05 masih PENDING" sebagai paket.
+
+---
+
+## 28. Hero landing CRM-enterprise: D-98 (APPROVED 10 Okt 2026)
+
+Fatih meminta lewat Designer 1:1 pada 10 Okt 2026. Bukan usulan. Chain tetap testnet. Nomor dicek terhadap repo sebelum bagian ini: pemakaian terakhir adalah D-97. D-98 belum dipakai. Bagian ini menimpa bentuk hero di §21. Teks emas-dan-kaca di §21 tetap, dan ditandai **HISTORICAL** untuk bentuk hero.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-98 | **APPROVED (Fatih, 10 Okt 2026, lewat Designer 1:1).** Rework hero landing, gaya CRM-enterprise: judul di tengah, dua tombol, kotak tangkapan dasbor, siluet kota ASCII, gradien cokelat gelap/amber. Navbar, merek, dan Launch app tidak diubah. Masuk di #86 (`ef4d797`) dan #87 (`87c7d89`). | 06; sitemap; approved-ui-changes; 09; STATUS; CONTEXT-INDEX |
+
+Yang ada di kode, bukan tambahan di luar diff: judul terpusat, tombol Become a provider menuju `/provider` dan Browse markets menuju `/markets`, bingkai `/hero/markets.webp`, siluet ASCII Jakarta, gradien `#000` ke `#0c0a08` ke `#1a0f06` dengan radial amber. Merek "Paron", navbar, dan tombol header Launch app tetap. Tombol landing "Launch demo" hilang. Pita "See the demo path" tetap, menuju `#demo`. #87 hanya mengganti gambar hero, ukuran 2880×1880, alamat di bingkai terpotong bentuk `0xA1FA…95DF`.
+
+Cek Designer di produksi setelah `4639a4b` **LULUS**. Tidak ada S0 atau S1. Yang lulus: hero, tombol ke `/provider` dan `/markets`, gambar tanpa alamat penuh, urutan bagian, navbar Docs paling kiri, menu mobile 390, satu h1, tanpa overflow, kata "demo" hanya di pita. Lampu hijau untuk rekaman video final. Video v3 selesai, sekitar 2 menit, direkam dari produksi dengan hero baru, dan sudah dikirim ke Fatih. Fatih yang mengunggah.
+
+Dua S2 kecil masih terbuka: pada 390 siluet kota ASCII tertutup kartu; `/provider` hanya gerbang Connect wallet, dengan label "Demo data" di bar atas aplikasi, di luar landing.
+
+Commit produksi sekarang `4639a4b`. `4639a4b` juga menambah panel Issued attestations, halaman `/legal/disclaimer`, hitung mundur faucet dari `lastFaucetAt`, dan bingkai kamera tur langkah 4. Cek Designer tidak membuka layar itu.
+
+Saat rekaman v3, pita biru "Indexer is catching up" muncul. Kalimat produk: "Indexer is catching up to the latest blocks; data may lag briefly." Kode menampilkannya jika `synced` false atau lag lebih dari 20 blok, lalu pita hilang sendiri. Scout saat rekaman: `synced:true`, lag 23 blok, `index_update_failures` 0, series 2610 terdaftar. Cek `/v1/health` sebelum rekaman ulang.
