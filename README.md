@@ -1,3 +1,7 @@
+<p align="center">
+  <img alt="Paron" src="docs/paron-lockup.svg" width="484" />
+</p>
+
 Robinhood Chain Testnet · chain ID 46630 · [explorer.testnet.chain.robinhood.com](https://explorer.testnet.chain.robinhood.com)
 
 App URL and API URL are not live yet. The web app uses the default Vercel URL once that project exists. The indexer host is a separate sign-in (see below).
