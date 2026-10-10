@@ -43,7 +43,7 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
       <div className="series-title">
         {detail ? <h1 className="series-symbol">{detail.symbol}</h1> : series.isLoading ? <div className="skeleton title-sk" role="status" aria-label="Loading series" data-testid="series-skeleton" /> : <h1>Series not found</h1>}
         {detail ? <SeriesStatus detail={detail} /> : null}
-        {detail?.provider.verified ? <span className="pill ok">Verified by Paron demo verifier</span> : null}
+        {detail?.provider.verified ? <span className="pill ok">Verified by Paron verifier (team-operated, testnet)</span> : null}
       </div>
       {series.isError ? (
         <p className={seriesTone} role={seriesTone === "muted" ? "status" : undefined}>

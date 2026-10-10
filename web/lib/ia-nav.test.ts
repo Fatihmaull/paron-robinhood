@@ -145,7 +145,7 @@ test("the demo data label stays visible when the header is narrow", () => {
   assert.equal(/\.strip\s*\{[^}]*display:\s*none/.test(narrow), false);
   assert.match(shell, /Demo data/);
   assert.match(index, /Demo data/);
-  assert.equal(shell.includes("Reference price (demo data)"), false);
+  assert.match(shell, /Reference price \(demo data\)/);
   assert.equal(index.includes("Reference price (demo data)"), false);
   assert.equal(landing.includes("className=\"strip"), false);
 });

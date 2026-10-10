@@ -54,7 +54,7 @@ export const DOCS_STEPS: readonly DocsStep[] = [
   },
   {
     title: "Pick a series and check the bond",
-    text: "Open Markets and choose a series, for example CU-JKT-H100-2610. The series page shows Bond/CU of $4.50 against a $3.00 primary price, which is the 1.5× bond that covers buyers if delivery fails. The \"Demo data\" label in the top bar and the \"Verified by Paron demo verifier\" badge are testnet labels: this is a testnet deployment, and the verifier is a demo attestation, not a real audit.",
+    text: "Open Markets and choose a series, for example CU-JKT-H100-2610. The series page shows Bond/CU of $4.50 against a $3.00 primary price, which is the 1.5× bond that covers buyers if delivery fails. The \"Demo data\" label in the top bar and the \"Verified by Paron verifier (team-operated, testnet)\" badge are testnet labels: this is a testnet deployment, and the verifier is a demo attestation, not a real audit.",
     image: "/docs/05-markets-check-bond.png",
     alt: "Series page with the bond per CU",
     width: 1280,

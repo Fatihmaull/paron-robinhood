@@ -35,7 +35,7 @@ export function ProviderConsole({ focus }: { focus?: string }) {
       <h1>Provider</h1>
       {provider ? <p className="num" title={canonicalAddress(provider.address)}>{shortAddress(provider.address)}</p> : null}
       <p className="lede">
-        {provider?.verified ? "Verified by Paron demo verifier" : "Not verified"} · {provider?.status ?? "—"}
+        {provider?.verified ? "Verified by Paron verifier (team-operated, testnet)" : "Not verified"} · {provider?.status ?? "—"}
       </p>
       {provider ? (
         <div className="stat-grid">

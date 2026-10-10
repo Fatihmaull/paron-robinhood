@@ -269,7 +269,7 @@ export function ListingWizard() {
         <p className="help">
           {draft.hours || "—"} hours · {draft.gpu} · factor {factor ? formatFactor(factor) : "—"}
         </p>
-        <p className="ok">✓ Verified by Paron demo verifier</p>
+        <p className="ok">✓ Verified by Paron verifier (team-operated, testnet)</p>
         <div className="bond-bar" aria-hidden="true">
           <span className="fill" style={{ width: "100%" }} />
         </div>
