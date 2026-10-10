@@ -791,6 +791,8 @@ Cadangan: window 60 detik, wallet yang sudah didanai, video backup direkam palin
 
 **Navigasi [D-95, APPROVED Sab 10 Okt 2026 ~11:07 WIB].** Daftar layar di atas tetap. Yang **HISTORICAL** adalah anggapan bahwa Provider, Operator, dan Demo duduk di navbar pengguna yang sama. Navbar pengguna (CTA "Launch app") hanya: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Provider adalah tautan terpisah; dashboard di `/provider/[address]` (tulis hanya untuk wallet pemilik; alamat lain read-only). `/provider` mengalihkan ke dashboard wallet yang tersambung, atau ke `/onboarding/kyb` kalau belum terverifikasi KYB. Operator (verifier, admin, ops, arbiter) hanya lewat CTA kecil di footer atau bagian bawah landing, judul "Operator tools". `/demo` tetap hidup; satu-satunya pintu adalah "Launch demo". Dashboard produksi hanya indexer sungguhan dan data on-chain testnet. Label "Reference price (demo data)" tetap sampai Fatih menyetujui pengganti. h1 "Provider" dengan alamat di bawahnya (D-94) berlaku di dashboard itu. Halaman indeks yang dibangun adalah `/h100-index`; `/index` mengalihkan 307; path API `/index/H100` tidak berubah.
 
+**Koreksi D-95 (setelah PR #71).** Kalimat "Provider adalah tautan terpisah" di atas, kalau dibaca sebagai tautan sekunder di navbar aplikasi, adalah **HISTORICAL**. PR #71 menghapus "For providers" dari navbar aplikasi. Pintu provider hanya CTA landing "Become a provider". Operator hanya lewat CTA kecil di footer landing. `/demo` hanya lewat CTA landing "Launch demo".
+
 ### 11.3 Data seed
 - Tiga provider terverifikasi.
 - `CU-JKT-H100-2611` @ $3,00/CU.

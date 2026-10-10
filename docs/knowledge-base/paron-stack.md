@@ -213,7 +213,7 @@ Versions are registry/GitHub "latest" as of 6 Oct 2026, 5:30 PM WIB ✅ unless m
 | Piece | Choice | Notes |
 |---|---|---|
 | Runtime | **Node 24 LTS** (v24.21.0 "Krypton" ✅) + viem | One `agents/` package |
-| **Default keeper** | Polls Ponder for redemptions past `ackDeadline`/`deliveryDeadline` with no state change. Calls permissionless `claimDefault` (holders can also call it from the UI). Runs as a cron worker every minute; dry-run mode for the demo | Shows that "silence = default" is enforced by anyone, not by Paron |
+| **Default keeper** | Polls Ponder for redemptions past `ackDeadline`/`deliveryDeadline` with no state change. Calls permissionless `claimDefault` (holders can also call it from the UI). Runs as a cron worker every minute; dry-run mode for the demo. **HISTORICAL for dry-run, superseded by D-96:** live on Railway (not dry-run) once Fatih funds the dedicated bot wallet from the faucet. Status PENDING FUNDING. Not active until proven. Refuses a non-testnet chain. D-42 off-chain kill switch stays. | Shows that "silence = default" is enforced by anyone, not by Paron |
 | **Delivery-receipt agent** | Runs on the provider's box: reads `nvidia-smi --query-gpu=name,memory.total,uuid`, builds an EIP-712 `DeliveryReceipt`, signs with the provider's key, pins JSON (IPFS or plain HTTPS in the MVP) and calls `markDelivered(reqId, receiptHash)` | NICE in 27h; the demo can run it on a laptop with mocked GPU output, clearly labelled |
 | Seeder | `script/Seed.s.sol`: 3 providers, 4 monthly series (H100/H200/B200), orders, one default scenario (10 CU → $45 payout) | Demo numbers: $3.00/CU, $4.50 bond |
 | Synthetic reference | Tiny signer script pushing labelled demo values to `ReferenceFeed` | Never OCPI data (licence) |

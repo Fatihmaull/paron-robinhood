@@ -113,7 +113,7 @@ Kolom "Hackathon" memakai tier solo dari sitemap §9.1: **S0** jalur demo (Jum s
 
 ### 4.11 Ops dan keeper
 - **Produk penuh:** halaman `/ops/keepers` dengan tombol untuk semua aksi permissionless (claim default, finalize redemption, resolve no-ruling, finalize series, `PrintIndex.poke`), bot keeper otomatis, monitoring (status indexer, chain, kontrak), log event mentah.
-- **Hackathon:** S1 `/ops/keepers` + `/demo` (panel demo publik); keeper bot dalam mode dry-run untuk demo. **Sandbox juri [DITOLAK Fatih ~11:06: fokus ke fitur supaya demo proper; tetap ide untuk Later]:** jalur berlabel "testnet sandbox" di `/demo` supaya juri online bisa mencoba sendiri: faucet → KYB satu klik dari bot *demo-verifier* berlabel → beli 1 CU di series sandbox terpisah yang agent providernya diset ghost → tunggu 60 dtk → claim default dari wallet sendiri. Pakai series atau deployment terpisah supaya state stage dan fixture 03 tetap bersih. Tidak dibangun di hackathon.
+- **Hackathon:** S1 `/ops/keepers` + `/demo` (panel demo publik); keeper bot dalam mode dry-run untuk demo **[HISTORICAL, superseded by D-96]**. D-96: bot keeper dan trader LIVE di Railway setelah dana faucet; PENDING FUNDING; not active sampai terbukti. **Sandbox juri [DITOLAK Fatih ~11:06: fokus ke fitur supaya demo proper; tetap ide untuk Later]:** jalur berlabel "testnet sandbox" di `/demo` supaya juri online bisa mencoba sendiri: faucet → KYB satu klik dari bot *demo-verifier* berlabel → beli 1 CU di series sandbox terpisah yang agent providernya diset ghost → tunggu 60 dtk → claim default dari wallet sendiri. Pakai series atau deployment terpisah supaya state stage dan fixture 03 tetap bersih. Tidak dibangun di hackathon.
 - **Later:** keeper terdesentralisasi/berinsentif, alerting.
 
 ### 4.12 Settlement, chain, dan onboarding dana
@@ -259,7 +259,7 @@ Ilustrasi unit economics dan sumbernya ada di PK §10.1 (bukan forecast).
 | Default/dispute | **claim default dari wallet mana pun**, Dispute + modal, Decline & pay | keepers (`resolveNoRuling`) | ruling arbiter, `/disputes/[reqId]` | Kleros/UMA |
 | Data | Prints API + PrintIndex + feed sintetis | `poke` di keepers | – | API berbayar, oracle berlisensi |
 | Governance | – | **eksekusi 1 timelock dari `/admin`** | – | signer independen |
-| Ops | – | `/ops/keepers`, `/demo`, keeper bot dry-run | – | keeper bot, alerting, sandbox juri (PG-2, ditolak untuk hackathon) |
+| Ops | – | `/ops/keepers`, `/demo`, keeper bot dry-run **[HISTORICAL, D-96]** | – | keeper bot, alerting, sandbox juri (PG-2, ditolak untuk hackathon) |
 | Legal | footnote/disclaimer | – | halaman legal | audit, OJK |
 
 Tebal = never cut. Urutan potong kalau waktu habis: 08 (cut ladder).

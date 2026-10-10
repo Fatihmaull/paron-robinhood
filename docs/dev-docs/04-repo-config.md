@@ -139,7 +139,7 @@ paron/                                   ← root repo (commit pertama ≥ Jum 0
 │   └── .env.example
 ├── agents/                              ← satu package Node 24 + viem (stack §4.4)
 │   ├── src/provider-agent/              ← auto-ack + markDelivered + kill switch (design §7.1)
-│   ├── src/keeper/                      ← keeper default, dry-run saat demo (stack §4.4)
+│   ├── src/keeper/                      ← keeper default, dry-run saat demo (stack §4.4) [HISTORICAL, D-96]
 │   ├── src/trader-bot/                  ← 3 tx latar S-03..S-05 (05 P5-04)
 │   ├── src/reference-signer/            ← push referensi sintetis (stack §4.4, D-06)
 │   ├── src/safe-tools/                  ← hanya fallback opsi A: protocol-kit (design §11.4)
@@ -383,7 +383,7 @@ Mainnet Robinhood (4663) **tidak** masuk file ini (di luar scope hackathon).
 | `PROVIDER_AGENT_DETECT` | provider-agent | ya | `chain` | `chain` (event langsung) atau `ponder`; target ack ≤ 3 dtk | 05 T5-07 |
 | `PROVIDER_AGENT_MOCK_GPU` | provider-agent | ya | `true` | Output `nvidia-smi` di-mock dan diberi label | stack §4.4 |
 | `KEEPER_PRIVATE_KEY` | keeper | ya | `0x<fresh-keeper-key>` | `W-KEEP` (service hosting) | 05 §1 |
-| `KEEPER_DRY_RUN` | keeper | ya | `true` | **Wajib `true` saat demo** | stack §4.4 |
+| `KEEPER_DRY_RUN` | keeper | ya | `true` | **Wajib `true` saat demo** **[HISTORICAL, superseded by D-96]**. D-96: live (bukan dry-run) setelah Fatih mendanai wallet bot dari faucet. Status PENDING FUNDING. Not active sampai terbukti. Nilai kunci tidak ditulis. | stack §4.4; 07 §26 |
 | `KEEPER_POLL_SECONDS` | keeper | tidak | `60` | "cron worker every minute" | stack §4.4 |
 | `TRADER_BOT_ACCOUNT` | trader-bot | ya | `paron-trader` | `W-TRD` | 05 P5-04 |
 | `TRADER_BOT_TRIGGER` | trader-bot | ya | `manual` | Dipicu C setelah `PrimaryBuy` S-02 | 05 A4 |

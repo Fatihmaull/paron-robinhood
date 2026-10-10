@@ -32,7 +32,8 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §22 Klarifikasi nama series (D-92, APPROVED Fatih 18:10 WIB, "rekomendasimu saja"): D-82 diperjelas
 - §23 Tenggat hackathon (D-93, APPROVED Fatih Sab 10 Okt 2026 10:16 WIB): 23:59 WIB menggantikan 12:00
 - §24 Daftar perbaikan pra-demo (D-94, APPROVED)
-- §25 Arsitektur informasi per aktor (D-95, APPROVED ~11:07 WIB)
+- §25 Arsitektur informasi per aktor (D-95, APPROVED ~11:07 WIB). Koreksi nav setelah #71: catatan Designer "For providers" di navbar aplikasi adalah HISTORICAL
+- §26 Bot keeper dan trader di Railway (D-96, APPROVED Sab 10 Okt 2026 ~15:00 WIB)
 
 ---
 
@@ -1059,10 +1060,22 @@ Pengiriman produk dalam dua PR terpisah, bukan PR dokumen ini: **PR-A** untuk na
 4. `/demo` tetap hidup. Satu-satunya pintu masuk adalah CTA landing "Launch demo". Tidak ada tautan dari navbar, dari footer dashboard, atau dari halaman lain.
 5. Dashboard produksi hanya memakai indexer sungguhan dan data on-chain testnet. Label yang sudah disetujui, "Reference price (demo data)" (D-84..D-88), tetap sampai Fatih menyetujui pengganti.
 
-Catatan pengelompokan dari Designer, bagian dari persetujuan yang sama: tautan pengguna di tengah. "For providers" dan "Operator" adalah tautan teks sekunder (`#a6a6a6`) di kanan. Menu mobile dikelompokkan Trade / Providers / Operators, dengan target sentuh minimal 44 px. Banner KYB di `/provider`: info netral untuk yang belum KYB dan untuk yang pending, dengan tindakan "Start KYB"; amber untuk yang sudah verified. Tombol "List capacity" nonaktif, dengan alasan tertulis "Complete KYB to list capacity".
+**HISTORICAL (koreksi di bawah, PR #71).** Catatan pengelompokan dari Designer, bagian dari persetujuan yang sama: tautan pengguna di tengah. "For providers" dan "Operator" adalah tautan teks sekunder (`#a6a6a6`) di kanan. Menu mobile dikelompokkan Trade / Providers / Operators, dengan target sentuh minimal 44 px. Banner KYB di `/provider`: info netral untuk yang belum KYB dan untuk yang pending, dengan tindakan "Start KYB"; amber untuk yang sudah verified. Tombol "List capacity" nonaktif, dengan alasan tertulis "Complete KYB to list capacity".
 
-Butir 3 menempatkan Operator hanya lewat CTA kecil di footer atau bagian bawah landing. Tautan sekunder "Operator" pada catatan Designer adalah CTA itu, bukan item navbar pengguna. "For providers" adalah tautan terpisah di luar nav pengguna (butir 2), warna `#a6a6a6`.
+**HISTORICAL (koreksi di bawah, PR #71).** Butir 3 menempatkan Operator hanya lewat CTA kecil di footer atau bagian bawah landing. Tautan sekunder "Operator" pada catatan Designer adalah CTA itu, bukan item navbar pengguna. "For providers" adalah tautan terpisah di luar nav pengguna (butir 2), warna `#a6a6a6`.
+
+**Koreksi D-95 (dicatat Sab 10 Okt 2026, setelah PR #71). D-95 tetap APPROVED.** Dua catatan Designer di atas, yang menaruh tautan sekunder "For providers" di navbar aplikasi (kanan header, dan di Menu), adalah **HISTORICAL**. PR #71 menghapus "For providers" dari navbar aplikasi. Aturan revisi Fatih: navbar pengguna, lewat "Launch app", hanya tautan pengguna: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Pintu provider hanya CTA landing "Become a provider". Operator hanya lewat CTA kecil di footer landing. `/demo` hanya lewat CTA landing "Launch demo". Pembacaan butir 2 sebagai tautan sekunder di dalam navbar aplikasi ikut **HISTORICAL**. Dashboard `/provider/[address]`, alih `/provider`, banner KYB, dan "List capacity" nonaktif dengan alasan "Complete KYB to list capacity" tetap.
 
 h1 "Provider" dengan alamat di bawahnya (D-94) berlaku pada dashboard `/provider/[address]`. Path `/provider` tanpa alamat tidak lagi menjadi konsol tetap; ia mengalihkan seperti butir 2.
 
 Roadmap setelah hackathon: gating nav berdasarkan peran, dibaca dari kontrak.
+
+---
+
+## 26. Bot keeper dan trader di Railway: D-96 (APPROVED Sab 10 Okt 2026 ~15:00 WIB)
+
+Fatih menyetujui pada Sab 10 Okt 2026, sekitar 15:00 WIB. Bukan usulan. Chain tetap testnet. Nomor dicek terhadap repo sebelum bagian ini: pemakaian terakhir adalah D-95. D-96 belum dipakai.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-96 | **APPROVED (Fatih, Sab 10 Okt 2026 ~15:00 WIB).** Bot keeper dan bot trader di Railway jalan LIVE dengan wallet bot khusus (bukan dry-run), setelah Fatih mendanai wallet itu dari faucet. Status: **PENDING FUNDING**. Sampai terbukti berjalan, dokumen menulis **not active**. Bot menolak chain selain testnet dan memakai kill switch off-chain D-42. Alamat wallet dan nama akun tidak ditulis. | STATUS; 09; 04; 05; CONTEXT-INDEX |
