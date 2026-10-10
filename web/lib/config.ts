@@ -57,12 +57,26 @@ function read(name: string, fallback = ""): string {
   return PUBLIC_ENV[name] ?? fallback;
 }
 
+/** Production always reads the indexer and the chain. Local dev can still use fixtures. */
+export function resolveDataSource(input: {
+  explicit: string;
+  apiBase: string;
+  onVercel: boolean;
+  nodeEnv: string;
+}): DataSource {
+  if (input.nodeEnv === "production") return "live";
+  if (input.explicit === "live" || input.explicit === "api") return "live";
+  if (input.explicit === "mock") return "mock";
+  return input.apiBase || input.onVercel ? "live" : "mock";
+}
+
 export function dataSource(): DataSource {
-  const raw = read("NEXT_PUBLIC_DATA_SOURCE", "");
-  if (raw === "live" || raw === "api") return "live";
-  if (raw === "mock") return "mock";
-  // Unset: live when an API base is configured (Vercel), otherwise local fixtures.
-  return apiBase() || read("NEXT_PUBLIC_ON_VERCEL") === "1" ? "live" : "mock";
+  return resolveDataSource({
+    explicit: read("NEXT_PUBLIC_DATA_SOURCE", ""),
+    apiBase: apiBase(),
+    onVercel: read("NEXT_PUBLIC_ON_VERCEL") === "1",
+    nodeEnv: process.env.NODE_ENV ?? "",
+  });
 }
 
 export function chainId(): number {

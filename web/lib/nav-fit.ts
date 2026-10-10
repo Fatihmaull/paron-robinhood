@@ -9,8 +9,10 @@ export function navNeedsMenu(input: {
   links: number;
   chip: number;
   wallet: number;
+  side?: number;
 }): boolean {
+  const side = input.side ?? 0;
   const needed =
-    input.padding + input.brand + input.links + input.chip + input.wallet + input.gap * input.gaps;
+    input.padding + input.brand + input.links + input.chip + input.wallet + side + input.gap * input.gaps;
   return needed > input.headerWidth;
 }

@@ -5,16 +5,20 @@ export const landingNav = [
   { href: "/buy", label: "Buy" },
   { href: "/trade", label: "Trade" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/provider", label: "Provider" },
   { href: "/data", label: "Data" },
-  { href: "/demo", label: "Demo" },
 ] as const;
 
 export const landingFooter = [
   { href: "/markets", label: "Markets" },
   { href: "/data", label: "Data" },
-  { href: "/demo", label: "Demo" },
+  { href: "/operator", label: "Operator" },
 ] as const;
+
+/** Connected and not verified goes to KYB. Everyone else opens the provider dashboard. */
+export function providerEntryPath(connected: boolean, verified: boolean | null | undefined): string {
+  if (connected && verified === false) return "/onboarding/kyb";
+  return "/provider";
+}
 
 export const landingLinks = {
   launch: "/markets",
@@ -88,3 +92,11 @@ export const landingSteps = [
 
 export const demoDataLabel = "Demo data";
 export const landingIndexNote = demoDataLabel;
+
+/** Hero figure only. Illustrative, not a live index print. */
+export const landingSample = {
+  amount: "$2.50",
+  aria: "Sample H100 index: 2 dollars 50",
+  tag: "Demo data · sample",
+  note: "Sample value for illustration",
+} as const;

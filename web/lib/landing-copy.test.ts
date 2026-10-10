@@ -10,6 +10,7 @@ import {
   landingHow,
   landingIndexNote,
   landingLedger,
+  landingSample,
   landingLinks,
   landingNav,
   landingProvider,
@@ -37,8 +38,11 @@ function pageExists(href: string): boolean {
 
 test("the H100 index page is not the app root route", () => {
   const shell = readFileSync(new URL("../components/shell.tsx", import.meta.url), "utf8");
-  assert.match(shell, /\["\/h100-index", "Index"\]/);
+  const nav = readFileSync(new URL("./nav-links.ts", import.meta.url), "utf8");
+  assert.match(nav, /\["\/h100-index", "Index"\]/);
+  assert.match(shell, /USER_NAV/);
   assert.equal(shell.includes('["/index", "Index"]'), false);
+  assert.equal(nav.includes('["/index", "Index"]'), false);
   assert.equal(existsSync(join(process.cwd(), "app", "h100-index", "page.tsx")), true);
   assert.equal(existsSync(join(process.cwd(), "app", "index", "page.tsx")), false);
 });
@@ -79,14 +83,23 @@ test("facts and the bond ledger stay testnet-accurate", () => {
   assert.match(landingLedger.map((row) => row.value).join(" "), /\$4\.50 \/ CU/);
 });
 
-test("landing headline stays sans and a missing reference has fallback copy", () => {
+test("landing hero figure is a labeled sample and the headline stays sans", () => {
   const view = readFileSync(new URL("../components/landing.tsx", import.meta.url), "utf8");
   const css = readFileSync(new URL("../app/landing.css", import.meta.url), "utf8");
   const charts = readFileSync(new URL("../components/charts.tsx", import.meta.url), "utf8");
   const legal = readFileSync(new URL("../app/legal/risk/page.tsx", import.meta.url), "utf8");
   const globals = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
-  assert.match(view, /No reference yet/);
-  assert.match(view, /indexQuote/);
+  assert.equal(landingSample.amount, "$2.50");
+  assert.match(landingSample.note, /illustration/);
+  assert.match(landingSample.tag, /Demo data/);
+  assert.match(view, /landingSample/);
+  assert.equal(view.includes("useIndex"), false);
+  assert.equal(view.includes("indexQuote"), false);
+  assert.match(view, /IntersectionObserver/);
+  assert.match(view, /className="curtain"/);
+  assert.equal(/<img/i.test(view), false);
+  assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(css, /\.rv\.in/);
   assert.match(charts, /attributionLogo:\s*false/);
   assert.equal(globals.includes("tv-attr-logo"), false);
   assert.equal(charts.includes("tradingview.com"), false);

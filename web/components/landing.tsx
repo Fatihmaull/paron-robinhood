@@ -1,29 +1,38 @@
 "use client";
 
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-import { formatUsd } from "@/lib/format";
-import { indexQuote } from "@/lib/index-quote";
-import { useIndex } from "@/lib/hooks";
+import { useAccount } from "wagmi";
+import { loadParticipant } from "@/lib/api";
 import {
   landingAnnounce,
   landingBuyer,
   landingFacts,
   landingFooter,
   landingHow,
-  landingIndexNote,
   landingLedger,
   landingLinks,
   landingNav,
   landingProvider,
+  landingSample,
   landingSteps,
+  providerEntryPath,
 } from "@/lib/landing-copy";
+import { DemoTour } from "./landing/demo-tour";
+import { useData } from "./providers";
 
 export function Landing() {
-  const index = useIndex();
-  const quote = indexQuote(index.data?.data);
-  const price = quote.amount ? formatUsd(quote.amount) : null;
-  const note = quote.label === "Reference" ? landingIndexNote : "Index";
+  const { address, isConnected } = useAccount();
+  const { source } = useData();
+  const participant = useQuery({
+    queryKey: ["participant-entry", source, address ?? null],
+    enabled: Boolean(isConnected && address),
+    retry: false,
+    queryFn: () => loadParticipant(address as string, source),
+  });
+  const verified = !isConnected ? null : participant.isError ? false : participant.data ? participant.data.data.verified : null;
+  const providerHref = providerEntryPath(isConnected, verified);
 
   useEffect(() => {
     const root = document.querySelector(".landing");
@@ -85,18 +94,15 @@ export function Landing() {
             <div className="index">
               <div className="bar" />
               <div className="row">
-                {price ? (
-                  <div className="serif num" aria-label={`${note}: ${price}`}>{price}</div>
-                ) : (
-                  <div className="fallback" role="status">{index.isFetched ? "No reference yet" : "Loading reference"}</div>
-                )}
-                <div className="mono tag">H100 index<br />{note}</div>
+                <div className="serif num" aria-label={landingSample.aria}>{landingSample.amount}</div>
+                <div className="mono tag">H100 index<br />{landingSample.tag}</div>
               </div>
               <p className="lede">A marketplace for tokenized GPU compute. One unit, one hour of H100-equivalent compute, backed by a posted bond.</p>
               <div className="cta">
                 <Link className="pill pill-solid" href={landingLinks.launch}>Launch app</Link>
                 <a className="pill pill-ghost" href={landingLinks.how}>How it works</a>
               </div>
+              <p className="mono sample">{landingSample.note}</p>
             </div>
           </div>
           <div className="wrap facts">
@@ -135,6 +141,8 @@ export function Landing() {
             </ol>
           </div>
         </section>
+
+        <DemoTour />
 
         <section className="bond">
           <div className="wrap grid">
@@ -186,7 +194,7 @@ export function Landing() {
                   <li key={item.strong}><b>{item.strong}</b> {item.text}</li>
                 ))}
               </ul>
-              <Link className="pill pill-ghost" href={landingLinks.provider}>Become a provider</Link>
+              <Link className="pill pill-ghost" href={providerHref}>Become a provider</Link>
             </div>
           </div>
         </section>
@@ -198,7 +206,7 @@ export function Landing() {
                 <p className="mono">Demo path · S0</p>
                 <h2 className="sec">Walk the whole loop in five steps.</h2>
               </div>
-              <Link className="pill pill-ghost" href={landingLinks.demo}>Open demo</Link>
+              <Link className="pill pill-ghost" href={landingLinks.demo}>Launch demo</Link>
             </div>
             <ol className="steps rv">
               {landingSteps.map((step) => (
