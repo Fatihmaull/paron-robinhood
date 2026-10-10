@@ -346,7 +346,7 @@ export function AdminPage() {
                 <span>A100 factor</span>
                 <span>{next ? formatFactor(next) : <span className="muted">Not set</span>}</span>
               </div>
-              <div className="row"><span>{done ? "Executed" : "Ready"}</span><span>{formatWib(op.ready_at_ms)}</span></div>
+              <div className="row"><span>Ready at</span><span>{formatWib(op.ready_at_ms)}</span></div>
               <p className="help">Fixture calldata is a placeholder. Execute encodes setFactor locally. Salt {shortId(op.salt)}.</p>
               {done ? null : (
                 <TxButton
