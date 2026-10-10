@@ -33,13 +33,56 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (
 
 ## 0. Ringkasan
 
-- **Satu-satunya tenggat keras: Sab 10 Okt 2026, 23:59 WIB** [D-93, APPROVED Fatih 10:16 WIB]. Kalimat lama "12:00 WIB" adalah **HISTORICAL, superseded by D-93** (termasuk kalimat 12:00 pada D-90). Target internal Sab 11:30 (design §7.3) tetap catatan historis dan tidak mengikat [D-90]. Jam freeze 06:00, 09:00, dan 11:30 tetap HISTORICAL (D-90). Usulan buffer: submit sekitar **21:00 WIB** pada hari yang sama. **D-97 (APPROVED, status bangun PENDING):** halaman tutorial `/docs` di navbar, tepat di kiri Markets. Target merge bangun sebelum sekitar **19:00 WIB**. Belum selesai. Submission, deck, dan tombol HackQuest adalah milik Fatih. **HISTORICAL:** "Handler merekam video demo final dari produksi." Video demo final sudah direkam dari `d3081be` dan tidak menampilkan `/admin`. Penyuntingan = agen evergreen video editor yang sudah ada, sesuai Fatih.
+- **Satu-satunya tenggat keras: Sab 10 Okt 2026, 23:59 WIB** [D-93, APPROVED Fatih 10:16 WIB]. Kalimat lama "12:00 WIB" adalah **HISTORICAL, superseded by D-93** (termasuk kalimat 12:00 pada D-90). Target internal Sab 11:30 (design §7.3) tetap catatan historis dan tidak mengikat [D-90]. Jam freeze 06:00, 09:00, dan 11:30 tetap HISTORICAL (D-90). Usulan buffer: submit sekitar **21:00 WIB** pada hari yang sama. **D-97 (APPROVED, status bangun LIVE):** halaman tutorial `/docs` di navbar, tepat di kiri Markets, hidup di produksi `783b6be` (Scout READY, `/docs` 200). **HISTORICAL:** "status bangun PENDING", "Target merge bangun sebelum sekitar 19:00 WIB", dan "Belum selesai." Cek ulang header Designer di 1024, 1280, dan 390, serta pengambilan ulang gambar tutorial 01, 02, dan 05, masih **PENDING**. Daftar URL isian ada di bagian Submission URLs. Submission, deck, dan tombol HackQuest adalah milik Fatih. **HISTORICAL:** "Handler merekam video demo final dari produksi." Video demo final sudah direkam dari `d3081be` dan tidak menampilkan `/admin`. Penyuntingan = agen evergreen video editor yang sudah ada, sesuai Fatih.
 - Submission lewat HackQuest ("official submission platform"); isian menurut notes §1: deskripsi proyek, problem & solution, repo GitHub, demo / aplikasi ter-deploy, tech stack, use case RWA, video demo **atau** materi presentasi, info tim. Nama field persis dan batas karakternya **tidak** ada di dokumen → [TBD T9-01].
 - **Batas durasi video tidak disebut** di dokumen kanonik → [TBD T9-02]. Rekomendasi: video submission = rekaman naskah ter-retime 2:30 (05 P5-06), maks ~3 menit [APPROVED P9-05].
 - Demo Day **Min 11 Okt 10:00–21:00 WIB** hanya untuk tim terpilih; judging berakhir 15:00 WIB; waktu pengumuman shortlist dan pemenang tidak dipublikasikan (notes §2).
 - Aturan inti: dibangun dari nol selama periode resmi; commit pertama ≥ Jum 09:00 WIB; atribusi pihak ketiga wajib (OQR §5; 04 §9.2).
 - **[D-64, 13:30 WIB]** Footnote "not affiliated" hanya di pitch deck / slide yang menyebut Ornn/ICE/OCPI/Robinhood (teks di §3.2). Penyebutan di footer situs dan README: historis [D-64].
 - **Penugasan pemilik [APPROVED Fatih langsung, 2026-10-09 17:01 WIB]:** video demo = agen evergreen video editor yang sudah ada (tidak ada bot baru; §4.6). Submit HackQuest = Fatih sendiri yang menekan submit. Pitch deck = Fatih sendiri yang membuatnya.
+
+---
+
+## Submission URLs
+
+Chain yang dipakai: Robinhood Chain Testnet, chain ID 46630. Bukan mainnet. Fallback Arbitrum Sepolia tidak dipilih. Alamat di bawah hanya kontrak testnet itu. Tidak ada alamat dompet.
+
+| Item | Nilai | Status |
+|---|---|---|
+| Repo | https://github.com/Fatihmaull/paron-robinhood | diisi |
+| App | https://paron.vercel.app | diisi |
+| Tutorial | https://paron.vercel.app/docs | LIVE di `783b6be` (Scout READY, `/docs` 200) |
+| Indexer health | https://paron-robinhood-production.up.railway.app/v1/health | diisi |
+| Series | https://paron-robinhood-production.up.railway.app/v1/series | diisi |
+| Demo video | berkas rekaman; perlu diunggah oleh Fatih | **TODO** |
+| Pitch deck | dibuat oleh Fatih | **TODO** |
+| `/demo` | https://paron.vercel.app/demo | hanya kalau form meminta interactive demo |
+
+`/demo` tidak masuk navbar dan tidak ditaut dari tutorial. Pintu di produk tetap CTA landing "Launch demo" (D-95).
+
+**Alamat kontrak (testnet 46630).** Sumber: `deployments/46630/stage-1.json` dan `deployments/46630/infra.json`. Kedua berkas itu sama persis dengan salinan di `indexer/deployments/46630/`. Tabel alamat di `DEPLOYMENTS.md` masih "pending deploy"; tabel itu **bukan** sumber alamat di sini. Manifest mencatat `verified: false` pada setiap kontrak di bawah. Jangan ditulis seolah sudah terverifikasi di explorer.
+
+Explorer: https://explorer.testnet.chain.robinhood.com (Blockscout). Tautan alamat memakai path `/address/`, host yang sama dengan tautan `/tx/` yang sudah ada di dokumen.
+
+| Kontrak | Alamat | Explorer |
+|---|---|---|
+| EASGate | `0xcfb4de7949afdd92193126e8c36b732c8fc2f503` | https://explorer.testnet.chain.robinhood.com/address/0xcfb4de7949afdd92193126e8c36b732c8fc2f503 |
+| ConversionTable | `0x147fcaf30928e42496b2e25072d2856ad67d9fca` | https://explorer.testnet.chain.robinhood.com/address/0x147fcaf30928e42496b2e25072d2856ad67d9fca |
+| ProviderRegistry | `0xac3cad1fbfe4600186349ff6331947403548a948` | https://explorer.testnet.chain.robinhood.com/address/0xac3cad1fbfe4600186349ff6331947403548a948 |
+| BondVault | `0x5e4b1235263fd50227c32f6018d859de9f07361a` | https://explorer.testnet.chain.robinhood.com/address/0x5e4b1235263fd50227c32f6018d859de9f07361a |
+| CUToken | `0xeee256347a0a70b75f0da2c6a32ad8c971d17464` | https://explorer.testnet.chain.robinhood.com/address/0xeee256347a0a70b75f0da2c6a32ad8c971d17464 |
+| PrintIndex | `0xb094986c6fb21bfc22d0be672283db6b981dd120` | https://explorer.testnet.chain.robinhood.com/address/0xb094986c6fb21bfc22d0be672283db6b981dd120 |
+| SeriesFactory | `0xe7d64ff70c16d4a44f918cae9739e7450c671757` | https://explorer.testnet.chain.robinhood.com/address/0xe7d64ff70c16d4a44f918cae9739e7450c671757 |
+| PrimarySale | `0x185f854a564708e9196f956f09955bafa9466839` | https://explorer.testnet.chain.robinhood.com/address/0x185f854a564708e9196f956f09955bafa9466839 |
+| OrderBook | `0xb8b531d529bb0d7061f8c54940b6182e31e87879` | https://explorer.testnet.chain.robinhood.com/address/0xb8b531d529bb0d7061f8c54940b6182e31e87879 |
+| RedemptionManager | `0x4bdd6ab3f78933bf802d5288d1226f049fde2209` | https://explorer.testnet.chain.robinhood.com/address/0x4bdd6ab3f78933bf802d5288d1226f049fde2209 |
+| PanelArbitrator | `0x0081ad8ef69e7f6b30e29a639207861b2c065f60` | https://explorer.testnet.chain.robinhood.com/address/0x0081ad8ef69e7f6b30e29a639207861b2c065f60 |
+| TimelockController | `0xcd1e14d003d027b5c435fa0c38b796a89c1c82fe` | https://explorer.testnet.chain.robinhood.com/address/0xcd1e14d003d027b5c435fa0c38b796a89c1c82fe |
+| MockUSDC | `0x32142f5bd9674bb38f6b53c1dde429ba2f51f111` | https://explorer.testnet.chain.robinhood.com/address/0x32142f5bd9674bb38f6b53c1dde429ba2f51f111 |
+| EAS | `0x52532ddcf56e5cada383b5ba15cdbac2fe85a349` | https://explorer.testnet.chain.robinhood.com/address/0x52532ddcf56e5cada383b5ba15cdbac2fe85a349 |
+| SchemaRegistry | `0x0E9A3dd0765d4Ef84D42b8e35Cef6aED89E6E379` | https://explorer.testnet.chain.robinhood.com/address/0x0E9A3dd0765d4Ef84D42b8e35Cef6aED89E6E379 |
+
+Dua belas kontrak pertama dari `stage-1.json` (`label` stage-1). MockUSDC, EAS, dan SchemaRegistry dari `infra.json` (EAS `mode` self-deploy, field versi `1.4.0`). `safe` di infra adalah null, jadi tidak ada baris Safe.
 
 ---
 
@@ -491,7 +534,7 @@ Tidak bisa dibuktikan secara baca-saja di produksi (tidak ada data untuk dicoba)
 ### D-95 nav dan D-96
 
 - Koreksi D-95: catatan Designer yang menaruh "For providers" di navbar aplikasi adalah **HISTORICAL** (#71 menghapusnya). Navbar pengguna hanya Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Kalimat yang mulai dari Markets tanpa Docs adalah **HISTORICAL** sejak D-97 untuk ketiadaan tautan Docs. Pintu provider hanya CTA landing "Become a provider". Operator hanya CTA kecil di footer landing. `/demo` hanya CTA landing "Launch demo".
-- **D-97, APPROVED 10 Okt 2026, status bangun PENDING (belum selesai).** Navbar: Docs, Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. `/docs` = tutorial lengkap, tiap langkah satu judul + penjelasan singkat + satu tangkapan layar, tanpa video. Hanya alur aplikasi produksi. Tidak ada tautan ke `/demo`. Tangkapan layar dari data on-chain sungguhan, bukan "Demo data". Bagian provider dan operator pendek: pintu "Become a provider" di landing dan tab Operator di footer, bukan di navbar. Header dicek ulang di 1024, 1280, dan 390 dengan wallet tersambung. Isi: Designer. Bangun: engineer. Target merge sebelum sekitar 19:00 WIB.
+- **D-97, APPROVED 10 Okt 2026, status bangun LIVE di `783b6be`.** **HISTORICAL:** "status bangun PENDING (belum selesai)" dan "Target merge sebelum sekitar 19:00 WIB." Navbar: Docs, Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. `/docs` = tutorial lengkap, tiap langkah satu judul + penjelasan singkat + satu tangkapan layar, tanpa video. Hanya alur aplikasi produksi. Tidak ada tautan ke `/demo`. Tangkapan layar dari data on-chain sungguhan, bukan "Demo data". Bagian provider dan operator pendek: pintu "Become a provider" di landing dan tab Operator di footer, bukan di navbar. Isi: Designer. Bangun: engineer. Scout mengonfirmasi https://paron.vercel.app READY, dan `/docs` menjawab 200. Masih **PENDING:** cek ulang header Designer di 1024, 1280, dan 390 dengan wallet tersambung. Masih **PENDING:** pengambilan ulang gambar tutorial 01, 02, dan 05.
 - D-96 APPROVED (Fatih, ~15:00 WIB): bot keeper dan trader di Railway LIVE dengan wallet bot khusus (bukan dry-run) setelah Fatih mendanai wallet itu dari faucet. **PENDING FUNDING**. **Not active** sampai terbukti. Menolak chain selain testnet. Kill switch off-chain D-42 tetap.
 
 ### Pemilik yang masih terbuka

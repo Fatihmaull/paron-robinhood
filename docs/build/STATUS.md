@@ -38,7 +38,7 @@ These figures are estimates from the handler as of 21:08 WIB on 9 Oct 2026. They
 
 ## Hosting (Sat 10 Oct 2026; no secrets, no account names, no token values)
 
-- Production: https://paron.vercel.app. Git-connected. Auto-builds on merge to `main` only. Current production commit is `1f33f2f` (PR #74). CI on that merge was green, and https://paron.vercel.app is READY at `1f33f2f`. Earlier UI checks below that name `d3081be` were made on that older commit.
+- Production: https://paron.vercel.app. Git-connected. Auto-builds on merge to `main` only. Current production commit is `783b6be` (PR #76). Scout confirmed READY, and `/docs` returns 200. **HISTORICAL as the "current" line:** "Current production commit is `1f33f2f` (PR #74)." That deploy stays the commit for the `/admin` "Ready at" check below. Earlier UI checks that name `d3081be` were made on that older commit.
 - Backup: https://paron-bay.vercel.app, on a second Vercel account. No Git connection. Manual deploy from `main`. The account is not named here.
 - The origin `https://paron.vercel.app` stays allowed in API CORS.
 - The Railway indexer is healthy. Its RPC backup env vars are set. Values are not written here. **HISTORICAL as the general line.** Current line: the second RPC (PublicNode) is already set as `INDEXER_RPC_URL_BACKUP` and `NEXT_PUBLIC_RPC_URL_BACKUP`. The URL and the key are not written. An RPC key that was in git history still needs rotation by Fatih (owner: Fatih).
@@ -87,7 +87,9 @@ Checked with a real testnet wallet. No wallet address is written here.
 - Faucet success is **verified**. Pending, then Success, with the message "5,000 test USDC added." and an explorer link. Tx `0xcdca…660f`.
 - Faucet cooldown text is **verified**. The status row shows "Failed · faucet · Faucet cooling down. Try again at the next hour." once. The duplicate "Transaction failed." is gone. The wallet is not prompted (blocked at simulation). Minor note: the text says "next hour" and has no countdown.
 
-**Current production commit:** `1f33f2f` (PR #74 merged to `main`, CI green). https://paron.vercel.app is READY at `1f33f2f`. No indexer or contract change in that PR. **HISTORICAL:** "A Designer glance check of `/admin` on that deploy is pending." The check **PASSED** at 1280 and 390: "Ready at 17:24:06 WIB", Done badge without Execute, clean console, one h1, no horizontal scroll, "Demo data" label.
+**Deploy `1f33f2f` (PR #74, merged to `main`, CI green).** https://paron.vercel.app was READY at `1f33f2f`. No indexer or contract change in that PR. **HISTORICAL:** "A Designer glance check of `/admin` on that deploy is pending" and "Current production commit: `1f33f2f`." The check **PASSED** at 1280 and 390: "Ready at 17:24:06 WIB", Done badge without Execute, clean console, one h1, no horizontal scroll, "Demo data" label.
+
+**Current production commit:** `783b6be` (PR #76). Scout confirmed https://paron.vercel.app READY, and `/docs` returns 200. The D-97 tutorial is **LIVE**. **HISTORICAL:** "build status PENDING" and "not done." Designer header re-check at 1024, 1280, and 390 with a wallet connected is still **PENDING**. Re-shooting tutorial images 01, 02, and 05 is still **PENDING**.
 
 ## Never-cut, proven via the UI on production (3/3)
 
@@ -133,6 +135,8 @@ Not provable read-only on production (no data to exercise): "Claimable now", "No
 - #71 landing S2 polish. This PR removed "For providers" from the app navbar (D-95 correction).
 - #72 never-cut fixes (`d3081be`).
 - #74 relabel Done ops on `/admin` from "Executed" to "Ready at" (`1f33f2f`). No indexer or contract change. The label is fixed. Execution time from the indexer is still not shown.
+- #75 records D-97 (tutorial page on the user navbar). Docs-only.
+- #76 adds the `/docs` tutorial and puts Docs left of Markets (`783b6be`). Production is READY at that deploy, and `/docs` returns 200.
 
 ## Open owner items
 
@@ -140,3 +144,6 @@ Not provable read-only on production (no data to exercise): "Claimable now", "No
 - **HISTORICAL:** "The handler records the final demo video from production." The final demo video is recorded from `d3081be` and does not show `/admin`. The evergreen video editor handles editing, per Fatih.
 - Designer re-review after #72: done. See the re-review section. No S0 or S1 items remain from that review.
 - **HISTORICAL:** "Designer glance check of `/admin` on production `1f33f2f` is pending." It **PASSED** at 1280 and 390 ("Ready at 17:24:06 WIB", Done badge without Execute, clean console, one h1, no horizontal scroll, "Demo data" label). No open design S0, S1, or S2 except the faucet cooldown text with no countdown (minor S2, skippable).
+- **PENDING:** Designer header re-check of the live `/docs` navbar at 1024, 1280, and 390 with a wallet connected.
+- **PENDING:** re-shoot tutorial images 01, 02, and 05.
+- **TODO:** demo video file still needs upload by Fatih. Pitch deck is still Fatih's.
