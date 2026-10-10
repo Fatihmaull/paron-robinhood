@@ -4,7 +4,7 @@ import dynamic from "next/dynamic";
 import Link from "next/link";
 import { useMemo, useState } from "react";
 import { keccak256, parseUnits, stringToHex } from "viem";
-import { useAccount, usePublicClient, useSignTypedData } from "wagmi";
+import { useAccount, useChainId, usePublicClient, useSignTypedData } from "wagmi";
 import { erc20Abi, orderBookAbi, primarySaleAbi, redemptionManagerAbi } from "@/lib/abi";
 import { ZERO_ADDRESS, chainId, contractAddress } from "@/lib/config";
 import { formatCoverage, formatCu, formatFactor, formatMaxCost, formatUsd, formatWib, isWholeCu, quotePrimary, shortId } from "@/lib/format";
@@ -194,11 +194,24 @@ function StatsRibbon({ detail }: { detail: SeriesDetail }) {
 
 function Ticket({ seriesId, detail, initial }: { seriesId: string; detail: NonNullable<ReturnType<typeof useSeries>["data"]>["data"]; initial: "buy" | "order" }) {
   const [mode, setMode] = useState<"buy" | "order">(initial);
+  const { address } = useAccount();
+  const walletChain = useChainId();
+  const wrongNetwork = Boolean(address) && walletChain !== chainId();
   return (
     <div>
       <div className="tabs" role="tablist" aria-label="Ticket">
         <button type="button" role="tab" aria-selected={mode === "buy"} data-active={mode === "buy"} onClick={() => setMode("buy")}>Buy</button>
-        <button type="button" role="tab" aria-selected={mode === "order"} data-active={mode === "order"} onClick={() => setMode("order")}>Place order</button>
+        <button
+          type="button"
+          role="tab"
+          aria-selected={mode === "order"}
+          data-active={mode === "order"}
+          disabled={wrongNetwork}
+          title={wrongNetwork ? "Wrong network" : undefined}
+          onClick={() => setMode("order")}
+        >
+          Place order
+        </button>
       </div>
       {mode === "buy" ? (
         <BuyBox seriesId={seriesId} price={detail.primary_price} saleOpen={detail.sale_open} />

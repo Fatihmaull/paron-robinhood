@@ -2,17 +2,20 @@
 
 import { useState } from "react";
 import type { Abi, PublicClient } from "viem";
-import { usePublicClient, useWriteContract } from "wagmi";
+import { useAccount, usePublicClient, useWriteContract } from "wagmi";
 import { CLAIM_DEFAULT_GAS_LIMIT, explorerTxUrl } from "@/lib/config";
 import { afterDeadlineOpen } from "@/lib/clock";
 import { STALE_DEADLINE_REVERTS, revertName } from "@/lib/errors";
 import { shortId } from "@/lib/format";
+import { simulationRequest } from "@/lib/tx-sim";
 import { useData } from "./providers";
 
 export type TxPhase = "pending" | "success" | "failed";
 
 export type TxRecord = {
   phase: TxPhase;
+  /** send() label of this step, such as approve or buy. */
+  step?: string;
   hash?: string;
   message?: string;
 };
@@ -33,6 +36,7 @@ type WriteReq = {
 
 export function useSend() {
   const { source, nowMs } = useData();
+  const { address } = useAccount();
   const client = usePublicClient();
   const { writeContractAsync } = useWriteContract();
   const [pending, setPending] = useState<string | null>(null);
@@ -49,13 +53,13 @@ export function useSend() {
     setPending(label);
     setError(null);
     setNote(null);
-    setRecord({ phase: "pending" });
+    setRecord({ phase: "pending", step: label });
     let hash: string | undefined;
     const args = request as never;
     try {
-      if (client) {
+      if (client && address) {
         try {
-          await client.simulateContract(args);
+          await client.simulateContract(simulationRequest(request, address) as never);
         } catch (err) {
           const name = revertName(err);
           const stale =
@@ -67,21 +71,21 @@ export function useSend() {
           if (!stale) throw err;
           setNote("Waiting for the next block…");
           hash = await writeContractAsync({ ...request, gas: CLAIM_DEFAULT_GAS_LIMIT } as never);
-          setRecord({ phase: "pending", hash });
+          setRecord({ phase: "pending", step: label, hash });
           await settle(client, hash);
-          setRecord({ phase: "success", hash });
+          setRecord({ phase: "success", step: label, hash });
           return true;
         }
       }
       hash = await writeContractAsync(args);
-      setRecord({ phase: "pending", hash });
+      setRecord({ phase: "pending", step: label, hash });
       if (client) await settle(client, hash);
-      setRecord({ phase: "success", hash });
+      setRecord({ phase: "success", step: label, hash });
       return true;
     } catch (err) {
       const message = failureMessage(err);
       setError(message);
-      setRecord({ phase: "failed", hash, message });
+      setRecord({ phase: "failed", step: label, hash, message });
       return false;
     } finally {
       setPending(null);
@@ -102,6 +106,7 @@ export function TxStatus({ record }: { record: TxRecord | null }) {
   return (
     <p className={`tx-status ${record.phase}`} role="status" data-testid="tx-status">
       {label}
+      {record.step ? ` · ${record.step}` : null}
       {record.hash ? (
         <>
           {" · "}

@@ -23,14 +23,14 @@ import { errorCopy } from "@/lib/errors";
 import { formatFactor, formatWib, shortId } from "@/lib/format";
 import { gpuModelId } from "@/lib/gpu-model";
 import { useKeeperQueue, useKyb, useTimelock } from "@/lib/hooks";
-import { useSend } from "./tx";
+import { TxStatus, useSend } from "./tx";
 import { OperatorLink } from "./operator-link";
 import { Field, Panel, TxButton } from "./ui";
 
 const ZERO32 = `0x${"0".repeat(64)}` as `0x${string}`;
 
 export function FaucetPage() {
-  const { send, pending, error } = useSend();
+  const { send, pending, error, record } = useSend();
   const [done, setDone] = useState(false);
   return (
     <div>
@@ -53,6 +53,7 @@ export function FaucetPage() {
         {done && !error ? <p className="ok">5,000 test USDC added.</p> : null}
         {error?.includes("FaucetCooldown") ? <p className="warn">{errorCopy("FaucetCooldown", { nextAt: "the time in the error" })}</p> : null}
         {error && !error.includes("FaucetCooldown") ? <p className="bad">{error}</p> : null}
+        <TxStatus record={record} />
         <p className="help">Low gas balance. Get testnet ETH from the chain faucet, then come back for mUSDC.</p>
       </Panel>
     </div>
