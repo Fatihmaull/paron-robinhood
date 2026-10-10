@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { useQuery } from "@tanstack/react-query";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useAccount } from "wagmi";
 import { loadParticipant } from "@/lib/api";
 import {
@@ -33,6 +33,7 @@ export function Landing() {
   });
   const verified = !isConnected ? null : participant.isError ? false : participant.data ? participant.data.data.verified : null;
   const providerHref = providerEntryPath(isConnected, verified);
+  const [navOpen, setNavOpen] = useState(false);
 
   useEffect(() => {
     const root = document.querySelector(".landing");
@@ -68,7 +69,7 @@ export function Landing() {
       <header className="nav">
         <div className="wrap">
           <Link className="brand" href="/" aria-label="Paron home">Paron</Link>
-          <nav aria-label="Primary">
+          <nav id="landing-nav" aria-label="Primary" className={navOpen ? "open" : undefined}>
             <ul>
               {landingNav.map((item) => (
                 <li key={item.href}><Link href={item.href}>{item.label}</Link></li>
@@ -76,6 +77,15 @@ export function Landing() {
             </ul>
           </nav>
           <div className="nav-cta">
+            <button
+              className="pill pill-ghost menu-toggle"
+              type="button"
+              aria-expanded={navOpen}
+              aria-controls="landing-nav"
+              onClick={() => setNavOpen((open) => !open)}
+            >
+              Menu
+            </button>
             <Link className="pill pill-solid" href={landingLinks.launch}>Launch app</Link>
           </div>
         </div>

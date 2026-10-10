@@ -141,7 +141,8 @@
   min-width: 44px;
   color: #fff;
 }
-.landing .nav ul { display: flex; gap: 4px; list-style: none; padding: 0; margin: 0; flex-wrap: wrap; }
+.landing .nav ul { display: flex; gap: 4px; list-style: none; padding: 0; margin: 0; flex-wrap: nowrap; }
+.landing .menu-toggle { display: none; }
 .landing .nav ul a {
   display: inline-flex;
   align-items: center;
@@ -527,7 +528,18 @@
 .landing .rv.in { opacity: 1; transform: none; }
 
 @media (max-width: 1024px) {
+  .landing .menu-toggle { display: inline-flex; }
   .landing .nav ul { display: none; }
+  .landing .nav nav.open {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: #000;
+    border-bottom: 1px solid var(--line);
+  }
+  .landing .nav nav.open ul { display: flex; flex-direction: column; align-items: stretch; padding: 8px 12px 12px; }
+  .landing .nav nav.open ul a { justify-content: flex-start; width: 100%; }
   .landing .hero h1, .landing .index, .landing .statement h2, .landing h2.sec, .landing .how .side, .landing .bond .big, .landing .how ol, .landing .bond .body, .landing .role {
     grid-column: 1 / 13;
   }
