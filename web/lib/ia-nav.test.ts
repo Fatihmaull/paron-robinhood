@@ -21,8 +21,10 @@ function walk(dir: string, visit: (file: string) => void) {
 test("user nav is markets through data", () => {
   assert.deepEqual(
     USER_NAV.map((item) => item[1]),
-    ["Markets", "Buy", "Trade", "Portfolio", "Redemptions", "Faucet", "Index", "Data"],
+    ["Docs", "Markets", "Buy", "Trade", "Portfolio", "Redemptions", "Faucet", "Index", "Data"],
   );
+  assert.equal(USER_NAV[0][0], "/docs");
+  assert.equal(USER_NAV[1][0], "/markets");
   const shell = read("../components/shell.tsx");
   const wallet = read("../components/wallet.tsx");
   assert.match(shell, /USER_NAV/);

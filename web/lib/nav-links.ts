@@ -1,6 +1,7 @@
 /** User-side dashboard links. Provider and operator stay outside this row. */
 
 export const USER_NAV = [
+  ["/docs", "Docs"],
   ["/markets", "Markets"],
   ["/buy", "Buy"],
   ["/trade", "Trade"],
