@@ -37,6 +37,7 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §27 Halaman tutorial `/docs` di navbar (D-97, APPROVED 10 Okt 2026, langsung di grup). Status bangun LIVE di `783b6be`. Kalimat "Status bangun PENDING" adalah **HISTORICAL**
 - §28 Hero landing CRM-enterprise (D-98, APPROVED 10 Okt 2026, Fatih lewat Designer 1:1). Menimpa bentuk hero D-91. D-91 tetap APPROVED
 - §29 Verifier, pendaftaran provider, dan wording (D-99, APPROVED 10 Okt 2026 ~19:50 WIB). Bangun PENDING sampai PR Verifier merge dan ter-deploy
+- §30 Logo resmi (D-100, APPROVED 10 Okt 2026 ~19:57 WIB). Landasan dan teks PARON off-white #E6E9EE; kotak kecil di atas landasan oranye #F07A2A
 
 ---
 
@@ -1148,3 +1149,15 @@ Lima poin di `/verifier`:
 5. Pesan atestasi buyer tetap, ditambah baris "Ask the verifier for a provider attestation (role 1), then link it here."
 
 Kalimat Good to know di `/docs`, disetujui dan belum live: "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register." Kalimat yang sama ada di 06. Halaman `/docs` yang live di `783b6be` belum memuat kalimat ini.
+
+---
+
+## 30. Logo resmi: D-100 (APPROVED 10 Okt 2026 ~19:57 WIB)
+
+Fatih menyetujui pada 10 Okt 2026, sekitar 19:57 WIB. Bukan usulan. Chain tetap testnet. Nomor dicek terhadap repo sebelum bagian ini: pemakaian terakhir adalah D-99. D-100 belum dipakai. Keputusan lain tidak diubah.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-100 | **APPROVED (Fatih, 10 Okt 2026 ~19:57 WIB).** Logo resmi Paron, seperti di navbar https://paron.vercel.app/markets: landasan dan teks PARON off-white `#E6E9EE`. Hanya kotak kecil di atas landasan yang oranye `#F07A2A`. | design.md; guidelines.md; approved-ui-changes; CONTEXT-INDEX |
+
+Sumber aset di app: `/brand/paron-lockup.svg` (teks sudah outline) dan `/brand/paron-mark.svg` (hanya landasan). Berkasnya `web/public/brand/paron-lockup.svg` dan `web/public/brand/paron-mark.svg`. Ekspor SVG dikerjakan Designer dan dikirim ke Fatih di chat 1:1. Ekspor itu tidak mengubah desain. Logo akan ada di README lewat PR docs milik handler. **PENDING** sampai PR itu merge. PR ini tidak mengedit `docs/README.md`.

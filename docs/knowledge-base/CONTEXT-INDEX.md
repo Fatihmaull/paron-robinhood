@@ -1,7 +1,7 @@
 # Paron: indeks dokumen konteks (master: Hackathon Scout; sekarang PO/project handler)
 
 Sumber kebenaran: repo `docs/knowledge-base/` (mirror dari folder kerja Scout di box; path box lama tidak dipakai).
-Terakhir diperbarui: Sabtu 10 Okt 2026 (D-93..D-99). Keputusan yang lebih kemudian mengalahkan yang lebih dahulu.
+Terakhir diperbarui: Sabtu 10 Okt 2026 (D-93..D-100). Keputusan yang lebih kemudian mengalahkan yang lebih dahulu.
 
 **Urutan mulai:** `SESSION_HANDOFF_HACKATHON.md` (state terkini) → file ini → `HANDOFF-BRIEF.md` (urutan baca, tugas pertama, prioritas, aturan), lalu `paron-product-plan.md` (gambaran produk penuh: semua modul, aplikasi, arsitektur akhir, roadmap P0–P5, batas lingkup hackathon).
 
@@ -184,6 +184,12 @@ Lima poin di `/verifier`: tombol "Register as provider" nonaktif dengan pesan ne
 Badge lama "Verified by Paron demo verifier" **HISTORICAL**. Wording baru yang menunggu bangun: "Verified by Paron verifier (team-operated, testnet)". Badge itu ada di D-04 dan D-54, bukan di tabel D-84..D-88. D-87 tidak diubah.
 
 Kalimat Good to know di `/docs`, disetujui dan belum live: "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register."
+
+## D-100 logo resmi (APPROVED 10 Okt 2026 ~19:57 WIB)
+
+Nomor dicek: pemakaian terakhir sebelum D-100 adalah D-99. D-100 belum dipakai. Chain tetap testnet. Rincian: 07 §30. Keputusan lain tidak diubah.
+
+Logo resmi Paron, seperti di navbar https://paron.vercel.app/markets: landasan dan teks PARON off-white `#E6E9EE`. Hanya kotak kecil di atas landasan yang oranye `#F07A2A`. Sumber aset di app: `/brand/paron-lockup.svg` (teks sudah outline) dan `/brand/paron-mark.svg` (hanya landasan). Ekspor SVG dikerjakan Designer dan dikirim ke Fatih di chat 1:1. Ekspor itu tidak mengubah desain. Logo akan ada di README lewat PR docs milik handler. **PENDING** sampai PR itu merge. PR ini tidak mengedit `docs/README.md`.
 
 ## Header, route indeks, dan kredit chart (catatan dokumen 10 Okt 2026)
 

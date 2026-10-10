@@ -177,6 +177,12 @@ On `/verifier` provider registration:
 
 `/docs` "Good to know", approved and not live yet: "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register." The same sentence is in 06.
 
+## Official logo (07 §30, D-100, APPROVED 10 Oct 2026 ~19:57 WIB)
+
+Fatih approved this at about 19:57 WIB. Other decisions are unchanged.
+
+The official Paron logo, as shown in the navbar at https://paron.vercel.app/markets: the anvil and the PARON text are off-white `#E6E9EE`. Only the small square above the anvil is orange `#F07A2A`. App assets: `/brand/paron-lockup.svg` (the text is already an outline) and `/brand/paron-mark.svg` (anvil only). Designer exports the SVG and sends it to Fatih in the 1:1 chat. That export does not change the design. The logo will appear in the README through the handler's docs pull request. **PENDING** until that pull request merges. This pull request does not edit `docs/README.md`.
+
 ## Index route
 
 The built page is `/h100-index`. Static `/index` collided with `/` on Vercel, so `/index` redirects 307. API path `/index/H100` is unchanged.

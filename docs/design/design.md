@@ -16,6 +16,12 @@ Reason: data screens must be uniform and scannable (RHYTHM 1); motion only confi
 6. **Honest data.** No invented numbers, no fake logos, no testimonials. Demo data is labelled. Empty beats deceptive (R-17, R-36, R-38).
 7. **Identity motif: the unit square.** One ember square (the CU struck on the anvil) in the logo, own-order dot, active tab underline. Reason: the one repeated, product-specific mark.
 
+## Logo
+
+**D-100 (APPROVED, Fatih, 10 Oct 2026 ~19:57 WIB).** The official Paron logo, as shown in the navbar at https://paron.vercel.app/markets: the anvil and the PARON text are off-white `#E6E9EE`. Only the small square above the anvil is orange `#F07A2A`.
+
+App assets: `/brand/paron-lockup.svg` (the text is already an outline) and `/brand/paron-mark.svg` (anvil only). Files: `web/public/brand/paron-lockup.svg` and `web/public/brand/paron-mark.svg`. Designer exports the SVG and sends it to Fatih in the 1:1 chat. That export does not change the design. The logo will appear in the README through the handler's docs pull request. **PENDING** until that pull request merges. This pull request does not edit `docs/README.md`. Other decisions are unchanged.
+
 ## 2. Typography
 
 | Role | Font | Size / line | Weight | Notes |
