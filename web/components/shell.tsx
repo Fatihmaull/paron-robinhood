@@ -177,7 +177,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
         </span>
         <span className="strip-ref">
           <span className="sep" />
-          Reference price (demo data)
+          Demo data
           <span className="num">{ref ? formatUsd(ref) : ""}</span>
         </span>
       </div>

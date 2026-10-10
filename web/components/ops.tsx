@@ -342,7 +342,7 @@ export function AdminPage() {
 }
 
 const KYB_PILLS = {
-  PENDING: { label: "Pending", tone: "info" },
+  PENDING: { label: "Pending", tone: "warn" },
   APPROVED: { label: "Approved", tone: "ok" },
   EXPIRED: { label: "Expired", tone: "warn" },
   REVOKED: { label: "Revoked", tone: "danger" },

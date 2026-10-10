@@ -7,7 +7,7 @@ import { useAccount, useSignTypedData } from "wagmi";
 import { agentCommandTypes, bondVaultAbi, redemptionManagerAbi, seriesFactoryAbi } from "@/lib/abi";
 import { beforeDeadlineOpen } from "@/lib/clock";
 import { agentUrl, chainId, contractAddress } from "@/lib/config";
-import { formatCountdown, formatCu, formatUsd, formatWib, shortId } from "@/lib/format";
+import { canonicalAddress, formatCountdown, formatCu, formatUsd, formatWib, shortAddress, shortId } from "@/lib/format";
 import { useProviderAccount, useProviderQueue } from "@/lib/hooks";
 import type { Redemption } from "@/lib/types";
 import { activeDeadline, useProviderNow } from "./redemption-view";
@@ -28,7 +28,8 @@ export function ProviderConsole({ focus }: { focus?: string }) {
   return (
     <div>
       <p className="kicker">Provider console</p>
-      <h1>{provider ? shortId(provider.address) : "Provider"}</h1>
+      <h1>Provider</h1>
+      {provider ? <p className="num" title={canonicalAddress(provider.address)}>{shortAddress(provider.address)}</p> : null}
       <p className="lede">
         {provider?.verified ? "Verified by Paron demo verifier" : "Not verified"} · {provider?.status ?? "—"}
       </p>

@@ -51,6 +51,7 @@ export function Markets({ headline = false, heading = true }: { headline?: boole
         {notice?.kind === "error" ? <p className="bad">{notice.text}</p> : null}
         {notice?.kind === "degraded" ? <p className="muted" role="status" data-testid="rpc-degraded">{notice.text}</p> : null}
         {syncing ? <p role="status" data-testid="markets-syncing" style={{ color: "var(--color-info)" }}>{notice.text}</p> : null}
+        {!query.isLoading && !syncing && rows.length === 0 && notice?.kind !== "error" ? <p>No series listed.</p> : null}
         {query.isLoading || syncing ? (
           <div role="status" aria-label="Loading series" data-testid="series-skeleton">
             {[0, 1, 2].map((i) => <div key={i} className="skeleton row-sk" />)}
