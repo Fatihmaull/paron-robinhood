@@ -18,20 +18,52 @@ export function errorCopy(name: string, vars: Record<string, string> = {}): stri
   return template.replace(/\{(\w+)\}/g, (_, key: string) => vars[key] ?? `{${key}}`);
 }
 
+const REVERT_NAMES = [
+  "NotDefaultable",
+  "DisputeWindowOpen",
+  "RulingDeadlineNotReached",
+  "NotProviderRole",
+  "StaleAttestation",
+  "InvalidLot",
+  "FaucetCooldown",
+  "SaleClosed",
+  "Paused",
+  "SlippageExceeded",
+  "MaxCostRequired",
+  "ERC20InsufficientBalance",
+  "ERC20InsufficientAllowance",
+  "BuyerNotVerified",
+  "SupplyExceeded",
+] as const;
+
 export function revertName(error: unknown): string | null {
   const text = error instanceof Error ? error.message : String(error);
-  const known = [
-    "NotDefaultable",
-    "DisputeWindowOpen",
-    "RulingDeadlineNotReached",
-    "NotProviderRole",
-    "StaleAttestation",
-    "InvalidLot",
-    "FaucetCooldown",
-    "SaleClosed",
-    "Paused",
-  ];
-  return known.find((name) => text.includes(name)) ?? null;
+  return REVERT_NAMES.find((name) => text.includes(name)) ?? null;
+}
+
+function cooldownNextAt(raw: string): string {
+  const match = raw.match(/FaucetCooldown\D{0,24}(\d{10})/);
+  if (!match) return "the next hour";
+  const ms = Number(match[1]) * 1000;
+  if (!Number.isFinite(ms)) return "the next hour";
+  return new Date(ms).toISOString().slice(11, 16) + " UTC";
+}
+
+/** Short status line. Unknown failures stay "Transaction failed." */
+export function failureReason(err: unknown): string {
+  const raw = err instanceof Error ? err.message : typeof err === "string" ? err : "";
+  if (/user rejected|user denied|rejected the request/i.test(raw)) return "Transaction rejected.";
+  const name = revertName(err);
+  if (name === "FaucetCooldown") return errorCopy("FaucetCooldown", { nextAt: cooldownNextAt(raw) });
+  if (name === "SlippageExceeded" || name === "MaxCostRequired") return "max cost too low";
+  if (name === "InvalidLot") return "Quantity must be a whole number of CU.";
+  if (name === "ERC20InsufficientBalance") return "insufficient balance";
+  if (name === "ERC20InsufficientAllowance") return "approval too low";
+  if (name === "BuyerNotVerified") return "buyer is not verified";
+  if (name === "SupplyExceeded") return "not enough supply";
+  if (name && name in COPIES) return errorCopy(name);
+  if (name) return name;
+  return "Transaction failed.";
 }
 
 export const STALE_DEADLINE_REVERTS = new Set([

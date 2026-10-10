@@ -35,7 +35,7 @@ export const TourScreens = memo(function TourScreens() {
       </div>
 
       <section className="screen" data-screen="markets">
-        <h1>Markets</h1>
+        <p className="screen-title">Markets</p>
         <p className="sub">Pick a series to open it.</p>
         <div className="panel tbl">
           <div className="tr th">
@@ -78,7 +78,7 @@ export const TourScreens = memo(function TourScreens() {
       <section className="screen" data-screen="series">
         <p className="lab">Series 4</p>
         <div className="h1row">
-          <h1>CU-JKT-H100-2610</h1>
+          <p className="screen-title">CU-JKT-H100-2610</p>
           <u className="tag">Sale open</u>
           <u className="tag ok">Verified by Paron demo verifier</u>
         </div>
@@ -127,7 +127,7 @@ export const TourScreens = memo(function TourScreens() {
 
       <section className="screen" data-screen="buy">
         <p className="lab">Series 4 · Buy</p>
-        <div className="h1row"><h1>Buy CU-JKT-H100-2610</h1></div>
+        <div className="h1row"><p className="screen-title">Buy CU-JKT-H100-2610</p></div>
         <div className="two buy">
           <div className="panel" data-tour="ticket">
             <p className="lab">Buy primary</p>
@@ -156,7 +156,7 @@ export const TourScreens = memo(function TourScreens() {
 
       <section className="screen" data-screen="trade">
         <p className="lab">Series 4 · Secondary</p>
-        <div className="h1row"><h1>Trade CU-JKT-H100-2610</h1></div>
+        <div className="h1row"><p className="screen-title">Trade CU-JKT-H100-2610</p></div>
         <div className="two buy">
           <div>
             <div className="panel" data-tour="book">
@@ -184,7 +184,7 @@ export const TourScreens = memo(function TourScreens() {
 
       <section className="screen on" data-screen="redeem">
         <p className="lab">Redemption</p>
-        <div className="h1row"><h1>Redemption request</h1></div>
+        <div className="h1row"><p className="screen-title">Redemption request</p></div>
         <div className="two redeem" data-tour="redeem-main">
           <div className="panel" data-tour="timeline">
             <p className="lab">Status · 20 CU</p>

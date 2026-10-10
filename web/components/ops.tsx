@@ -51,8 +51,6 @@ export function FaucetPage() {
           {pending === "faucet" ? "Sending…" : "Get test USDC"}
         </TxButton>
         {done && !error ? <p className="ok">5,000 test USDC added.</p> : null}
-        {error?.includes("FaucetCooldown") ? <p className="warn">{errorCopy("FaucetCooldown", { nextAt: "the time in the error" })}</p> : null}
-        {error && !error.includes("FaucetCooldown") ? <p className="bad">{error}</p> : null}
         <TxStatus record={record} />
         <p className="help">Low gas balance. Get testnet ETH from the chain faucet, then come back for mUSDC.</p>
       </Panel>

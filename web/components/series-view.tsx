@@ -446,7 +446,7 @@ function TradeBox({ seriesId, token }: { seriesId: string; token: string }) {
 function RedeemLink({ seriesId }: { seriesId: string }) {
   return (
     <p className="help">
-      Holding CU? <Link href={`/redemptions/new?series=${seriesId}`}>Request redemption</Link>. Delivery text is hashed on-chain.
+      Holding CU? <Link className="touch-link" href={`/redemptions/new?series=${seriesId}`}>Request redemption</Link>. Delivery text is hashed on-chain.
       {" "}
       <span className="muted">{shortId(keccak256(stringToHex("demo")))}</span>
     </p>

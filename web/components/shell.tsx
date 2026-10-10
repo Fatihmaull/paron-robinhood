@@ -81,9 +81,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
       const links = header.querySelector<HTMLElement>(".nav-links-measure");
       const brand = header.querySelector<HTMLElement>(".brand");
       const wallet = header.querySelector<HTMLElement>(".nav-wallet");
-      const side = header.querySelector<HTMLElement>(".for-providers-measure");
       const chip = header.querySelector<HTMLElement>(":scope > .chip");
-      if (!links || !brand || !wallet || !side) return;
+      if (!links || !brand || !wallet) return;
       const cs = getComputedStyle(header);
       const gap = Number.parseFloat(cs.columnGap || "0") || 0;
       const padding = (Number.parseFloat(cs.paddingLeft) || 0) + (Number.parseFloat(cs.paddingRight) || 0);
@@ -92,12 +91,11 @@ export function Shell({ children }: { children: React.ReactNode }) {
         headerWidth: header.clientWidth,
         padding,
         gap,
-        gaps: chipVisible ? 5 : 4,
+        gaps: chipVisible ? 4 : 3,
         brand: brand.getBoundingClientRect().width,
         links: links.scrollWidth,
         chip: chipVisible ? chip.getBoundingClientRect().width : 0,
         wallet: wallet.getBoundingClientRect().width,
-        side: side.getBoundingClientRect().width,
       });
       setFit(menu ? "menu" : "inline");
       if (!menu) setOpen(false);
@@ -151,18 +149,8 @@ export function Shell({ children }: { children: React.ReactNode }) {
               {label}
             </Link>
           ))}
-          <div className="nav-menu-section">
-            <p className="nav-menu-label">Providers</p>
-            <Link className="for-providers" href="/provider" data-active={path === "/provider" || path.startsWith("/provider/")}>
-              For providers
-            </Link>
-          </div>
         </nav>
         <div className="nav-spacer" />
-        <Link className="for-providers for-providers-measure" href="/provider" tabIndex={-1} aria-hidden="true">For providers</Link>
-        <Link className="for-providers" href="/provider" data-active={path === "/provider" || path.startsWith("/provider/")}>
-          For providers
-        </Link>
         <span className="chip"><span className="dot" /><span className="chip-wide">{chainId() === 421614 ? "Arbitrum Sepolia" : "Robinhood Chain Testnet"}</span><span className="chip-narrow">{`Testnet · ${chainId()}`}</span></span>
         <span className="nav-wallet">
           <HeaderWallet />
