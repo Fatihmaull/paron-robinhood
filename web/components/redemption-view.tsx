@@ -7,7 +7,7 @@ import { erc20Abi, redemptionManagerAbi } from "@/lib/abi";
 import { afterDeadlineOpen, beforeDeadlineOpen, inUnlockGap } from "@/lib/clock";
 import { contractAddress } from "@/lib/config";
 import { errorCopy } from "@/lib/errors";
-import { disputeBond, formatCountdown, formatCu, formatUsd, formatWib, shortId } from "@/lib/format";
+import { claimCountdown, disputeBond, formatCountdown, formatCu, formatUsd, formatWib, shortId } from "@/lib/format";
 import { PROVIDER_T1_SERVER_MS, snapServerNow } from "@/lib/fixtures";
 import { useRedemption } from "@/lib/hooks";
 import type { Redemption } from "@/lib/types";
@@ -110,15 +110,15 @@ function StateCopy({
   }
   if (row.state === "FINALIZED") return <p className="hero ok">Finalized. Bond released {formatUsd(row.bond_released)}.</p>;
   if (!deadline) return <p>{row.state}</p>;
-  const remaining = formatCountdown(nowMs, deadline);
+  const signed = formatCountdown(nowMs, deadline);
   const passed = nowMs > deadline;
   return (
     <div>
-      <div className="clock" data-testid="countdown">{remaining}</div>
+      <div className="clock" data-testid="countdown">{claimCountdown(nowMs, deadline)}</div>
       <p className="muted">
-        {passed ? `Deadline passed ${remaining.replace("-", "")} ago.` : "until the deadline"} {clockLabel}
+        {passed ? `Deadline passed ${signed.replace("-", "")} ago.` : "until the deadline"} {clockLabel}
       </p>
-      {row.state === "DEFAULTABLE" || row.state === "REQUESTED" ? (
+      {!passed && (row.state === "DEFAULTABLE" || row.state === "REQUESTED") ? (
         <p>If it passes, anyone can claim {formatUsd(row.claim_usd)} for the holder.</p>
       ) : null}
     </div>
@@ -177,8 +177,9 @@ function ClaimBlock({
       {!open ? <p className="help">Unlocks when the deadline passes.</p> : null}
       {gap ? <p className="help">The button stays shut for 2 seconds after the deadline second.</p> : null}
       <p className="help" data-testid="claim-status">
-        {formatWib(nowMs)} {clockLabel}. Deadline {when}. Opens after {formatWib(deadline + 2000)}. {open ? "Time-eligible." : "Not yet."}{" "}
-        {errorCopy("NotDefaultable", { deadline: when })}
+        {open
+          ? "Claimable now"
+          : `${formatWib(nowMs)} ${clockLabel}. Deadline ${when}. Opens after ${formatWib(deadline + 2000)}. Not yet. ${errorCopy("NotDefaultable", { deadline: when })}`}
       </p>
       {note ? <p className="warn">{note}</p> : null}
       <TxStatus record={record} />
