@@ -36,7 +36,7 @@ Paron is a full-stack decentralized application built on EVM:
 ## Live Deployments
 
 Paron is deployed on the **Robinhood Chain Testnet** (Chain ID: 46630).
-- **Web App:** [https://paron.vercel.app](https://paron.vercel.app)
+- **Web App:** [https://paron.vercel.app](https://paron.vercel.app) (Backup: [https://paron-bay.vercel.app](https://paron-bay.vercel.app))
 - **API Health:** [Indexer Status](https://paron-robinhood-production.up.railway.app/v1/health)
 - **Explorer:** [Robinhood Chain Testnet Explorer](https://explorer.testnet.chain.robinhood.com)
 
