@@ -38,7 +38,7 @@ These figures are estimates from the handler as of 21:08 WIB on 9 Oct 2026. They
 
 ## Hosting (Sat 10 Oct 2026; no secrets, no account names, no token values)
 
-- Production: https://paron.vercel.app. Git-connected. Auto-builds on merge to `main` only. Current production commit is `783b6be` (PR #76). Scout confirmed READY, and `/docs` returns 200. **HISTORICAL as the "current" line:** "Current production commit is `1f33f2f` (PR #74)." That deploy stays the commit for the `/admin` "Ready at" check below. Earlier UI checks that name `d3081be` were made on that older commit.
+- Production: https://paron.vercel.app. Git-connected. Auto-builds on merge to `main` only. Current production commit is `4639a4b`. **HISTORICAL as the "current" line:** "Current production commit is `783b6be` (PR #76)." That deploy stays the commit for the `/docs` 200 check. **HISTORICAL as an earlier "current" line:** "Current production commit is `1f33f2f` (PR #74)." That deploy stays the commit for the `/admin` "Ready at" check. Earlier UI checks that name `d3081be` were made on that older commit. GitHub listed no open pull requests when this note was written. The handler's pull request for tutorial image 01 is pending merge and was not on that list yet.
 - Backup: https://paron-bay.vercel.app, on a second Vercel account. No Git connection. Manual deploy from `main`. The account is not named here.
 - The origin `https://paron.vercel.app` stays allowed in API CORS.
 - The Railway indexer is healthy. Its RPC backup env vars are set. Values are not written here. **HISTORICAL as the general line.** Current line: the second RPC (PublicNode) is already set as `INDEXER_RPC_URL_BACKUP` and `NEXT_PUBLIC_RPC_URL_BACKUP`. The URL and the key are not written. An RPC key that was in git history still needs rotation by Fatih (owner: Fatih).
@@ -75,13 +75,13 @@ These figures are estimates as of 19:12 WIB on 10 Oct 2026. They were not recomp
 | S1 | ~100% | ~60% |
 | S2 | ~100% | ~70% |
 
-- S1 and S2 built move to ~100% in the working tree: issued attestations on `/verifier` (`GET /v1/participants`, revoke uid from that list), `/legal/disclaimer`, faucet cooldown read from `lastFaucetAt` with a countdown, and the tour step 4 card framed before the camera move. This is not on production yet.
-- Proven stays at the 15:55 column. The keeper bot and the trader bot are still not running, the kill switch is still untested, and the new pages are not proven on https://paron.vercel.app. D-96 still says the bots are **not active** until the bot wallet is funded.
+- **HISTORICAL:** "This is not on production yet" and "the new pages are not proven on https://paron.vercel.app." `4639a4b` is the production commit. It adds an Issued attestations panel on `/verifier` (`GET /v1/participants`; "Use for revoke" fills the uid), the page `/legal/disclaimer` plus footer links to Risk and Disclaimer, a faucet cooldown line read from `lastFaucetAt` with a countdown, and a tour step 4 camera frame on the tray (zoom 1.55) before the move. The Designer pass after this commit did not exercise those screens. The Revoke control was already on `/verifier` before this commit.
+- Proven stays at the 15:55 column for the bots. The keeper bot and the trader bot are still not running, and the kill switch is still untested. D-96 still says the bots are **not active** until the bot wallet is funded.
 - Never-cut stays 3/3 built and 3/3 proven via the UI on production.
 
 ## Deadline
 
-Hard deadline remains Saturday 10 Oct 2026 23:59 WIB (D-93). Submission, the deck, and the HackQuest button are Fatih's. Suggested submit by about 21:00 WIB for buffer. **HISTORICAL:** "The handler records the final demo video from production." The final demo video is recorded from `d3081be` and does not show `/admin`. The existing evergreen video editor handles editing, per Fatih.
+Hard deadline remains Saturday 10 Oct 2026 23:59 WIB (D-93). Submission, the deck, and the HackQuest button are Fatih's. Suggested submit by about 21:00 WIB for buffer. **HISTORICAL:** "The handler records the final demo video from production" and "The final demo video is recorded from `d3081be`." Final demo video v3 is done. It is about 2 minutes, recorded from production with the new hero, and it was sent to Fatih. Fatih uploads it himself.
 
 ## D-96 bots (APPROVED, not active)
 
@@ -105,7 +105,31 @@ Checked with a real testnet wallet. No wallet address is written here.
 
 **Deploy `1f33f2f` (PR #74, merged to `main`, CI green).** https://paron.vercel.app was READY at `1f33f2f`. No indexer or contract change in that PR. **HISTORICAL:** "A Designer glance check of `/admin` on that deploy is pending" and "Current production commit: `1f33f2f`." The check **PASSED** at 1280 and 390: "Ready at 17:24:06 WIB", Done badge without Execute, clean console, one h1, no horizontal scroll, "Demo data" label.
 
-**Current production commit:** `783b6be` (PR #76). Scout confirmed https://paron.vercel.app READY, and `/docs` returns 200. The D-97 tutorial is **LIVE**. **HISTORICAL:** "build status PENDING" and "not done." Designer header re-check at 1024, 1280, and 390 with a wallet connected is still **PENDING**. Re-shooting tutorial images 01, 02, and 05 is still **PENDING**.
+**Deploy `783b6be` (PR #76).** Scout confirmed https://paron.vercel.app READY, and `/docs` returns 200. The D-97 tutorial page is **LIVE** from that deploy. **HISTORICAL:** "Current production commit: `783b6be`" and "build status PENDING."
+
+**Current production commit:** `4639a4b`.
+
+## What landed after the tutorial page
+
+Checked against the merged commits. Nothing here is inferred past those diffs.
+
+- **#78 (`e19d646`).** Docs sits immediately left of Markets on the landing navbar, including the menu below 1024px. Tutorial step 5 now says the Demo data label and the demo verifier badge are testnet labels.
+- **#80 (`ed96472`).** Replaced tutorial images `02-launch-app.png` and `05-markets-check-bond.png` only, as the shots that stay. Image 02 is `/markets` after Launch app with a shortened wallet. Image 05 is the series page with Docs in the navbar. No copy or app code in that PR. Those two images are on `main` and are in the production commit.
+- **Image 01.** #80 also replaced `01-open-paron.png`, and that file on `main` still shows the old hero. A new shot, `shots-v4/01-open-paron.png`, was taken from the new hero at `synced:true`, lag 2 blocks. The handler has a small pull request for it on a cloud agent. **Image 01 updated, PR pending merge.** It is not live until that PR merges. Images 02 and 05 are unchanged.
+- **#86 (`ef4d797`).** Replaces the gold-and-glass landing hero. Centered title "Where compute is forged into one standard." with "one standard." emphasized. Two hero buttons: Become a provider → `/provider`, Browse markets → `/markets`. A window frame holds `/hero/markets.webp`. The background is an ASCII Jakarta skyline (`web/components/landing/skyline.ts`) over a dark gradient (`#000` to `#0c0a08` to `#1a0f06`) with amber radial color. The header brand "Paron", the navbar, and the header "Launch app" button stay. The landing "Launch demo" button is gone. The announcement bar still says "See the demo path" and links to `#demo`.
+- **#87 (`87c7d89`).** Replaces only `web/public/hero/markets.webp`, same 2880×1880 path. The frame no longer shows a full 42-character provider wallet. The shot uses the shortened `0xA1FA…95DF` form. `landing.tsx` is unchanged in that commit.
+- **`4639a4b`.** Closes the remaining S1 and S2 screens listed above. No separate pull-request number on that commit.
+
+## D-98 landing hero (APPROVED)
+
+D-98 APPROVED. Fatih requested the landing hero rework via a Designer 1:1 on 10 Oct 2026. Style: CRM-enterprise. Centered title, two buttons, a dashboard screenshot box, an ASCII city silhouette, and a dark brown/amber gradient. Navbar, brand, and Launch app stay as they were. Shipped in #86 and #87. This supersedes the gold-and-glass hero (D-91) and the older index-strip hero. Those descriptions are **HISTORICAL**. D-91 stays APPROVED as the decision that was made then.
+
+Designer re-check of production after `4639a4b` **PASSED**. No S0 or S1. Passed: the hero; buttons to `/provider` and `/markets`; images without full addresses; section order; navbar Docs first; the mobile menu at 390; one h1; no overflow; the word "demo" only in the bar. Green light for the final video. That video is v3, and it has been sent to Fatih.
+
+Two minor S2 items remain open:
+
+- At 390 the ASCII city silhouette is covered by the card.
+- `/provider` shows only a Connect wallet gate, with a "Demo data" label in the app top bar. That label is outside the landing page.
 
 ## Never-cut, proven via the UI on production (3/3)
 
@@ -134,13 +158,18 @@ Not provable read-only on production (no data to exercise): "Claimable now", "No
 
 ## Known issues
 
-- Open: `/verifier` Applications list does not include already-issued attestations.
+- **HISTORICAL:** "Open: `/verifier` Applications list does not include already-issued attestations." `4639a4b` adds a separate Issued attestations panel from `GET /v1/participants`. The Designer pass did not open that panel.
 - Minor, still open: `/arbiter` `ruleWithSignatures` may be a stub.
-- Minor, still open: Revoke button is missing.
-- Minor, still open: tour card step 04 is clipped for one transition frame.
+- **HISTORICAL:** "Revoke button is missing." The Revoke control was already on `/verifier` before `4639a4b`. That commit adds "Use for revoke", which fills the uid. The Designer pass did not click it.
+- **HISTORICAL as an open code gap:** "tour card step 04 is clipped for one transition frame." `4639a4b` frames the tray before the camera move. The Designer pass did not replay the tour.
 - S2, **FIXED** (PR #74, `1f33f2f`, merged to `main`, CI green; https://paron.vercel.app READY at `1f33f2f`). **HISTORICAL:** "fix pending, relabel to Ready at", "that PR is not merged", the timezone or chain-time guess, and "a Designer glance check of `/admin` is pending." The Done-op label is now "Ready at". Designer check of `/admin` at `1f33f2f` **PASSED** at 1280 and 390: "Ready at 17:24:06 WIB", Done badge without Execute, clean console, one h1, no horizontal scroll, "Demo data" label. The value is still `ready_at_ms` (schedule + delay = ready time) from `web/components/ops.tsx`. Execution time from the indexer is still not shown. No indexer or contract change.
 - Not provable read-only on production (no data): "Claimable now", "Not set", Execute on a ready op, TxStatus on `/verifier`, `/admin`, `/ops/keepers`.
-- Design status after the `/admin` check: no open design S0, S1, or S2, except the faucet cooldown text, which says "next hour" and has no countdown. That leftover is a minor S2 and is skippable.
+- **HISTORICAL:** "no open design S0, S1, or S2, except the faucet cooldown text, which says next hour and has no countdown." The `d3081be` proof of that older sentence stays. `4639a4b` adds a countdown from `lastFaucetAt`. The Designer pass did not re-check the faucet sentence.
+- Designer re-check of production after `4639a4b` **PASSED**. No S0 or S1. Green light for the final video, which is now done (v3, sent to Fatih).
+- Minor S2, still open: at 390 the ASCII city silhouette is covered by the card.
+- Minor S2, still open: `/provider` shows only a Connect wallet gate, with a "Demo data" label in the app top bar, outside the landing page.
+- Tutorial image 01 on `/docs` in production still shows the old hero. **Image 01 updated, PR pending merge.** The new file is `shots-v4/01-open-paron.png`, taken at `synced:true`, lag 2 blocks. Not live until that pull request merges. Images 02 and 05 are unchanged (#80).
+- Known behavior, seen while recording v3: a blue "Indexer is catching up" banner. The product sentence is "Indexer is catching up to the latest blocks; data may lag briefly." The code shows it when `/v1/health` says `synced` is false or lag is more than 20 blocks, and it clears when that stops. Scout checked during the recording: `synced:true`, lag 23 blocks, `index_update_failures` 0, series 2610 listed. Lag 23 is over the 20-block line, so the banner can show while `synced` is true. Check `/v1/health` before another recording.
 
 ## Recent PRs
 
@@ -152,7 +181,11 @@ Not provable read-only on production (no data to exercise): "Claimable now", "No
 - #72 never-cut fixes (`d3081be`).
 - #74 relabel Done ops on `/admin` from "Executed" to "Ready at" (`1f33f2f`). No indexer or contract change. The label is fixed. Execution time from the indexer is still not shown.
 - #75 records D-97 (tutorial page on the user navbar). Docs-only.
-- #76 adds the `/docs` tutorial and puts Docs left of Markets (`783b6be`). Production is READY at that deploy, and `/docs` returns 200.
+- #76 adds the `/docs` tutorial and puts Docs left of Markets (`783b6be`). Production was READY at that deploy, and `/docs` returns 200.
+- #78 puts Docs immediately left of Markets on the landing navbar (`e19d646`), including the menu below 1024px, and updates tutorial step 5 with the testnet-label sentence.
+- #80 replaces tutorial images 02 and 05 (`ed96472`). Image 01 in that PR still shows the old hero. The new hero shot is a later pull request, not merged.
+- #86 replaces the landing hero (`ef4d797`). #87 replaces only the hero screenshot so the provider address in the frame is shortened (`87c7d89`).
+- `4639a4b` adds issued attestations, `/legal/disclaimer`, the faucet countdown, and the tour step 4 frame. This is the current production commit.
 
 ## Open owner items
 
@@ -160,6 +193,7 @@ Not provable read-only on production (no data to exercise): "Claimable now", "No
 - **HISTORICAL:** "The handler records the final demo video from production." The final demo video is recorded from `d3081be` and does not show `/admin`. The evergreen video editor handles editing, per Fatih.
 - Designer re-review after #72: done. See the re-review section. No S0 or S1 items remain from that review.
 - **HISTORICAL:** "Designer glance check of `/admin` on production `1f33f2f` is pending." It **PASSED** at 1280 and 390 ("Ready at 17:24:06 WIB", Done badge without Execute, clean console, one h1, no horizontal scroll, "Demo data" label). No open design S0, S1, or S2 except the faucet cooldown text with no countdown (minor S2, skippable).
-- **PENDING:** Designer header re-check of the live `/docs` navbar at 1024, 1280, and 390 with a wallet connected.
-- **PENDING:** re-shoot tutorial images 01, 02, and 05.
-- **TODO:** demo video file still needs upload by Fatih. Pitch deck is still Fatih's.
+- Fatih still owns the deck, the upload of demo video v3, funding the bot wallet, rotating the RPC key, and submitting on HackQuest before 23:59 WIB.
+- **HISTORICAL:** "The handler records the final demo video from production" and "demo video file still needs upload" as if the file did not exist. Video v3 is done, about 2 minutes, recorded from production with the new hero, and sent to Fatih. Fatih uploads it himself.
+- **HISTORICAL:** "Designer header re-check of the live `/docs` navbar at 1024, 1280, and 390 is pending" and "re-shoot tutorial images 01, 02, and 05." Designer re-check after `4639a4b` **PASSED** (no S0 or S1; details above). Images 02 and 05 shipped in #80. Image 01's new hero shot is **updated, PR pending merge**, not live.
+- Two minor S2 items stay open: the ASCII silhouette covered by the card at 390, and the `/provider` Connect wallet gate with "Demo data" in the app top bar.
