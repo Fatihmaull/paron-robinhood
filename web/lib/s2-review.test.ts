@@ -63,6 +63,12 @@ test("step 4 hides the buy form and inactive screens", () => {
   const verifier = ops.slice(ops.indexOf("function VerifierPage"), ops.indexOf("function AdminPage"));
   assert.match(verifier, /Issued attestations/);
   assert.match(verifier, /Use for revoke/);
+  assert.match(verifier, /<FitAddress value=\{item\.address\} \/>/);
+  assert.equal(verifier.includes("shortId(item.address)"), false);
+  assert.equal(verifier.includes('useState("0x6666666666666666666666666666666666666666")'), false);
+  assert.equal(verifier.includes('useState(`0x${"e6".repeat(32)}`)'), false);
+  assert.match(verifier, /placeholder="0x6666…6666"/);
+  assert.match(verifier, /placeholder="0xe6e6…e6e6"/);
   assert.match(ops, /lastFaucetAt/);
   assert.match(ops, /data-testid="faucet-cooldown"/);
   const disclaimer = read("../app/legal/disclaimer/page.tsx");

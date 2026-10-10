@@ -47,7 +47,11 @@ test("demo path states, wallet gate, and the short provider address", () => {
   assert.match(provider, /shortAddress/);
   assert.match(ops, /PENDING: \{ label: "Pending", tone: "warn" \}/);
   assert.match(address, /shortAddress/);
+  assert.match(address, /title=\{parts\.full\}/);
+  assert.equal(address.includes("addr-wide"), false);
   assert.match(css, /min-height: 44px/);
+  assert.match(css, /button\.addr-copy[\s\S]*min-height:\s*44px/);
+  assert.match(css, /button\.addr-copy[\s\S]*min-width:\s*44px/);
   assert.match(css, /addr-narrow/);
   assert.equal(shortAddress("0x3F8fBCD4b4196Ea3c1c020F09Fc9a590bB246ae9"), "0x3F8f…6ae9");
 });
