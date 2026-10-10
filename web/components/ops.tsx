@@ -22,6 +22,7 @@ import { demoChecks } from "@/lib/demo";
 import { errorCopy } from "@/lib/errors";
 import { formatFactor, formatWib, shortId } from "@/lib/format";
 import { gpuModelId } from "@/lib/gpu-model";
+import { isDoneOp, isReadyOp, opStatusKey, scheduledFactor } from "@/lib/timelock-ops";
 import { useKeeperQueue, useKyb, useTimelock } from "@/lib/hooks";
 import { TxStatus, useSend } from "./tx";
 import { OperatorLink } from "./operator-link";
@@ -59,7 +60,7 @@ export function FaucetPage() {
 }
 
 export function KybPage() {
-  const { send, pending, error } = useSend();
+  const { send, pending, error, record } = useSend();
   const [uid, setUid] = useState("");
   const { address } = useAccount();
   return (
@@ -87,7 +88,8 @@ export function KybPage() {
         </TxButton>
         <p className="help">Connected wallet {address ? shortId(address) : "none"}. A buyer attestation cannot list capacity.</p>
         <p className="help">{errorCopy("NotProviderRole")}</p>
-        {error ? <p className="bad">{error}</p> : null}
+        {record?.step === "link" ? <TxStatus record={record} /> : null}
+        {error && record?.step === "link" && record.phase !== "failed" ? <p className="bad">{error}</p> : null}
       </Panel>
       <div style={{ height: 12 }} />
       <Panel title="Register as provider">
@@ -102,6 +104,7 @@ export function KybPage() {
         >
           {pending === "register" ? "Registering…" : "Register as provider"}
         </TxButton>
+        {record?.step === "register" ? <TxStatus record={record} /> : null}
       </Panel>
     </div>
   );
@@ -109,7 +112,7 @@ export function KybPage() {
 
 export function KeepersPage() {
   const queue = useKeeperQueue();
-  const { send, pending } = useSend();
+  const { send, pending, record } = useSend();
   const rows = queue.data?.data ?? [];
   const claims = rows.filter((row) => row.state === "DEFAULTABLE" || row.actions.includes("CLAIM_DEFAULT"));
   const finals = rows.filter((row) => row.state === "DELIVERED");
@@ -154,6 +157,7 @@ export function KeepersPage() {
           </TxButton>
         </Queue>
       </div>
+      <TxStatus record={record} />
     </div>
   );
 }
@@ -178,7 +182,7 @@ function Row({ label, children }: { label: string; children: React.ReactNode }) 
 
 export function VerifierPage() {
   const apps = useKyb();
-  const { send, pending, error } = useSend();
+  const { send, pending, error, record } = useSend();
   const [applicant, setApplicant] = useState("0x6666666666666666666666666666666666666666");
   const [entity, setEntity] = useState(`0x${"e6".repeat(32)}`);
   const [role, setRole] = useState("1");
@@ -199,6 +203,7 @@ export function VerifierPage() {
       <p className="lede">Manual EAS attest. The signer is the verifier EOA. Revoke calls EAS.revoke for an attestation uid.</p>
       <div className="grid two">
       <Panel title="Applications">
+        {record?.step === "attest" && record.phase === "success" ? <p className="ok">Attestation issued.</p> : null}
         {list.length === 0 ? <p className="muted">No pending applications.</p> : null}
         <div className="actions" aria-label="KYB statuses">
           <KybPill status="PENDING" />
@@ -284,7 +289,8 @@ export function VerifierPage() {
         >
           {pending === "revoke" ? "Revoking…" : "Revoke"}
         </TxButton>
-        {error ? <p className="bad">{error}</p> : null}
+        <TxStatus record={record} />
+        {error && record?.phase !== "failed" ? <p className="bad">{error}</p> : null}
         <p className="help">Revoke is EAS.revoke on the ParticipantVerified schema. The verifier wallet must be the attester.</p>
       </Panel>
       </div>
@@ -294,11 +300,16 @@ export function VerifierPage() {
 
 export function AdminPage() {
   const ops = useTimelock();
-  const { send, pending, error } = useSend();
+  const { send, pending, error, record } = useSend();
   const [factor, setFactor] = useState("0.4500");
+  const [factorError, setFactorError] = useState<string | null>(null);
   const rows = ops.data?.data ?? [];
-  const ready = rows.filter((op) => op.status === "READY").length;
-  const waiting = rows.filter((op) => op.status === "PENDING" || op.status === "WAITING").length;
+  const ready = rows.filter((op) => isReadyOp(op.status)).length;
+  const waiting = rows.filter((op) => {
+    const key = opStatusKey(op.status);
+    return key === "PENDING" || key === "WAITING";
+  }).length;
+  const listed = rows.filter((op) => isReadyOp(op.status) || isDoneOp(op.status));
   const delay = rows[0]?.delay_s ?? 300;
   const table = contractAddress("conversionTable");
   const timelock = contractAddress("timelock");
@@ -324,27 +335,43 @@ export function AdminPage() {
         <Panel title="Timelock delay"><b className="stat-value">{Math.floor(delay / 60)}:{String(delay % 60).padStart(2, "0")}</b></Panel>
       </div>
       <Panel title="Ready operations">
-        {rows.length === 0 ? <p className="muted">No operations ready to execute. Schedule a factor change below.</p> : null}
-        {rows.map((op) => (
-          <div key={op.operation_id}>
-            <div className="row"><span>{op.target_name}.{op.decoded.function}</span><OpPill status={op.status} /></div>
-            <div className="row"><span>A100 factor</span><span>{formatFactor(op.decoded.args.new_factor)}</span></div>
-            <div className="row"><span>Ready</span><span>{formatWib(op.ready_at_ms)}</span></div>
-            <p className="help">Fixture calldata is a placeholder. Execute encodes setFactor locally. Salt {shortId(op.salt)}.</p>
-            <TxButton
-              onClick={() =>
-                void send("execute", {
-                  address: timelock,
-                  abi: timelockAbi,
-                  functionName: "execute",
-                  args: [op.target as `0x${string}`, 0n, payload(op.decoded.args.new_factor ?? "0.4500"), op.predecessor as `0x${string}`, op.salt as `0x${string}`],
-                })
-              }
-            >
-              {pending === "execute" ? "Executing…" : "Execute"}
-            </TxButton>
-          </div>
-        ))}
+        {ready === 0 ? <p className="muted">No operations ready to execute. Schedule a factor change below.</p> : null}
+        {listed.map((op) => {
+          const done = isDoneOp(op.status);
+          const next = scheduledFactor(op.decoded.args);
+          return (
+            <div key={op.operation_id}>
+              <div className="row"><span>{op.target_name}.{op.decoded.function}</span><OpPill status={op.status} /></div>
+              <div className="row">
+                <span>A100 factor</span>
+                <span>{next ? formatFactor(next) : <span className="muted">Not set</span>}</span>
+              </div>
+              <div className="row"><span>{done ? "Executed" : "Ready"}</span><span>{formatWib(op.ready_at_ms)}</span></div>
+              <p className="help">Fixture calldata is a placeholder. Execute encodes setFactor locally. Salt {shortId(op.salt)}.</p>
+              {done ? null : (
+                <TxButton
+                  onClick={() => {
+                    if (!next) {
+                      setFactorError("Factor is not set.");
+                      return;
+                    }
+                    setFactorError(null);
+                    void send("execute", {
+                      address: timelock,
+                      abi: timelockAbi,
+                      functionName: "execute",
+                      args: [op.target as `0x${string}`, 0n, payload(next), op.predecessor as `0x${string}`, op.salt as `0x${string}`],
+                    });
+                  }}
+                >
+                  {pending === "execute" ? "Executing…" : "Execute"}
+                </TxButton>
+              )}
+            </div>
+          );
+        })}
+        {factorError ? <p className="bad">{factorError}</p> : null}
+        {record?.step === "execute" ? <TxStatus record={record} /> : null}
       </Panel>
       <div style={{ height: 12 }} />
       <Panel title="Schedule factor">
@@ -364,7 +391,8 @@ export function AdminPage() {
         >
           {pending === "schedule" ? "Scheduling…" : "Schedule"}
         </TxButton>
-        {error ? <p className="bad">{error}</p> : null}
+        {record?.step === "schedule" ? <TxStatus record={record} /> : null}
+        {error && record?.phase !== "failed" ? <p className="bad">{error}</p> : null}
         <p className="help">Demo delay is 5 minutes. Treasury reads stay on the series bond panel.</p>
       </Panel>
     </div>
@@ -389,13 +417,13 @@ const OP_PILLS = {
   PENDING: { label: "Pending", tone: "warn" },
   WAITING: { label: "Pending", tone: "warn" },
   READY: { label: "Ready", tone: "ok" },
-  DONE: { label: "Done", tone: "neutral" },
-  EXECUTED: { label: "Done", tone: "neutral" },
+  DONE: { label: "Done", tone: "ok" },
+  EXECUTED: { label: "Done", tone: "ok" },
   CANCELLED: { label: "Cancelled", tone: "outline" },
 } as const;
 
 function OpPill({ status }: { status: string }) {
-  const known = OP_PILLS[status as keyof typeof OP_PILLS];
+  const known = OP_PILLS[opStatusKey(status) as keyof typeof OP_PILLS];
   if (!known) return <span className="pill neutral">{status}</span>;
   return <span className={`pill ${known.tone}`}>{known.label}</span>;
 }

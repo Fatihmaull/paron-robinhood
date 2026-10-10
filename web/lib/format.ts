@@ -132,6 +132,12 @@ export function formatCountdown(nowMs: number, deadlineMs: number): string {
   return `${sign}${m}:${String(s).padStart(2, "0")}`;
 }
 
+/** Claim clock. Stays at 0:00 once the deadline second has passed. */
+export function claimCountdown(nowMs: number, deadlineMs: number): string {
+  const signed = formatCountdown(nowMs, deadlineMs);
+  return signed.startsWith("-") ? "0:00" : signed;
+}
+
 export function mulUsd(qtyWhole: string, price: string): bigint {
   if (!/^\d+$/.test(qtyWhole)) {
     throw new Error("qty");
