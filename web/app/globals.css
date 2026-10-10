@@ -202,6 +202,19 @@ a.operator-link:hover { color: var(--color-text-primary); text-decoration: none;
 }
 .banner.info,
 .banner.mock { background: var(--color-info-subtle); color: var(--color-info); }
+.kyb-banner {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px;
+  min-height: 44px;
+  margin: 0 0 16px;
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+}
+.kyb-banner.neutral { background: var(--color-neutral-subtle); color: var(--color-neutral); }
+.kyb-banner.info { background: var(--color-info-subtle); color: var(--color-info); }
+.kyb-banner.warn { background: var(--color-warn-subtle); color: var(--color-warn); }
 .banner.warn { background: var(--color-warn-subtle); color: var(--color-warn); }
 .banner.danger { background: var(--color-danger-subtle); color: var(--color-danger); }
 .snapshot { background: var(--color-bg-sunken); color: var(--color-text-tertiary); }
