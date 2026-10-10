@@ -669,3 +669,13 @@ a.touch-link { display: inline-flex; align-items: center; justify-content: cente
   .tabs a, .tabs button { flex: 0 0 auto; white-space: nowrap; height: auto; }
 }
 .sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
+.wallet-wrap { position: relative; display: inline-flex; }
+.wallet-status {
+  position: absolute; right: 0; top: calc(100% + 4px); z-index: var(--z-sticky);
+  width: 260px; margin: 0; padding: 8px 10px;
+  background: var(--color-bg-raised); border: 1px solid var(--color-border-default);
+  border-radius: var(--radius-lg); box-shadow: var(--shadow-2);
+  white-space: normal; text-align: left;
+}
+a.btn.chrome { display: inline-flex; align-items: center; justify-content: center; text-decoration: none; }
+.nav:has(.wallet-status) { z-index: var(--z-dropdown); }
