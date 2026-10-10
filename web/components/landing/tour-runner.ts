@@ -137,6 +137,7 @@ export function startTour(root: HTMLElement, hooks: Hooks): () => void {
   function show(name: string) {
     ui.querySelectorAll<HTMLElement>(".screen").forEach((screen) => {
       screen.classList.toggle("on", screen.dataset.screen === name);
+      if (name !== "buy") screen.classList.remove("tx-focus");
     });
     ui.querySelectorAll<HTMLElement>("[data-nav]").forEach((item) => {
       item.classList.toggle("act", item.dataset.nav === NAV[name]);
@@ -201,6 +202,7 @@ export function startTour(root: HTMLElement, hooks: Hooks): () => void {
     },
     calc: () => calc(),
     "tx-pending": () => {
+      q("[data-screen='buy']")?.classList.add("tx-focus");
       const tray = q("[data-tour='tray']");
       tray?.classList.remove("done");
       tray?.classList.add("on");

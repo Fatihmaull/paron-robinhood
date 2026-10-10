@@ -36,15 +36,15 @@ test("user nav is markets through data", () => {
   assert.equal(wallet.includes("/arbiter"), false);
 });
 
-test("for providers sits outside the user row", () => {
+test("provider and operator entries stay on the landing", () => {
   const shell = read("../components/shell.tsx");
-  const css = read("../app/globals.css");
-  assert.match(shell, /For providers/);
-  assert.match(shell, /nav-menu-section/);
-  assert.match(shell, />Providers</);
-  assert.match(css, /a\.for-providers[\s\S]*?#a6a6a6/);
-  assert.match(css, /a\.for-providers[\s\S]*?border-radius:\s*0/);
-  assert.equal(/className="pill[^"]*for-providers|for-providers[^"]*pill/.test(shell), false);
+  const landing = read("../components/landing.tsx");
+  assert.equal(shell.includes("For providers"), false);
+  assert.equal(shell.includes('href="/provider"'), false);
+  assert.equal(shell.includes('href="/operator"'), false);
+  assert.match(landing, /Become a provider/);
+  assert.match(landing, /providerEntryPath/);
+  assert.equal(landingFooter.some((item) => item.href === "/operator"), true);
 });
 
 test("landing CTAs keep one demo entry and a footer operator link", () => {

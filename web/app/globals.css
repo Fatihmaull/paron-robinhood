@@ -626,7 +626,7 @@ a.touch-link { display: inline-flex; align-items: center; justify-content: cente
 .lede .pill { white-space: nowrap; vertical-align: middle; }
 .tx-action { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; max-width: 100%; }
 .tx-reason { margin: 0; }
-.tx-status { margin: 8px 0 0; }
+.tx-status { margin: 8px 0 0; font-size: 14px; line-height: 1.4; }
 .tx-status.pending { color: var(--color-warn); }
 .tx-status.success { color: var(--color-ok); }
 .tx-status.failed { color: var(--color-danger); }

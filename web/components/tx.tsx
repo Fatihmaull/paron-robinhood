@@ -5,7 +5,7 @@ import type { Abi, PublicClient } from "viem";
 import { useAccount, usePublicClient, useWriteContract } from "wagmi";
 import { CLAIM_DEFAULT_GAS_LIMIT, explorerTxUrl } from "@/lib/config";
 import { afterDeadlineOpen } from "@/lib/clock";
-import { STALE_DEADLINE_REVERTS, revertName } from "@/lib/errors";
+import { STALE_DEADLINE_REVERTS, failureReason, revertName } from "@/lib/errors";
 import { shortId } from "@/lib/format";
 import { simulationRequest } from "@/lib/tx-sim";
 import { useData } from "./providers";
@@ -21,9 +21,7 @@ export type TxRecord = {
 };
 
 function failureMessage(err: unknown): string {
-  const raw = err instanceof Error ? err.message : "";
-  if (/user rejected|user denied|rejected the request/i.test(raw)) return "Transaction rejected.";
-  return "Transaction failed.";
+  return failureReason(err);
 }
 
 type WriteReq = {
