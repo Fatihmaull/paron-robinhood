@@ -52,9 +52,14 @@ test("the docs page is one heading, one image per step, and no video", () => {
   assert.match(DOCS_STEPS[4].text, /"Demo data" label in the top bar/);
   assert.match(DOCS_STEPS[4].text, /Verified by Paron demo verifier/);
   assert.match(joined, /Good to know/);
-  assert.equal(DOCS_NOTES.length, 3);
+  assert.equal(DOCS_NOTES.length, 4);
   assert.match(DOCS_NOTES.join(" "), /Demo data/);
   assert.match(DOCS_NOTES.join(" "), /sample/);
+  assert.match(
+    DOCS_NOTES.join("\n"),
+    /To register as a provider your wallet needs a provider attestation \(role 1\) issued on Verifier and linked here first\. A buyer attestation can't register\./,
+  );
+  assert.equal(joined.includes("Paron demo verifier (team-operated)"), false);
   const css = read("../app/globals.css");
   assert.match(css, /\.grid\.docs \{[^}]*grid-template-columns:/);
   const narrow = css.slice(css.indexOf("@media (max-width: 860px)"));

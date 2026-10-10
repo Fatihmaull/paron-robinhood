@@ -40,6 +40,21 @@ test("a failed step names a known reason once", () => {
   assert.match(waiting, /left\)/);
   assert.match(failureReason(new Error("SaleClosed()")), /primary sale is closed/);
   assert.equal(failureReason(new Error("execution reverted")), "Transaction failed.");
+  assert.equal(
+    failureReason(new Error('The contract function "registerProvider" reverted.', { cause: { data: { errorName: "NotProviderRole" }, message: "NotProviderRole()" } })),
+    "This attestation is for a buyer. Providers need a provider verification (role 1).",
+  );
+  assert.equal(
+    failureReason(Object.assign(new Error("reverted"), { cause: { data: { errorName: "NotVerified" } } })),
+    "Verification missing or expired.",
+  );
+  assert.equal(failureReason(new Error("AlreadyRegistered()")), "This wallet is already registered.");
+  assert.equal(failureReason(new Error("BuyerNotVerified()")), "buyer is not verified");
+  assert.equal(failureReason(new Error("insufficient funds for gas")), "insufficient funds for gas");
+  const tx = read("../components/tx.tsx");
+  assert.match(tx, /if \(receipt\.status === "success"\) return/);
+  assert.match(tx, /client\.call\(/);
+  assert.match(tx, /throw new Error\("Transaction failed\."\)/);
   const ops = read("../components/ops.tsx");
   const faucet = ops.slice(ops.indexOf("function FaucetPage"), ops.indexOf("function KybPage"));
   assert.match(faucet, /<TxStatus record=\{record\} \/>/);

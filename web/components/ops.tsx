@@ -20,15 +20,31 @@ import { contractAddress, ZERO_ADDRESS } from "@/lib/config";
 import { asBytes32 } from "@/lib/settlement";
 import { demoChecks } from "@/lib/demo";
 import { errorCopy } from "@/lib/errors";
-import { formatCountdown, formatFactor, formatWib, shortId } from "@/lib/format";
+import { formatCountdown, formatFactor, formatWib, shortAddress, shortId } from "@/lib/format";
 import { gpuModelId } from "@/lib/gpu-model";
 import { isDoneOp, isReadyOp, opStatusKey, scheduledFactor } from "@/lib/timelock-ops";
 import { useKeeperQueue, useKyb, useParticipants, useTimelock } from "@/lib/hooks";
+import { attestationRole, canRegisterAsProvider } from "@/lib/verification";
 import { TxStatus, useSend } from "./tx";
 import { OperatorLink } from "./operator-link";
 import { Field, Panel, TxButton } from "./ui";
 
 const ZERO32 = `0x${"0".repeat(64)}` as `0x${string}`;
+
+const participantOfAbi = [
+  {
+    type: "function",
+    name: "participantOf",
+    stateMutability: "view",
+    inputs: [{ name: "account", type: "address" }],
+    outputs: [
+      { name: "entityId", type: "bytes32" },
+      { name: "role", type: "uint8" },
+      { name: "country", type: "bytes2" },
+      { name: "expiry", type: "uint64" },
+    ],
+  },
+] as const;
 
 const faucetClockAbi = [
   {
@@ -95,15 +111,30 @@ export function KybPage() {
   const { send, pending, error, record } = useSend();
   const [uid, setUid] = useState("");
   const { address } = useAccount();
+  const gate = contractAddress("gate");
+  const linked = useReadContract({
+    address: gate,
+    abi: participantOfAbi,
+    functionName: "participantOf",
+    args: address ? [address] : undefined,
+    query: { enabled: Boolean(address) && gate !== ZERO_ADDRESS, refetchInterval: 15_000 },
+  });
+  useEffect(() => {
+    if (record?.step === "link" && record.phase === "success") void linked.refetch();
+  }, [record?.step, record?.phase, linked.refetch]);
+  const role = attestationRole(linked.data?.[1]);
+  const waitingForRole = Boolean(address) && gate !== ZERO_ADDRESS && linked.isLoading;
+  const notProvider = Boolean(address) && linked.isSuccess && !canRegisterAsProvider(role);
+  const registerBlocked = waitingForRole || notProvider;
   return (
     <div>
       <h1>Verification</h1>
       <p className="lede">
-        Link an attestation from the Paron demo verifier (team-operated), then register as a provider if the role is 1.
+        Link an attestation from the Paron verifier (team-operated, testnet), then register as a provider if the role is 1.
       </p>
       <Panel title="Link attestation">
         <Field label="Attestation uid">
-          <input value={uid} onChange={(event) => setUid(event.target.value)} placeholder="0x…" />
+          <input value={uid} onChange={(event) => setUid(event.target.value)} placeholder="0x… (32-byte attestation uid)" autoComplete="off" />
         </Field>
         <TxButton
           disabled={!uid.startsWith("0x") || uid.length !== 66}
@@ -118,14 +149,16 @@ export function KybPage() {
         >
           {pending === "link" ? "Linking…" : "Link attestation"}
         </TxButton>
-        <p className="help">Connected wallet {address ? shortId(address) : "none"}. A buyer attestation cannot list capacity.</p>
+        <p className="help">Connected wallet {address ? shortAddress(address) : "none"}. A buyer attestation cannot list capacity.</p>
         <p className="help">{errorCopy("NotProviderRole")}</p>
+        <p className="help">Ask the verifier for a provider attestation (role 1), then link it here.</p>
         {record?.step === "link" ? <TxStatus record={record} /> : null}
         {error && record?.step === "link" && record.phase !== "failed" ? <p className="bad">{error}</p> : null}
       </Panel>
       <div style={{ height: 12 }} />
       <Panel title="Register as provider">
         <TxButton
+          disabled={registerBlocked}
           onClick={() =>
             void send("register", {
               address: contractAddress("providerRegistry"),
@@ -136,6 +169,7 @@ export function KybPage() {
         >
           {pending === "register" ? "Registering…" : "Register as provider"}
         </TxButton>
+        {notProvider ? <p className="help">Link a provider attestation first</p> : null}
         {record?.step === "register" ? <TxStatus record={record} /> : null}
       </Panel>
     </div>
@@ -232,7 +266,7 @@ export function VerifierPage() {
       <OperatorLink />
       <div className="page-head">
         <h1>Verifier</h1>
-        <span className="pill outline">Paron demo verifier (team-operated)</span>
+        <span className="pill outline">Paron verifier (team-operated, testnet)</span>
       </div>
       <p className="lede">Manual EAS attest. The signer is the verifier EOA. Revoke calls EAS.revoke for an attestation uid.</p>
       <div className="grid two">
