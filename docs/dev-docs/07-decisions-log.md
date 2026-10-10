@@ -34,6 +34,7 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §24 Daftar perbaikan pra-demo (D-94, APPROVED)
 - §25 Arsitektur informasi per aktor (D-95, APPROVED ~11:07 WIB). Koreksi nav setelah #71: catatan Designer "For providers" di navbar aplikasi adalah HISTORICAL
 - §26 Bot keeper dan trader di Railway (D-96, APPROVED Sab 10 Okt 2026 ~15:00 WIB)
+- §27 Halaman tutorial `/docs` di navbar (D-97, APPROVED 10 Okt 2026, langsung di grup). Status bangun PENDING
 
 ---
 
@@ -1079,3 +1080,25 @@ Fatih menyetujui pada Sab 10 Okt 2026, sekitar 15:00 WIB. Bukan usulan. Chain te
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
 | D-96 | **APPROVED (Fatih, Sab 10 Okt 2026 ~15:00 WIB).** Bot keeper dan bot trader di Railway jalan LIVE dengan wallet bot khusus (bukan dry-run), setelah Fatih mendanai wallet itu dari faucet. Status: **PENDING FUNDING**. Sampai terbukti berjalan, dokumen menulis **not active**. Bot menolak chain selain testnet dan memakai kill switch off-chain D-42. Alamat wallet dan nama akun tidak ditulis. | STATUS; 09; 04; 05; CONTEXT-INDEX |
+
+---
+
+## 27. Halaman tutorial `/docs` di navbar: D-97 (APPROVED 10 Okt 2026)
+
+Fatih menyetujui langsung di grup pada 10 Okt 2026. Bukan usulan. Chain tetap testnet. Nomor dicek terhadap repo sebelum bagian ini: pemakaian terakhir adalah D-96. D-97 belum dipakai.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-97 | **APPROVED (Fatih, 10 Okt 2026, dinyatakan langsung di grup).** Tambah halaman `/docs` yang dicapai dari navbar aplikasi, tepat di kiri Markets. Isi: tutorial lengkap dari awal sampai selesai untuk memakai Paron. Tiap langkah punya satu judul, penjelasan singkat, dan satu tangkapan layar. Tanpa video. Status bangun: **PENDING**, belum selesai. Isi ditulis Designer dan dibangun engineer. | 06; sitemap; approved-ui-changes; 09; CONTEXT-INDEX |
+
+Urutan navbar pengguna (Launch app) sekarang: Docs, Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Kalimat D-95 yang menulis navbar mulai dari Markets, tanpa Docs, adalah **HISTORICAL** untuk ketiadaan tautan Docs. Larangan tautan Provider, Operator, dan Demo di navbar tetap (D-95, koreksi #71).
+
+Batasan Scout, bagian dari keputusan yang sama:
+
+1. Tutorial hanya mencakup alur aplikasi produksi.
+2. Tidak ada tautan ke `/demo`. `/demo` tetap hidup dan tetap hanya lewat CTA landing "Launch demo" (D-95).
+3. Tangkapan layar dari data on-chain sungguhan, bukan "Demo data".
+4. Bagian provider dan bagian operator pendek. Pintunya disebut apa adanya: "Become a provider" di landing, dan tab Operator di footer, bukan di navbar.
+5. Header wajib dicek ulang di 1024, 1280, dan 390 dengan wallet tersambung.
+
+`/docs/methodology` dan `/docs/contracts` tidak diganti oleh tutorial ini. Tujuan lama `/docs` sebagai "dokumentasi produk + README publik" adalah **HISTORICAL** untuk halaman itu.

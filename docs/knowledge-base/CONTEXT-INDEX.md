@@ -1,7 +1,7 @@
 # Paron: indeks dokumen konteks (master: Hackathon Scout; sekarang PO/project handler)
 
 Sumber kebenaran: repo `docs/knowledge-base/` (mirror dari folder kerja Scout di box; path box lama tidak dipakai).
-Terakhir diperbarui: Sabtu 10 Okt 2026 (D-93..D-96, plus koreksi nav D-95 setelah #71). Keputusan yang lebih kemudian mengalahkan yang lebih dahulu.
+Terakhir diperbarui: Sabtu 10 Okt 2026 (D-93..D-97). Keputusan yang lebih kemudian mengalahkan yang lebih dahulu.
 
 **Urutan mulai:** `SESSION_HANDOFF_HACKATHON.md` (state terkini) → file ini → `HANDOFF-BRIEF.md` (urutan baca, tugas pertama, prioritas, aturan), lalu `paron-product-plan.md` (gambaran produk penuh: semua modul, aplikasi, arsitektur akhir, roadmap P0–P5, batas lingkup hackathon).
 
@@ -144,6 +144,15 @@ Nomor dicek: pemakaian terakhir sebelum D-96 adalah D-95. D-96 belum dipakai. Ya
 
 - Koreksi D-95 (setelah PR #71). D-95 tetap APPROVED. Catatan Designer yang menaruh tautan sekunder "For providers" di navbar aplikasi adalah **HISTORICAL**. Navbar pengguna (Launch app) hanya: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Pintu provider hanya CTA landing "Become a provider". Operator hanya lewat CTA kecil di footer landing. `/demo` hanya lewat CTA landing "Launch demo".
 - D-96 APPROVED (Fatih, Sab 10 Okt 2026 ~15:00 WIB). Bot keeper dan bot trader di Railway jalan LIVE dengan wallet bot khusus (bukan dry-run), setelah Fatih mendanai wallet itu dari faucet. Status: **PENDING FUNDING**. Sampai terbukti, dokumen menulis **not active**. Bot menolak chain selain testnet dan memakai kill switch off-chain D-42. Alamat wallet dan nama akun tidak ditulis.
+
+## D-97 tutorial `/docs` (APPROVED 10 Okt 2026, langsung di grup)
+
+Nomor dicek: pemakaian terakhir sebelum D-97 adalah D-96. D-97 belum dipakai. Chain tetap testnet. Rincian: 07 §27. Status bangun: **PENDING**, belum selesai.
+
+- D-97 APPROVED (Fatih, 10 Okt 2026, dinyatakan langsung di grup). Halaman `/docs` masuk navbar aplikasi, tepat di kiri Markets. Urutan: Docs, Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Kalimat navbar yang mulai dari Markets tanpa Docs adalah **HISTORICAL** untuk ketiadaan tautan itu. Provider, Operator, dan Demo tetap tidak di navbar (D-95).
+- Tutorial lengkap dari awal sampai selesai. Tiap langkah: satu judul, penjelasan singkat, satu tangkapan layar. Tanpa video.
+- Batasan Scout: hanya alur aplikasi produksi; tidak ada tautan ke `/demo` (`/demo` tetap hanya lewat "Launch demo" di landing); tangkapan layar dari data on-chain sungguhan, bukan "Demo data"; bagian provider dan operator pendek, pintunya "Become a provider" di landing dan tab Operator di footer, bukan di navbar.
+- Header wajib dicek ulang di 1024, 1280, dan 390 dengan wallet tersambung. Isi ditulis Designer dan dibangun engineer. Target merge bangun sebelum sekitar 19:00 WIB (09).
 - Tenggat keras tetap Sab 10 Okt 2026 23:59 WIB (D-93). Submission, deck, dan tombol HackQuest adalah milik Fatih. Usulan submit sekitar 21:00 WIB supaya ada buffer. **HISTORICAL:** "Handler merekam video demo final dari produksi." Video demo final sudah direkam dari `d3081be` dan tidak menampilkan `/admin`. Penyuntingan = agen evergreen video editor yang sudah ada, sesuai Fatih. Isu S2 label "Executed" di `/admin`: **HISTORICAL** untuk status "fix pending, relabel to Ready at" dan "belum merge". **FIXED** di PR #74 (`1f33f2f`). Label sekarang "Ready at". Waktu eksekusi dari indexer masih tidak ditampilkan. Tidak ada perubahan indexer atau kontrak. **HISTORICAL:** "Cek sekilas Designer pada `/admin` masih pending." Cek itu **LULUS** di 1280 dan 390 ("Ready at 17:24:06 WIB", lencana Done tanpa Execute, konsol bersih, satu h1, tanpa scroll horizontal, label "Demo data"). Tidak ada S0, S1, atau S2 desain yang masih terbuka kecuali teks cooldown faucet tanpa hitung mundur (S2 kecil, boleh dilewati). Rincian di STATUS dan 09.
 - Estimasi handler 15:55 WIB 10 Okt (bukan hitung per butir): built ~97%, proven ~85%. S0 A ~100%. S0 B pada jam itu ~95% adalah **HISTORICAL**; setelah faucet sukses dan teks cooldown terbukti di produksi `d3081be`, S0 B ~100%. S1 A ~95% B ~60% (bot belum jalan di Railway, kill switch belum diuji). S2 A ~95% B ~70%. Never-cut terbangun 3/3, terbukti lewat UI di produksi 3/3. Rincian cek, isu, dan pemilik: `docs/build/STATUS.md` dan dev-docs/09.
 
