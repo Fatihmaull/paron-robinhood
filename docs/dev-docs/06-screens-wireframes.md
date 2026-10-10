@@ -196,6 +196,18 @@ Cek Designer di produksi setelah `4639a4b` **LULUS**. Tidak ada S0 atau S1. Yang
 
 Dua S2 kecil masih terbuka: pada 390 siluet kota ASCII tertutup kartu; `/provider` hanya gerbang Connect wallet, dengan label "Demo data" di bar atas aplikasi, di luar landing.
 
+**[D-99, APPROVED. Fatih, 10 Okt 2026 ~19:50 WIB, "ya setuju semua". Belum live.]** Bangun lewat PR Verifier milik handler. **PENDING** sampai merge dan deploy. Tidak ada jalur submit KYB di app. Atestasi diterbitkan manual lewat `/verifier`.
+
+Di `/verifier`, pendaftaran provider:
+
+1. Tombol "Register as provider" nonaktif, pesan netral (bukan merah) "Link a provider attestation first", jika atestasi yang ditautkan bukan role 1. Error transaksi gagal menyebut alasannya.
+2. Field "Attestation uid" kosong. Tidak diisi alamat wallet. Placeholder: "0x… (32-byte attestation uid)".
+3. Baris "Connected wallet" dipendekkan, gaya `0x3F8f…`.
+4. Intro baru: "Paron verifier (team-operated, testnet)". Tanpa kata demo. Teks lama "Paron demo verifier (team-operated)" dan badge "Verified by Paron demo verifier" di wireframe file ini **HISTORICAL**. Wording badge yang menunggu bangun: "Verified by Paron verifier (team-operated, testnet)". Badge itu dari D-04 dan D-54, bukan dari tabel D-84..D-88. D-87 tidak diubah.
+5. Pesan atestasi buyer tetap, ditambah "Ask the verifier for a provider attestation (role 1), then link it here."
+
+Kalimat Good to know di `/docs`, disetujui dan belum live (halaman live di `783b6be` belum memuatnya): "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register."
+
 **Header (PRs #64).** Dengan wallet tersambung, alamat di header memakai `0x3F8f…6ae9`: 6 karakter pertama termasuk `0x`, 4 karakter terakhir. Cek di 1024, 1100, 1280, 1440, dan 390. Nav tidak terpotong. Tombol Menu muncul saat tautan tidak muat. Setiap kontrol header minimal 44 px. Kalimat D-70 "tombol Menu tidak tampil >860 px" tetap untuk kasus tautan yang muat; untuk header dengan wallet tersambung, aturan Menu-saat-tidak-muat yang dipakai. Cek produksi https://paron.vercel.app (commit `20ff4b1`) memakai potongan yang sama, gaya `0xA1FA…95DF` (6 karakter pertama termasuk `0x`, 4 karakter terakhir). Rincian Buy, jaringan salah, faucet, dan never-cut ada di 09 dan `docs/build/STATUS.md`.
 
 **Kredit chart.** Logo TradingView dimatikan lewat opsi library `attributionLogo: false` di `web/components/charts.tsx`. Kredit lisensi berupa teks polos ada di `/legal/risk` (`web/app/legal/risk/page.tsx`). Larangan logo pihak ketiga dan larangan tautan pihak ketiga tetap, dengan pengecualian kredit lisensi ini saja.

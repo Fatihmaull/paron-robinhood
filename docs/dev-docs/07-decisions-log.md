@@ -36,6 +36,7 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §26 Bot keeper dan trader di Railway (D-96, APPROVED Sab 10 Okt 2026 ~15:00 WIB)
 - §27 Halaman tutorial `/docs` di navbar (D-97, APPROVED 10 Okt 2026, langsung di grup). Status bangun LIVE di `783b6be`. Kalimat "Status bangun PENDING" adalah **HISTORICAL**
 - §28 Hero landing CRM-enterprise (D-98, APPROVED 10 Okt 2026, Fatih lewat Designer 1:1). Menimpa bentuk hero D-91. D-91 tetap APPROVED
+- §29 Verifier, pendaftaran provider, dan wording (D-99, APPROVED 10 Okt 2026 ~19:50 WIB). Bangun PENDING sampai PR Verifier merge dan ter-deploy
 
 ---
 
@@ -1082,7 +1083,7 @@ Fatih menyetujui pada Sab 10 Okt 2026, sekitar 15:00 WIB. Bukan usulan. Chain te
 
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
-| D-96 | **APPROVED (Fatih, Sab 10 Okt 2026 ~15:00 WIB).** Bot keeper dan bot trader di Railway jalan LIVE dengan wallet bot khusus (bukan dry-run), setelah Fatih mendanai wallet itu dari faucet. Status: **PENDING FUNDING**. Sampai terbukti berjalan, dokumen menulis **not active**. Bot menolak chain selain testnet dan memakai kill switch off-chain D-42. Alamat wallet dan nama akun tidak ditulis. | STATUS; 09; 04; 05; CONTEXT-INDEX |
+| D-96 | **APPROVED (Fatih, Sab 10 Okt 2026 ~15:00 WIB).** Bot keeper dan bot trader di Railway dengan wallet bot khusus (bukan dry-run). Bot menolak chain selain testnet dan memakai kill switch off-chain D-42. Alamat wallet dan kunci tidak ditulis. **HISTORICAL:** "PENDING FUNDING" dan "not active sampai terbukti" sebagai status keduanya. Status jalan 10 Okt 2026: **keeper live, trader menyusul setelah wallet siap.** | STATUS; 09; 04; 05; CONTEXT-INDEX; handoff |
 
 ---
 
@@ -1127,3 +1128,23 @@ Dua S2 kecil masih terbuka: pada 390 siluet kota ASCII tertutup kartu; `/provide
 Commit produksi sekarang `4639a4b`. `4639a4b` juga menambah panel Issued attestations, halaman `/legal/disclaimer`, hitung mundur faucet dari `lastFaucetAt`, dan bingkai kamera tur langkah 4. Cek Designer tidak membuka layar itu.
 
 Saat rekaman v3, pita biru "Indexer is catching up" muncul. Kalimat produk: "Indexer is catching up to the latest blocks; data may lag briefly." Kode menampilkannya jika `synced` false atau lag lebih dari 20 blok, lalu pita hilang sendiri. Scout saat rekaman: `synced:true`, lag 23 blok, `index_update_failures` 0, series 2610 terdaftar. Cek `/v1/health` sebelum rekaman ulang.
+
+---
+
+## 29. Verifier, pendaftaran provider, dan wording: D-99 (APPROVED 10 Okt 2026 ~19:50 WIB)
+
+Fatih berkata "ya setuju semua" di grup pada 10 Okt 2026, sekitar 19:50 WIB, untuk lima poin Designer. Bukan usulan. Chain tetap testnet. Nomor dicek terhadap repo sebelum bagian ini: pemakaian terakhir adalah D-98. D-99 belum dipakai. Bangun lewat PR Verifier milik handler. **PENDING** sampai PR itu merge dan ter-deploy. Jangan ditulis live.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-99 | **APPROVED (Fatih, 10 Okt 2026 ~19:50 WIB).** Di `/verifier`, pendaftaran provider mengikuti lima poin di bawah. Kalimat Good to know di `/docs` ikut disetujui dan belum live. Tidak ada jalur submit KYB di app; atestasi tetap diterbitkan manual lewat `/verifier`. | 06; approved-ui-changes; 09; CONTEXT-INDEX; handoff |
+
+Lima poin di `/verifier`:
+
+1. Tombol "Register as provider" nonaktif, dengan pesan netral (bukan merah) "Link a provider attestation first", kalau atestasi yang ditautkan bukan role 1. Error transaksi yang gagal menyebut alasannya.
+2. Field "Attestation uid" tidak diisi lebih dulu dengan alamat wallet. Kosong, placeholder "0x… (32-byte attestation uid)".
+3. Baris "Connected wallet" dipendekkan, gaya `0x3F8f…`.
+4. Intro "Paron demo verifier (team-operated)" diganti "Paron verifier (team-operated, testnet)". Kata demo tidak dipakai pada wording baru. Badge lama "Verified by Paron demo verifier" **HISTORICAL**. Wording baru yang menunggu bangun: "Verified by Paron verifier (team-operated, testnet)". Badge itu tercatat di D-04 dan D-54. Tabel D-84..D-88 tidak memuat badge itu. D-87 (pita "Reference price (demo data)") tidak diubah oleh D-99.
+5. Pesan atestasi buyer tetap, ditambah baris "Ask the verifier for a provider attestation (role 1), then link it here."
+
+Kalimat Good to know di `/docs`, disetujui dan belum live: "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register." Kalimat yang sama ada di 06. Halaman `/docs` yang live di `783b6be` belum memuat kalimat ini.

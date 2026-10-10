@@ -244,7 +244,7 @@ Catatan:
 4. **Test:** `forge test` (unit/fuzz), `invariant_*` profil `ci`, fork test opsional dengan RPC sendiri (04 §9.1).
 5. **Lokal penuh:** anvil fork RH (`latest − 20`, key baru), `DeployAll` scope `full`, `Seed` fase 0–2 (`SEED_MODE=stage`), Ponder dev, web dev (04 §6, §10; 05 §4.1).
 6. **Frontend tanpa chain:** `NEXT_PUBLIC_DATA_SOURCE=mock` membaca `fixtures/v1/` (04 §4.5, 06 §11.3).
-7. **Agent provider + keeper:** paket `agents/`; keeper dry-run (stack §4.4). Kalimat dry-run wajib itu **HISTORICAL, superseded by D-96**: live setelah dana faucet; PENDING FUNDING; not active sampai terbukti.
+7. **Agent provider + keeper:** paket `agents/`; keeper dry-run (stack §4.4). Kalimat dry-run wajib itu **HISTORICAL, superseded by D-96**. Status terkini: **keeper live, trader menyusul setelah wallet siap.** Lihat bagian D-96.
 
 Semua perintah ditulis di README sebagai blok perintah biasa saat repo dibuat; dokumen ini tidak memuatnya.
 
@@ -313,7 +313,7 @@ Kalau listing molor, potong callout integritas dulu, lalu persingkat "Paron Prin
 - **Deployment:** deployment **latihan** atau anvil, **tidak pernah** deployment panggung (05 §4.6 butir 3); kalau anvil dipakai, countdown bisa dipercepat dengan maju waktu, tetapi video harus jujur (lihat butir berikut).
 - **Kejujuran waktu:** countdown 60 dtk boleh dipotong di editing **hanya** dengan overlay jelas, mis. "⏩ 45 s skipped (real-time countdown)" [APPROVED P9-12]. Jangan memakai request yang disiapkan sebelumnya tanpa disebut (05 §2.2 opsi d dinilai "tidak jujur sebagai 'live'").
 - **Wallet:** wallet demo latihan dengan saldo dan allowance seperti seed (05 A-6); wallet tanpa KYB untuk klaim default [D-31].
-- **Agent:** menyala, kill switch off di awal; keeper dry-run (stack §4.4, 05 §4.7). Kalimat keeper dry-run **HISTORICAL, superseded by D-96**. Status bot: PENDING FUNDING, **not active** sampai terbukti. Kill switch off-chain D-42 tetap. Kill switch belum diuji.
+- **Agent:** menyala, kill switch off di awal; keeper dry-run (stack §4.4, 05 §4.7). Kalimat keeper dry-run **HISTORICAL, superseded by D-96**. Kill switch off-chain D-42 tetap. Status terkini: **keeper live, trader menyusul setelah wallet siap.** Kill switch trader belum diuji karena trader belum di-deploy.
 - **Referensi sintetis:** push segar sebelum rekam (05 F-5).
 - **Disclaimer terlihat di slide penutup saja [D-64]** (bukan di situs); label "synthetic demo data" terbaca di app.
 - **Audio:** narasi bahasa Inggris (sejalan dengan naskah design §7.4) [APPROVED P9-06]; alat rekam/mikrofon = [TBD T9-08].
@@ -456,7 +456,7 @@ Angka di bawah adalah **estimasi dari handler per 21:08 WIB 9 Okt 2026**. Tidak 
 | S2 | 8 | ~80% | ~55% |
 
 - Never-cut: terbangun 3/3; terbukti on-chain lewat skrip 3/3; terbukti lewat klik UI di live 0/3. **HISTORICAL.** Di produksi `d3081be` terbukti lewat UI 3/3 (§7B).
-- Bot keeper dan bot trader sudah merge (CI hijau; kill switch off-chain D-42; dry-run; menolak chain selain testnet). Keduanya belum berjalan di Railway. **HISTORICAL untuk niat dry-run.** D-96 menyetujui mode live setelah dana. Sampai terbukti: **not active**.
+- Bot keeper dan bot trader sudah merge (CI hijau; kill switch off-chain D-42; menolak chain selain testnet). **HISTORICAL:** "keduanya belum berjalan di Railway" dan "not active sampai terbukti." Status terkini: **keeper live, trader menyusul setelah wallet siap.**
 - Kill switch dan G4 belum diuji.
 - `ruleWithSignatures` di `/arbiter` mungkin masih stub.
 - Tombol Revoke belum ada.
@@ -479,7 +479,7 @@ Angka ini **estimasi dari handler pada 15:55 WIB 10 Okt 2026**. Bukan hitung ula
 | S2 | ~95% | ~70% |
 
 - Pada 15:55 WIB, S0 B tercatat ~95%. Angka ~95% itu **HISTORICAL**. Faucet sukses dan teks cooldown faucet kemudian terbukti di produksi `d3081be`, jadi S0 B ~100%.
-- S1 B ~60%: bot keeper dan bot trader belum jalan di Railway, kill switch belum diuji. D-96 menyetujui mode live setelah wallet bot didanai. Sampai terbukti, bot **not active**. Status dana: **PENDING FUNDING**.
+- S1 B ~60% pada pembacaan 15:55. **HISTORICAL untuk status jalan sekarang:** "kedua bot belum jalan" dan "not active / PENDING FUNDING." Status terkini ada di bagian D-96. Kill switch trader belum diuji karena trader belum di-deploy.
 - Never-cut: terbangun 3/3; terbukti lewat UI di produksi 3/3.
 - **HISTORICAL sebagai angka terbangun terkini untuk S1 dan S2:** S1 ~95% dan S2 ~95%. Angka terbukti pada tabel 15:55 tetap angka live sampai ada cek produksi baru.
 
@@ -495,7 +495,7 @@ Angka ini estimasi pada 19:12 WIB 10 Okt 2026. Bukan hitung ulang per butir. Buk
 | S2 | ~100% | ~70% |
 
 - **HISTORICAL:** "Belum tampil di produksi" dan "halaman baru belum dicek." `4639a4b` adalah commit produksi. Commit itu menambah panel Issued attestations di `/verifier` (`GET /v1/participants`; "Use for revoke" mengisi uid), halaman `/legal/disclaimer` plus tautan footer Risk dan Disclaimer, baris cooldown faucet dari `lastFaucetAt` dengan hitung mundur, dan bingkai kamera tur langkah 4 pada tray (zoom 1.55) sebelum gerak. Cek Designer setelah commit itu tidak membuka layar-layar itu. Tombol Revoke sudah ada di `/verifier` sebelum commit ini.
-- Kolom terbukti untuk bot tidak berubah. Bot keeper dan bot trader belum jalan di Railway, kill switch belum diuji. D-96: bot tetap **not active** sampai wallet bot didanai. Status dana: **PENDING FUNDING**.
+- **HISTORICAL:** "Bot keeper dan bot trader belum jalan di Railway" dan "keduanya not active sampai wallet didanai." Status terkini ada di bagian D-96 di bawah: keeper live, trader belum di-deploy.
 - Never-cut tetap 3/3 terbangun dan 3/3 terbukti lewat UI di produksi.
 
 ### Cek di https://paron.vercel.app
@@ -555,6 +555,8 @@ Tidak bisa dibuktikan secara baca-saja di produksi (tidak ada data untuk dicoba)
 - S2 kecil, masih terbuka: `/provider` hanya menampilkan gerbang Connect wallet, dengan label "Demo data" di bar atas aplikasi, di luar landing.
 - Gambar tutorial 01 di `/docs` pada produksi masih menampilkan hero lama. **Gambar 01 updated, PR pending merge.** Berkas baru `shots-v4/01-open-paron.png`, diambil saat `synced:true`, lag 2 blok. Belum live sampai PR itu merge. Gambar 02 dan 05 tidak berubah (#80).
 - Perilaku yang diketahui, terlihat saat rekaman v3: pita biru "Indexer is catching up". Kalimat produk: "Indexer is catching up to the latest blocks; data may lag briefly." Kode menampilkannya jika `/v1/health` berkata `synced` false atau lag lebih dari 20 blok, dan pita hilang sendiri saat syarat itu berhenti. Scout mengecek saat rekaman: `synced:true`, lag 23 blok, `index_update_failures` 0, series 2610 terdaftar. Lag 23 melewati garis 20 blok, jadi pita bisa tampil meski `synced` true. Cek `/v1/health` sebelum rekaman ulang.
+- Tetap benar: tidak ada jalur submit KYB di app. Atestasi diterbitkan manual lewat `/verifier`.
+- **D-99, APPROVED (Fatih, 10 Okt 2026 ~19:50 WIB, "ya setuju semua").** Bangun lewat PR Verifier milik handler. **PENDING** sampai PR itu merge dan ter-deploy. Jangan ditulis live. Rincian di 07 §29. Di `/verifier`, pendaftaran provider: tombol "Register as provider" nonaktif dengan pesan netral (bukan merah) "Link a provider attestation first" kalau atestasi yang ditautkan bukan role 1, dan error transaksi gagal menyebut alasannya; field "Attestation uid" kosong, placeholder "0x… (32-byte attestation uid)", tidak diisi alamat wallet; baris "Connected wallet" dipendekkan gaya `0x3F8f…`; intro "Paron demo verifier (team-operated)" diganti "Paron verifier (team-operated, testnet)" tanpa kata demo. Badge lama "Verified by Paron demo verifier" **HISTORICAL**. Wording baru yang menunggu bangun: "Verified by Paron verifier (team-operated, testnet)". Badge itu ada di D-04 dan D-54, bukan di tabel D-84..D-88. Pesan atestasi buyer tetap, ditambah "Ask the verifier for a provider attestation (role 1), then link it here." Kalimat Good to know di `/docs`, belum live: "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register."
 
 ### D-95 nav dan D-96
 
@@ -563,7 +565,7 @@ Tidak bisa dibuktikan secara baca-saja di produksi (tidak ada data untuk dicoba)
 - **D-98, APPROVED (Fatih lewat Designer 1:1, 10 Okt 2026).** Rework hero landing, gaya CRM-enterprise: judul di tengah, dua tombol, kotak tangkapan dasbor, siluet kota ASCII, gradien cokelat gelap/amber. Navbar, merek, dan Launch app tidak diubah. Masuk di #86 (`ef4d797`) dan #87 (`87c7d89`). Menimpa deskripsi hero emas-dan-kaca (D-91) dan hero strip indeks yang lebih lama. Teks itu **HISTORICAL**. D-91 tetap APPROVED sebagai keputusan pada jamnya. Yang benar-benar berubah di kode: judul terpusat, tombol Become a provider → `/provider` dan Browse markets → `/markets`, bingkai `/hero/markets.webp`, langit ASCII Jakarta, gradien `#000` → `#0c0a08` → `#1a0f06` plus radial amber. Merek "Paron", navbar, dan tombol header Launch app tetap. Tombol landing "Launch demo" hilang. Pita pengumuman tetap "See the demo path" menuju `#demo`. #87 hanya mengganti gambar hero supaya alamat di bingkai terpotong (`0xA1FA…95DF`), ukuran 2880×1880.
 - Cek Designer di produksi setelah `4639a4b` **LULUS**. Tidak ada S0/S1. Yang lulus: hero; tombol ke `/provider` dan `/markets`; gambar tanpa alamat penuh; urutan bagian; navbar Docs paling kiri; menu mobile 390; satu h1; tanpa overflow; kata "demo" hanya di pita. Lampu hijau untuk video final. Video v3 (sekitar 2 menit, dari produksi dengan hero baru) sudah dikirim ke Fatih. Fatih yang mengunggah. Dua S2 kecil tetap terbuka: siluet ASCII pada 390 tertutup kartu; `/provider` hanya gerbang Connect wallet dengan label "Demo data" di bar atas aplikasi, di luar landing.
 - Commit produksi sekarang `4639a4b`. Saat catatan ini ditulis, GitHub tidak menampilkan PR terbuka. PR gambar 01 dari handler belum ada di daftar itu dan belum merge.
-- D-96 APPROVED (Fatih, ~15:00 WIB): bot keeper dan trader di Railway LIVE dengan wallet bot khusus (bukan dry-run) setelah Fatih mendanai wallet itu dari faucet. **PENDING FUNDING**. **Not active** sampai terbukti. Menolak chain selain testnet. Kill switch off-chain D-42 tetap.
+- D-96 APPROVED (Fatih, ~15:00 WIB): bot keeper dan trader di Railway dengan wallet bot khusus (bukan dry-run). Menolak chain selain testnet. Kill switch off-chain D-42 tetap. Alamat wallet dan kunci tidak ditulis. **HISTORICAL:** "PENDING FUNDING" dan "kedua bot not active sampai terbukti." Status terkini: **keeper live, trader menyusul setelah wallet siap.** Keeper LIVE di Railway (service `paron-keeper`, deploy sukses, tanpa error, kill switch off). Belum ada transaksi karena belum ada redemption yang lewat tenggat. Trader belum di-deploy. Wallet trader masih butuh mUSDC dan KYB, dan wallet buyer yang diikuti belum diputuskan. Jangan ditulis seolah keduanya jalan.
 
 ### Pemilik yang masih terbuka
 
