@@ -34,7 +34,7 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §24 Daftar perbaikan pra-demo (D-94, APPROVED)
 - §25 Arsitektur informasi per aktor (D-95, APPROVED ~11:07 WIB). Koreksi nav setelah #71: catatan Designer "For providers" di navbar aplikasi adalah HISTORICAL
 - §26 Bot keeper dan trader di Railway (D-96, APPROVED Sab 10 Okt 2026 ~15:00 WIB)
-- §27 Halaman tutorial `/docs` di navbar (D-97, APPROVED 10 Okt 2026, langsung di grup). Status bangun PENDING
+- §27 Halaman tutorial `/docs` di navbar (D-97, APPROVED 10 Okt 2026, langsung di grup). Status bangun LIVE di `783b6be`. Kalimat "Status bangun PENDING" adalah **HISTORICAL**
 
 ---
 
@@ -1089,7 +1089,7 @@ Fatih menyetujui langsung di grup pada 10 Okt 2026. Bukan usulan. Chain tetap te
 
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
-| D-97 | **APPROVED (Fatih, 10 Okt 2026, dinyatakan langsung di grup).** Tambah halaman `/docs` yang dicapai dari navbar aplikasi, tepat di kiri Markets. Isi: tutorial lengkap dari awal sampai selesai untuk memakai Paron. Tiap langkah punya satu judul, penjelasan singkat, dan satu tangkapan layar. Tanpa video. Status bangun: **PENDING**, belum selesai. Isi ditulis Designer dan dibangun engineer. | 06; sitemap; approved-ui-changes; 09; CONTEXT-INDEX |
+| D-97 | **APPROVED (Fatih, 10 Okt 2026, dinyatakan langsung di grup).** Tambah halaman `/docs` yang dicapai dari navbar aplikasi, tepat di kiri Markets. Isi: tutorial lengkap dari awal sampai selesai untuk memakai Paron. Tiap langkah punya satu judul, penjelasan singkat, dan satu tangkapan layar. Tanpa video. Isi ditulis Designer dan dibangun engineer. Status bangun: **LIVE** di produksi `783b6be` (PR #76; Scout READY; `/docs` 200). **HISTORICAL:** "Status bangun: PENDING, belum selesai." Cek ulang header Designer di 1024, 1280, dan 390, serta pengambilan ulang gambar tutorial 01, 02, dan 05, masih **PENDING**. | 06; sitemap; approved-ui-changes; 09; STATUS; CONTEXT-INDEX |
 
 Urutan navbar pengguna (Launch app) sekarang: Docs, Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Kalimat D-95 yang menulis navbar mulai dari Markets, tanpa Docs, adalah **HISTORICAL** untuk ketiadaan tautan Docs. Larangan tautan Provider, Operator, dan Demo di navbar tetap (D-95, koreksi #71).
 

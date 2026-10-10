@@ -131,7 +131,7 @@ Post-hackathon roadmap: role-based nav gating read from contracts.
 
 ## Tutorial page (07 §27, D-97, APPROVED 10 Oct 2026)
 
-Fatih stated this directly in the group. Later than D-95. Chain stays testnet. The last decision number before this one was D-96. D-97 was unused. Build status: **PENDING**, not done. Designer writes the content. The engineer builds it.
+Fatih stated this directly in the group. Later than D-95. Chain stays testnet. The last decision number before this one was D-96. D-97 was unused. Designer writes the content. The engineer builds it. Build status: **LIVE** on production at `783b6be` (PR #76). Scout confirmed https://paron.vercel.app READY, and `/docs` returns 200. **HISTORICAL:** "Build status: PENDING, not done" and the target merge before about 19:00 WIB.
 
 The user-navbar order that starts at Markets, with no Docs link, is **HISTORICAL** for that missing link. Provider, Operator, and Demo stay out of the navbar (D-95, including the #71 correction).
 
@@ -145,9 +145,10 @@ Scout constraints:
 - No link to `/demo`. `/demo` stays reachable only via "Launch demo" on the landing page (D-95).
 - Screenshots come from real on-chain data, not "Demo data".
 - The provider section and the operator section are short. They name the doors: "Become a provider" on the landing page, and the Operator tab in the footer, not the navbar.
-- Recheck the header at 1024, 1280, and 390 with a wallet connected.
+- Recheck the header at 1024, 1280, and 390 with a wallet connected. That Designer re-check is still **PENDING**.
+- Re-shooting tutorial images 01, 02, and 05 is still **PENDING**.
 
-`/docs/methodology` and `/docs/contracts` stay separate routes. The older `/docs` purpose (public product write-up and README) is **HISTORICAL** for this page. Target merge of the build is before about 19:00 WIB (09).
+`/docs/methodology` and `/docs/contracts` stay separate routes. The older `/docs` purpose (public product write-up and README) is **HISTORICAL** for this page. **HISTORICAL:** "Target merge of the build is before about 19:00 WIB." The page is already live.
 
 ## Index route
 
