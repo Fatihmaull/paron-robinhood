@@ -32,10 +32,10 @@ export function DemoTour() {
     <section className={poster ? "demo-tour is-static" : "demo-tour"} ref={rootRef} aria-labelledby="tour-h">
       <div className="wrap tour-grid">
         <div className="tour-copy">
-          <p className="mono">Demo path</p>
+          <p className="mono">Full path</p>
           <h2 id="tour-h">See the full path in 30 seconds.</h2>
           <p className="lede">Pick a series, check the bond, buy, trade, redeem. The same screens you get in the app.</p>
-          <ol aria-label="Steps shown in the demo tour">
+          <ol aria-label="Steps shown in the tour">
             {TOUR_STEPS.map((step) => (
               <li key={step.n} aria-current={step.n === stepIndex ? "step" : undefined}>
                 <b>{String(step.n).padStart(2, "0")}</b>
@@ -48,7 +48,7 @@ export function DemoTour() {
         </div>
         <div className="tour-stage">
           <div className="tour-frame">
-            <span className="demo-badge">Demo data</span>
+            <span className="demo-badge">Sample</span>
             <div className="tour-win" aria-hidden="true" inert>
               <div className="scaler">
                 <div className="cam">
@@ -66,7 +66,7 @@ export function DemoTour() {
               className="tour-pause"
               type="button"
               aria-pressed={paused}
-              aria-label={paused ? "Play demo tour" : "Pause demo tour"}
+              aria-label={paused ? "Play tour" : "Pause tour"}
               onClick={() => {
                 const next = !flags.current.userPaused;
                 flags.current.userPaused = next;
@@ -77,7 +77,7 @@ export function DemoTour() {
               <svg className="i-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l10 6-10 6z" /></svg>
             </button>
           </div>
-          <p className="tour-note">Illustrative sample. All numbers are demo data.</p>
+          <p className="tour-note">Illustrative sample. All numbers are a sample.</p>
         </div>
       </div>
     </section>

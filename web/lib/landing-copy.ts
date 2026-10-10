@@ -26,7 +26,6 @@ export const landingLinks = {
   how: "#how",
   buy: "/buy",
   provider: "/provider",
-  demo: "/demo",
   data: "/data",
   announce: "#demo",
 } as const;

@@ -21,7 +21,6 @@ export const TourScreens = memo(function TourScreens() {
           <span>Provider</span>
           <span>Index</span>
           <span>Data</span>
-          <span>Demo</span>
         </nav>
         <div className="m-chip"><i />Robinhood Chain Testnet</div>
         <div className="m-wallet">0x3F8f…6ae9</div>
@@ -31,7 +30,7 @@ export const TourScreens = memo(function TourScreens() {
         <span className="ok">OK</span>
         <span className="amb">$3.20/CU</span>
         <span>2 entities · 2 CU/24h</span>
-        <em>Demo data</em>
+        <em>Sample</em>
       </div>
 
       <section className="screen" data-screen="markets">
@@ -80,7 +79,7 @@ export const TourScreens = memo(function TourScreens() {
         <div className="h1row">
           <p className="screen-title">CU-JKT-H100-2610</p>
           <u className="tag">Sale open</u>
-          <u className="tag ok">Verified by Paron demo verifier</u>
+          <u className="tag ok">Verified by Paron verifier</u>
         </div>
         <div className="stats">
           <div><small>Last</small><b className="amb">$3.20/CU</b></div>

@@ -28,7 +28,8 @@ test("tour copy drops the fee line and the defaulted record", () => {
   assert.equal(screens.includes("href"), false);
   assert.match(screens, /data-tour="tx-link"/);
   assert.match(screens, /View on explorer/);
-  assert.match(screens, />Demo data</);
+  assert.match(screens, />Sample</);
+  assert.equal(screens.toLowerCase().includes("demo"), false);
   assert.equal(/partner|feeds/i.test(joined), false);
   assert.equal(TOUR_STEPS.length, 6);
   assert.equal(TOUR_BEATS[0]?.step, 1);

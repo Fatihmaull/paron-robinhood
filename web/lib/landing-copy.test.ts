@@ -91,7 +91,7 @@ test("facts and the bond ledger stay testnet-accurate", () => {
   assert.match(landingLedger.map((row) => row.value).join(" "), /\$4\.50 \/ CU/);
 });
 
-test("landing hero figure is a labeled sample and the headline stays sans", () => {
+test("landing hero uses the production headline type and one framed shot", () => {
   const view = readFileSync(new URL("../components/landing.tsx", import.meta.url), "utf8");
   const css = readFileSync(new URL("../app/landing.css", import.meta.url), "utf8");
   const charts = readFileSync(new URL("../components/charts.tsx", import.meta.url), "utf8");
@@ -99,13 +99,16 @@ test("landing hero figure is a labeled sample and the headline stays sans", () =
   const globals = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
   assert.equal(landingSample.amount, "$2.50");
   assert.match(landingSample.note, /illustration/);
-  assert.match(landingSample.tag, /Demo data/);
-  assert.match(view, /landingSample/);
+  assert.equal(view.includes("landingSample"), false);
   assert.equal(view.includes("useIndex"), false);
   assert.equal(view.includes("indexQuote"), false);
   assert.match(view, /IntersectionObserver/);
-  assert.match(view, /className="curtain"/);
-  assert.equal(/<img/i.test(view), false);
+  assert.match(view, /heroSkyline/);
+  assert.match(view, /Become a provider/);
+  assert.match(view, /Browse markets/);
+  const imgs = view.match(/<img\b[^>]*>/g) ?? [];
+  assert.equal(imgs.length, 1);
+  assert.equal(/demo/i.test(imgs[0]), false);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
   assert.match(css, /\.rv\.in/);
   assert.match(charts, /attributionLogo:\s*false/);
@@ -115,15 +118,20 @@ test("landing hero figure is a labeled sample and the headline stays sans", () =
   assert.match(legal, /https:\/\/www\.tradingview\.com\//);
   assert.equal(/<img/i.test(legal), false);
   assert.match(css, /\.landing \.hero h1 \{[^}]*--font-inter-tight/s);
+  assert.match(css, /\.landing \.hero h1 em \{[^}]*--font-instrument-serif/s);
+  assert.match(css, /\.landing \.hero h1 em \{[^}]*font-weight:\s*400/s);
   assert.match(css, /\.landing \.nav \{[^}]*display:\s*block/s);
 });
 
-test("landing motion is 38-64s and glass stays off the dashboard", () => {
+test("landing hero does not loop a curtain and glass stays off the dashboard", () => {
   const css = readFileSync(new URL("../app/landing.css", import.meta.url), "utf8");
-  assert.match(css, /38s/);
-  assert.match(css, /52s/);
-  assert.match(css, /64s/);
+  assert.equal(css.includes("38s"), false);
+  assert.equal(css.includes("52s"), false);
+  assert.equal(css.includes("64s"), false);
   assert.match(css, /prefers-reduced-motion:\s*reduce/);
+  assert.match(css, /prefers-reduced-motion:\s*reduce[\s\S]*\.rv \{[^}]*transition:\s*none/);
+  const hero = css.slice(css.indexOf(".landing .hero {"), css.indexOf(".landing .facts"));
+  assert.equal(/animation\s*:/.test(hero), false);
   const shadows = css.match(/box-shadow\s*:[^;]+/g) ?? [];
   assert.deepEqual(shadows, ["box-shadow: none"]);
   const globals = readFileSync(new URL("../app/globals.css", import.meta.url), "utf8");
