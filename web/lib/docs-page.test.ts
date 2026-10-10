@@ -50,7 +50,7 @@ test("the docs page is one heading, one image per step, and no video", () => {
   assert.match(joined, /OPERATOR tab in the footer of the landing page/);
   assert.match(joined, /Bond\/CU of \$4\.50/);
   assert.match(DOCS_STEPS[4].text, /"Demo data" label in the top bar/);
-  assert.match(DOCS_STEPS[4].text, /Verified by Paron demo verifier/);
+  assert.match(DOCS_STEPS[4].text, /Verified by Paron verifier \(team-operated, testnet\)/);
   assert.match(joined, /Good to know/);
   assert.equal(DOCS_NOTES.length, 4);
   assert.match(DOCS_NOTES.join(" "), /Demo data/);

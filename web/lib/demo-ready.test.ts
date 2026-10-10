@@ -21,7 +21,7 @@ test("demo data is one label and money stays grouped", () => {
   const legal = read("../app/legal/risk/page.tsx");
   assert.match(shell, /Demo data/);
   assert.match(index, /Demo data/);
-  assert.equal(shell.includes("Reference price (demo data)"), false);
+  assert.match(shell, /Reference price \(demo data\)/);
   assert.equal(index.includes("Reference price (demo data)"), false);
   assert.equal(legal.includes("synthetic demo data"), false);
 });
@@ -58,4 +58,14 @@ test("demo path states, wallet gate, and the short provider address", () => {
   assert.match(css, /button\.addr-copy \{[^}]*font-family:\s*var\(--font-mono\)/);
   assert.match(css, /addr-narrow/);
   assert.equal(shortAddress("0x3F8fBCD4b4196Ea3c1c020F09Fc9a590bB246ae9"), "0x3F8f…6ae9");
+});
+
+test("D-87 ribbon and D-99 verified badge wording", () => {
+  const shell = readFileSync(new URL("../components/shell.tsx", import.meta.url), "utf8");
+  assert.match(shell, /Reference price \(demo data\)/);
+  for (const file of ["wizard.tsx", "provider-console.tsx", "series-view.tsx"]) {
+    const source = readFileSync(new URL(`../components/${file}`, import.meta.url), "utf8");
+    assert.match(source, /Verified by Paron verifier \(team-operated, testnet\)/);
+    assert.equal(source.includes("Verified by Paron demo verifier"), false);
+  }
 });
