@@ -21,6 +21,7 @@ contracts/broadcast/
 
 # local
 /out/
+/docs/motion-tour-frames/
 *.log
 .idea/
 .vscode/
