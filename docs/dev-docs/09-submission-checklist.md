@@ -33,7 +33,7 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (
 
 ## 0. Ringkasan
 
-- **Satu-satunya tenggat keras: Sab 10 Okt 2026, 23:59 WIB** [D-93, APPROVED Fatih 10:16 WIB]. Kalimat lama "12:00 WIB" adalah **HISTORICAL, superseded by D-93** (termasuk kalimat 12:00 pada D-90). Target internal Sab 11:30 (design §7.3) tetap catatan historis dan tidak mengikat [D-90]. Jam freeze 06:00, 09:00, dan 11:30 tetap HISTORICAL (D-90).
+- **Satu-satunya tenggat keras: Sab 10 Okt 2026, 23:59 WIB** [D-93, APPROVED Fatih 10:16 WIB]. Kalimat lama "12:00 WIB" adalah **HISTORICAL, superseded by D-93** (termasuk kalimat 12:00 pada D-90). Target internal Sab 11:30 (design §7.3) tetap catatan historis dan tidak mengikat [D-90]. Jam freeze 06:00, 09:00, dan 11:30 tetap HISTORICAL (D-90). Usulan buffer: submit sekitar **21:00 WIB** pada hari yang sama. Submission, deck, dan tombol HackQuest adalah milik Fatih. **HISTORICAL:** "Handler merekam video demo final dari produksi." Video demo final sudah direkam dari `d3081be` dan tidak menampilkan `/admin`. Penyuntingan = agen evergreen video editor yang sudah ada, sesuai Fatih.
 - Submission lewat HackQuest ("official submission platform"); isian menurut notes §1: deskripsi proyek, problem & solution, repo GitHub, demo / aplikasi ter-deploy, tech stack, use case RWA, video demo **atau** materi presentasi, info tim. Nama field persis dan batas karakternya **tidak** ada di dokumen → [TBD T9-01].
 - **Batas durasi video tidak disebut** di dokumen kanonik → [TBD T9-02]. Rekomendasi: video submission = rekaman naskah ter-retime 2:30 (05 P5-06), maks ~3 menit [APPROVED P9-05].
 - Demo Day **Min 11 Okt 10:00–21:00 WIB** hanya untuk tim terpilih; judging berakhir 15:00 WIB; waktu pengumuman shortlist dan pemenang tidak dipublikasikan (notes §2).
@@ -197,7 +197,7 @@ Catatan:
 4. **Test:** `forge test` (unit/fuzz), `invariant_*` profil `ci`, fork test opsional dengan RPC sendiri (04 §9.1).
 5. **Lokal penuh:** anvil fork RH (`latest − 20`, key baru), `DeployAll` scope `full`, `Seed` fase 0–2 (`SEED_MODE=stage`), Ponder dev, web dev (04 §6, §10; 05 §4.1).
 6. **Frontend tanpa chain:** `NEXT_PUBLIC_DATA_SOURCE=mock` membaca `fixtures/v1/` (04 §4.5, 06 §11.3).
-7. **Agent provider + keeper:** paket `agents/`; keeper dry-run (stack §4.4).
+7. **Agent provider + keeper:** paket `agents/`; keeper dry-run (stack §4.4). Kalimat dry-run wajib itu **HISTORICAL, superseded by D-96**: live setelah dana faucet; PENDING FUNDING; not active sampai terbukti.
 
 Semua perintah ditulis di README sebagai blok perintah biasa saat repo dibuat; dokumen ini tidak memuatnya.
 
@@ -266,7 +266,7 @@ Kalau listing molor, potong callout integritas dulu, lalu persingkat "Paron Prin
 - **Deployment:** deployment **latihan** atau anvil, **tidak pernah** deployment panggung (05 §4.6 butir 3); kalau anvil dipakai, countdown bisa dipercepat dengan maju waktu, tetapi video harus jujur (lihat butir berikut).
 - **Kejujuran waktu:** countdown 60 dtk boleh dipotong di editing **hanya** dengan overlay jelas, mis. "⏩ 45 s skipped (real-time countdown)" [APPROVED P9-12]. Jangan memakai request yang disiapkan sebelumnya tanpa disebut (05 §2.2 opsi d dinilai "tidak jujur sebagai 'live'").
 - **Wallet:** wallet demo latihan dengan saldo dan allowance seperti seed (05 A-6); wallet tanpa KYB untuk klaim default [D-31].
-- **Agent:** menyala, kill switch off di awal; keeper dry-run (stack §4.4, 05 §4.7).
+- **Agent:** menyala, kill switch off di awal; keeper dry-run (stack §4.4, 05 §4.7). Kalimat keeper dry-run **HISTORICAL, superseded by D-96**. Status bot: PENDING FUNDING, **not active** sampai terbukti. Kill switch off-chain D-42 tetap. Kill switch belum diuji.
 - **Referensi sintetis:** push segar sebelum rekam (05 F-5).
 - **Disclaimer terlihat di slide penutup saja [D-64]** (bukan di situs); label "synthetic demo data" terbaca di app.
 - **Audio:** narasi bahasa Inggris (sejalan dengan naskah design §7.4) [APPROVED P9-06]; alat rekam/mikrofon = [TBD T9-08].
@@ -393,14 +393,14 @@ Jam 11:30 tidak mengikat [D-90]. Tenggat 12:00 **[HISTORICAL, superseded by D-93
 - [ ] Semua isian §2 terisi; teks dicek ejaan; link di-paste ulang dari jendela private.
 - [ ] Info tim akurat: Fatih, solo (nama, peran; aturan ≤ 4 orang terpenuhi).
 - [ ] Track: "RWA — Build the Real World Onchain" (satu-satunya track).
-- [ ] Submit sebelum 11:30 **[HISTORICAL D-90; jam 11:30 tidak mengikat]**. Tenggat keras = Sab 10 Okt 2026 23:59 WIB [D-93]. Simpan tangkapan layar konfirmasi + waktu. Tag `submission` disebut di rencana lama; jam 11:30 tidak mengikat.
+- [ ] Submit sebelum 11:30 **[HISTORICAL D-90; jam 11:30 tidak mengikat]**. Tenggat keras = Sab 10 Okt 2026 23:59 WIB [D-93]. Simpan tangkapan layar konfirmasi + waktu. Tag `submission` disebut di rencana lama; jam 11:30 tidak mengikat. Usulan buffer: submit sekitar 21:00 WIB. Yang menekan tombol HackQuest, yang membuat deck, dan yang men-submit = Fatih.
 - [ ] Setelah submit: jangan ubah deployment panggung atau README alamat sampai Demo Day selesai (05 §4.6 butir 5).
 
 ---
 
 ## 7A. Estimasi status build (handler, 9 Okt 2026 21:08 WIB)
 
-Angka di bawah adalah **estimasi dari handler per 21:08 WIB 9 Okt 2026**. Tidak dihitung ulang per butir pada catatan ini. Bukan hasil audit baru.
+Angka di bawah adalah **estimasi dari handler per 21:08 WIB 9 Okt 2026**. Tidak dihitung ulang per butir pada catatan ini. Bukan hasil audit baru. Bagian ini **HISTORICAL** terhadap §7B (10 Okt). Angka bukti UI 0/3 dan mode dry-run tidak dipakai lagi.
 
 | Kelompok | Butir | A | B |
 |---|---|---|---|
@@ -408,11 +408,97 @@ Angka di bawah adalah **estimasi dari handler per 21:08 WIB 9 Okt 2026**. Tidak 
 | S1 | 9 | ~90% | ~45% |
 | S2 | 8 | ~80% | ~55% |
 
-- Never-cut: terbangun 3/3; terbukti on-chain lewat skrip 3/3; terbukti lewat klik UI di live 0/3.
-- Bot keeper dan bot trader sudah merge (CI hijau; kill switch off-chain D-42; dry-run; menolak chain selain testnet). Keduanya belum berjalan di Railway.
+- Never-cut: terbangun 3/3; terbukti on-chain lewat skrip 3/3; terbukti lewat klik UI di live 0/3. **HISTORICAL.** Di produksi `d3081be` terbukti lewat UI 3/3 (§7B).
+- Bot keeper dan bot trader sudah merge (CI hijau; kill switch off-chain D-42; dry-run; menolak chain selain testnet). Keduanya belum berjalan di Railway. **HISTORICAL untuk niat dry-run.** D-96 menyetujui mode live setelah dana. Sampai terbukti: **not active**.
 - Kill switch dan G4 belum diuji.
 - `ruleWithSignatures` di `/arbiter` mungkin masih stub.
 - Tombol Revoke belum ada.
+
+---
+
+## 7B. Cek produksi dan estimasi 10 Okt 2026
+
+Chain tetap testnet. Tidak ada alamat wallet, nama akun, kunci, atau nilai token di bagian ini.
+
+### Estimasi handler, 15:55 WIB 10 Okt
+
+Angka ini **estimasi dari handler pada 15:55 WIB 10 Okt 2026**. Bukan hitung ulang per butir. Bukan audit baru.
+
+| Kelompok | A (terbangun) | B (terbukti) |
+|---|---|---|
+| Keseluruhan | ~97% terbangun | ~85% terbukti |
+| S0 | ~100% | ~100% |
+| S1 | ~95% | ~60% |
+| S2 | ~95% | ~70% |
+
+- Pada 15:55 WIB, S0 B tercatat ~95%. Angka ~95% itu **HISTORICAL**. Faucet sukses dan teks cooldown faucet kemudian terbukti di produksi `d3081be`, jadi S0 B ~100%.
+- S1 B ~60%: bot keeper dan bot trader belum jalan di Railway, kill switch belum diuji. D-96 menyetujui mode live setelah wallet bot didanai. Sampai terbukti, bot **not active**. Status dana: **PENDING FUNDING**.
+- Never-cut: terbangun 3/3; terbukti lewat UI di produksi 3/3.
+
+### Cek di https://paron.vercel.app
+
+Dicek dengan wallet testnet sungguhan. Alamat wallet tidak ditulis.
+
+**Commit `20ff4b1`**, setelah perbaikan #70 yang memasukkan `account` ke simulasi transaksi:
+
+- Buy 1 CU menampilkan Pending, lalu Success, dengan tautan explorer.
+- Buy yang gagal menampilkan Failed merah beserta nama langkah.
+- Jaringan salah (chain 421614) menampilkan banner merah dan Switch, serta menonaktifkan faucet, Buy, dan Place order.
+- Format alamat di header bergaya `0xA1FA…95DF`: 6 karakter pertama termasuk `0x`, 4 karakter terakhir.
+
+**Commit `d3081be` (produksi):**
+
+- Sukses faucet **terverifikasi**. Pending, lalu Success, dengan pesan "5,000 test USDC added." dan tautan explorer. Tx `0xcdca…660f`.
+- Teks cooldown faucet **terverifikasi**. Baris status menampilkan "Failed · faucet · Faucet cooling down. Try again at the next hour." sekali. Duplikat "Transaction failed." sudah hilang. Wallet tidak diminta (diblok di simulasi). Catatan kecil: teks berkata "next hour" dan tidak ada hitung mundur.
+
+**Commit produksi sekarang:** `1f33f2f` (PR #74 sudah merge ke `main`, CI hijau). https://paron.vercel.app READY di `1f33f2f`. PR itu tidak mengubah indexer atau kontrak. **HISTORICAL:** "Cek sekilas Designer pada `/admin` di deploy itu masih pending." Cek itu **LULUS** di 1280 dan 390: "Ready at 17:24:06 WIB", lencana Done tanpa Execute, konsol bersih, satu h1, tanpa scroll horizontal, label "Demo data". Cek UI di atas yang menyebut `d3081be` tetap catatan commit itu.
+
+### Never-cut, terbukti lewat UI di produksi (3/3)
+
+- Atestasi KYB diterbitkan dari `/verifier` oleh peran deployer. Tx `0xb9ce…327d`. Indexer menampilkan alamat itu verified. Aplikasi tidak punya jalur submit KYB dan tidak punya aplikasi pending, jadi di demo atestasi diterbitkan manual lewat formulir Issue attestation di `/verifier`.
+- Eksekusi Timelock dari `/admin`. Tx `0x6823…f653`. Operasi menampilkan Done.
+- Claim default dari `/redemptions/3`. Tx `0xcbf6…c21e`. Halaman menampilkan "Defaulted · paid", $4.50 ke holder.
+
+### PR #72 (`d3081be`) dan tinjauan ulang Designer
+
+#72 memperbaiki, di kode: operasi Done menampilkan lencana hijau "Done" tanpa Execute; fallback 0.4500 yang di-hardcode dihapus (faktor kosong menampilkan "Not set" dan Execute berhenti dengan pesan yang jelas); komponen TxStatus dipakai bersama di `/verifier`, `/admin`, Keepers, dan KYB; klaim menampilkan "Claimable now".
+
+Tinjauan ulang Designer atas produksi `d3081be` (#72) **selesai**. Tidak ada temuan S0 atau S1. Lampu hijau untuk video final. Butir terbuka lama "Designer meninjau ulang `/verifier`, `/admin`, `/redemptions/3` setelah #72" adalah **HISTORICAL** (selesai).
+
+Lolos di produksi:
+
+- Operasi Done di `/admin` menampilkan lencana "Done" tanpa Execute dan tanpa 0.4500.
+- `/redemptions/3` menampilkan "Defaulted · paid" tanpa "Not claimable yet".
+- `.tx-status` 14px dan konsisten.
+- Tombol aksi 44px.
+- Konsol bersih.
+- Satu h1.
+- Label "Demo data".
+- Navbar bersih.
+
+Tidak bisa dibuktikan secara baca-saja di produksi (tidak ada data untuk dicoba): "Claimable now", "Not set", Execute pada operasi yang siap, dan TxStatus di `/verifier`, `/admin`, dan `/ops/keepers`.
+
+### Isu yang diketahui
+
+- Masih terbuka: daftar Applications di `/verifier` tidak memuat atestasi yang sudah terbit.
+- Kecil, masih terbuka: `ruleWithSignatures` di `/arbiter` mungkin masih stub.
+- Kecil, masih terbuka: tombol Revoke belum ada.
+- Kecil, masih terbuka: kartu tur langkah 04 terpotong selama satu frame transisi.
+- S2, **FIXED** (PR #74, `1f33f2f`, sudah merge ke `main`, CI hijau; https://paron.vercel.app READY di `1f33f2f`). **HISTORICAL:** "fix pending, relabel to Ready at", "PR itu belum di-merge", dugaan zona waktu atau waktu chain, dan "cek sekilas Designer pada `/admin` masih pending." Label operasi Done sekarang "Ready at". Cek Designer atas `/admin` di `1f33f2f` **LULUS** di 1280 dan 390: "Ready at 17:24:06 WIB", lencana Done tanpa Execute, konsol bersih, satu h1, tanpa scroll horizontal, label "Demo data". Nilainya tetap `ready_at_ms` (jadwal + jeda = waktu siap) dari `web/components/ops.tsx`. Waktu eksekusi dari indexer masih tidak ditampilkan. Tidak ada perubahan indexer atau kontrak.
+- Tidak bisa dibuktikan secara baca-saja di produksi (tidak ada data): "Claimable now", "Not set", Execute pada operasi yang siap, TxStatus di `/verifier`, `/admin`, `/ops/keepers`.
+- Status desain setelah cek `/admin`: tidak ada S0, S1, atau S2 desain yang masih terbuka, kecuali teks cooldown faucet yang berkata "next hour" dan tidak punya hitung mundur. Sisa itu S2 kecil dan boleh dilewati.
+
+### D-95 nav dan D-96
+
+- Koreksi D-95: catatan Designer yang menaruh "For providers" di navbar aplikasi adalah **HISTORICAL** (#71 menghapusnya). Navbar pengguna hanya Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Pintu provider hanya CTA landing "Become a provider". Operator hanya CTA kecil di footer landing. `/demo` hanya CTA landing "Launch demo".
+- D-96 APPROVED (Fatih, ~15:00 WIB): bot keeper dan trader di Railway LIVE dengan wallet bot khusus (bukan dry-run) setelah Fatih mendanai wallet itu dari faucet. **PENDING FUNDING**. **Not active** sampai terbukti. Menolak chain selain testnet. Kill switch off-chain D-42 tetap.
+
+### Pemilik yang masih terbuka
+
+- Fatih mendanai wallet bot dan merotasi kunci RPC, membuat deck, dan men-submit.
+- **HISTORICAL:** "Handler merekam video demo final dari produksi." Video demo final sudah direkam dari `d3081be` dan tidak menampilkan `/admin`. Agen evergreen video editor menyunting, sesuai Fatih.
+- Tinjauan ulang Designer setelah #72: selesai. Tidak ada sisa S0 atau S1 dari tinjauan itu.
+- **HISTORICAL:** "Cek sekilas Designer pada `/admin` di produksi `1f33f2f` masih pending." Cek itu **LULUS** di 1280 dan 390 ("Ready at 17:24:06 WIB", lencana Done tanpa Execute, konsol bersih, satu h1, tanpa scroll horizontal, label "Demo data"). Tidak ada S0, S1, atau S2 desain yang masih terbuka kecuali teks cooldown faucet tanpa hitung mundur (S2 kecil, boleh dilewati).
 
 ---
 

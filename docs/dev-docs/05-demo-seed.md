@@ -2,6 +2,8 @@
 
 > **[D-82, diperjelas oleh D-92, APPROVED Fatih 2026-10-09 18:10 WIB, "rekomendasimu saja", dicatat Scout]:** seed = `CU-JKT-H100-2611` (series 1). Series panggung/demo = `CU-JKT-H100-2610` (series 4). Catatan D-19/D-25 untuk panggung, window, `series_id`, dan input skrip seed/forge tetap berlaku, bukan historis. Preset wizard di PR #53 masih mengisi `2611`; handler menggantinya ke `2610` di PR UI mendatang. Rekaman memakai putaran baru di series 4. String `2610` pada window, `series_id`, dan input skrip tidak ditulis ulang di dokumen ini.
 
+> **[D-96, APPROVED Fatih Sab 10 Okt 2026 ~15:00 WIB.]** Kalimat di dokumen ini yang mewajibkan keeper dry-run saat demo adalah **HISTORICAL**. D-96: bot keeper dan bot trader di Railway jalan LIVE (bukan dry-run) dengan wallet bot khusus, setelah Fatih mendanai wallet itu dari faucet. Status PENDING FUNDING. Sampai terbukti, statusnya **not active**. Bot menolak chain selain testnet dan memakai kill switch off-chain D-42. Alamat wallet dan nama akun tidak ditulis.
+
 
 Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P5-xx disetujui Fatih (Jum 9 Okt 2026 ~09:40 WIB); disinkronkan Jum 9 Okt ~10:30 WIB (event `ReputationUpdated` dengan `strikes`, tim solo, X-6/X-7 selesai). Cadangan: `.bak-2026-10-09-pre-approval/`. Isinya prosa dan langkah semu bernomor. **Tidak ada script dalam bahasa apa pun.** Disusun Kamis 8 Okt 2026, ~21:20 WIB. Kode (termasuk `script/Seed.s.sol`, stack §4.4) baru ditulis mulai Jumat 9 Okt 09:00 WIB.
 

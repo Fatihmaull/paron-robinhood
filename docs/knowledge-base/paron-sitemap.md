@@ -36,11 +36,11 @@ Fatih pernah kalah di hackathon karena juri menulis *"features still mocked and 
    - Masa depan: app terpisah.
 6. **`/demo` dan `/faucet` publik** dan terlihat oleh juri.
 
-**[D-95, APPROVED Sab 10 Okt 2026 ~11:07 WIB.]** Halaman verifier, admin, ops, dan arbiter tetap ada di situs yang sama. Yang **HISTORICAL** untuk navigasi: anggapan bahwa Provider, Operator, dan Demo duduk di navbar pengguna, dan bahwa `/demo` ditautkan dari halaman lain. Navbar pengguna (CTA "Launch app") hanya Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Provider di luar nav itu; dashboard `/provider/[address]`. Operator hanya lewat CTA kecil di footer atau bagian bawah landing. `/demo` tetap hidup; satu-satunya pintu adalah CTA landing "Launch demo". `/faucet` tetap di navbar pengguna. Detail: 07 §25.
+**[D-95, APPROVED Sab 10 Okt 2026 ~11:07 WIB.]** Halaman verifier, admin, ops, dan arbiter tetap ada di situs yang sama. Yang **HISTORICAL** untuk navigasi: anggapan bahwa Provider, Operator, dan Demo duduk di navbar pengguna, dan bahwa `/demo` ditautkan dari halaman lain. Navbar pengguna (CTA "Launch app") hanya Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Provider di luar nav itu; dashboard `/provider/[address]`. Operator hanya lewat CTA kecil di footer atau bagian bawah landing. `/demo` tetap hidup; satu-satunya pintu adalah CTA landing "Launch demo". `/faucet` tetap di navbar pengguna. Detail: 07 §25. **Koreksi setelah #71:** pintu provider hanya CTA landing "Become a provider", bukan tautan sekunder di navbar aplikasi.
 
 **Route indeks.** Halaman yang dibangun adalah `/h100-index` (`web/app/h100-index/page.tsx`). Path statis `/index` bentrok dengan `/` di Vercel, jadi `/index` mengalihkan 307 ke `/h100-index` (`web/next.config.ts`, `permanent: false`). Path API `/index/H100` tidak berubah (indexer `GET /v1/index/:gpu`). Di pohon dan matriks di bawah, nama halaman `/index` berarti `/h100-index` kecuali yang disebut sebagai path API `/v1/index/…`. `/index/[gpu]` tetap route produk penuh yang belum menjadi halaman terpisah.
 
-**IA UI (10 Okt 2026):** navbar aplikasi yang dibuka dari "Launch app" hanya sisi pengguna: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. "For providers" berdiri di kanan header, di luar baris itu, dan di Menu sebagai bagian terpisah. "Operator" hanya di footer landing dan di halaman operator, menuju `/operator` (judul "Operator tools") yang menaut ke `/verifier`, `/admin`, `/ops/keepers`, `/arbiter`, dan `/disputes`. `/demo` tetap hidup; satu-satunya pintu masuk adalah CTA landing "Launch demo".
+**IA UI (10 Okt 2026):** navbar aplikasi yang dibuka dari "Launch app" hanya sisi pengguna: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. **HISTORICAL:** kalimat lama bahwa "For providers" berdiri di kanan header, di luar baris itu, dan di Menu sebagai bagian terpisah. PR #71 menghapus "For providers" dari navbar aplikasi. Aturan revisi Fatih (koreksi D-95): pintu provider hanya CTA landing "Become a provider". Operator hanya lewat CTA kecil di footer landing, menuju `/operator` (judul "Operator tools") yang menaut ke `/verifier`, `/admin`, `/ops/keepers`, `/arbiter`, dan `/disputes`. Pintu Operator dari halaman lain sebagai jalur masuk adalah **HISTORICAL**. `/demo` tetap hidup; satu-satunya pintu masuk adalah CTA landing "Launch demo".
 
 ---
 
@@ -835,7 +835,7 @@ Pola umum: aksi yang **lewat timelock** dibuat sebagai proposal (`TimelockContro
 #### `/operator`
 - **Tujuan:** halaman "Operator tools" yang mengumpulkan verifier, admin, keepers, arbiter, dan disputes.
 - **Gate:** Publik. Aksi tetap di halaman masing-masing.
-- **Komponen/aksi:** tautan ke `/verifier`, `/admin`, `/ops/keepers`, `/arbiter`, `/disputes`. Tidak masuk navbar pengguna. Pintu masuk: footer landing dan tautan "Operator" di halaman-halaman itu.
+- **Komponen/aksi:** tautan ke `/verifier`, `/admin`, `/ops/keepers`, `/arbiter`, `/disputes`. Tidak masuk navbar pengguna. Pintu masuk publik: CTA kecil di footer landing saja (koreksi D-95, #71). Kalimat lama "dan tautan Operator di halaman-halaman itu" sebagai pintu masuk adalah **HISTORICAL**.
 - **Kontrak/API:** tidak ada panggilan baru.
 - **State:** statis.
 - **Tag:** MVP-27h · Demo live: Ya (dari footer landing).
