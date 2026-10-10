@@ -199,7 +199,9 @@ h2 { font-size: var(--text-xs); margin: 0 0 10px; font-weight: 500; }
 .grid > *, .main > * { min-width: 0; }
 .table-scroll { overflow-x: auto; max-width: 100%; }
 .skip {
-  position: absolute; left: var(--space-4); top: -48px; z-index: var(--z-sticky);
+  position: absolute; left: var(--space-4); top: -80px; z-index: var(--z-sticky);
+  display: inline-flex; align-items: center; justify-content: center;
+  min-height: 44px; min-width: 44px;
   background: var(--color-bg-raised, var(--color-bg-canvas)); color: var(--color-text-primary);
   padding: var(--space-2) var(--space-4); border: 1px solid var(--color-border-default); border-radius: var(--btn-radius);
 }
@@ -236,7 +238,9 @@ h2 { font-size: var(--text-xs); margin: 0 0 10px; font-weight: 500; }
   font-size: var(--text-sm);
 }
 .row:last-child { border-bottom: 0; }
+.row > span { min-width: 0; overflow-wrap: anywhere; }
 .row > span:last-child { font-family: var(--font-mono); font-variant-numeric: tabular-nums; text-align: right; }
+.facts dd, .facts dt { min-width: 0; overflow-wrap: anywhere; }
 table { width: 100%; border-collapse: collapse; font-size: var(--text-sm); }
 th, td { text-align: left; padding: 0 var(--table-cell-px); border-bottom: 1px solid var(--table-row-border); vertical-align: middle; }
 th {
@@ -253,13 +257,8 @@ td.num, th.num { text-align: right; font-family: var(--font-mono); font-variant-
   min-width: 0;
   vertical-align: bottom;
 }
-.addr-head {
-  overflow: hidden;
-  text-overflow: ellipsis;
-  white-space: nowrap;
-  min-width: 0;
-}
-.addr-tail { flex: none; white-space: nowrap; }
+.addr-wide { white-space: nowrap; }
+.addr-narrow { display: none; }
 td.num, .stats-ribbon dd, .clock, .strip .num, .book-row .px { color: var(--color-accent); }
 tr:hover td { background: var(--table-row-hover); }
 
@@ -271,7 +270,7 @@ tr:hover td { background: var(--table-row-hover); }
   gap: 8px;
   font-size: var(--text-sm);
   font-weight: 500;
-  height: 44px;
+  height: auto;
   min-height: 44px;
   min-width: 44px;
   border: 0;
@@ -476,6 +475,7 @@ input, select, textarea {
   color: var(--input-fg);
   font-family: var(--font-mono);
 }
+input:not([type="checkbox"]):not([type="radio"]), select, textarea { min-height: 44px; }
 input:focus, select:focus, textarea:focus { border-color: var(--input-border-focus); }
 
 @media (max-width: 860px) {
@@ -490,7 +490,7 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
   .clock { font-size: var(--countdown-size-hero); text-align: center; }
   .btn { min-height: 44px; height: auto; }
   .btn.danger { min-height: 56px; width: 100%; }
-  input, select, textarea { min-height: 44px; }
+  .tx-action:has(.btn.danger) { display: flex; width: 100%; }
   .hero { font-size: 28px; }
   .utilbar { padding: var(--space-2) var(--space-4); }
   .chip-wide { display: none; }
@@ -536,16 +536,19 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
 .tab-with-pill { gap: 8px; }
 
 a.touch-link { display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 10px 12px; }
-@media (max-width: 860px) {
-  td .addr { max-width: min(42ch, 28vw); }
-  .lede .addr { max-width: min(42ch, 100%); }
-}
-@media (max-width: 480px) {
-  td .addr { max-width: 8.25ch; }
-}
 .lede .pill { white-space: nowrap; vertical-align: middle; }
+.tx-action { display: inline-flex; flex-direction: column; align-items: flex-start; gap: 4px; max-width: 100%; }
+.tx-reason { margin: 0; }
+.tx-status { margin: 8px 0 0; }
+.tx-status.pending { color: var(--color-warn); }
+.tx-status.success { color: var(--color-ok); }
+.tx-status.failed { color: var(--color-danger); }
 
+@media (max-width: 1100px) {
+  .lede .addr-wide, td .addr-wide { display: none; }
+  .lede .addr-narrow, td .addr-narrow { display: inline; }
+}
 @media (max-width: 860px) {
-  .tabs { flex-wrap: nowrap; overflow-x: auto; gap: var(--space-5); scrollbar-width: none; }
-  .tabs a, .tabs button { flex: 0 0 auto; white-space: nowrap; }
+  .tabs { flex-wrap: wrap; overflow: visible; gap: var(--space-3); }
+  .tabs a, .tabs button { flex: 0 0 auto; white-space: nowrap; height: auto; }
 }

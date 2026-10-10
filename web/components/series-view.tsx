@@ -16,7 +16,7 @@ import { bidUsdcAllowance, uint256Of } from "@/lib/settlement";
 import { TAPE_UNAVAILABLE } from "@/lib/onchain";
 import { readFailureTone } from "@/lib/markets-state";
 import { Panel, TxButton, Field } from "./ui";
-import { useSend } from "./tx";
+import { TxStatus, useSend } from "./tx";
 import { useData } from "./providers";
 
 const PrintChart = dynamic(() => import("./charts").then((mod) => mod.PrintChart), { ssr: false });
@@ -45,7 +45,11 @@ export function SeriesView({ seriesId, tab }: { seriesId: string; tab: "overview
         {detail ? <SeriesStatus detail={detail} /> : null}
         {detail?.provider.verified ? <span className="pill ok">Verified by Paron demo verifier</span> : null}
       </div>
-      {series.isError ? <p className={seriesTone} role={seriesTone === "muted" ? "status" : undefined}>{series.error instanceof Error ? series.error.message : "Couldn't load this series."}</p> : null}
+      {series.isError ? (
+        <p className={seriesTone} role={seriesTone === "muted" ? "status" : undefined}>
+          {series.error instanceof Error && series.error.message !== "Not found." ? series.error.message : "Series not found."}
+        </p>
+      ) : null}
       {detail ? <StatsRibbon detail={detail} /> : null}
       {detail ? (
         <p className="lede">
@@ -252,7 +256,7 @@ function BookRow({ side, price, qty, max }: { side: "bid" | "ask"; price: string
 function BuyBox({ seriesId, price, saleOpen }: { seriesId: string; price: string; saleOpen: boolean }) {
   const [qty, setQty] = useState("1");
   const [maxCost, setMaxCost] = useState("");
-  const { send, pending, error } = useSend();
+  const { send, pending, error, record } = useSend();
   const { source } = useData();
   const { address } = useAccount();
   const client = usePublicClient();
@@ -336,7 +340,8 @@ function BuyBox({ seriesId, price, saleOpen }: { seriesId: string; price: string
       >
         {pending === "buy" ? "Buying…" : "Buy"}
       </TxButton>
-      {error ? <p className="bad">{error}</p> : null}
+      <TxStatus record={record} />
+      {error && record?.phase !== "failed" ? <p className="bad">{error}</p> : null}
     </Panel>
   );
 }
@@ -346,7 +351,7 @@ function TradeBox({ seriesId, token }: { seriesId: string; token: string }) {
   const [price, setPrice] = useState("3.20");
   const [qty, setQty] = useState("1");
   const [ioc, setIoc] = useState(false);
-  const { send, pending, error } = useSend();
+  const { send, pending, error, record } = useSend();
   const { source } = useData();
   const client = usePublicClient();
   const whole = isWholeCu(qty);
@@ -417,7 +422,8 @@ function TradeBox({ seriesId, token }: { seriesId: string; token: string }) {
       >
         {pending === "order" ? "Placing…" : "Place order"}
       </TxButton>
-      {error ? <p className="bad">{error}</p> : null}
+      <TxStatus record={record} />
+      {error && record?.phase !== "failed" ? <p className="bad">{error}</p> : null}
       <p className="help">Bids approve mUSDC for the escrow plus the taker fee. Asks approve the series CU token.</p>
       <RedeemLink seriesId={seriesId} />
     </Panel>
@@ -437,7 +443,7 @@ function RedeemLink({ seriesId }: { seriesId: string }) {
 export function RedeemForm({ seriesId }: { seriesId: string }) {
   const [amount, setAmount] = useState("1");
   const [refText, setRefText] = useState("");
-  const { send, pending, error } = useSend();
+  const { send, pending, error, record } = useSend();
   const whole = isWholeCu(amount);
   const hash = refText ? keccak256(stringToHex(refText)) : null;
   return (
@@ -465,7 +471,8 @@ export function RedeemForm({ seriesId }: { seriesId: string }) {
       >
         {pending === "redeem" ? "Requesting…" : "Request redemption"}
       </TxButton>
-      {error ? <p className="bad">{error}</p> : null}
+      <TxStatus record={record} />
+      {error && record?.phase !== "failed" ? <p className="bad">{error}</p> : null}
     </Panel>
   );
 }

@@ -3,6 +3,7 @@
 import { useEffect, useRef } from "react";
 import { ColorType, createChart, LineSeries, type UTCTimestamp } from "lightweight-charts";
 import { Bar, BarChart, ResponsiveContainer, XAxis, YAxis } from "recharts";
+import { formatUsd } from "@/lib/format";
 import type { PrintRow } from "@/lib/types";
 
 function cssVar(name: string): string {
@@ -54,7 +55,7 @@ export function BondChart({ balance, released, slashed }: { balance: string; rel
       <ResponsiveContainer width="100%" height="100%">
         <BarChart data={data} margin={{ top: 8, right: 8, bottom: 4, left: 4 }}>
           <XAxis dataKey="name" stroke="var(--chart-axis)" tick={{ fontSize: 11 }} interval={0} />
-          <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 11 }} width={56} tickCount={2} domain={[0, "auto"]} tickFormatter={(v: number) => (v >= 1000 ? `$${Math.round(v / 100) / 10}k` : `$${v}`)} />
+          <YAxis stroke="var(--chart-axis)" tick={{ fontSize: 11 }} width={76} tickCount={2} domain={[0, "auto"]} tickFormatter={(v: number) => formatUsd(Number.isFinite(v) ? String(v) : null)} />
           <Bar dataKey="value" fill="var(--chart-bar)" />
         </BarChart>
       </ResponsiveContainer>

@@ -1,12 +1,27 @@
 "use client";
 
 import { useState } from "react";
-import type { Abi } from "viem";
+import type { Abi, PublicClient } from "viem";
 import { usePublicClient, useWriteContract } from "wagmi";
-import { CLAIM_DEFAULT_GAS_LIMIT } from "@/lib/config";
+import { CLAIM_DEFAULT_GAS_LIMIT, explorerTxUrl } from "@/lib/config";
 import { afterDeadlineOpen } from "@/lib/clock";
 import { STALE_DEADLINE_REVERTS, revertName } from "@/lib/errors";
+import { shortId } from "@/lib/format";
 import { useData } from "./providers";
+
+export type TxPhase = "pending" | "success" | "failed";
+
+export type TxRecord = {
+  phase: TxPhase;
+  hash?: string;
+  message?: string;
+};
+
+function failureMessage(err: unknown): string {
+  const raw = err instanceof Error ? err.message : "";
+  if (/user rejected|user denied|rejected the request/i.test(raw)) return "Transaction rejected.";
+  return "Transaction failed.";
+}
 
 type WriteReq = {
   address: `0x${string}`;
@@ -23,6 +38,7 @@ export function useSend() {
   const [pending, setPending] = useState<string | null>(null);
   const [note, setNote] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [record, setRecord] = useState<TxRecord | null>(null);
 
   async function send(
     label: string,
@@ -33,6 +49,8 @@ export function useSend() {
     setPending(label);
     setError(null);
     setNote(null);
+    setRecord({ phase: "pending" });
+    let hash: string | undefined;
     const args = request as never;
     try {
       if (client) {
@@ -46,23 +64,53 @@ export function useSend() {
             name != null &&
             STALE_DEADLINE_REVERTS.has(name) &&
             afterDeadlineOpen(nowMs, opts.deadlineMs);
-          if (stale) {
-            setNote("Waiting for the next block…");
-            await writeContractAsync({ ...request, gas: CLAIM_DEFAULT_GAS_LIMIT } as never);
-            return true;
-          }
-          throw err;
+          if (!stale) throw err;
+          setNote("Waiting for the next block…");
+          hash = await writeContractAsync({ ...request, gas: CLAIM_DEFAULT_GAS_LIMIT } as never);
+          setRecord({ phase: "pending", hash });
+          await settle(client, hash);
+          setRecord({ phase: "success", hash });
+          return true;
         }
       }
-      await writeContractAsync(args);
+      hash = await writeContractAsync(args);
+      setRecord({ phase: "pending", hash });
+      if (client) await settle(client, hash);
+      setRecord({ phase: "success", hash });
       return true;
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Transaction failed.");
+      const message = failureMessage(err);
+      setError(message);
+      setRecord({ phase: "failed", hash, message });
       return false;
     } finally {
       setPending(null);
     }
   }
 
-  return { send, pending, note, error, setNote };
+  return { send, pending, note, error, setNote, record };
+}
+
+async function settle(client: PublicClient, hash: string) {
+  const receipt = await client.waitForTransactionReceipt({ hash: hash as `0x${string}` });
+  if (receipt.status !== "success") throw new Error("Transaction failed.");
+}
+
+export function TxStatus({ record }: { record: TxRecord | null }) {
+  if (!record) return null;
+  const label = record.phase === "pending" ? "Pending" : record.phase === "success" ? "Success" : "Failed";
+  return (
+    <p className={`tx-status ${record.phase}`} role="status" data-testid="tx-status">
+      {label}
+      {record.hash ? (
+        <>
+          {" · "}
+          <a className="ext" href={explorerTxUrl(record.hash)} data-testid="tx-explorer">
+            {shortId(record.hash)}
+          </a>
+        </>
+      ) : null}
+      {record.phase === "failed" && record.message ? ` · ${record.message}` : null}
+    </p>
+  );
 }

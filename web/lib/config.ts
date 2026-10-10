@@ -152,6 +152,12 @@ export function activeChain() {
   return chainId() === 421614 ? arbitrumSepolia : robinhoodTestnet;
 }
 
+/** Block explorer page for a transaction hash on the active chain (46630 uses the Robinhood testnet explorer). */
+export function explorerTxUrl(hash: string): string {
+  const base = activeChain().blockExplorers?.default.url ?? robinhoodTestnet.blockExplorers.default.url;
+  return `${base.replace(/\/$/, "")}/tx/${hash}`;
+}
+
 export function wrongNetworkCopy(): string {
   if (chainId() === 421614) {
     return "Your wallet is on another network. Paron runs on Arbitrum Sepolia (421614).";

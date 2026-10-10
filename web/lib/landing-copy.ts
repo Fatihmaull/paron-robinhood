@@ -86,4 +86,5 @@ export const landingSteps = [
   { title: "Claim", detail: "Anyone can claim the default for the holder" },
 ] as const;
 
-export const landingIndexNote = "Reference price (demo data)";
+export const demoDataLabel = "Demo data";
+export const landingIndexNote = demoDataLabel;

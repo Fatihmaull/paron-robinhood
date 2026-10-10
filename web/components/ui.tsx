@@ -28,26 +28,24 @@ export function TxButton({
   const walletChain = useChainId();
   const mock = source === "mock";
   const wrong = Boolean(address) && walletChain !== expectedChainId();
-  const blocked = mock || wrong || Boolean(disabled);
-  const title = mock
-    ? "Disabled in mock mode"
-    : wrong
-      ? "Switch network"
-      : !address
-        ? "Connect wallet"
-        : reason;
+  const gate = !address ? "Connect wallet" : wrong ? "Wrong network" : mock ? "Disabled in mock mode" : null;
+  const blocked = Boolean(gate) || Boolean(disabled);
+  const shown = gate ?? (blocked && reason && reason.includes(" ") ? reason : null);
   return (
-    <button
-      type={type}
-      className={`btn ${tone === "default" ? "" : tone} ${armed ? "armed" : ""}`}
-      disabled={blocked}
-      title={title}
-      data-testid={testId}
-      data-eligible={armed ? "true" : "false"}
-      onClick={onClick}
-    >
-      {children}
-    </button>
+    <span className="tx-action">
+      <button
+        type={type}
+        className={`btn ${tone === "default" ? "" : tone} ${armed ? "armed" : ""}`}
+        disabled={blocked}
+        title={shown ?? undefined}
+        data-testid={testId}
+        data-eligible={armed ? "true" : "false"}
+        onClick={onClick}
+      >
+        {children}
+      </button>
+      {shown ? <p className="help tx-reason">{shown}</p> : null}
+    </span>
   );
 }
 

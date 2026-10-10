@@ -12,7 +12,7 @@ import { PROVIDER_T1_SERVER_MS, snapServerNow } from "@/lib/fixtures";
 import { useRedemption } from "@/lib/hooks";
 import type { Redemption } from "@/lib/types";
 import { useData } from "./providers";
-import { useSend } from "./tx";
+import { TxStatus, useSend } from "./tx";
 import { Field, Panel, TxButton } from "./ui";
 
 const STATE_PILL: Record<string, { label: string; tone: string }> = {
@@ -136,7 +136,7 @@ function ClaimBlock({
   deadline: number | null;
   clockLabel: string;
 }) {
-  const { send, pending, note, error } = useSend();
+  const { send, pending, note, error, record } = useSend();
   const [paid, setPaid] = useState(false);
   const listed = row.actions.includes("CLAIM_DEFAULT") || row.state === "DEFAULTABLE";
   if (!listed || deadline == null) return null;
@@ -181,7 +181,8 @@ function ClaimBlock({
         {errorCopy("NotDefaultable", { deadline: when })}
       </p>
       {note ? <p className="warn">{note}</p> : null}
-      {error ? <p className="bad">{error}</p> : null}
+      <TxStatus record={record} />
+      {error && record?.phase !== "failed" ? <p className="bad">{error}</p> : null}
       {paid ? (
         <div className="panel success">
           <p>Default paid. {formatUsd(row.claim_usd)} sent to {shortId(row.holder)}.</p>
@@ -194,7 +195,7 @@ function ClaimBlock({
 }
 
 function HolderActions({ row, nowMs, deadline }: { row: Redemption; nowMs: number; deadline: number | null }) {
-  const { send, pending } = useSend();
+  const { send, pending, record } = useSend();
   const [openDispute, setOpenDispute] = useState(false);
   const [receipt, setReceipt] = useState("");
   const canDispute = row.actions.includes("DISPUTE") || (row.state === "DELIVERED" && deadline != null && beforeDeadlineOpen(nowMs, deadline));
@@ -224,7 +225,7 @@ function HolderActions({ row, nowMs, deadline }: { row: Redemption; nowMs: numbe
       ) : null}
       {openDispute ? (
         <div>
-          <p>Dispute bond {formatUsd(bond)} (the greater of 5% of the claim and $5).</p>
+          <p>Dispute bond {formatUsd(bond)} (the greater of 5% of the claim and {formatUsd("5")}).</p>
           <p className="help">Demo: access details are hashed, not delivered.</p>
           <Field label="What was missing">
             <textarea value={receipt} onChange={(event) => setReceipt(event.target.value)} />
@@ -255,12 +256,13 @@ function HolderActions({ row, nowMs, deadline }: { row: Redemption; nowMs: numbe
           </TxButton>
         </div>
       ) : null}
+      <TxStatus record={record} />
     </div>
   );
 }
 
 function PublicActions({ row, nowMs, deadline }: { row: Redemption; nowMs: number; deadline: number | null }) {
-  const { send, pending, note } = useSend();
+  const { send, pending, note, record } = useSend();
   const finalizeOpen = row.state === "DELIVERED" && deadline != null && afterDeadlineOpen(nowMs, deadline);
   const resolveOpen = row.state === "DISPUTED" && deadline != null && afterDeadlineOpen(nowMs, deadline);
   if (row.state !== "DELIVERED" && row.state !== "DISPUTED") return null;
@@ -306,6 +308,7 @@ function PublicActions({ row, nowMs, deadline }: { row: Redemption; nowMs: numbe
           Resolve no-ruling
         </TxButton>
       ) : null}
+      <TxStatus record={record} />
       {note ? <p className="warn">{note}</p> : null}
       <p className="help">resolveNoRuling can reopen the request once, before the grace window ends.</p>
     </div>

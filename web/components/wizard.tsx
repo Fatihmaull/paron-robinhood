@@ -157,7 +157,7 @@ export function ListingWizard() {
       </div>
       {demoPresets() ? (
         <button className="btn ghost" type="button" onClick={() => setDraft((prev) => ({ ...PRESET, arbitrator: prev.arbitrator }))}>
-          Demo preset · {PRESET.symbol.slice(-4)} · 500h · $3.00 · bond $4.50 · 60/60/90
+          Demo preset · {PRESET.symbol.slice(-4)} · 500h · {formatUsd(PRESET.price)} · bond {formatUsd(PRESET.bond)} · 60/60/90
         </button>
       ) : null}
       <div style={{ height: 12 }} />
