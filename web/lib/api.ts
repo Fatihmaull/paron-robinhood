@@ -28,13 +28,16 @@ import {
   STATEMENT_UNAVAILABLE,
   TAPE_UNAVAILABLE,
 } from "./onchain";
-import type { GpuRow, Holding, LoadResult, Meta, Participant, Redemption, Snap, StatementRow, TimelockOp } from "./types";
+import { retryLiveStatus, selectProviderAddress, type ListedProvider } from "./provider-select";
+import type { GpuRow, Holding, LoadResult, Meta, Participant, ProviderAccount, Redemption, Snap, StatementRow, TimelockOp } from "./types";
 
 export class ApiError extends Error {
   code: string;
-  constructor(code: string, message: string) {
+  status: number;
+  constructor(code: string, message: string, status = 0) {
     super(message);
     this.code = code;
+    this.status = status;
   }
 }
 
@@ -59,12 +62,13 @@ async function liveGet<T>(path: string): Promise<{ data: T; next_cursor?: string
         error?: { code?: string; message?: string };
       };
       if (!res.ok || body.error) {
-        throw new ApiError(body.error?.code ?? "INTERNAL", body.error?.message ?? `HTTP ${res.status}`);
+        throw new ApiError(body.error?.code ?? "INTERNAL", body.error?.message ?? `HTTP ${res.status}`, res.status);
       }
       if (!body.meta) throw new ApiError("INTERNAL", "Response is missing meta.");
       return { data: body.data as T, meta: body.meta, next_cursor: body.next_cursor ?? null };
     } catch (error) {
       last = error;
+      if (error instanceof ApiError && !retryLiveStatus(error.status)) break;
     } finally {
       clearTimeout(timer);
     }
@@ -195,27 +199,66 @@ export function loadProviderRedemptions(snap: Snap, source: "mock" | "live", cli
   );
 }
 
+async function providerList(): Promise<{ data: ListedProvider[]; meta: Meta }> {
+  return liveGet<ListedProvider[]>("/providers?status=all&limit=1000");
+}
+
 export function loadProvider(snap: Snap, source: "mock" | "live", client?: PublicClient, address?: string) {
   const unavailable = async () => {
     throw new OnchainUnavailable("Provider totals need the Paron API.");
   };
   if (source === "mock") return withFallback(snap, source, () => providerAccount(snap), "", unavailable, client);
-  // Live: the connected wallet if it is a provider, otherwise the first active provider (the demo has no fixed address).
-  const firstActive = async () => {
-    const list = await liveGet<Array<{ address: string }>>("/providers?status=ACTIVE&limit=1");
-    const first = list.data[0]?.address;
-    if (!first) throw new ApiError("NOT_FOUND", "No active provider yet.");
-    return liveGet<unknown>(`/providers/${first}`);
-  };
+  // Live: the connected wallet when it is already in the provider list, otherwise the first active provider.
+  // Never GET /providers/:addr for an address the list does not contain (that route is 404).
   return (async () => {
     try {
-      const env = address ? await liveGet<unknown>(`/providers/${address}`).catch(firstActive) : await firstActive();
+      const list = await providerList();
+      const target = selectProviderAddress(address, list.data);
+      if (!target) throw new ApiError("NOT_FOUND", "No active provider yet.");
+      const env = await liveGet<unknown>(`/providers/${target}`);
       return { ...env, origin: "live" as const } as LoadResult<NonNullable<ReturnType<typeof providerAccount>>["data"]>;
     } catch (error) {
       if (!client) throw error;
       return unavailable();
     }
   })();
+}
+
+/** One provider, or null when that address is not listed. Does not substitute another provider. */
+export function loadProviderExact(
+  snap: Snap,
+  source: "mock" | "live",
+  address: string,
+): Promise<LoadResult<ProviderAccount | null>> {
+  if (source === "mock") {
+    const env = providerAccount(snap);
+    if (env.data.address.toLowerCase() !== address.toLowerCase()) {
+      return Promise.resolve({ data: null, meta: localMeta(), origin: "mock" });
+    }
+    return Promise.resolve({ ...env, origin: "mock" });
+  }
+  return (async () => {
+    const list = await providerList();
+    const target = list.data.find((row) => row.address.toLowerCase() === address.toLowerCase());
+    if (!target) return { data: null, meta: list.meta, origin: "live" as const };
+    const env = await liveGet<ProviderAccount>(`/providers/${target.address}`);
+    return { ...env, origin: "live" as const };
+  })();
+}
+
+export function loadProviderQueueFor(
+  snap: Snap,
+  source: "mock" | "live",
+  client: PublicClient | undefined,
+  address: string,
+): Promise<LoadResult<Redemption[]>> {
+  if (source === "mock") {
+    const owner = providerAccount(snap).data.address;
+    if (owner.toLowerCase() !== address.toLowerCase()) {
+      return Promise.resolve({ data: [], meta: localMeta(), origin: "mock" });
+    }
+  }
+  return loadProviderRedemptions(snap, source, client, { provider: address });
 }
 
 export function loadIndex(snap: Snap, source: "mock" | "live", client?: PublicClient) {
