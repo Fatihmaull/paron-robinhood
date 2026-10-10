@@ -61,7 +61,7 @@ Hal-hal yang sudah dikunci Fatih:
 ### 1.5 Konteks hackathon
 - **Ethereum Jakarta Hackathon 2026 (ETHJKT)** di HackQuest, track tunggal **RWA: "Build the Real World Onchain"**.
 - Workshop pra-hackathon 5–7 Okt 2026.
-- **Build: Jumat 9 Okt 09:00 WIB → submit Sabtu 10 Okt 12:00 WIB** (27 jam). Day 1 adalah sprint offline 12 jam di ETHJKT @ Hub (Jakarta Creative Hub), Day 2 online.
+- **Build: Jumat 9 Okt 09:00 WIB → submit Sabtu 10 Okt 12:00 WIB** (27 jam). Day 1 adalah sprint offline 12 jam di ETHJKT @ Hub (Jakarta Creative Hub), Day 2 online. Jam 12:00 dan angka 27 jam pada kalimat ini **HISTORICAL, superseded by D-93**. Tenggat keras = Sabtu 10 Okt 2026 23:59 WIB. Jam freeze 06:00, 09:00, dan 11:30 tetap HISTORICAL (D-90). Angka jam baru tidak dihitung ulang.
 - Demo Day Minggu 11 Okt di Ganara Art (tim terpilih).
 - Kriteria juri: Real-World Utility 25%, Onchain Implementation 25%, Innovation 20%, Feasibility & Scalability 20%, Demo & UX 10%.
 - Aturan inti: proyek harus "built from scratch during the official hackathon period". Persiapan environment dan riset boleh dilakukan sebelumnya (detail di §9.4).
@@ -753,6 +753,7 @@ Lima cek dijalankan di RH Testnet antara 09:00–10:30 WIB. Satu hard fail = pin
   - menampilkan OCPI di app/API/chart tanpa lisensi tertulis;
   - menampilkan Stock Tokens.
 - Footnote wajib ada di setiap materi (lihat bagian atas dokumen) dan di blok atribusi README.
+- **Pengecualian kredit lisensi (10 Okt 2026).** Larangan logo pihak ketiga dan larangan tautan pihak ketiga tetap berlaku. Satu pengecualian: logo chart TradingView dimatikan lewat opsi library `attributionLogo: false` di `web/components/charts.tsx`. Kredit lisensi berupa teks polos ada di halaman `/legal/risk` (`web/app/legal/risk/page.tsx`). Itu satu-satunya pengecualian.
 - Di luar lingkup secara eksplisit: leverage/perps, vault indeks sintetis, cash settlement di harga oracle, governance token.
 
 ### 10.4 Stablecoin jangka panjang (keputusan ada di Fatih, Q11)
@@ -787,6 +788,8 @@ Cadangan: window 60 detik, wallet yang sudah didanai, video backup direkam palin
 - **S4 Portfolio & redemptions:** daftar holding, modal Redeem, timeline per request dengan countdown dan tombol Confirm / Dispute / **Claim default**.
 - **S5 Provider console:** request masuk (Ack / Mark delivered), status bond, hasil penjualan, tombol tarik sisa bond.
 - **S6 Prints & data [NICE]**, **S7 Arbitration view [NICE]**.
+
+**Navigasi [D-95, APPROVED Sab 10 Okt 2026 ~11:07 WIB].** Daftar layar di atas tetap. Yang **HISTORICAL** adalah anggapan bahwa Provider, Operator, dan Demo duduk di navbar pengguna yang sama. Navbar pengguna (CTA "Launch app") hanya: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Provider adalah tautan terpisah; dashboard di `/provider/[address]` (tulis hanya untuk wallet pemilik; alamat lain read-only). `/provider` mengalihkan ke dashboard wallet yang tersambung, atau ke `/onboarding/kyb` kalau belum terverifikasi KYB. Operator (verifier, admin, ops, arbiter) hanya lewat CTA kecil di footer atau bagian bawah landing, judul "Operator tools". `/demo` tetap hidup; satu-satunya pintu adalah "Launch demo". Dashboard produksi hanya indexer sungguhan dan data on-chain testnet. Label "Reference price (demo data)" tetap sampai Fatih menyetujui pengganti. h1 "Provider" dengan alamat di bawahnya (D-94) berlaku di dashboard itu. Halaman indeks yang dibangun adalah `/h100-index`; `/index` mengalihkan 307; path API `/index/H100` tidak berubah.
 
 ### 11.3 Data seed
 - Tiga provider terverifikasi.
@@ -851,6 +854,7 @@ Hasil riset open items lain (faucet, bridge, kompatibilitas EAS, Safe) ada di `o
 - Login Privy / paymaster gasless.
 - Adapter Kleros/UMA.
 - Margin call berbasis indeks.
+- Gating nav berdasarkan peran, dibaca dari kontrak (setelah hackathon, D-95). Selama hackathon, pemisahan nav mengikuti D-95 tanpa gate kontrak.
 
 ---
 

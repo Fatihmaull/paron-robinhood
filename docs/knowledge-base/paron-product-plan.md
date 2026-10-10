@@ -236,7 +236,7 @@ Ilustrasi unit economics dan sumbernya ada di PK §10.1 (bukan forecast).
 
 | Fase | Tujuan | Isi utama | Syarat keluar |
 |---|---|---|---|
-| **P0 Hackathon** (Jum 9 – Sab 10 Okt) | Demo end-to-end yang bisa diuji juri | Tier S0–S2, never-cut list, deploy testnet, README + video | Submission HackQuest sebelum Sab 12:00 WIB |
+| **P0 Hackathon** (Jum 9 – Sab 10 Okt) | Demo end-to-end yang bisa diuji juri | Tier S0–S2, never-cut list, deploy testnet, README + video | Submission HackQuest sebelum Sab 12:00 WIB **[HISTORICAL, superseded by D-93]**. Tenggat keras = Sab 10 Okt 2026 23:59 WIB |
 | **P1 Hardening** | Tutup semua S3 dan utang teknis | Semua 78 route ke kualitas penuh, 136 test Foundry + fuzz/invariant, Slither, enkripsi delivery, receipt agent, guarded launch (cap bond per series) + factory berversi (PG-8), `releaseUnsoldBond` (PG-6), `pauseListings` (PG-9), pull payment (EN-12), kepatuhan & ops dasar (PG-10) | Semua MUST + FULL hijau, demo tanpa fallback |
 | **P2 Pilot testnet** | Validasi dengan provider dan buyer nyata | Verifier pihak ketiga, 1–3 provider pilot, MM awal, dashboard publik, definisi delivery + `maxRedeemPerDay` (PG-4), eskalasi no-ruling (PG-3) | Redemption nyata berhasil dan terukur |
 | **P3 Mainnet beta** | Venue institusional pertama | Audit eksternal, structuring hukum/OJK, USDC di Arbitrum One, timelock 48j, penandatangan independen | Audit bersih + opini hukum |

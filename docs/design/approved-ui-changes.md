@@ -20,7 +20,7 @@ Map: spec-change-requests.md #9-#13 and live-review LR-5, LR-6, LR-8.
 
 ## #12  Mobile tables, no page-level horizontal scroll (`/`, `/markets`, viewport 390)
 - Wrap every `<table>` in `.table-scroll{overflow-x:auto}`; `min-width:0` on grid children. Acceptance: `document.documentElement.scrollWidth <= innerWidth` at 390px on `/`, `/markets`, `/markets/1`.
-- Also: `.btn.menu-toggle{display:none}` above 860px (Menu button must not show on desktop).
+- Also: `.btn.menu-toggle{display:none}` above 860px (Menu button must not show on desktop). **HISTORICAL** for a header with a connected wallet. Current header rule (PRs #64, with the wallet-connected header fix in D-94): the address shows as `0x3F8f…6ae9` (first 6 characters including `0x`, last 4). Check 1024, 1100, 1280, 1440, and 390 with a wallet connected. The nav is never clipped. The Menu button shows when the links do not fit. Every header control is at least 44px. The table-scroll rule above stays.
 
 ## #13  Dev-only banners
 - Mock banner and snapshot switcher render only when `NEXT_PUBLIC_DATA_SOURCE=mock` AND not a production build. Production Vercel must show neither.
@@ -84,6 +84,8 @@ Tokens: black `#000`, text `#f3f3f3`, secondary text `#a6a6a6` and `#8c8c8c`, am
 
 The earlier ban on gradient and glass in `design.md` is allowed only on the landing hero and its numbers panel. Still banned: purple or cyan, blobs, gradient on text (except the 1.5× number), heavy shadows, fake cards or fake stats. Content rules are unchanged (no third-party logos, no forbidden words). Review must not flag this hero as a regression.
 
+The absolute reading of "no third-party logos" and "no third-party links" stays the rule. **Licence-credit exception:** the TradingView chart logo is off via the library option `attributionLogo: false` in `web/components/charts.tsx`. The plain-text licence credit is on `/legal/risk` (`web/app/legal/risk/page.tsx`). That credit is the only exception.
+
 ## Series names (07 §22, D-92, APPROVED 2026-10-09 18:10 WIB)
 
 Fatih approved the recommendation for the demo series ("rekomendasimu saja"). Scout recorded it at 18:10 WIB. This clarifies D-82: seed = 2611, stage/demo series = 2610 (series 4).
@@ -91,3 +93,40 @@ Fatih approved the recommendation for the demo series ("rekomendasimu saja"). Sc
 Live facts: seed series 1–3 are `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-B200-2612`. Series 4 `CU-JKT-H100-2610` was created by the S0 test and matches D-19. The series for the demo and the recording is series 4. `2611` stays seed data on Markets.
 
 Impact: the wizard preset (PR #53) fills `2611`. The handler will change it to `2610` in a later UI PR. The recording uses a new run on series 4.
+
+## Deadline (07 §23, D-93, APPROVED Sat 10 Oct 2026 10:16 WIB)
+
+The hard deadline is Saturday 10 Oct 2026 23:59 WIB. The 12:00 deadline in D-90, and the 12:00 lines in 08 and 09, are **HISTORICAL**. The old freeze times 06:00, 09:00, and 11:30 stay **HISTORICAL** (D-90).
+
+## Pre-demo list (07 §24, D-94, APPROVED)
+
+Fatih approved the engineering and design list ("oke lanjut" / "masukin semua ke kerjaan"). No contract change in this decision. Anything that needs a contract change is reported to Fatih first.
+
+- Wallet-connected header fix (address form and width checks are in the #12 note above).
+- Empty and error states on the demo path: `/buy`, `/trade`, `/redemptions`.
+- Visible transaction status: pending, success, failed, with an explorer link.
+- Small S2 fixes: skip link, input heights, truncated tab at 390, Pending badge in amber, provider address shortened on `/markets/4`.
+- Money format `$3,240.00` (same as D-79) and a uniform "Demo data" label. The approved ribbon sentence "Reference price (demo data)" (D-87, D-84..D-88) is kept until Fatih approves a replacement (D-95). The shorter label does not replace that sentence.
+- Landing link checks.
+- Provider page h1 text "Provider", with the address below it. Under D-95 this h1 is on `/provider/[address]`.
+- `/arbiter`, and a Revoke button on `/verifier`, only if no contract change is needed.
+
+## Information architecture (07 §25, D-95, APPROVED Sat 10 Oct 2026 ~11:07 WIB)
+
+Later than D-94. Where they conflict, D-95 applies. Delivery is two product PRs, not this docs PR: PR-A nav, CTAs, and demo isolation; PR-B the per-provider dashboard.
+
+The single user navbar that also held Provider and Demo is **HISTORICAL**.
+
+1. The main user navbar, reached via "Launch app", shows the user side only: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. No Provider, Operator, or Demo links.
+2. Provider is a separate link outside the user nav. Each provider has a dashboard at `/provider/[address]` (series, redemptions, agents). Write actions only for the owning wallet. Other addresses are read-only. Old `/provider` redirects to the connected wallet's dashboard, or to `/onboarding/kyb` if that wallet is not KYB-verified. Landing CTAs: "Launch app" (user dashboard), "Become a provider" (provider dashboard or KYB).
+3. Operator (verifier, admin, ops, arbiter) is one separate tab. Reachable only via a small CTA in the landing footer or bottom section, never in any navbar. Operator pages are titled "Operator tools".
+4. `/demo` stays live. The only entry is the landing CTA "Launch demo". No links from navbars, dashboard footers, or other pages.
+5. The production dashboard uses only the real indexer and on-chain testnet data. The label "Reference price (demo data)" stays until Fatih approves a replacement.
+
+Designer grouping, part of the same approval: user links centered. "For providers" and "Operator" are secondary text links (`#a6a6a6`) at the right. The "Operator" link is the footer or bottom CTA in rule 3, not a user-navbar item. "For providers" is the separate link in rule 2. Mobile menu groups Trade / Providers / Operators, with targets of at least 44px. KYB banner on `/provider`: neutral info for not-KYB and for pending, with "Start KYB"; amber for verified. "List capacity" is disabled, with the written reason "Complete KYB to list capacity".
+
+Post-hackathon roadmap: role-based nav gating read from contracts.
+
+## Index route
+
+The built page is `/h100-index`. Static `/index` collided with `/` on Vercel, so `/index` redirects 307. API path `/index/H100` is unchanged.

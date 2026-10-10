@@ -27,7 +27,7 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 **Changelog Jum 9 Okt 2026 ~13:25 WIB (cadangan `.bak-2026-10-09-pre-1325/`):** kontrak **stage-1** deployed ~13:20 WIB (PE) di RH Testnet `46630` (`startBlock` `131496617`; verify-deployment lulus; seed 3 series cocok 05); langkah deploy S0 **DONE lebih awal** dari gerbang G2 16:14. Scout set Railway `DEPLOY_LABEL=stage-1` + CORS origin Vercel; menunggu konfirmasi redeploy (§0 milestone).
 **Changelog Jum 9 Okt 2026 13:30 WIB (cadangan `.bak-2026-10-09-pre-1331/`):** Fatih ("oke 1-4, footer not affiliated hapus itu"): D-60..D-63 (perubahan tampilan 06) dan D-64 (footer + teks "not affiliated" dihapus dari produk; disclaimer hanya di pitch deck) APPROVED, lihat 07 §12. **Daftar never-cut kini tepat 3 butir:** claim default dari wallet mana pun; terbitkan KYB live di `/verifier`; satu execute Timelock dari `/admin`. Butir ke-4 (footer) dihapus di §0 dan §4; X8-8 diperbarui.
 **Catatan Jum 9 Okt 2026 (historis, sebelum 17:01 WIB; saat itu PENDING, 07 D-83, §7):** Safe multisig = rencana roadmap kalau Paron live di mainnet. Peran admin tidak berubah sampai freeze. Usulan aturan kode setelah freeze ada di §7.2; jam dan tag di §0 tidak digeser.
-**Catatan 2026-10-09 17:01 WIB (APPROVED, Fatih langsung, 07 §20):** D-83 APPROVED (Safe di mainnet nanti; admin tidak berubah, tanpa EOA kedua, tanpa pindah ke Safe). D-90 membatalkan aturan freeze kontrak, aturan freeze UI, dan aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Detail: §0 dan §7.
+**Catatan 2026-10-09 17:01 WIB (APPROVED, Fatih langsung, 07 §20):** D-83 APPROVED (Safe di mainnet nanti; admin tidak berubah, tanpa EOA kedua, tanpa pindah ke Safe). D-90 membatalkan aturan freeze kontrak, aturan freeze UI, dan aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Kalimat 12:00 itu **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Detail: §0 dan §7.
 
 **Tim.** Satu-satunya manusia dan pembuat keputusan = **Fatih** (07 D-08 APPROVED; isian HackQuest tetap "Fatih solo"). Eksekusi build = **4 lane cloud agent** (L1 kontrak, L2 frontend, L3 indexer/API, L4 ops/deploy) dengan **PE sebagai integrator** (merge, review, menjaga kontrak antarmuka) [APPROVED D-59]; PE boleh merge sendiri kalau test hijau (izin tetap Fatih ~11:27 WIB). Hanya Fatih yang menyetujui keputusan; agent tidak mengubah status D-xx.
 
@@ -37,7 +37,7 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 
 **Legenda:**
 - **T0** = saat Fatih memberi **"go"** untuk mulai build paralel = **Jum 9 Okt 2026 11:14 WIB** (diberikan 11:14 WIB). Jam WIB absolut ditulis di samping setiap waktu T0-relatif.
-- **Jangkar jam tetap** (tidak ikut T0): tidur Sab 02:00–03:30, dan **tenggat keras Sab 12:00**. Freeze kontrak 06:00, freeze UI 09:00, dan submit internal 11:30 adalah catatan historis [SUPERSEDED D-90] dan tidak mengikat. Dengan T0 = 11:14, blok lane terakhir (→T0+14h) selesai Sab 01:14, jadi tidak menabrak tidur; 01:14–02:00 = buffer integrasi + G4.
+- **Jangkar jam tetap** (tidak ikut T0): tidur Sab 02:00–03:30, dan **tenggat keras Sab 12:00** **[HISTORICAL, superseded by D-93; tenggat keras Sab 10 Okt 2026 23:59 WIB]**. Freeze kontrak 06:00, freeze UI 09:00, dan submit internal 11:30 adalah catatan historis [SUPERSEDED D-90] dan tidak mengikat. Dengan T0 = 11:14, blok lane terakhir (→T0+14h) selesai Sab 01:14, jadi tidak menabrak tidur; 01:14–02:00 = buffer integrasi + G4.
 - **[usulan 08]** = urutan atau durasi yang diusulkan dokumen ini. Tidak ada di sumber kanonik; boleh digeser selama tenggat terkunci tidak berubah.
 - **Done-check** = kondisi yang harus benar sebelum pindah blok. Kalau gagal, ikuti aturan **checkpoint** (§3) dan **cut order** (§4). Jangan memperpanjang blok diam-diam.
 - Durasi tiap blok adalah estimasi, bukan jaminan (sitemap §9.1).
@@ -46,7 +46,7 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 
 ## 0. Tenggat terkunci dan milestone utama
 
-**[D-90, APPROVED Fatih langsung 2026-10-09 17:01 WIB]** Tidak ada aturan freeze kontrak, tidak ada aturan freeze UI, dan tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Baris 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 di tabel ini, di §2, di §3, dan di Lampiran A adalah catatan historis, bukan jadwal yang mengikat. **Tenggat keras tetap Sab 2026-10-10 12:00 WIB.**
+**[D-90, APPROVED Fatih langsung 2026-10-09 17:01 WIB]** Tidak ada aturan freeze kontrak, tidak ada aturan freeze UI, dan tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Baris 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 di tabel ini, di §2, di §3, dan di Lampiran A adalah catatan historis, bukan jadwal yang mengikat. **Tenggat keras tetap Sab 2026-10-10 12:00 WIB.** Kalimat 12:00 itu **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Jam freeze 06:00, 09:00, dan 11:30 tetap HISTORICAL (D-90).
 
 | Waktu | Milestone | Sumber |
 |---|---|---|
@@ -62,7 +62,7 @@ Riwayat status: ditulis Jum 9 Okt 2026 ~09:45 WIB, setelah Fatih menyetujui semu
 | **Sab 09:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze UI (tag `freeze-ui`, tidak dipakai). Jam ini tidak mengikat | design §7.3, 09 §1.2 |
 | Sab 10:00 | Isian HackQuest final + video submission terunggah | 09 §1.2 |
 | **Sab 11:30** | **[HISTORIS D-90]** Submit internal di HackQuest; tag `submission`. Jam 11:30 tidak mengikat. Submit tetap dilakukan Fatih sendiri | design §7.3, 09 §1.2 |
-| **Sab 12:00** | **Tenggat keras** (tetap mengikat) | notes §2 |
+| **Sab 12:00** | **Tenggat keras** (tetap mengikat) **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB | notes §2 |
 | Min 11 Okt | Demo Day (kalau masuk shortlist); checklist T−24/T−60/T−10 | 05 §4.7, 09 §1.2 |
 
 **Tidak boleh dipotong (sitemap §9.1 + AUDIT §6; tepat 3 butir sejak D-64, 13:30 WIB):**
@@ -138,7 +138,7 @@ Footer "not affiliated" **bukan lagi** butir never-cut: dihapus dari produk (D-6
 
 ## 2. Sabtu 10 Okt
 
-**[D-90]** Baris freeze dan jam 06:00, 09:00, serta 11:30 di §2.1–§2.3 adalah historis dan tidak mengikat. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai **[SUPERSEDED / CANCELLED D-90]**. Tenggat keras 12:00 tetap. Tabel di bawah tidak dihapus.
+**[D-90]** Baris freeze dan jam 06:00, 09:00, serta 11:30 di §2.1–§2.3 adalah historis dan tidak mengikat. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai **[SUPERSEDED / CANCELLED D-90]**. Tenggat keras 12:00 **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Tabel di bawah tidak dihapus.
 
 ### 2.1 Tidur, S2, freeze (02:00 → 06:00) [jam freeze historis, D-90]
 
@@ -169,6 +169,8 @@ Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); 
 
 ### 2.3 Submit (10:00 → 12:00)
 
+Judul jendela "→ 12:00" adalah **HISTORICAL, superseded by D-93**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Tabel di bawah tidak dihapus.
+
 | Blok | Kerja | Deliverable | Done-check |
 |---|---|---|---|
 | 10:00 | Semua isian HackQuest final (09 §2); info tim = Fatih solo | Teks isian | 8 isian terisi |
@@ -176,7 +178,7 @@ Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); 
 | 11:15–11:30 | Buffer | — | — |
 | **11:30** | **[HISTORIS D-90]** Submit di HackQuest; tag `submission`; tangkapan layar konfirmasi + waktu. Jam 11:30 tidak mengikat. Yang menekan submit = Fatih sendiri | Bukti submit | Halaman konfirmasi tersimpan |
 | 11:30–12:00 | Buffer: hanya koreksi teks isian kalau form mengizinkan. Deployment panggung dan README alamat tidak disentuh (05 §4.6 butir 5) | — | — |
-| **12:00** | **Tenggat keras** (tetap mengikat, D-90). Setelah ini: tidur | — | — |
+| **12:00** | **Tenggat keras** (tetap mengikat, D-90) **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Setelah ini: tidur | — | — |
 
 **Setelah submit:** Sab sore checklist T−24 (05 §4.7); Min 11 Okt checklist T−60 / T−10 (05 §4.7); slot demo [TBD T9-04].
 
@@ -195,7 +197,7 @@ Pembagian lane: tidur berlaku untuk semua lane (tidak ada merge 02:00–03:30); 
 | **Sab 02:00 (G4)** | Tiga must-not-cut S1 sudah terbukti? | Lanjutkan yang belum (tidur dipotong jadi 45 menit); S2 mulai dari cut order §4 |
 | **Sab 06:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Kontrak siap beku? | Jam 06:00 tidak mengikat. Tidak ada aturan freeze kontrak |
 | **Sab 09:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** UI siap beku? | Jam 09:00 tidak mengikat. Tidak ada aturan freeze UI |
-| **Sab 11:30** | **[HISTORIS D-90]** Submit internal terkirim? | Jam 11:30 tidak mengikat. Tenggat keras tetap 12:00. Video backup v1 dipakai kalau video submission belum jadi |
+| **Sab 11:30** | **[HISTORIS D-90]** Submit internal terkirim? | Jam 11:30 tidak mengikat. Tenggat keras 12:00 **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Video backup v1 dipakai kalau video submission belum jadi |
 
 ---
 
@@ -275,7 +277,7 @@ Kalimat lama "sampai freeze kontrak Sab 06:00" [SUPERSEDED D-90]: tidak ada free
 
 ### 7.2 Usulan aturan setelah freeze [SUPERSEDED / CANCELLED D-90]
 
-**[SUPERSEDED / CANCELLED D-90, APPROVED Fatih langsung 2026-10-09 17:01 WIB.]** Aturan di bawah tidak berlaku. Tidak ada freeze kontrak, tidak ada freeze UI, tidak ada aturan setelah freeze, dan tag `freeze-contracts` serta `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB tidak mengikat. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Teks usulan dipertahankan sebagai riwayat.
+**[SUPERSEDED / CANCELLED D-90, APPROVED Fatih langsung 2026-10-09 17:01 WIB.]** Aturan di bawah tidak berlaku. Tidak ada freeze kontrak, tidak ada freeze UI, tidak ada aturan setelah freeze, dan tag `freeze-contracts` serta `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB tidak mengikat. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Kalimat 12:00 itu **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Teks usulan dipertahankan sebagai riwayat.
 
 Usulan ini membatasi perubahan kode. Milestone video, README, dan submit di §2.2–§2.3 tidak digeser.
 
@@ -307,7 +309,7 @@ Usulan ini membatasi perubahan kode. Milestone video, README, dan submit di §2.
 | **Sab 09:00** | **[HISTORIS, SUPERSEDED / CANCELLED D-90]** Freeze UI (tag `freeze-ui`, tidak dipakai) | design §7.3, 09 §1.2 |
 | Sab 10:00 | Isian HackQuest final + video submission terunggah | 09 §1.2 |
 | **Sab 11:30** | **[HISTORIS D-90]** Submit internal di HackQuest; tag `submission`. Jam 11:30 tidak mengikat | design §7.3, 09 §1.2 |
-| **Sab 12:00** | **Tenggat keras** (tetap mengikat) | notes §2 |
+| **Sab 12:00** | **Tenggat keras** (tetap mengikat) **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB | notes §2 |
 | Min 11 Okt | Demo Day (kalau masuk shortlist); checklist T−24/T−60/T−10 | 05 §4.7, 09 §1.2 |
 
 ### A.1 Jumat 9 Okt (rencana solo)

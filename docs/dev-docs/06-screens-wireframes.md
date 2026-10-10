@@ -121,7 +121,7 @@ Diselaraskan dengan `paron-sitemap.md` **(sitemap §x)** pada Kamis 8 Okt 2026, 
 | `/onboarding/kyb`, `/onboarding/provider` | target link M-KYB (§1.4): form pengajuan + "Register as provider" | wallet / KYB | sitemap: MVP-27h | penyimpanan pengajuan [D-41]; form belum di-wireframe 06 |
 | `/connect` | M-WALLET (§1.2) | semua | MUST | route membuka modal yang sama |
 | `/faucet` | komponen faucet menu wallet (§1.2) sebagai halaman | wallet | MUST | |
-| `/h100-index` | S6 bagian indeks (§8.1) | publik | NICE (design §7.2); sitemap: index page MVP-27h Tier 2 | dulu `/prints` |
+| `/h100-index` | S6 bagian indeks (§8.1) | publik | NICE (design §7.2); sitemap: index page MVP-27h Tier 2 | dulu `/prints`. Path statis `/index` bentrok dengan `/` di Vercel, jadi halaman ini `/h100-index`. `/index` mengalihkan 307 (`web/next.config.ts`, `permanent: false`). Path API `/index/H100` tidak berubah (indexer `GET /v1/index/:gpu`) |
 | `/data` | S6 bagian tabel prints + CSV + contoh `curl` (§8.1) | publik, analis | NICE (design §7.2); sitemap: MVP-27h Tier 2 | dulu `/prints` |
 | `/transparency` | S6 bagian delivery record (§8.1) | publik | NICE (design §7.2); sitemap: MVP-27h Tier 2 | dulu `/prints` |
 | `/arbiter`, `/arbiter/cases/{reqId}`, `/arbiter/history` | S7 Arbitration view (§8.2) | panel; publik read-only | NICE (design §7.2); sitemap: MVP-27h Tier 1 | dulu `/arbitration`; pengumpulan tanda tangan [D-43] |
@@ -144,7 +144,7 @@ Visual dan layout saja; alur, route, dan perilaku kontrak/API tidak berubah. Sum
 | S3 `/markets/{seriesId}` (§4.1, §4.4, §4.5, §4.9) | Terminal satu viewport: header + stats ribbon; grid 12 kolom (chart + tape 1-6, book 7-9, ticket 10-12); tab Bond, Terms, Redemptions, Reputation di bawah; <1280 px: ticket, chart, book, tab; <860 px satu kolom; tanpa celah kosong; metadata "ID {id} · window {yyyy-mm}" (token ID hilang kalau id kosong); pill Verified `nowrap`; link Redeem ember atau netral, tidak biru; book kosong "No orders. Place the first bid."; tape kosong "No prints yet." | D-67 |
 | S4-R detail redemption (§5.7) | Kartu ringkasan: jumlah state 36 px mono, fakta kunci (CU, holder, provider, deadline), satu baris aksi (Claim default berisi merah, 56 px di mobile); timeline kanan tetap; "Default paid. $45.00 sent to 0x2222...2222." = teks terbesar | D-68 |
 | Header (§1.1, §12) | "Connect wallet" sekunder (`--btn-chrome-*`); ember hanya untuk satu aksi primer per halaman; pemilih snapshot netral | D-69 |
-| `/`, `/markets`, `/markets/{seriesId}` mobile (§2.3, §4.9) | Tabel dalam `.table-scroll`; tanpa scroll horizontal halaman di 390 px; tombol Menu tidak tampil >860 px | D-70 |
+| `/`, `/markets`, `/markets/{seriesId}` mobile (§2.3, §4.9) | Tabel dalam `.table-scroll`; tanpa scroll horizontal halaman di 390 px. "Tombol Menu tidak tampil >860 px" **HISTORICAL** untuk header dengan wallet tersambung: Menu muncul saat tautan tidak muat (§0.7, PRs #64) | D-70 |
 | Banner dev (§1.6, §11.3) | Banner mock + pemilih snapshot hanya saat `NEXT_PUBLIC_DATA_SOURCE=mock` dan bukan build produksi | D-71 |
 | Teks kecil (semua layar) | Tidak ada opacity pada teks; minimum `--color-text-tertiary`; kontras ≥ 4.5:1 untuk teks ≤ 13 px | D-72 |
 | S5 tab (§6.1, §6.5) | "Requests", "Series", "Bond", "Agent": Title Case, 13 px medium, aktif bergaris bawah ember, target 44 px di mobile | D-73 |
@@ -165,6 +165,16 @@ Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe �
 **[D-87, APPROVED sama]** Pita data demo sintetis tetap. Teks: "Reference price (demo data)".
 
 **[D-89, APPROVED handler]** Kegagalan RPC publik = teks redup, bukan error merah. Jeda ulang 400 ms, 800 ms, 1600 ms.
+
+### 0.7 D-94, D-95, header, dan kredit chart (Sab 10 Okt 2026)
+
+**[D-94, APPROVED]** Jalur demo `/buy`, `/trade`, dan `/redemptions` punya state kosong dan state error. Status transaksi terlihat: pending, success, failed, dengan tautan explorer. Perbaikan kecil S2: skip link, tinggi input, tab yang terpotong di 390, badge Pending berwarna amber, alamat provider dipendekkan di `/markets/4`. Format uang `$3,240.00`. Label seragam "Demo data" tidak mengganti kalimat pita "Reference price (demo data)" (D-87); D-95 mempertahankan kalimat itu sampai Fatih menyetujui pengganti. h1 halaman provider = "Provider", alamat di bawahnya, pada `/provider/[address]` (D-95). `/arbiter` dan tombol Revoke di `/verifier` hanya kalau tidak perlu perubahan kontrak. Yang butuh perubahan kontrak dilaporkan ke Fatih lebih dulu.
+
+**[D-95, APPROVED ~11:07 WIB]** Navbar pengguna (CTA landing "Launch app") hanya: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Tidak ada tautan Provider, Operator, atau Demo di navbar itu. Provider adalah tautan terpisah. Dashboard di `/provider/[address]` (series, redemptions, agents; tulis hanya untuk wallet pemilik; alamat lain read-only). `/provider` mengalihkan ke dashboard wallet yang tersambung, atau ke `/onboarding/kyb` kalau belum terverifikasi KYB. CTA landing: "Launch app", "Become a provider". Operator (verifier, admin, ops, arbiter) hanya lewat CTA kecil di footer atau bagian bawah landing, judul "Operator tools", tidak di navbar. `/demo` tetap hidup; satu-satunya pintu adalah "Launch demo". Dashboard produksi hanya indexer sungguhan dan data on-chain testnet. Tautan pengguna di tengah. "For providers" dan "Operator" adalah teks sekunder `#a6a6a6` (Operator = CTA footer/bawah, bukan item navbar). Menu mobile: Trade / Providers / Operators, target minimal 44 px. Banner KYB di `/provider`: info netral untuk belum KYB dan pending, dengan "Start KYB"; amber untuk verified. "List capacity" nonaktif, alasan tertulis "Complete KYB to list capacity".
+
+**Header (PRs #64).** Dengan wallet tersambung, alamat di header memakai `0x3F8f…6ae9`: 6 karakter pertama termasuk `0x`, 4 karakter terakhir. Cek di 1024, 1100, 1280, 1440, dan 390. Nav tidak terpotong. Tombol Menu muncul saat tautan tidak muat. Setiap kontrol header minimal 44 px. Kalimat D-70 "tombol Menu tidak tampil >860 px" tetap untuk kasus tautan yang muat; untuk header dengan wallet tersambung, aturan Menu-saat-tidak-muat yang dipakai.
+
+**Kredit chart.** Logo TradingView dimatikan lewat opsi library `attributionLogo: false` di `web/components/charts.tsx`. Kredit lisensi berupa teks polos ada di `/legal/risk` (`web/app/legal/risk/page.tsx`). Larangan logo pihak ketiga dan larangan tautan pihak ketiga tetap, dengan pengecualian kredit lisensi ini saja.
 
 ---
 
@@ -190,8 +200,8 @@ Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe �
 ```
 
 - Strip indeks di bawah nav tampil di semua halaman (design §7.2 S1 "PrintIndex vs reference strip"; dipakai juga sebagai bukti "PrintIndex ticks" di S3). Isi: satu GPU yang relevan (S1 = H100 default, S3 = GPU series itu). Data E2 `status`, `value`, `participants`, `eligible_volume_cu`; referensi E15 `value` + label. Fallback onchain: `PrintIndex.statusOf` + `latestRoundData`, `ReferenceFeed.latestRoundData` + `label()`.
-- Menu nav mengikuti area sitemap §3 (route di §0.5): Markets → `/markets`, Buy → `/buy`, Trade → `/trade`, Portfolio → `/portfolio`, Provider → `/provider`, Index → `/h100-index`, Data → `/data`, Demo → `/demo`. Faucet ada di menu wallet (§1.2) dan di `/faucet`. "List capacity" menjadi tombol di S1 dan S5 → `/provider/series/new`. Link ke `/verifier`, `/arbiter`, `/admin`, `/ops/keepers` ada di menu wallet dan utility bar (halaman ber-role tetap bisa dilihat read-only, sitemap §2.1).
-- Menu "Provider" hanya tampil kalau wallet terhubung adalah provider terdaftar (E12 200) atau punya role 1 (E13 `role.code` = 1) [D-24].
+- **[HISTORICAL sejak D-95]** Menu nav pada wireframe dan kalimat ini: Markets → `/markets`, Buy → `/buy`, Trade → `/trade`, Portfolio → `/portfolio`, Provider → `/provider`, Index → `/h100-index`, Data → `/data`, Demo → `/demo`, plus tautan role di menu wallet. Navbar yang berlaku ada di §0.7. Index tetap `/h100-index`.
+- Menu "Provider" hanya tampil kalau wallet terhubung adalah provider terdaftar (E12 200) atau punya role 1 (E13 `role.code` = 1) [D-24]. Kalimat syarat tampil di navbar pengguna itu **HISTORICAL** sejak D-95: Provider tidak ada di navbar pengguna. Syarat tulis vs baca ada di dashboard `/provider/[address]`.
 
 **Copy strip indeks**
 
@@ -208,7 +218,7 @@ Catatan: label tab "requests / series / bond / agent" huruf kecil di wireframe �
 ### 1.2 Wallet connect (M-WALLET)
 
 - Komponen: RainbowKit `ConnectButton` + modal bawaan (stack §4.3; 04 §2 RainbowKit 2.2.11). WalletConnect butuh `NEXT_PUBLIC_WALLETCONNECT_PROJECT_ID` [TBD T4-04]. Cara HP juri terhubung = [TBD T5-03].
-- Setelah terhubung, tombol menjadi chip: "{badge} 0x2222…2222 · $985.00 USDC".
+- Setelah terhubung, tombol menjadi chip: "{badge} 0x3F8f…6ae9 · $985.00 USDC". Bentuk alamat di header: 6 karakter pertama termasuk `0x`, lalu elipsis, lalu 4 karakter terakhir (contoh `0x3F8f…6ae9`). Placeholder lama `0x2222…2222` mengikuti potongan yang sama dan **HISTORICAL** sebagai contoh header. Cek header di 1024, 1100, 1280, 1440, dan 390 dengan wallet tersambung (§0.7, PRs #64).
 
 ```text
 +---------------------------------------------+
@@ -1145,7 +1155,7 @@ Sumber E9 `/v1/accounts/{addr}/statement` (urut lama → baru, P3-20): baris `ts
 | Bagian | Sumber | Copy khusus |
 |---|---|---|
 | Kartu indeks | E2 `/v1/index/{gpu}`: `status`, `value`, `onchain_vwap`, `participants`, `eligible_volume_cu`, `method`, `thresholds` [D-15] [D-16]; fallback `PrintIndex.statusOf` + `latestRoundData` | status sama dengan §1.1; baris method "winsorized VWAP · METHODOLOGY.md" |
-| Chart | E3 `/v1/index/{gpu}/history` (NICE) + E15 referensi | garis referensi wajib berlabel "Spot reference (synthetic demo data)" (design §10.5 #2); tanpa angka OCPI [D-06] |
+| Chart | E3 `/v1/index/{gpu}/history` (NICE) + E15 referensi | garis referensi wajib berlabel "Spot reference (synthetic demo data)" (design §10.5 #2); tanpa angka OCPI [D-06]. Logo TradingView mati lewat `attributionLogo: false` (`web/components/charts.tsx`). Kredit lisensi berupa teks polos di `/legal/risk` (`web/app/legal/risk/page.tsx`). Larangan logo dan tautan pihak ketiga tetap, dengan pengecualian kredit lisensi ini saja |
 | Tabel prints | E1 `/v1/prints?gpu=&region=&from=&to=&limit=` (`kind`, `cu_price`, `price_per_gpu_hour`, `qty_cu`, `notional_usd`, `eligible`, `ineligible_reason`, `explorer_url`) | label eligible sama dengan tape S3 (§4.5) |
 | "Download CSV" | E1 `format=csv` dengan filter sama | file `paron-prints-{gpu}-{from}-{to}.csv` |
 | Delivery record | E16 `/v1/deliveries?gpu=&month=` (NICE): `delivered_cu`, `defaulted_cu`, `default_rate` [03 P3-36] | "Default rate = defaulted ÷ (delivered + defaulted)" |

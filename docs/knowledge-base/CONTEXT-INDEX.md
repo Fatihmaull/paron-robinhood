@@ -1,7 +1,7 @@
 # Paron: indeks dokumen konteks (master: Hackathon Scout; sekarang PO/project handler)
 
 Sumber kebenaran: repo `docs/knowledge-base/` (mirror dari folder kerja Scout di box; path box lama tidak dipakai).
-Terakhir diperbarui: Jumat 9 Okt 2026, 18:10 WIB
+Terakhir diperbarui: Sabtu 10 Okt 2026 (D-93..D-95). Keputusan yang lebih kemudian mengalahkan yang lebih dahulu.
 
 **Urutan mulai:** `SESSION_HANDOFF_HACKATHON.md` (state terkini) → file ini → `HANDOFF-BRIEF.md` (urutan baca, tugas pertama, prioritas, aturan), lalu `paron-product-plan.md` (gambaran produk penuh: semua modul, aplikasi, arsitektur akhir, roadmap P0–P5, batas lingkup hackathon).
 
@@ -33,7 +33,7 @@ Terakhir diperbarui: Jumat 9 Okt 2026, 18:10 WIB
 | 5 | dev-docs/05-demo-seed.md | Skenario + spec script seed demo (500 CU, buy 20, ask $3.20, default 10 CU) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
 | 6 | dev-docs/06-screens-wireframes.md | Wireframe teks + copy per screen | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
 | 7 | dev-docs/07-decisions-log.md | Open questions §9 + treasury/fee + D-41..D-44 → keputusan (rekomendasi disetujui Fatih Jum 9 Okt ~09:40 WIB) | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
-| 8 | dev-docs/08-team-tasks.md | Timeline solo per jam (T0 Jum 11:14; jam 06:00 / 09:00 / 11:30 Sab historis [D-90]; tenggat keras 12:00 WIB), cut ladder, daftar never-cut, slot ukur PENDING teknis | SELESAI (4 lane agent, D-59) |
+| 8 | dev-docs/08-team-tasks.md | Timeline solo per jam (T0 Jum 11:14; jam 06:00 / 09:00 / 11:30 Sab historis [D-90]; jam 12:00 historis [D-93]; tenggat keras Sab 10 Okt 2026 23:59 WIB), cut ladder, daftar never-cut, slot ukur PENDING teknis | SELESAI (4 lane agent, D-59) |
 | 9 | dev-docs/09-submission-checklist.md | Field HackQuest, README + disclaimer, video demo | SELESAI; keputusan APPROVED (Jum 9 Okt ~09:40 WIB) |
 
 ## Keputusan terakhir Fatih (Jum 9 Okt ~10:34 WIB, APPROVED)
@@ -105,9 +105,9 @@ Pre-Paron ideation notes, naming drafts, old reviews/clones and rollback backups
 ## Keputusan Fatih 2026-10-09 17:01 WIB [APPROVED, langsung]
 - D-81 APPROVED. Guard CI grep `affiliated|endorsed by` (butir terakhir D-74) tetap DIBATALKAN. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. Konfirmasi langsung Fatih menutup status menunggu di bagian ~15:34 WIB. Tercatat di 07 §20, 04 §9, 06 §0.6, 09, design.md, guidelines.md, approved-ui-changes.md, docs/README.md.
 - D-83 APPROVED. Safe multisig = roadmap kalau Paron live di mainnet nanti. Peran admin tidak berubah (D-54): tanpa EOA kedua, tanpa pindah ke Safe. 07 §17, 08 §7.1, product-plan §4.10.
-- D-90 APPROVED (nomor bebas berikutnya setelah D-89). Aturan freeze dihapus: tidak ada freeze kontrak, tidak ada freeze UI, tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. Teks lama di 08 §0, 08 §7.2, 09 §1.2, 04 §9.2, dan bagian historis di bawah ditandai SUPERSEDED/CANCELLED atau historis; tidak dihapus. **Tenggat keras submission tetap Sab 2026-10-10 12:00 WIB.**
+- D-90 APPROVED (nomor bebas berikutnya setelah D-89). Aturan freeze dihapus: tidak ada freeze kontrak, tidak ada freeze UI, tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. Teks lama di 08 §0, 08 §7.2, 09 §1.2, 04 §9.2, dan bagian historis di bawah ditandai SUPERSEDED/CANCELLED atau historis; tidak dihapus. **Tenggat keras submission tetap Sab 2026-10-10 12:00 WIB.** Kalimat 12:00 itu **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB.
 - Penugasan pemilik (09): video demo = agen evergreen video editor yang sudah ada (tidak ada bot baru); submit HackQuest = Fatih sendiri yang menekan submit; pitch deck = Fatih sendiri yang membuatnya.
-- Hosting Vercel (04 bagian hosting, tanpa secret atau token): project hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam). `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota.
+- Hosting Vercel (04 bagian hosting, tanpa secret atau token): project hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam). `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota. **[HISTORICAL, catatan 17:01 WIB; hosting terkini di bagian Sab 10 Okt 2026 di bawah.]**
 - PR UI #47, #51, #53, #54 sudah merge ke `main` (CI hijau) dan belum tampil di web. Ujung `main` saat catatan ini: `0366ec6`.
 
 ## Keputusan 2026-10-09 (D-91 APPROVED; D-92 APPROVED 18:10 WIB)
@@ -125,7 +125,29 @@ Sebelum 17:01 WIB bagian ini mencatat tiga butir sebagai PENDING. Ketiganya ditu
 - ~13:25 WIB: stage-1 ter-deploy di Robinhood Chain Testnet (46630); 3 seed series.
 - ~14:02 WIB: tiap build Railway memakai schema `paron_<sha8>` (PR #30); 503 INDEXER_SYNCING ~1 menit setelah deploy itu normal.
 - ~14:15 WIB: risiko RPC publik intermiten di browser; nama cadangan saat itu masih PENDING. **[D-89]** nama `INDEXER_RPC_URL_BACKUP` dan `NEXT_PUBLIC_RPC_URL_BACKUP` sekarang final.
-- 15:15 dan 15:31 WIB (cek live): /v1/health synced:true chain 46630; /v1/series = 3 seed; RPC cadangan belum terpasang, menunggu RPC kedua dari Fatih.
-- 17:01 WIB (Fatih, langsung; tanpa secret atau token): Vercel hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam). `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota. PR UI #47, #51, #53, #54 sudah di `main` (CI hijau) dan belum tampil di web.
+- 15:15 dan 15:31 WIB (cek live): /v1/health synced:true chain 46630; /v1/series = 3 seed; RPC cadangan belum terpasang, menunggu RPC kedua dari Fatih. **[HISTORICAL; pada catatan Sab 10 Okt 2026 indexer Railway sehat dan variabel env cadangan RPC terpasang. Nilai tidak ditulis.]**
+- 17:01 WIB (Fatih, langsung; tanpa secret atau token): Vercel hanya membangun branch `main`. Branch lain dilewati lewat Ignored Build Step, jadi tidak ada pratinjau PR. Verifikasi UI hanya setelah merge ke `main`. Kuota deploy free tier habis (`api-deployments-free-per-day`, pulih kira-kira 24 jam). `main` terbaru belum live sampai Fatih menyelesaikan masalah build/kuota. **[HISTORICAL, catatan 17:01 WIB; hosting terkini di bagian Sab 10 Okt 2026 di bawah.]** PR UI #47, #51, #53, #54 sudah di `main` (CI hijau) dan belum tampil di web.
 - Env (nama saja): DATABASE_URL, DATABASE_SCHEMA, CHAIN, PORT, DEPLOY_LABEL, INDEXER_RPC_URL, INDEXER_RPC_URL_BACKUP (belum), API_CORS_ORIGIN, NEXT_PUBLIC_RPC_URL, NEXT_PUBLIC_RPC_URL_BACKUP (belum), NEXT_PUBLIC_API_BASE_URL.
-- Deadline WIB: jam freeze kontrak 06:00, freeze UI 09:00, dan submit internal 11:30 pada Sab 10 Okt adalah catatan historis [SUPERSEDED D-90] dan tidak mengikat. Tenggat keras tetap Sab 10 Okt 12:00.
+- Deadline WIB: jam freeze kontrak 06:00, freeze UI 09:00, dan submit internal 11:30 pada Sab 10 Okt adalah catatan historis [SUPERSEDED D-90] dan tidak mengikat. Tenggat keras tetap Sab 10 Okt 12:00. Kalimat 12:00 itu **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB.
+
+## Keputusan Fatih Sab 10 Okt 2026 (D-93 APPROVED 10:16 WIB; D-94 APPROVED; D-95 APPROVED ~11:07 WIB)
+
+Nomor dicek: pemakaian terakhir sebelumnya D-92. D-93, D-94, dan D-95 belum dipakai. Yang lebih kemudian mengalahkan yang lebih dahulu. Chain tetap testnet. Rincian: 07 §23–§25.
+
+- D-93 APPROVED (Fatih, Sab 10 Okt 2026, 10:16 WIB). Tenggat keras hackathon sekarang Sabtu 10 Okt 2026 23:59 WIB. Menggantikan tenggat 12:00 pada D-90 dan rujukan tenggat di 08 serta 09. Jam freeze 06:00, 09:00, dan 11:30 tetap HISTORICAL (D-90).
+- D-94 APPROVED (Fatih, "oke lanjut" / "masukin semua ke kerjaan"). Daftar perbaikan pra-demo dari engineering dan design disetujui: perbaikan header saat wallet tersambung; state kosong dan error di jalur demo (`/buy`, `/trade`, `/redemptions`); status transaksi pending / success / failed dengan tautan explorer; perbaikan kecil S2 (skip link, tinggi input, tab terpotong di 390, badge Pending amber, alamat provider dipendekkan di `/markets/4`); format uang `$3,240.00` dan label seragam "Demo data"; cek tautan landing; h1 "Provider" dengan alamat di bawahnya; `/arbiter` dan tombol Revoke di `/verifier` hanya kalau tidak perlu perubahan kontrak. Yang butuh perubahan kontrak dilaporkan ke Fatih lebih dulu.
+- D-95 APPROVED (Fatih, Sab 10 Okt 2026 ~11:07 WIB, "lanjut semuanya langsung"). Arsitektur informasi dipecah per aktor. (1) Navbar pengguna, lewat "Launch app", hanya: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Tidak ada tautan Provider, Operator, atau Demo. (2) Provider adalah tautan terpisah di luar nav pengguna. Dashboard tiap provider di `/provider/[address]` (series, redemptions, agents; aksi tulis hanya untuk wallet pemilik; alamat lain read-only). `/provider` mengalihkan ke dashboard wallet yang tersambung, atau ke `/onboarding/kyb` kalau belum terverifikasi KYB. Landing: "Launch app" dan "Become a provider". (3) Operator (verifier, admin, ops, arbiter) satu tab terpisah, hanya lewat CTA kecil di footer atau bagian bawah landing, tidak pernah di navbar. Halaman berjudul "Operator tools". (4) `/demo` tetap hidup. Satu-satunya pintu adalah CTA landing "Launch demo". Tidak ada tautan dari navbar, footer dashboard, atau halaman lain. (5) Dashboard produksi hanya indexer sungguhan dan data on-chain testnet. Label "Reference price (demo data)" (D-84..D-88) tetap sampai Fatih menyetujui pengganti. Pengiriman: PR-A nav, CTA, isolasi demo; PR-B dashboard per provider. Catatan Designer: tautan pengguna di tengah; "For providers" dan "Operator" teks sekunder `#a6a6a6` di kanan (Operator = CTA footer/bawah, bukan item navbar); menu mobile Trade / Providers / Operators, target minimal 44 px; banner KYB di `/provider` info netral untuk belum KYB dan pending dengan "Start KYB", amber untuk verified; "List capacity" nonaktif dengan alasan "Complete KYB to list capacity". Roadmap setelah hackathon: gating nav berdasarkan peran, dibaca dari kontrak. h1 "Provider" (D-94) berlaku di `/provider/[address]`.
+
+## Hosting (Sab 10 Okt 2026; tanpa secret, tanpa nama akun, tanpa nilai token)
+
+- Produksi: https://paron.vercel.app. Terhubung ke Git. Build otomatis hanya saat merge ke `main`.
+- Cadangan: https://paron-bay.vercel.app, pada akun Vercel kedua. Tidak terhubung ke Git. Deploy manual dari `main`. Nama akun tidak ditulis.
+- Origin `https://paron.vercel.app` tetap diizinkan pada CORS API.
+- Indexer Railway sehat. Variabel env cadangan RPC pada indexer itu terpasang. Nilainya tidak ditulis di dokumen.
+- Catatan 15:15 WIB bahwa RPC cadangan belum terpasang, dan catatan 17:01 WIB bahwa kuota deploy habis serta `main` terbaru belum live, adalah **HISTORICAL**.
+
+## Header, route indeks, dan kredit chart (catatan dokumen 10 Okt 2026)
+
+- Format alamat di header: `0x3F8f…6ae9` (6 karakter pertama termasuk `0x`, 4 karakter terakhir). Header dicek di 1024, 1100, 1280, 1440, dan 390 dengan wallet tersambung. Nav tidak terpotong. Tombol Menu muncul saat tautan tidak muat. Semua kontrol header minimal 44 px (PRs #64). Rincian di 06 dan checklist 09.
+- Halaman `/index` pindah ke `/h100-index` karena path statis `/index` bentrok dengan `/` di Vercel. `/index` mengalihkan 307. Path API `/index/H100` tidak berubah. Sitemap dan 06 ikut diperbarui.
+- Logo chart TradingView dimatikan lewat opsi library `attributionLogo: false` di `web/components/charts.tsx`. Kredit lisensi berupa teks polos ada di halaman `/legal/risk` (`web/app/legal/risk/page.tsx`). Larangan logo pihak ketiga dan larangan tautan pihak ketiga tetap, dengan pengecualian kredit lisensi ini saja.

@@ -25,7 +25,7 @@ This folder is the full written context of Paron (collateral-backed GPU compute-
 - Decisions are marked `APPROVED` (Fatih decided) or `PENDING`/`USULAN` (proposal) inside the docs. Trust only APPROVED items as binding.
 - Designer findings (`design/spec-change-requests.md` #9 to #13 and live-review items LR-5, LR-6, LR-8) were approved by Fatih on 9 Oct 2026 14:40 WIB and are recorded as D-67 to D-74 (APPROVED) in `dev-docs/07-decisions-log.md` §15, with UI details in `dev-docs/06-screens-wireframes.md` §0.6 and `design/approved-ui-changes.md`.
 - Not verified at export time: live contrast ratios and the D-66 skeleton visuals.
-- Open item: backup RPC URL (`INDEXER_RPC_URL_BACKUP`): belum terpasang per 9 Okt 2026 15:15 WIB, menunggu RPC kedua dari Fatih.
+- Open item: backup RPC URL (`INDEXER_RPC_URL_BACKUP`): belum terpasang per 9 Okt 2026 15:15 WIB, menunggu RPC kedua dari Fatih. **HISTORICAL.** Pada catatan Sab 10 Okt 2026 indexer Railway sehat dan variabel env cadangan RPC pada indexer terpasang. Nilai tidak ditulis. Keputusan terkini: D-93..D-95 di `dev-docs/07-decisions-log.md` dan `knowledge-base/CONTEXT-INDEX.md`. Tenggat keras = Sab 10 Okt 2026 23:59 WIB (D-93). Jam 12:00 adalah HISTORICAL.
 
 ## Notes
 

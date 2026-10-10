@@ -14,7 +14,7 @@ Disusun Kamis 8 Okt 2026, ~21:30 WIB. Diperbarui Jum 9 Okt 2026, ~09:45 WIB: per
 - **[PENDING]** = menunggu keputusan Fatih. Label `P-xx`/`D-xx` merujuk ke register di 01/07.
 - **[APPROVED]** = disetujui Fatih Jum 9 Okt ~09:40 WIB: tab leverage "Coming soon", copy UI Inggris (P6-01), tier mengikuti sitemap (X6-19), dan semua rekomendasi 07 (D-01..D-44 kecuali D-10, termasuk P-13/P-16/P-47/P-64/T-05/Q2). PENDING lain yang tidak terkait persetujuan ini dibiarkan.
 - **Tim = Fatih solo.** Potongan build 27 jam (§9) sekarang mengasumsikan satu orang; tier build solo ada di §9.1.
-- **MVP-27h** = dibangun saat hackathon (Jum 9 Okt 09:00 → Sab 10 Okt 12:00 WIB). **NICE** = nice-to-have menurut design §7.1/§7.2, dibangun di 27 jam kalau sempat. **FULL** = produk penuh, setelah hackathon.
+- **MVP-27h** = dibangun saat hackathon (Jum 9 Okt 09:00 → Sab 10 Okt 12:00 WIB). Jam 12:00 pada kalimat ini **HISTORICAL, superseded by D-93**. Tenggat keras = Sab 10 Okt 2026 23:59 WIB. **NICE** = nice-to-have menurut design §7.1/§7.2, dibangun di 27 jam kalau sempat. **FULL** = produk penuh, setelah hackathon.
 - **Bahasa copy UI = Inggris** [APPROVED P6-01, 06 §0.1]. Teks spec ini tetap bahasa Indonesia, tapi semua contoh copy/label/pesan error di layar ditulis dalam bahasa Inggris.
 - **Sinkron dengan dev docs 03/04/06/07** (Kamis 8 Okt ~21:50 WIB): nama param API mengikuti 03, flag data source mengikuti 04 §4.5 / 06 §11.3, param route mengikuti 06 (`[reqId]` untuk redemption/dispute), gap §10 ditautkan ke 07 D-41..D-44.
 - **Demo live** = "Ya" kalau halaman itu harus bisa dicoba juri/tim langsung di testnet saat demo.
@@ -35,6 +35,10 @@ Fatih pernah kalah di hackathon karena juri menulis *"features still mocked and 
    - Opsional: subdomain `admin.` / `verify.` / `arbiter.` via rewrite di middleware Next.js (lihat §2.3).
    - Masa depan: app terpisah.
 6. **`/demo` dan `/faucet` publik** dan terlihat oleh juri.
+
+**[D-95, APPROVED Sab 10 Okt 2026 ~11:07 WIB.]** Halaman verifier, admin, ops, dan arbiter tetap ada di situs yang sama. Yang **HISTORICAL** untuk navigasi: anggapan bahwa Provider, Operator, dan Demo duduk di navbar pengguna, dan bahwa `/demo` ditautkan dari halaman lain. Navbar pengguna (CTA "Launch app") hanya Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Provider di luar nav itu; dashboard `/provider/[address]`. Operator hanya lewat CTA kecil di footer atau bagian bawah landing. `/demo` tetap hidup; satu-satunya pintu adalah CTA landing "Launch demo". `/faucet` tetap di navbar pengguna. Detail: 07 §25.
+
+**Route indeks.** Halaman yang dibangun adalah `/h100-index` (`web/app/h100-index/page.tsx`). Path statis `/index` bentrok dengan `/` di Vercel, jadi `/index` mengalihkan 307 ke `/h100-index` (`web/next.config.ts`, `permanent: false`). Path API `/index/H100` tidak berubah (indexer `GET /v1/index/:gpu`). Di pohon dan matriks di bawah, nama halaman `/index` berarti `/h100-index` kecuali yang disebut sebagai path API `/v1/index/…`. `/index/[gpu]` tetap route produk penuh yang belum menjadi halaman terpisah.
 
 ---
 
@@ -70,7 +74,7 @@ Gate di UI hanya untuk kenyamanan. **Yang menegakkan aturan tetap kontrak** (01 
 - Masa depan: app terpisah per panel, lebih aman untuk kunci admin.
 
 ### 2.4 Pemetaan ke layar desain S1–S7 (design §7.2, PK §11.2)
-S1 Market → `/markets`. S2 List capacity → `/provider/series/new`. S3 Series page → `/markets/[seriesId]` + `/buy/[seriesId]` + `/trade/[seriesId]`. S4 Portfolio & redemptions → `/portfolio` + `/redemptions/*` + `/claims` + `/disputes/*`. S5 Provider console → `/provider/*`. S6 Prints & data → `/index`, `/data`, `/transparency`. S7 Arbitration view → `/arbiter/*`.
+S1 Market → `/markets`. S2 List capacity → `/provider/series/new`. S3 Series page → `/markets/[seriesId]` + `/buy/[seriesId]` + `/trade/[seriesId]`. S4 Portfolio & redemptions → `/portfolio` + `/redemptions/*` + `/claims` + `/disputes/*`. S5 Provider console → `/provider/*` (sejak D-95, dashboard di `/provider/[address]`; `/provider` mengalihkan). S6 Prints & data → `/h100-index` (halaman; `/index` mengalihkan 307), `/data`, `/transparency`. S7 Arbitration view → `/arbiter/*`.
 
 ---
 
@@ -89,7 +93,7 @@ flowchart LR
   ROOT --> OPS[Ops / keeper]
   ROOT --> TST[Testnet]
 
-  PUB --> P1["/how-it-works"] & P2["/markets"] & P4["/providers"] & P6["/index"] & P8["/transparency"] & P10["/data"] & P11["/docs"] & P14["/legal/*"] & P15["/status"]
+  PUB --> P1["/how-it-works"] & P2["/markets"] & P4["/providers"] & P6["/h100-index"] & P8["/transparency"] & P10["/data"] & P11["/docs"] & P14["/legal/*"] & P15["/status"]
   P2 --> P3["/markets/[seriesId]"]
   P4 --> P5["/providers/[providerId]"]
   P6 --> P7["/index/[gpu]"]
@@ -199,7 +203,8 @@ State umum yang berlaku di semua halaman (tidak diulang per route):
 - **State:** alamat tidak terdaftar → "Not a registered provider." Banned → banner merah.
 - **Tag:** MVP-27h (versi ringkas; dipakai badge reputasi S3) · Demo live: Ya (reputasi "8 CU delivered" + strike setelah default).
 
-#### `/index`  (S6)
+#### `/h100-index`  (S6; dulu `/index`)
+- **Alihkan:** `/index` → `/h100-index` status 307. Path API `/index/H100` tidak berubah.
 - **Tujuan:** PrintIndex semua kelas GPU (VWAP winsorized dalam satuan CU) + status.
 - **Gate:** Publik.
 - **Komponen/aksi:** kartu per GPU (nilai, status OK / THIN / DISRUPTED, `lastOkAt`), link methodology.
@@ -855,7 +860,7 @@ Pola umum: aksi yang **lewat timelock** dibuat sebagai proposal (`TimelockContro
 
 | Area | Route | Jumlah | MVP-27h | NICE | FULL |
 |---|---|---|---|---|---|
-| Publik | `/`, `/how-it-works`, `/markets`, `/markets/[seriesId]`, `/providers`, `/providers/[providerId]`, `/index`, `/index/[gpu]`, `/transparency`, `/transparency/[seriesId]`, `/data`, `/docs`, `/docs/methodology`, `/docs/contracts`, `/legal/terms`, `/legal/risk`, `/legal/disclaimer`, `/status` | 18 | 12 | 0 | 6 |
+| Publik | `/`, `/how-it-works`, `/markets`, `/markets/[seriesId]`, `/providers`, `/providers/[providerId]`, `/h100-index` (alihkan 307 dari `/index`), `/index/[gpu]`, `/transparency`, `/transparency/[seriesId]`, `/data`, `/docs`, `/docs/methodology`, `/docs/contracts`, `/legal/terms`, `/legal/risk`, `/legal/disclaimer`, `/status` | 18 | 12 | 0 | 6 |
 | Akun | `/connect`, `/onboarding`, `/onboarding/kyb`, `/onboarding/provider`, `/account`, `/account/notifications`, `/account/api-keys` | 7 | 5 | 0 | 2 |
 | Buyer | `/buy`, `/buy/[seriesId]`, `/portfolio`, `/redemptions`, `/redemptions/new`, `/redemptions/[reqId]`, `/claims`, `/disputes`, `/disputes/new`, `/disputes/[reqId]`, `/statements` | 11 | 10 | 0 | 1 |
 | Trader | `/trade`, `/trade/[seriesId]`, `/trade/orders`, `/trade/history`, `/trade/positions`, `/trade/leverage` | 6 | 3 | 0 | 3 |
