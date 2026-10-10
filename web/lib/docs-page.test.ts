@@ -23,12 +23,13 @@ test("the docs page is one heading, one image per step, and no video", () => {
   assert.equal((page.match(/<h1[\s>]/g) ?? []).length, 1);
   assert.equal(page.includes("<video"), false);
   assert.equal(page.includes(["/", "demo"].join("")), false);
-  assert.match(page, /loading="lazy"/);
   assert.match(page, /width=\{step\.width\}/);
   assert.match(page, /height=\{step\.height\}/);
   assert.match(page, /alt=\{step\.alt\}/);
-  assert.match(page, /className="touch-link"/);
-  assert.ok(DOCS_STEPS.length >= 10);
+  assert.match(page, /className="grid docs"/);
+  assert.match(page, /aria-label="Contents"/);
+  assert.match(page, /className="panel operator-tools"/);
+  assert.equal(DOCS_STEPS.length, 17);
   const images = new Set(DOCS_STEPS.map((step) => step.image));
   assert.equal(images.size, DOCS_STEPS.length);
   for (const step of DOCS_STEPS) {
@@ -37,8 +38,8 @@ test("the docs page is one heading, one image per step, and no video", () => {
     assert.ok(step.alt.length > 0);
     assert.equal(step.width > 0 && step.height > 0, true);
     assert.match(step.image, /^\/docs\/.+\.png$/);
-    assert.equal(step.link === undefined || !step.link.href.includes(["/", "demo"].join("")), true);
-    const file = join(process.cwd(), "public", step.image);
+    assert.equal(step.width, 1280);
+    const file = join(process.cwd(), "public", step.image.slice(1));
     assert.equal(existsSync(file), true, step.image);
   }
   const joined = `${page}\n${read("./docs-content.ts")}`;
@@ -47,10 +48,16 @@ test("the docs page is one heading, one image per step, and no video", () => {
   assert.equal(/0x[0-9a-fA-F]{40}/.test(joined), false);
   assert.match(joined, /Become a provider/);
   assert.match(joined, /OPERATOR tab in the footer of the landing page/);
-  assert.match(joined, /Verified by Paron demo verifier/);
+  assert.match(joined, /Bond\/CU of \$4\.50/);
   assert.match(joined, /Good to know/);
   assert.equal(DOCS_NOTES.length, 3);
   assert.match(DOCS_NOTES.join(" "), /Demo data/);
+  const css = read("../app/globals.css");
+  assert.match(css, /\.grid\.docs \{[^}]*grid-template-columns:/);
+  const narrow = css.slice(css.indexOf("@media (max-width: 860px)"));
+  assert.match(narrow, /\.grid\.docs[^}]*grid-template-columns:\s*1fr/);
+  assert.match(css, /\.operator-tools a \{[^}]*min-height:\s*44px/);
+  assert.match(css, /\.grid\.docs img \{[^}]*max-width:\s*100%/);
 });
 
 test("a short wallet still collapses the header before Docs can clip it", () => {
