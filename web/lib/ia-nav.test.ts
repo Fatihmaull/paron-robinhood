@@ -104,6 +104,20 @@ test("production never selects mock fixtures", () => {
   assert.equal(resolveDataSource({ explicit: "", apiBase: "", onVercel: false, nodeEnv: "development" }), "mock");
 });
 
+test("the demo data label stays visible when the header is narrow", () => {
+  const css = read("../app/globals.css");
+  const shell = read("../components/shell.tsx");
+  const index = read("../app/h100-index/page.tsx");
+  const landing = read("../components/landing.tsx");
+  const narrow = css.slice(css.indexOf("@media (max-width: 860px)"));
+  assert.equal(/\.strip\s*\{[^}]*display:\s*none/.test(narrow), false);
+  assert.match(shell, /Demo data/);
+  assert.match(index, /Demo data/);
+  assert.equal(shell.includes("Reference price (demo data)"), false);
+  assert.equal(index.includes("Reference price (demo data)"), false);
+  assert.equal(landing.includes("className=\"strip"), false);
+});
+
 test("the provider side link counts toward the nav fit", () => {
   assert.equal(
     navNeedsMenu({

@@ -550,7 +550,15 @@ input:focus, select:focus, textarea:focus { border-color: var(--input-border-foc
   .brand img { height: 20px; }
   .chip { padding: 0 6px; }
   .nav > .chip { display: none; }
-  .strip { display: none; }
+  .strip {
+    display: flex;
+    height: auto;
+    min-height: var(--size-strip);
+    flex-wrap: wrap;
+    align-items: center;
+    padding: 6px 12px;
+    row-gap: 4px;
+  }
   .main { width: min(100% - 32px, var(--size-content-max)); }
   .clock { font-size: var(--countdown-size-hero); text-align: center; }
   .btn { min-height: 44px; height: auto; }
