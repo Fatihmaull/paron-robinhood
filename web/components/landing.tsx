@@ -204,7 +204,7 @@ export function Landing() {
             <div className="head rv">
               <div>
                 <p className="mono">Demo path · S0</p>
-                <h2 className="sec">Walk the whole loop in five steps.</h2>
+                <h2 className="sec">Walk the documented demo path.</h2>
               </div>
               <Link className="pill pill-ghost" href={landingLinks.demo}>Launch demo</Link>
             </div>

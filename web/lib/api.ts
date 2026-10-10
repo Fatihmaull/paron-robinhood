@@ -254,6 +254,27 @@ export function loadParticipant(address: string, source: "mock" | "live"): Promi
   return liveGet<Participant>(`/participants/${address}`).then((env) => ({ ...env, origin: "live" as const }));
 }
 
+export type OpenDispute = {
+  req_id: string;
+  series_id: string | null;
+  dispute_bond: string;
+  ruling_deadline_ms: number | null;
+  ruling: string | null;
+};
+
+/** Open disputes from the existing indexer route. Mock has no dispute fixture, so the list is empty. */
+export function loadOpenDisputes(source: "mock" | "live"): Promise<LoadResult<OpenDispute[]>> {
+  if (source === "mock") {
+    const now = Date.now();
+    return Promise.resolve({
+      data: [],
+      meta: { chain_id: chainId(), indexed_block: 0, indexed_at_ms: now, server_now_ms: now },
+      origin: "mock",
+    });
+  }
+  return liveGet<OpenDispute[]>("/disputes?status=open").then((env) => ({ ...env, origin: "live" as const }));
+}
+
 export function loadKyb(source: "mock" | "live"): Promise<LoadResult<unknown[]>> {
   if (source === "mock") {
     const env = kybPendingApps() as { data: unknown[]; meta: Meta; next_cursor?: string | null };

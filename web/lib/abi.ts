@@ -68,6 +68,29 @@ export const easAbi = [
     ],
     outputs: [{ name: "", type: "bytes32" }],
   },
+  {
+    type: "function",
+    name: "revoke",
+    stateMutability: "payable",
+    inputs: [
+      {
+        name: "request",
+        type: "tuple",
+        components: [
+          { name: "schema", type: "bytes32" },
+          {
+            name: "data",
+            type: "tuple",
+            components: [
+              { name: "uid", type: "bytes32" },
+              { name: "value", type: "uint256" },
+            ],
+          },
+        ],
+      },
+    ],
+    outputs: [],
+  },
 ] as const satisfies Abi;
 
 /** OpenZeppelin TimelockController. Not a Paron contract. */
