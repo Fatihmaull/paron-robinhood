@@ -74,6 +74,10 @@ function primaryKey(table: string, key: string): Record<string, unknown> {
     case "index_state":
     case "gpu_factor":
       return { gpuModel: key };
+    case "kyb_application":
+      // kyb_application is keyed by `uid`, not `id`. A wrong key made every find() miss,
+      // so approvals never linked to their application.
+      return { uid: key };
     case "index_params":
       return { id: key };
     default:
