@@ -1,6 +1,7 @@
 /** Landing copy. Every figure here is already shown in the app or the docs. */
 
 export const landingNav = [
+  { href: "/docs", label: "Docs" },
   { href: "/markets", label: "Markets" },
   { href: "/buy", label: "Buy" },
   { href: "/trade", label: "Trade" },

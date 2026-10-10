@@ -49,6 +49,33 @@ test("provider and operator entries stay on the landing", () => {
   assert.equal(landingFooter.some((item) => item.href === "/operator"), true);
 });
 
+test("landing nav puts Docs immediately left of Markets", () => {
+  assert.deepEqual(
+    landingNav.slice(0, 2).map((item) => [item.href, item.label]),
+    [
+      ["/docs", "Docs"],
+      ["/markets", "Markets"],
+    ],
+  );
+  const landing = read("../components/landing.tsx");
+  const css = read("../app/landing.css");
+  const footer = read("../components/shell.tsx");
+  assert.match(landing, /aria-controls="landing-nav"/);
+  assert.match(landing, /landingNav\.map/);
+  assert.match(landing, />\s*Menu\s*</);
+  assert.match(css, /\.landing \.menu-toggle \{[^}]*display:\s*none/);
+  assert.match(css, /\.landing \.nav ul a \{[^}]*min-height:\s*44px/);
+  assert.match(css, /\.landing \.pill \{[^}]*min-height:\s*44px/);
+  const narrow = css.slice(css.indexOf("@media (max-width: 1024px)"));
+  assert.match(narrow, /\.landing \.menu-toggle \{[^}]*display:\s*inline-flex/);
+  assert.match(narrow, /\.landing \.nav nav\.open ul \{[^}]*display:\s*flex/);
+  assert.match(footer, /href="\/docs\/contracts"/);
+  assert.deepEqual(
+    landingFooter.map((item) => item.label),
+    ["Markets", "Data", "Operator"],
+  );
+});
+
 test("landing CTAs keep one demo entry and a footer operator link", () => {
   assert.equal(landingLinks.launch, "/markets");
   assert.equal(landingLinks.demo, "/demo");
