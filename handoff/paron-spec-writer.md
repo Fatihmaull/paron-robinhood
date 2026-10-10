@@ -19,7 +19,7 @@ Kerja repo lewat cloud agent. Satu commit per PR docs, biar kuota Vercel hemat.
 - D-93: tenggat keras 10 Okt 2026, 23:59 WIB. Jam 12:00 itu historis.
 - D-94: daftar perbaikan pra-demo.
 - D-95: IA per aktor. User, provider, operator, dan demo terpisah. Pintu provider = "Become a provider" di landing. Operator = CTA kecil di footer. `/demo` cuma lewat "Launch demo".
-- D-96: keeper dan trader live di Railway dengan wallet bot khusus, bukan dry-run. Alamat wallet tidak ditulis. Sampai terbukti jalan, docs tetap **not active**. Dana faucet masih **PENDING FUNDING**.
+- D-96 APPROVED. **HISTORICAL:** "kedua bot not active" dan "PENDING FUNDING" sebagai status terkini. Status sekarang: **keeper live, trader menyusul setelah wallet siap.** Keeper LIVE di Railway (service `paron-keeper`, deploy sukses, tanpa error, kill switch off). Belum ada tx karena belum ada redemption yang lewat tenggat. Trader belum di-deploy. Wallet trader masih butuh mUSDC dan KYB, dan wallet buyer yang diikuti belum diputuskan. Jangan tulis keduanya jalan. Alamat dan kunci tidak ditulis.
 - D-97: halaman `/docs` di kiri Markets. Halaman live di `783b6be`. Navbar landing dan langkah 5 live di `e19d646` (#78). Gambar 02 dan 05 live di #80. Gambar 01 di `main` masih hero lama. Gambar 01 hero baru (`shots-v4/01-open-paron.png`, `synced:true`, lag 2 blok) sudah diambil. **Gambar 01 updated, PR pending merge.** Belum live sampai merge. Gambar 02 dan 05 tidak berubah.
 - D-98 APPROVED (Fatih lewat Designer 1:1, 10 Okt 2026). Bukan pending. Hero landing gaya CRM-enterprise: judul tengah, dua tombol, kotak tangkapan dasbor, siluet kota ASCII, gradien cokelat gelap/amber. Navbar, merek, dan Launch app tidak diubah. Masuk di #86 dan #87. Deskripsi hero emas-dan-kaca (D-91) HISTORICAL untuk bentuk hero. Cek Designer di produksi setelah `4639a4b` LULUS, tanpa S0/S1. Dua S2 kecil tetap: siluet ASCII pada 390 tertutup kartu; `/provider` hanya gerbang Connect wallet dengan label "Demo data" di bar atas aplikasi.
 - PR docs #67, #73, #75, #77, #79 sudah merge.
@@ -39,7 +39,8 @@ PR kode dan docs yang diketahui sudah merge sampai `4639a4b`. Produksi: https://
 - Gambar 01 updated, PR pending merge. Belum live. Gambar 02 dan 05 tidak berubah.
 - S2 kecil yang masih terbuka: siluet ASCII pada 390 tertutup kartu; `/provider` hanya gerbang Connect wallet dengan label "Demo data" di bar atas aplikasi.
 - Known issue yang tetap: tidak ada jalur KYB submit di app (attestation manual lewat `/verifier`). `/arbiter` `ruleWithSignatures` mungkin stub. **HISTORICAL:** "Applications tidak memuat attestation terbit" dan "tombol Revoke belum ada" sebagai celah kode. `4639a4b` menambah panel Issued attestations dan "Use for revoke". Tombol Revoke sudah ada sebelum commit itu.
-- Bagian Fatih: deck, unggah video v3 (berkas sudah di tangan Fatih), isi wallet bot, rotasi key RPC, submit HackQuest sebelum 23:59 WIB. Saran submit sekitar 21:00 WIB.
+- D-99 APPROVED (Fatih, ~19:50 WIB, "ya setuju semua"). Bangun di PR Verifier handler. **PENDING** sampai merge dan deploy. Jangan tulis live. Tidak ada jalur submit KYB di app; atestasi tetap manual lewat `/verifier`.
+- Bagian Fatih: deck, unggah video v3 (berkas sudah di tangan Fatih), siapkan wallet trader (mUSDC dan KYB; wallet buyer yang diikuti belum diputuskan), rotasi key RPC, submit HackQuest sebelum 23:59 WIB. Saran submit sekitar 21:00 WIB.
 
 ## Cara melanjutkan
 

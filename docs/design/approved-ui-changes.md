@@ -163,6 +163,26 @@ Designer re-check of production after `4639a4b` **PASSED**. No S0 or S1. Passed:
 
 Two minor S2 items remain: at 390 the ASCII city silhouette is covered by the card; `/provider` shows only a Connect wallet gate, with a "Demo data" label in the app top bar, outside the landing page.
 
+## Verifier registration (07 §29, D-99, APPROVED 10 Oct 2026 ~19:50 WIB, not live)
+
+Fatih said "ya setuju semua" in the group. The build is the handler's Verifier pull request. **PENDING** until that pull request merges and deploys. Do not write it as live. There is still no in-app KYB submission path. An attestation is issued manually on `/verifier`.
+
+On `/verifier` provider registration:
+
+1. "Register as provider" is disabled, with the neutral message "Link a provider attestation first" (not a red error), when the linked attestation is not role 1. A failed transaction states the reason.
+2. "Attestation uid" is empty. It is not prefilled with the wallet address. Placeholder: "0x… (32-byte attestation uid)".
+3. The "Connected wallet" line is shortened, `0x3F8f…` style.
+4. The intro "Paron demo verifier (team-operated)" is replaced by "Paron verifier (team-operated, testnet)". The new wording does not use the word demo. **HISTORICAL:** "Verified by Paron demo verifier". Pending wording: "Verified by Paron verifier (team-operated, testnet)". That badge is recorded under D-04 and D-54. It is not in the D-84..D-88 table. D-87 is unchanged.
+5. The buyer-attestation message stays, plus "Ask the verifier for a provider attestation (role 1), then link it here."
+
+`/docs` "Good to know", approved and not live yet: "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register." The same sentence is in 06.
+
+## Official logo (07 §30, D-100, APPROVED 10 Oct 2026 ~19:57 WIB)
+
+Fatih approved this at about 19:57 WIB. Other decisions are unchanged.
+
+The official Paron logo, as shown in the navbar at https://paron.vercel.app/markets: the anvil and the PARON text are off-white `#E6E9EE`. Only the small square above the anvil is orange `#F07A2A`. App assets: `/brand/paron-lockup.svg` (the text is already an outline) and `/brand/paron-mark.svg` (anvil only). Designer exports the SVG and sends it to Fatih in the 1:1 chat. That export does not change the design. The logo will appear in the README through the handler's docs pull request. **PENDING** until that pull request merges. This pull request does not edit `docs/README.md`.
+
 ## Index route
 
 The built page is `/h100-index`. Static `/index` collided with `/` on Vercel, so `/index` redirects 307. API path `/index/H100` is unchanged.

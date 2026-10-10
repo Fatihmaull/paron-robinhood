@@ -1,7 +1,7 @@
 # Paron: indeks dokumen konteks (master: Hackathon Scout; sekarang PO/project handler)
 
 Sumber kebenaran: repo `docs/knowledge-base/` (mirror dari folder kerja Scout di box; path box lama tidak dipakai).
-Terakhir diperbarui: Sabtu 10 Okt 2026 (D-93..D-98). Keputusan yang lebih kemudian mengalahkan yang lebih dahulu.
+Terakhir diperbarui: Sabtu 10 Okt 2026 (D-93..D-100). Keputusan yang lebih kemudian mengalahkan yang lebih dahulu.
 
 **Urutan mulai:** `SESSION_HANDOFF_HACKATHON.md` (state terkini) → file ini → `HANDOFF-BRIEF.md` (urutan baca, tugas pertama, prioritas, aturan), lalu `paron-product-plan.md` (gambaran produk penuh: semua modul, aplikasi, arsitektur akhir, roadmap P0–P5, batas lingkup hackathon).
 
@@ -143,7 +143,7 @@ Nomor dicek: pemakaian terakhir sebelumnya D-92. D-93, D-94, dan D-95 belum dipa
 Nomor dicek: pemakaian terakhir sebelum D-96 adalah D-95. D-96 belum dipakai. Yang lebih kemudian mengalahkan yang lebih dahulu. Chain tetap testnet. Rincian: 07 §25 (koreksi) dan §26.
 
 - Koreksi D-95 (setelah PR #71). D-95 tetap APPROVED. Catatan Designer yang menaruh tautan sekunder "For providers" di navbar aplikasi adalah **HISTORICAL**. Navbar pengguna (Launch app) hanya: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Pintu provider hanya CTA landing "Become a provider". Operator hanya lewat CTA kecil di footer landing. `/demo` hanya lewat CTA landing "Launch demo".
-- D-96 APPROVED (Fatih, Sab 10 Okt 2026 ~15:00 WIB). Bot keeper dan bot trader di Railway jalan LIVE dengan wallet bot khusus (bukan dry-run), setelah Fatih mendanai wallet itu dari faucet. Status: **PENDING FUNDING**. Sampai terbukti, dokumen menulis **not active**. Bot menolak chain selain testnet dan memakai kill switch off-chain D-42. Alamat wallet dan nama akun tidak ditulis.
+- D-96 APPROVED (Fatih, Sab 10 Okt 2026 ~15:00 WIB). Bot keeper dan bot trader di Railway dengan wallet bot khusus (bukan dry-run). Bot menolak chain selain testnet dan memakai kill switch off-chain D-42. Alamat wallet dan kunci tidak ditulis. **HISTORICAL:** "PENDING FUNDING" dan "not active sampai terbukti" untuk keduanya. Status 10 Okt 2026: **keeper live, trader menyusul setelah wallet siap.** Keeper LIVE di Railway (service `paron-keeper`, deploy sukses, tanpa error, kill switch off, belum ada tx karena belum ada redemption yang lewat tenggat). Trader belum di-deploy (wallet masih butuh mUSDC dan KYB; wallet buyer yang diikuti belum diputuskan).
 
 ## D-97 tutorial `/docs` (APPROVED 10 Okt 2026, langsung di grup)
 
@@ -155,7 +155,7 @@ Nomor dicek: pemakaian terakhir sebelum D-97 adalah D-96. D-97 belum dipakai. Ch
 - Isi ditulis Designer dan dibangun engineer. **HISTORICAL:** "Target merge bangun sebelum sekitar 19:00 WIB" dan "cek header serta gambar masih PENDING." Halaman sudah hidup. URL isian ada di 09, bagian Submission URLs.
 - Tenggat keras tetap Sab 10 Okt 2026 23:59 WIB (D-93). Submission, deck, dan tombol HackQuest adalah milik Fatih. Usulan submit sekitar 21:00 WIB supaya ada buffer. **HISTORICAL:** "Handler merekam video demo final dari produksi" dan "Video demo final sudah direkam dari `d3081be`" sebagai video terkini. Video v3 selesai, sekitar 2 menit, direkam dari produksi dengan hero baru, sudah dikirim ke Fatih. Fatih yang mengunggah. Isu S2 label "Executed" di `/admin`: **HISTORICAL** untuk status "fix pending, relabel to Ready at" dan "belum merge". **FIXED** di PR #74 (`1f33f2f`). Label sekarang "Ready at". Waktu eksekusi dari indexer masih tidak ditampilkan. Tidak ada perubahan indexer atau kontrak. **HISTORICAL:** "Cek sekilas Designer pada `/admin` masih pending." Cek itu **LULUS** di 1280 dan 390 ("Ready at 17:24:06 WIB", lencana Done tanpa Execute, konsol bersih, satu h1, tanpa scroll horizontal, label "Demo data"). **HISTORICAL:** "Tidak ada S0, S1, atau S2 desain yang masih terbuka kecuali teks cooldown faucet tanpa hitung mundur." Cek setelah `4639a4b` lulus tanpa S0/S1. Dua S2 kecil tetap (siluet ASCII pada 390, gerbang `/provider`). Rincian di STATUS dan 09.
 - Estimasi handler 15:55 WIB 10 Okt (bukan hitung per butir): built ~97%, proven ~85%. S0 A ~100%. S0 B pada jam itu ~95% adalah **HISTORICAL**; setelah faucet sukses dan teks cooldown terbukti di produksi `d3081be`, S0 B ~100%. S1 A ~95% B ~60% (bot belum jalan di Railway, kill switch belum diuji). S2 A ~95% B ~70%. Never-cut terbangun 3/3, terbukti lewat UI di produksi 3/3. **HISTORICAL sebagai angka terbangun terkini untuk S1 dan S2.** Angka terbukti 15:55 tetap berlaku sampai ada cek produksi baru. Rincian cek, isu, dan pemilik: `docs/build/STATUS.md` dan dev-docs/09.
-- Estimasi 19:12 WIB 10 Okt (bukan hitung per butir, bukan audit baru): keseluruhan ~99% terbangun, ~85% terbukti. S0 ~100% / ~100%. S1 ~100% terbangun / ~60% terbukti. S2 ~100% terbangun / ~70% terbukti. **HISTORICAL:** "Belum di produksi" dan "halaman baru belum dicek." Isi `4639a4b` sudah di `main` dan itu commit produksi: panel attestation terbit, `/legal/disclaimer`, hitung mundur faucet, bingkai tur langkah 4. Cek Designer tidak membuka layar itu. Bot tetap **not active** sampai wallet didanai (D-96). Never-cut tetap 3/3 terbangun dan 3/3 terbukti lewat UI di produksi.
+- Estimasi 19:12 WIB 10 Okt (bukan hitung per butir, bukan audit baru): keseluruhan ~99% terbangun, ~85% terbukti. S0 ~100% / ~100%. S1 ~100% terbangun / ~60% terbukti. S2 ~100% terbangun / ~70% terbukti. **HISTORICAL:** "Belum di produksi" dan "halaman baru belum dicek." Isi `4639a4b` sudah di `main` dan itu commit produksi: panel attestation terbit, `/legal/disclaimer`, hitung mundur faucet, bingkai tur langkah 4. Cek Designer tidak membuka layar itu. **HISTORICAL:** "Bot tetap not active sampai wallet didanai." Status D-96 sekarang: keeper live, trader belum di-deploy. Never-cut tetap 3/3 terbangun dan 3/3 terbukti lewat UI di produksi.
 
 ## Hosting (Sab 10 Okt 2026; tanpa secret, tanpa nama akun, tanpa nilai token)
 
@@ -174,6 +174,22 @@ Cek Designer di produksi setelah `4639a4b` **LULUS**. Tidak ada S0/S1. Lulus: he
 S2 kecil yang masih terbuka: siluet ASCII pada 390 tertutup kartu; `/provider` hanya gerbang Connect wallet dengan label "Demo data" di bar atas aplikasi, di luar landing.
 
 Saat rekaman v3, pita biru "Indexer is catching up" muncul. Kalimat produk: "Indexer is catching up to the latest blocks; data may lag briefly." Kode menampilkannya jika `synced` false atau lag lebih dari 20 blok, lalu pita hilang sendiri. Scout: `synced:true`, lag 23 blok, `index_update_failures` 0, series 2610 terdaftar. Cek `/v1/health` sebelum rekaman ulang.
+
+## D-99 verifier (APPROVED 10 Okt 2026 ~19:50 WIB, belum live)
+
+Nomor dicek: pemakaian terakhir sebelum D-99 adalah D-98. D-99 belum dipakai. Chain tetap testnet. Rincian: 07 §29. Fatih berkata "ya setuju semua" di grup. Bangun lewat PR Verifier milik handler. **PENDING** sampai merge dan deploy. Jangan ditulis live. Tidak ada jalur submit KYB di app. Atestasi diterbitkan manual lewat `/verifier`.
+
+Lima poin di `/verifier`: tombol "Register as provider" nonaktif dengan pesan netral (bukan merah) "Link a provider attestation first" jika atestasi yang ditautkan bukan role 1, dan error transaksi gagal menyebut alasannya; field "Attestation uid" kosong dengan placeholder "0x… (32-byte attestation uid)", tidak diisi alamat wallet; baris "Connected wallet" gaya `0x3F8f…`; intro baru "Paron verifier (team-operated, testnet)" tanpa kata demo; pesan atestasi buyer tetap, ditambah "Ask the verifier for a provider attestation (role 1), then link it here."
+
+Badge lama "Verified by Paron demo verifier" **HISTORICAL**. Wording baru yang menunggu bangun: "Verified by Paron verifier (team-operated, testnet)". Badge itu ada di D-04 dan D-54, bukan di tabel D-84..D-88. D-87 tidak diubah.
+
+Kalimat Good to know di `/docs`, disetujui dan belum live: "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register."
+
+## D-100 logo resmi (APPROVED 10 Okt 2026 ~19:57 WIB)
+
+Nomor dicek: pemakaian terakhir sebelum D-100 adalah D-99. D-100 belum dipakai. Chain tetap testnet. Rincian: 07 §30. Keputusan lain tidak diubah.
+
+Logo resmi Paron, seperti di navbar https://paron.vercel.app/markets: landasan dan teks PARON off-white `#E6E9EE`. Hanya kotak kecil di atas landasan yang oranye `#F07A2A`. Sumber aset di app: `/brand/paron-lockup.svg` (teks sudah outline) dan `/brand/paron-mark.svg` (hanya landasan). Ekspor SVG dikerjakan Designer dan dikirim ke Fatih di chat 1:1. Ekspor itu tidak mengubah desain. Logo akan ada di README lewat PR docs milik handler. **PENDING** sampai PR itu merge. PR ini tidak mengedit `docs/README.md`.
 
 ## Header, route indeks, dan kredit chart (catatan dokumen 10 Okt 2026)
 

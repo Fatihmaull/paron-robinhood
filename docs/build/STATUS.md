@@ -31,7 +31,7 @@ These figures are estimates from the handler as of 21:08 WIB on 9 Oct 2026. They
 | S2 | 8 | ~80% | ~55% |
 
 - Never-cut: built 3/3; proven on-chain by script 3/3; proven by a UI click on live 0/3. **HISTORICAL (21:08 WIB 9 Oct).** Production UI on `d3081be` later proved 3/3. See the 10 Oct section.
-- Keeper bot and trader bot are merged (CI green; D-42 off-chain kill switch; dry-run; they refuse a chain that is not testnet). They are not running on Railway yet. **HISTORICAL for the dry-run intent.** D-96 approves live mode once the bot wallet is funded. Until that is proven they are **not active**.
+- Keeper bot and trader bot are merged (CI green; D-42 off-chain kill switch; they refuse a chain that is not testnet). **HISTORICAL:** "They are not running on Railway yet" and "until that is proven they are not active." Current status is in the D-96 section: keeper live, trader not deployed.
 - The kill switch and G4 are not tested yet.
 - `/arbiter` `ruleWithSignatures` may still be a stub.
 - The Revoke button is missing.
@@ -60,7 +60,7 @@ These figures are **estimates from the handler as of 15:55 WIB on 10 Oct 2026**.
 | S2 | ~95% | ~70% |
 
 - At 15:55 WIB, S0 B was recorded as ~95%. That ~95% figure is **HISTORICAL**. Faucet success and the faucet cooldown text were later proven on production `d3081be`, so S0 B is ~100%.
-- S1 B ~60%: the keeper bot and the trader bot are not running on Railway, and the kill switch is untested. D-96 approves live mode once the bot wallet is funded. Until that run is proven, the bots are **not active**.
+- S1 B ~60% at this 15:55 reading. **HISTORICAL for the current run:** "the keeper bot and the trader bot are not running" and "the bots are not active." See the D-96 status section. The kill switch on the trader is still untested because that bot is not deployed.
 - Never-cut: built 3/3; proven via the UI on production 3/3.
 - **HISTORICAL as the current built line:** S1 ~95% built and S2 ~95% built. See the 19:12 WIB estimate below. The proven column at 15:55 stays the live figure until a production check.
 
@@ -76,16 +76,20 @@ These figures are estimates as of 19:12 WIB on 10 Oct 2026. They were not recomp
 | S2 | ~100% | ~70% |
 
 - **HISTORICAL:** "This is not on production yet" and "the new pages are not proven on https://paron.vercel.app." `4639a4b` is the production commit. It adds an Issued attestations panel on `/verifier` (`GET /v1/participants`; "Use for revoke" fills the uid), the page `/legal/disclaimer` plus footer links to Risk and Disclaimer, a faucet cooldown line read from `lastFaucetAt` with a countdown, and a tour step 4 camera frame on the tray (zoom 1.55) before the move. The Designer pass after this commit did not exercise those screens. The Revoke control was already on `/verifier` before this commit.
-- Proven stays at the 15:55 column for the bots. The keeper bot and the trader bot are still not running, and the kill switch is still untested. D-96 still says the bots are **not active** until the bot wallet is funded.
+- **HISTORICAL:** "The keeper bot and the trader bot are still not running" and "the bots are not active until the bot wallet is funded." See the D-96 status below. Do not read this 15:55 line as the current run state.
 - Never-cut stays 3/3 built and 3/3 proven via the UI on production.
 
 ## Deadline
 
 Hard deadline remains Saturday 10 Oct 2026 23:59 WIB (D-93). Submission, the deck, and the HackQuest button are Fatih's. Suggested submit by about 21:00 WIB for buffer. **HISTORICAL:** "The handler records the final demo video from production" and "The final demo video is recorded from `d3081be`." Final demo video v3 is done. It is about 2 minutes, recorded from production with the new hero, and it was sent to Fatih. Fatih uploads it himself.
 
-## D-96 bots (APPROVED, not active)
+## D-96 bots (APPROVED)
 
-D-96 APPROVED (Fatih, Sat 10 Oct 2026 ~15:00 WIB). The keeper bot and the trader bot on Railway go live with a dedicated bot wallet (not dry-run), once Fatih funds that wallet from the faucet. Status: **PENDING FUNDING**. Docs say **not active** until proven. The bots refuse a chain that is not testnet and keep the D-42 off-chain kill switch. The wallet is not named and its address is not written.
+D-96 APPROVED (Fatih, Sat 10 Oct 2026 ~15:00 WIB). The keeper bot and the trader bot on Railway go live with a dedicated bot wallet (not dry-run), once that wallet is funded from the faucet. They refuse a chain that is not testnet and keep the D-42 off-chain kill switch. No wallet address and no key is written.
+
+**HISTORICAL:** "Status: PENDING FUNDING" and "both bots are not active until proven."
+
+Current run, reported 10 Oct 2026: **keeper live, trader menyusul setelah wallet siap.** The keeper is LIVE on Railway (service `paron-keeper`, deploy success, no errors, kill switch off). It has sent no transaction yet because no redemption has passed its deadline. The trader bot is not deployed. Its wallet still needs mUSDC and KYB, and the buyer wallet it should follow is undecided. Do not write that both bots are running.
 
 ## Production checks (https://paron.vercel.app)
 
