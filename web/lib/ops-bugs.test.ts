@@ -1,8 +1,9 @@
 import assert from "node:assert/strict";
 import { readFileSync } from "node:fs";
 import test from "node:test";
-import { claimCountdown, formatCountdown } from "./format.ts";
+import { claimCountdown, formatCountdown, shortAddress } from "./format.ts";
 import { isDoneOp, isReadyOp, opStatusKey, scheduledFactor } from "./timelock-ops.ts";
+import { attestationRole, canRegisterAsProvider } from "./verification.ts";
 
 const read = (path: string) => readFileSync(new URL(path, import.meta.url), "utf8");
 
@@ -64,6 +65,45 @@ test("verifier, admin, keepers, and KYB render the shared tx status", () => {
   assert.match(css, /\.tx-status\.success \{[^}]*--color-ok/);
   assert.match(css, /\.tx-status\.pending \{[^}]*--color-warn/);
   assert.match(css, /\.tx-status\.failed \{[^}]*--color-danger/);
+});
+
+test("verification register stays closed until the linked attestation is role 1", () => {
+  assert.equal(canRegisterAsProvider(attestationRole(1)), true);
+  assert.equal(canRegisterAsProvider(attestationRole(1n)), true);
+  assert.equal(canRegisterAsProvider(attestationRole(2)), false);
+  assert.equal(canRegisterAsProvider(attestationRole(0)), false);
+  assert.equal(canRegisterAsProvider(attestationRole(null)), false);
+  assert.equal(attestationRole(undefined), null);
+  const wallet = "0x3F8fBCD4b4196Ea3c1c020F09Fc9a590bB246ae9";
+  assert.equal(shortAddress(wallet), "0x3F8f…6ae9");
+  const ops = read("../components/ops.tsx");
+  const kyb = slice(ops, "function KybPage", "function KeepersPage");
+  assert.match(kyb, /Paron verifier \(team-operated, testnet\)/);
+  assert.equal(kyb.includes("Paron demo verifier (team-operated)"), false);
+  assert.match(kyb, /const \[uid, setUid\] = useState\(""\)/);
+  assert.match(kyb, /value=\{uid\}/);
+  assert.match(kyb, /placeholder="0x… \(32-byte attestation uid\)"/);
+  assert.equal(/useState\(\s*address/.test(kyb), false);
+  assert.equal(kyb.includes("value={address}"), false);
+  assert.match(kyb, /Connected wallet \{address \? shortAddress\(address\) : "none"\}/);
+  assert.equal(kyb.includes("shortId(address)"), false);
+  assert.match(kyb, /errorCopy\("NotProviderRole"\)/);
+  assert.match(read("./errors.ts"), /This attestation is for a buyer/);
+  assert.match(kyb, /Ask the verifier for a provider attestation \(role 1\), then link it here\./);
+  assert.match(kyb, /participantOf/);
+  assert.match(kyb, /canRegisterAsProvider\(role\)/);
+  assert.match(kyb, /disabled=\{registerBlocked\}/);
+  const register = kyb.slice(kyb.indexOf('title="Register as provider"'));
+  assert.match(register, /Register as provider/);
+  assert.match(register, /<p className="help">Link a provider attestation first<\/p>/);
+  assert.equal(register.includes('className="bad"'), false);
+  assert.match(register, /<TxStatus record=\{record\} \/>/);
+  const verifier = slice(ops, "function VerifierPage", "function AdminPage");
+  assert.match(verifier, /Paron verifier \(team-operated, testnet\)/);
+  assert.equal(verifier.includes("Paron demo verifier (team-operated)"), false);
+  const css = read("../app/globals.css");
+  assert.match(css, /\.btn \{[^}]*min-height:\s*44px/);
+  assert.match(css, /\.help \{[^}]*--color-text-tertiary/);
 });
 
 test("a live claim says Claimable now and the clock does not go negative", () => {

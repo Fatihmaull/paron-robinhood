@@ -16,6 +16,7 @@ export const DOCS_NOTES = [
   "Paron is testnet only. Tokens have no monetary value and no real funds are involved.",
   "Some figures are labeled Demo data or sample; treat them as illustrations, not market prices.",
   "A provider's bond is 1.5× the primary price. It is the collateral a default claim is paid from, so a default is a real loss for the provider on testnet.",
+  "To register as a provider your wallet needs a provider attestation (role 1) issued on Verifier and linked here first. A buyer attestation can't register.",
 ] as const;
 
 export const DOCS_STEPS: readonly DocsStep[] = [

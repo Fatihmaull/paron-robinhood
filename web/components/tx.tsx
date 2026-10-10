@@ -95,7 +95,18 @@ export function useSend() {
 
 async function settle(client: PublicClient, hash: string) {
   const receipt = await client.waitForTransactionReceipt({ hash: hash as `0x${string}` });
-  if (receipt.status !== "success") throw new Error("Transaction failed.");
+  if (receipt.status === "success") return;
+  const tx = await client.getTransaction({ hash: hash as `0x${string}` });
+  if (tx.to) {
+    await client.call({
+      account: tx.from,
+      to: tx.to,
+      data: tx.input,
+      value: tx.value,
+      blockNumber: receipt.blockNumber,
+    });
+  }
+  throw new Error("Transaction failed.");
 }
 
 export function TxStatus({ record }: { record: TxRecord | null }) {
