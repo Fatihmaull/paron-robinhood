@@ -40,6 +40,8 @@ Fatih pernah kalah di hackathon karena juri menulis *"features still mocked and 
 
 **Route indeks.** Halaman yang dibangun adalah `/h100-index` (`web/app/h100-index/page.tsx`). Path statis `/index` bentrok dengan `/` di Vercel, jadi `/index` mengalihkan 307 ke `/h100-index` (`web/next.config.ts`, `permanent: false`). Path API `/index/H100` tidak berubah (indexer `GET /v1/index/:gpu`). Di pohon dan matriks di bawah, nama halaman `/index` berarti `/h100-index` kecuali yang disebut sebagai path API `/v1/index/…`. `/index/[gpu]` tetap route produk penuh yang belum menjadi halaman terpisah.
 
+**IA UI (10 Okt 2026):** navbar aplikasi yang dibuka dari "Launch app" hanya sisi pengguna: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. "For providers" berdiri di kanan header, di luar baris itu, dan di Menu sebagai bagian terpisah. "Operator" hanya di footer landing dan di halaman operator, menuju `/operator` (judul "Operator tools") yang menaut ke `/verifier`, `/admin`, `/ops/keepers`, `/arbiter`, dan `/disputes`. `/demo` tetap hidup; satu-satunya pintu masuk adalah CTA landing "Launch demo".
+
 ---
 
 ## 2. Konvensi
@@ -829,6 +831,14 @@ Pola umum: aksi yang **lewat timelock** dibuat sebagai proposal (`TimelockContro
 - **Kontrak/API:** tabel Ponder + T16 `config_change`. Endpoint event mentah **[TBD]** (tidak ada di 03 §3.2).
 - **State:** kosong.
 - **Tag:** FULL · Demo live: Tidak.
+
+#### `/operator`
+- **Tujuan:** halaman "Operator tools" yang mengumpulkan verifier, admin, keepers, arbiter, dan disputes.
+- **Gate:** Publik. Aksi tetap di halaman masing-masing.
+- **Komponen/aksi:** tautan ke `/verifier`, `/admin`, `/ops/keepers`, `/arbiter`, `/disputes`. Tidak masuk navbar pengguna. Pintu masuk: footer landing dan tautan "Operator" di halaman-halaman itu.
+- **Kontrak/API:** tidak ada panggilan baru.
+- **State:** statis.
+- **Tag:** MVP-27h · Demo live: Ya (dari footer landing).
 
 ### 4.10 Testnet (publik, terlihat oleh juri)
 

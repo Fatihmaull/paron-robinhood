@@ -5,16 +5,20 @@ export const landingNav = [
   { href: "/buy", label: "Buy" },
   { href: "/trade", label: "Trade" },
   { href: "/portfolio", label: "Portfolio" },
-  { href: "/provider", label: "Provider" },
   { href: "/data", label: "Data" },
-  { href: "/demo", label: "Demo" },
 ] as const;
 
 export const landingFooter = [
   { href: "/markets", label: "Markets" },
   { href: "/data", label: "Data" },
-  { href: "/demo", label: "Demo" },
+  { href: "/operator", label: "Operator" },
 ] as const;
+
+/** Connected and not verified goes to KYB. Everyone else opens the provider dashboard. */
+export function providerEntryPath(connected: boolean, verified: boolean | null | undefined): string {
+  if (connected && verified === false) return "/onboarding/kyb";
+  return "/provider";
+}
 
 export const landingLinks = {
   launch: "/markets",

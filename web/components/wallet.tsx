@@ -43,10 +43,6 @@ export function WalletConnect() {
         <div className="menu-pop">
           <Link href="/faucet" onClick={() => setOpen(false)}>Get test USDC</Link>
           <Link href="/onboarding/kyb" onClick={() => setOpen(false)}>Verification</Link>
-          <Link href="/verifier" onClick={() => setOpen(false)}>Verifier</Link>
-          <Link href="/admin" onClick={() => setOpen(false)}>Admin</Link>
-          <Link href="/ops/keepers" onClick={() => setOpen(false)}>Keepers</Link>
-          <Link href="/arbiter" onClick={() => setOpen(false)}>Arbiter</Link>
           <button type="button" onClick={() => disconnect()}>Disconnect</button>
         </div>
       ) : null}

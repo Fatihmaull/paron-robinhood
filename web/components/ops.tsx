@@ -24,6 +24,7 @@ import { formatFactor, formatWib, shortId } from "@/lib/format";
 import { gpuModelId } from "@/lib/gpu-model";
 import { useKeeperQueue, useKyb, useTimelock } from "@/lib/hooks";
 import { useSend } from "./tx";
+import { OperatorLink } from "./operator-link";
 import { Field, Panel, TxButton } from "./ui";
 
 const ZERO32 = `0x${"0".repeat(64)}` as `0x${string}`;
@@ -117,6 +118,7 @@ export function KeepersPage() {
   const rm = contractAddress("redemptionManager");
   return (
     <div>
+      <OperatorLink />
       <h1>Keepers</h1>
       <p className="lede">Five permissionless queues. Buttons send the contract call from the connected wallet.</p>
       <div className="grid">
@@ -187,6 +189,7 @@ export function VerifierPage() {
 
   return (
     <div>
+      <OperatorLink />
       <div className="page-head">
         <h1>Verifier</h1>
         <span className="pill outline">Paron demo verifier (team-operated)</span>
@@ -286,6 +289,7 @@ export function AdminPage() {
 
   return (
     <div>
+      <OperatorLink />
       <h1>Admin</h1>
       <p className="lede">Schedule setFactor from the admin wallet. Execute is open to any wallet. There is no Safe protocol-kit in this app.</p>
       <div className="stat-grid three">
@@ -394,6 +398,7 @@ export function ArbiterPage() {
   const [ruling, setRuling] = useState("1");
   return (
     <div>
+      <OperatorLink />
       <h1>Panel</h1>
       <p className="lede">rule() is members-only. There is no arbiter role. A 2-of-3 panel collects signatures out of band; this page sends rule() when the caller is a member.</p>
       <Panel>

@@ -1,7 +1,10 @@
 "use client";
 
 import Link from "next/link";
+import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useAccount } from "wagmi";
+import { loadParticipant } from "@/lib/api";
 import { formatUsd } from "@/lib/format";
 import { indexQuote } from "@/lib/index-quote";
 import { useIndex } from "@/lib/hooks";
@@ -17,9 +20,21 @@ import {
   landingNav,
   landingProvider,
   landingSteps,
+  providerEntryPath,
 } from "@/lib/landing-copy";
+import { useData } from "./providers";
 
 export function Landing() {
+  const { address, isConnected } = useAccount();
+  const { source } = useData();
+  const participant = useQuery({
+    queryKey: ["participant-entry", source, address ?? null],
+    enabled: Boolean(isConnected && address),
+    retry: false,
+    queryFn: () => loadParticipant(address as string, source),
+  });
+  const verified = !isConnected ? null : participant.isError ? false : participant.data ? participant.data.data.verified : null;
+  const providerHref = providerEntryPath(isConnected, verified);
   const index = useIndex();
   const quote = indexQuote(index.data?.data);
   const price = quote.amount ? formatUsd(quote.amount) : null;
@@ -186,7 +201,7 @@ export function Landing() {
                   <li key={item.strong}><b>{item.strong}</b> {item.text}</li>
                 ))}
               </ul>
-              <Link className="pill pill-ghost" href={landingLinks.provider}>Become a provider</Link>
+              <Link className="pill pill-ghost" href={providerHref}>Become a provider</Link>
             </div>
           </div>
         </section>
@@ -198,7 +213,7 @@ export function Landing() {
                 <p className="mono">Demo path · S0</p>
                 <h2 className="sec">Walk the whole loop in five steps.</h2>
               </div>
-              <Link className="pill pill-ghost" href={landingLinks.demo}>Open demo</Link>
+              <Link className="pill pill-ghost" href={landingLinks.demo}>Launch demo</Link>
             </div>
             <ol className="steps rv">
               {landingSteps.map((step) => (
