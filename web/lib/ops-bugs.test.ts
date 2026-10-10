@@ -44,6 +44,8 @@ test("done operations use a green Done badge and do not render Execute", () => {
   const admin = slice(ops, "function AdminPage", "const KYB_PILLS");
   assert.match(admin, /isReadyOp\(op\.status\) \|\| isDoneOp\(op\.status\)/);
   assert.match(admin, /\{done \? null : \([\s\S]*Execute[\s\S]*?<\/TxButton>/);
+  assert.match(admin, /<span>Ready at<\/span><span>\{formatWib\(op\.ready_at_ms\)\}<\/span>/);
+  assert.equal(admin.includes('done ? "Executed"'), false);
 });
 
 test("verifier, admin, keepers, and KYB render the shared tx status", () => {
