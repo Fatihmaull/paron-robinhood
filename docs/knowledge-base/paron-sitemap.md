@@ -36,11 +36,11 @@ Fatih pernah kalah di hackathon karena juri menulis *"features still mocked and 
    - Masa depan: app terpisah.
 6. **`/demo` dan `/faucet` publik** dan terlihat oleh juri.
 
-**[D-95, APPROVED Sab 10 Okt 2026 ~11:07 WIB.]** Halaman verifier, admin, ops, dan arbiter tetap ada di situs yang sama. Yang **HISTORICAL** untuk navigasi: anggapan bahwa Provider, Operator, dan Demo duduk di navbar pengguna, dan bahwa `/demo` ditautkan dari halaman lain. Navbar pengguna (CTA "Launch app") hanya Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Provider di luar nav itu; dashboard `/provider/[address]`. Operator hanya lewat CTA kecil di footer atau bagian bawah landing. `/demo` tetap hidup; satu-satunya pintu adalah CTA landing "Launch demo". `/faucet` tetap di navbar pengguna. Detail: 07 §25. **Koreksi setelah #71:** pintu provider hanya CTA landing "Become a provider", bukan tautan sekunder di navbar aplikasi.
+**[D-95, APPROVED Sab 10 Okt 2026 ~11:07 WIB.]** Halaman verifier, admin, ops, dan arbiter tetap ada di situs yang sama. Yang **HISTORICAL** untuk navigasi: anggapan bahwa Provider, Operator, dan Demo duduk di navbar pengguna, dan bahwa `/demo` ditautkan dari halaman lain. Navbar pengguna (CTA "Launch app") hanya Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Provider di luar nav itu; dashboard `/provider/[address]`. Operator hanya lewat CTA kecil di footer atau bagian bawah landing. `/demo` tetap hidup; satu-satunya pintu adalah CTA landing "Launch demo". `/faucet` tetap di navbar pengguna. Detail: 07 §25. **Koreksi setelah #71:** pintu provider hanya CTA landing "Become a provider", bukan tautan sekunder di navbar aplikasi. **D-97 (APPROVED 10 Okt 2026):** urutan yang mulai dari Markets tanpa Docs adalah **HISTORICAL** untuk ketiadaan tautan Docs. Navbar sekarang: Docs, Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Docs tepat di kiri Markets.
 
 **Route indeks.** Halaman yang dibangun adalah `/h100-index` (`web/app/h100-index/page.tsx`). Path statis `/index` bentrok dengan `/` di Vercel, jadi `/index` mengalihkan 307 ke `/h100-index` (`web/next.config.ts`, `permanent: false`). Path API `/index/H100` tidak berubah (indexer `GET /v1/index/:gpu`). Di pohon dan matriks di bawah, nama halaman `/index` berarti `/h100-index` kecuali yang disebut sebagai path API `/v1/index/…`. `/index/[gpu]` tetap route produk penuh yang belum menjadi halaman terpisah.
 
-**IA UI (10 Okt 2026):** navbar aplikasi yang dibuka dari "Launch app" hanya sisi pengguna: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. **HISTORICAL:** kalimat lama bahwa "For providers" berdiri di kanan header, di luar baris itu, dan di Menu sebagai bagian terpisah. PR #71 menghapus "For providers" dari navbar aplikasi. Aturan revisi Fatih (koreksi D-95): pintu provider hanya CTA landing "Become a provider". Operator hanya lewat CTA kecil di footer landing, menuju `/operator` (judul "Operator tools") yang menaut ke `/verifier`, `/admin`, `/ops/keepers`, `/arbiter`, dan `/disputes`. Pintu Operator dari halaman lain sebagai jalur masuk adalah **HISTORICAL**. `/demo` tetap hidup; satu-satunya pintu masuk adalah CTA landing "Launch demo".
+**IA UI (10 Okt 2026):** **HISTORICAL sejak D-97** untuk urutan yang mulai dari Markets tanpa Docs. Navbar aplikasi yang dibuka dari "Launch app" sekarang: Docs, Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Docs tepat di kiri Markets. **HISTORICAL:** kalimat lama bahwa "For providers" berdiri di kanan header, di luar baris itu, dan di Menu sebagai bagian terpisah. PR #71 menghapus "For providers" dari navbar aplikasi. Aturan revisi Fatih (koreksi D-95): pintu provider hanya CTA landing "Become a provider". Operator hanya lewat CTA kecil di footer landing, menuju `/operator` (judul "Operator tools") yang menaut ke `/verifier`, `/admin`, `/ops/keepers`, `/arbiter`, dan `/disputes`. Pintu Operator dari halaman lain sebagai jalur masuk adalah **HISTORICAL**. `/demo` tetap hidup; satu-satunya pintu masuk adalah CTA landing "Launch demo". **D-97:** tutorial `/docs` tidak menaut ke `/demo`. Status bangun tutorial: **PENDING**.
 
 ---
 
@@ -247,12 +247,13 @@ State umum yang berlaku di semua halaman (tidak diulang per route):
 - **Tag:** MVP-27h, Tier 2 (S6; **X6-19 [APPROVED]**) · Solo: Tier S3 (§9.1). API E1 `/v1/prints` sendiri tetap MUST (design §10.4), jadi live `curl` 15 dtk tetap bisa tanpa halaman ini · Demo live: Ya kalau dibangun.
 
 #### `/docs`
-- **Tujuan:** dokumentasi produk + README publik: arsitektur, blok atribusi (design §7.5), footnote.
+- **Tujuan lama:** dokumentasi produk + README publik: arsitektur, blok atribusi (design §7.5), footnote. **HISTORICAL sejak D-97.**
+- **Tujuan [D-97, APPROVED 10 Okt 2026, status bangun PENDING]:** tutorial lengkap dari awal sampai selesai untuk memakai Paron. Dicapai dari navbar aplikasi, tepat di kiri Markets. Tiap langkah: satu judul, penjelasan singkat, satu tangkapan layar. Tanpa video. Hanya alur aplikasi produksi. Tidak ada tautan ke `/demo` (pintu `/demo` tetap CTA landing "Launch demo", D-95). Tangkapan layar dari data on-chain sungguhan, bukan "Demo data". Bagian provider dan operator pendek: pintu provider = "Become a provider" di landing; pintu operator = tab Operator di footer, bukan di navbar. Header wajib dicek ulang di 1024, 1280, dan 390 dengan wallet tersambung. Isi ditulis Designer dan dibangun engineer. Belum selesai.
 - **Gate:** Publik.
-- **Komponen/aksi:** konten statis markdown.
+- **Komponen/aksi lama:** konten statis markdown. **HISTORICAL** untuk bentuk tutorial D-97.
 - **Kontrak/API:** —
-- **State:** —
-- **Tag:** MVP-27h (versi README) · Demo live: Tidak.
+- **State:** belum dibangun (PENDING).
+- **Tag:** MVP-27h (versi README) · Demo live: Tidak. Baris tag README itu **HISTORICAL** sebagai tujuan halaman. Tutorial D-97 belum selesai.
 
 #### `/docs/methodology`
 - **Tujuan:** `METHODOLOGY.md` PrintIndex (winsorized VWAP, ambang volume, status, carry-forward), plus metode faktor konversi.
