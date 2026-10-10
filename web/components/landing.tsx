@@ -15,11 +15,11 @@ import {
   landingLinks,
   landingNav,
   landingProvider,
-  landingSample,
   landingSteps,
   providerEntryPath,
 } from "@/lib/landing-copy";
 import { DemoTour } from "./landing/demo-tour";
+import { heroSkyline } from "./landing/skyline";
 import { useData } from "./providers";
 
 export function Landing() {
@@ -92,27 +92,33 @@ export function Landing() {
       </header>
       <main id="main">
         <div className="hero">
-          <div className="curtain" aria-hidden="true">
-            <i className="c1" />
-            <i className="c2" />
-            <i className="c3" />
-            <span className="glass" />
-            <span className="scrim" />
-          </div>
-          <div className="wrap hero-main grid">
-            <h1>Where compute is forged into one standard.</h1>
-            <div className="index">
-              <div className="bar" />
-              <div className="row">
-                <div className="serif num" aria-label={landingSample.aria}>{landingSample.amount}</div>
-                <div className="mono tag">H100 index<br />{landingSample.tag}</div>
-              </div>
-              <p className="lede">A marketplace for tokenized GPU compute. One unit, one hour of H100-equivalent compute, backed by a posted bond.</p>
+          <div className="hero-visual">
+            <pre className="sky" aria-hidden="true">{heroSkyline}</pre>
+            <div className="hero-copy">
+              <h1>Where compute is forged into <em>one standard.</em></h1>
+              <p className="lede">A bonded marketplace for tokenized GPU compute. One unit is one H100-hour, backed by a posted bond. Testnet only.</p>
               <div className="cta">
-                <Link className="pill pill-solid" href={landingLinks.launch}>Launch app</Link>
-                <a className="pill pill-ghost" href={landingLinks.how}>How it works</a>
+                <Link className="pill pill-solid" href={landingLinks.provider}>Become a provider</Link>
+                <Link className="pill pill-ghost" href={landingLinks.launch}>Browse markets</Link>
               </div>
-              <p className="mono sample">{landingSample.note}</p>
+            </div>
+            <div className="hero-stage-wrap">
+              <div className="stage">
+                <div className="win">
+                  <div className="win-bar">
+                    <div className="dots" aria-hidden="true"><i /><i /><i /></div>
+                    <div className="win-title">Paron</div>
+                    <span />
+                  </div>
+                  <img
+                    className="win-shot"
+                    src="/hero/markets.webp"
+                    width={2880}
+                    height={1880}
+                    alt="Paron markets for series CU-JKT-H100-2610 on Robinhood Chain Testnet, with the prints chart, order book, buy ticket, and market table."
+                  />
+                </div>
+              </div>
             </div>
           </div>
           <div className="wrap facts">
@@ -213,10 +219,9 @@ export function Landing() {
           <div className="wrap grid">
             <div className="head rv">
               <div>
-                <p className="mono">Demo path · S0</p>
-                <h2 className="sec">Walk the documented demo path.</h2>
+                <p className="mono">S0 path</p>
+                <h2 className="sec">Walk the documented path.</h2>
               </div>
-              <Link className="pill pill-ghost" href={landingLinks.demo}>Launch demo</Link>
             </div>
             <ol className="steps rv">
               {landingSteps.map((step) => (

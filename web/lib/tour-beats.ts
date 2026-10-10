@@ -89,4 +89,4 @@ export function tourPresentation(width: number, reduceMotion: boolean): "poster"
   return "play";
 }
 
-export const TOUR_POSTER_STEP = "Demo path · 6 steps";
+export const TOUR_POSTER_STEP = "Full path · 6 steps";

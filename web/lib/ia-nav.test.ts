@@ -76,9 +76,10 @@ test("landing nav puts Docs immediately left of Markets", () => {
   );
 });
 
-test("landing CTAs keep one demo entry and a footer operator link", () => {
+test("landing CTAs keep the announcement path and a footer operator link", () => {
   assert.equal(landingLinks.launch, "/markets");
-  assert.equal(landingLinks.demo, "/demo");
+  assert.equal(landingLinks.provider, "/provider");
+  assert.equal(landingLinks.announce, "#demo");
   assert.equal(
     landingNav.some((item) => item.href === "/demo" || item.href === "/provider" || item.href === "/operator"),
     false,
@@ -89,10 +90,12 @@ test("landing CTAs keep one demo entry and a footer operator link", () => {
   );
   assert.equal(landingFooter.find((item) => item.label === "Operator")?.href, "/operator");
   const landing = read("../components/landing.tsx");
-  assert.equal((landing.match(/landingLinks\.demo/g) ?? []).length, 1);
-  assert.match(landing, /Launch demo/);
-  assert.equal(landing.includes("Open demo"), false);
+  assert.equal(landing.includes("Launch demo"), false);
+  assert.equal(landing.includes('href="/demo"'), false);
+  assert.equal(landing.includes("landingLinks.demo"), false);
+  assert.match(landing, /See the demo path/);
   assert.match(landing, /Become a provider/);
+  assert.match(landing, /Browse markets/);
   assert.match(landing, /providerEntryPath/);
   assert.equal(providerEntryPath(false, null), "/provider");
   assert.equal(providerEntryPath(true, true), "/provider");
