@@ -1,45 +1,43 @@
 "use client";
 
 import Link from "next/link";
-import { useLayoutEffect, useRef, useState } from "react";
+import "@/app/motion-tour.css";
 import { landingLinks } from "@/lib/landing-copy";
-import { TOUR_POSTER_STEP, TOUR_STEPS } from "@/lib/tour-beats";
-import { startTour } from "./tour-runner";
-import { TourScreens } from "./tour-screens";
+import { MOTION_SCENES } from "@/lib/motion-scenes";
+import { MotionBar, MotionSimple, MotionStageFrame, useFilm } from "@/components/motion-tour/player";
 
 export function DemoTour() {
-  const rootRef = useRef<HTMLElement>(null);
-  const flags = useRef({ userPaused: false });
-  const [poster, setPoster] = useState(true);
-  const [paused, setPaused] = useState(false);
-  const [stepIndex, setStepIndex] = useState<number>(TOUR_STEPS.length);
-  const [stepText, setStepText] = useState(TOUR_POSTER_STEP);
-
-  useLayoutEffect(() => {
-    const root = rootRef.current;
-    if (!root) return;
-    return startTour(root, {
-      flags: flags.current,
-      onStep: (index, text) => {
-        setStepIndex(index);
-        setStepText(text);
-      },
-      onPoster: setPoster,
-    });
-  }, []);
-
+  const film = useFilm("embed");
   return (
-    <section className={poster ? "demo-tour is-static" : "demo-tour"} ref={rootRef} aria-labelledby="tour-h">
+    <section
+      id="tour"
+      className="demo-tour"
+      aria-labelledby="tour-h"
+      tabIndex={0}
+      onFocus={(event) => {
+        if (!event.currentTarget.contains(event.relatedTarget as Node | null)) film.setPaused(true);
+      }}
+      onKeyDown={(event) => {
+        if (event.key === "ArrowRight") film.stepBy(1);
+        if (event.key === "ArrowLeft") film.stepBy(-1);
+        if (event.key === " " && event.target === event.currentTarget) {
+          event.preventDefault();
+          film.setPaused((current) => !current);
+        }
+      }}
+    >
       <div className="wrap tour-grid">
         <div className="tour-copy">
           <p className="mono">Full path</p>
-          <h2 id="tour-h">See the full path in 30 seconds.</h2>
-          <p className="lede">Pick a series, check the bond, buy, trade, redeem. The same screens you get in the app.</p>
-          <ol aria-label="Steps shown in the tour">
-            {TOUR_STEPS.map((step) => (
-              <li key={step.n} aria-current={step.n === stepIndex ? "step" : undefined}>
-                <b>{String(step.n).padStart(2, "0")}</b>
-                <span><strong>{step.title}</strong> {step.body}</span>
+          <h2 id="tour-h">See the full path.</h2>
+          <p className="lede">Twelve scenes, from the faucet to the timelock. The same screens you get in the app.</p>
+          <ol className="motion-scenes" aria-label="Scenes shown in the tour">
+            {MOTION_SCENES.map((scene, index) => (
+              <li key={scene.id}>
+                <button type="button" aria-current={index === film.frame.sceneIndex ? "step" : undefined} onClick={() => film.jump(index)}>
+                  <b>{String(index + 1).padStart(2, "0")}</b>
+                  <span>{scene.title}</span>
+                </button>
               </li>
             ))}
           </ol>
@@ -47,37 +45,13 @@ export function DemoTour() {
           <p className="tour-small">Testnet only. Tokens have no monetary value. The tour is a sample, not live data.</p>
         </div>
         <div className="tour-stage">
-          <div className="tour-frame">
-            <span className="demo-badge">Sample</span>
-            <div className="tour-win" aria-hidden="true" inert>
-              <div className="scaler">
-                <div className="cam">
-                  <TourScreens />
-                </div>
-              </div>
-            </div>
+          <div className="motion-embed">
+            <MotionStageFrame frame={film.frame} />
+            <MotionSimple frame={film.frame} stepBy={film.stepBy} />
+            <MotionBar frame={film.frame} paused={film.paused} onToggle={() => film.setPaused((current) => !current)} />
+            <p className="tour-note">Illustrative sample. All numbers are a sample.</p>
+            <p className="motion-live" aria-live="polite">{film.frame.label}</p>
           </div>
-          <div className="tour-bar">
-            <span className="tour-step" aria-hidden="true">{stepText}</span>
-            <span className="tour-ticks" aria-hidden="true">
-              {TOUR_STEPS.map((step) => <i key={step.n} className={step.n <= stepIndex ? "on" : undefined} />)}
-            </span>
-            <button
-              className="tour-pause"
-              type="button"
-              aria-pressed={paused}
-              aria-label={paused ? "Play tour" : "Pause tour"}
-              onClick={() => {
-                const next = !flags.current.userPaused;
-                flags.current.userPaused = next;
-                setPaused(next);
-              }}
-            >
-              <svg className="i-pause" viewBox="0 0 14 14" aria-hidden="true"><rect x="2" y="1" width="3.5" height="12" /><rect x="8.5" y="1" width="3.5" height="12" /></svg>
-              <svg className="i-play" viewBox="0 0 14 14" aria-hidden="true"><path d="M3 1l10 6-10 6z" /></svg>
-            </button>
-          </div>
-          <p className="tour-note">Illustrative sample. All numbers are a sample.</p>
         </div>
       </div>
     </section>

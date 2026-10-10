@@ -20,6 +20,7 @@ contracts/cache/
 contracts/broadcast/
 
 # local
+/out/
 *.log
 .idea/
 .vscode/

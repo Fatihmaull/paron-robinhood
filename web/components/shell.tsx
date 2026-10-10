@@ -127,7 +127,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
       : catchup;
   const bannerTone = devMock ? "mock" : catchup && banner === catchup ? "info" : "warn";
 
-  if (path === "/") return children;
+  if (path === "/" || path === "/tour") return children;
 
   return (
     <div className="shell">
