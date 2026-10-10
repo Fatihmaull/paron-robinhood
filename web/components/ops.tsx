@@ -27,6 +27,7 @@ import { useKeeperQueue, useKyb, useParticipants, useTimelock } from "@/lib/hook
 import { attestationRole, canRegisterAsProvider } from "@/lib/verification";
 import { TxStatus, useSend } from "./tx";
 import { OperatorLink } from "./operator-link";
+import { FitAddress } from "./address";
 import { Field, Panel, TxButton } from "./ui";
 
 const ZERO32 = `0x${"0".repeat(64)}` as `0x${string}`;
@@ -250,8 +251,8 @@ export function VerifierPage() {
   const apps = useKyb();
   const issued = useParticipants();
   const { send, pending, error, record } = useSend();
-  const [applicant, setApplicant] = useState("0x6666666666666666666666666666666666666666");
-  const [entity, setEntity] = useState(`0x${"e6".repeat(32)}`);
+  const [applicant, setApplicant] = useState("");
+  const [entity, setEntity] = useState("");
   const [role, setRole] = useState("1");
   const [country, setCountry] = useState("ID");
   const [expiry, setExpiry] = useState("1822953600");
@@ -282,7 +283,7 @@ export function VerifierPage() {
         </div>
         {list.map((item) => (
           <div className="row" key={item.uid}>
-            <span>{shortId(item.applicant)} · {item.role?.name ?? "Applicant"}</span>
+            <span><FitAddress value={item.applicant} /> · {item.role?.name ?? "Applicant"}</span>
             <KybPill status={item.status} />
           </div>
         ))}
@@ -293,7 +294,7 @@ export function VerifierPage() {
         {attestations.map((item) => (
           <div className="row" key={item.attestation_uid ?? item.address}>
             <span>
-              {shortId(item.address)} · {item.role?.name ?? "Participant"}
+              <FitAddress value={item.address} /> · {item.role?.name ?? "Participant"}
               {item.revoked ? " · Revoked" : item.verified ? " · Verified" : ""}
             </span>
             <button
@@ -309,8 +310,8 @@ export function VerifierPage() {
         ))}
       </Panel>
       <Panel title="Issue attestation">
-        <Field label="Applicant"><input value={applicant} onChange={(event) => setApplicant(event.target.value)} /></Field>
-        <Field label="Entity id (bytes32)"><input value={entity} onChange={(event) => setEntity(event.target.value)} /></Field>
+        <Field label="Applicant"><input value={applicant} onChange={(event) => setApplicant(event.target.value)} placeholder="0x6666…6666" /></Field>
+        <Field label="Entity id (bytes32)"><input value={entity} onChange={(event) => setEntity(event.target.value)} placeholder="0xe6e6…e6e6" /></Field>
         <Field label="Role">
           <select value={role} onChange={(event) => setRole(event.target.value)}>
             <option value="1">1 Provider</option>

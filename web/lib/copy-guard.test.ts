@@ -25,6 +25,19 @@ test("web/ and README carry no affiliation copy", () => {
   assert.deepEqual(hits, []);
 });
 
+test("the missing-page screen avoids banned words", () => {
+  const page = readFileSync(join(process.cwd(), "app", "not-found.tsx"), "utf8");
+  const css = readFileSync(join(process.cwd(), "app", "globals.css"), "utf8");
+  assert.equal(WORDS.test(page), false);
+  assert.equal(BANNED.test(page), false);
+  assert.equal((page.match(/<h1[\s>]/g) ?? []).length, 1);
+  assert.equal((page.match(/<p[\s>]/g) ?? []).length, 1);
+  assert.match(page, /href="\/markets"/);
+  assert.match(css, /\.not-found \.btn \{[^}]*min-height:\s*44px/);
+  assert.match(css, /\.not-found \.btn \{[^}]*min-width:\s*44px/);
+  assert.match(css, /\.not-found \{[^}]*var\(--color-bg-canvas\)/);
+});
+
 test("docs tutorial avoids banned words", () => {
   const docs = readFileSync(join(process.cwd(), "lib", "docs-content.ts"), "utf8");
   const page = readFileSync(join(process.cwd(), "app", "docs", "page.tsx"), "utf8");

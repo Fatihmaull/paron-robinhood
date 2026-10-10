@@ -5,7 +5,8 @@ import { usePathname } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { useAccount, useBalance, useBlockNumber, useChainId, useSwitchChain } from "wagmi";
 import { formatUsd } from "@/lib/format";
-import { catchupBanner, type HealthSnapshot } from "@/lib/indexer-banner";
+import { catchupText, nextCatchupState, QUIET_CATCHUP, type CatchupMemory, type HealthSnapshot } from "@/lib/indexer-banner";
+import { indexStripActivity } from "@/lib/index-quote";
 import { USER_NAV } from "@/lib/nav-links";
 import { navNeedsMenu } from "@/lib/nav-fit";
 import { rpcBackoffMs } from "@/lib/rpc";
@@ -37,10 +38,13 @@ export function Shell({ children }: { children: React.ReactNode }) {
   const [open, setOpen] = useState(false);
   const [fit, setFit] = useState<"pending" | "inline" | "menu">("pending");
   const headerRef = useRef<HTMLElement>(null);
-  const [health, setHealth] = useState<HealthSnapshot | null>(null);
+  const [catchupMemory, setCatchupMemory] = useState<CatchupMemory>(QUIET_CATCHUP);
   const [healthBlock, setHealthBlock] = useState<number | null>(null);
   useEffect(() => {
-    if (source !== "live" || !apiBase()) return;
+    if (source !== "live" || !apiBase()) {
+      setCatchupMemory(QUIET_CATCHUP);
+      return;
+    }
     let dead = false;
     const check = async () => {
       const ctrl = new AbortController();
@@ -50,14 +54,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
         const body = (await res.json()) as { data?: HealthSnapshot };
         if (!res.ok) throw new Error(`health ${res.status}`);
         if (!dead) {
-          setHealth(body.data ?? null);
           setHealthBlock(typeof body.data?.indexed_block === "number" ? body.data.indexed_block : null);
+          setCatchupMemory((prev) => nextCatchupState(prev, body.data ?? null));
         }
       } catch {
-        if (!dead) {
-          setHealth(null);
-          setHealthBlock(null);
-        }
+        // A failed poll is not a healthy reading. Leave the banner streak alone.
+        if (!dead) setHealthBlock(null);
       } finally {
         clearTimeout(timer);
       }
@@ -111,11 +113,12 @@ export function Shell({ children }: { children: React.ReactNode }) {
     };
   }, [path, address, isConnected]);
   const strip = index.data?.data;
+  const activity = indexStripActivity(strip);
   const ref = strip?.reference?.value;
   const wrong = isConnected && walletChain !== chainId();
   const lowGas = balance.data != null && balance.data.value < 5_000_000_000_000_000n;
   const head = block.data != null ? Number(block.data) : null;
-  const catchup = source === "live" ? catchupBanner(health) : null;
+  const catchup = source === "live" ? catchupText(catchupMemory) : null;
   const devMock = source === "mock" && process.env.NODE_ENV !== "production";
   const banner = devMock
     ? `Mock data (fixtures). Transactions are disabled. Snapshot ${snap}.`
@@ -163,7 +166,7 @@ export function Shell({ children }: { children: React.ReactNode }) {
           <span className="num">
             {strip?.status === "OK" && strip.value ? `${formatUsd(strip.value)}/CU` : strip?.status === "THIN" && strip.value ? `last OK ${formatUsd(strip.value)}/CU` : strip?.status === "DISRUPTED" ? "do not use for settlement" : strip?.status === "THIN" ? "no eligible prints yet" : ""}
           </span>
-          {strip?.status === "OK" ? <span>· {strip.participants} entities · <span className="num">{formatCu(strip.eligible_volume_cu).replace(" CU", "")}</span> CU/24h</span> : null}
+          {activity ? <span>· {activity.participants} entities · <span className="num">{formatCu(activity.volumeCu).replace(" CU", "")}</span> CU/24h</span> : null}
         </span>
         <span className="strip-ref">
           <span className="sep" />
