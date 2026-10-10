@@ -120,3 +120,23 @@ test("a live claim says Claimable now and the clock does not go negative", () =>
   assert.equal(liveBranch.includes("NotDefaultable"), false);
   assert.match(status, /NotDefaultable/);
 });
+
+test("issue attestation unlocks once a wallet is connected and the inputs are valid", () => {
+  const ops = read("../components/ops.tsx");
+  const verifier = slice(ops, "function VerifierPage", "function AdminPage");
+  assert.match(verifier, /disabled=\{!attestInputsValid\}/);
+  assert.match(verifier, /\^0x\[0-9a-fA-F\]\{40\}\$/);
+  assert.match(verifier, /\^0x\[0-9a-fA-F\]\{64\}\$/);
+  const ui = read("../components/ui.tsx");
+  assert.match(ui, /const gate = !address \? "Connect wallet"/);
+});
+
+test("wallet connect uses the picked connector, a timeout, and a retryable button", () => {
+  const wallet = read("../components/wallet.tsx");
+  assert.match(wallet, /pickConnector\(connectors\)/);
+  assert.match(wallet, /withTimeout\(connectAsync/);
+  assert.match(wallet, /Waiting for approval in MetaMask…/);
+  assert.match(wallet, /Install MetaMask/);
+  assert.match(wallet, /connectErrorMessage\(err\)/);
+  assert.equal(wallet.includes("connectors[0]"), false);
+});

@@ -256,6 +256,8 @@ export function VerifierPage() {
   const [role, setRole] = useState("1");
   const [country, setCountry] = useState("ID");
   const [expiry, setExpiry] = useState("1822953600");
+  const attestInputsValid =
+    /^0x[0-9a-fA-F]{40}$/.test(applicant) && /^0x[0-9a-fA-F]{64}$/.test(entity) && /^\d+$/.test(expiry);
   const [uid, setUid] = useState("");
   const uidOk = /^0x[0-9a-fA-F]{64}$/.test(uid);
   const easReady = contractAddress("eas") !== ZERO_ADDRESS && asBytes32(contractAddress("easSchema")) !== ZERO32;
@@ -323,6 +325,8 @@ export function VerifierPage() {
         <Field label="Country"><input value={country} onChange={(event) => setCountry(event.target.value)} /></Field>
         <Field label="Expiry (unix seconds)"><input value={expiry} onChange={(event) => setExpiry(event.target.value)} /></Field>
         <TxButton
+          disabled={!attestInputsValid}
+          reason={attestInputsValid ? undefined : "Enter the applicant address and entity id first"}
           onClick={() => {
             const data = encodeAbiParameters(
               [
