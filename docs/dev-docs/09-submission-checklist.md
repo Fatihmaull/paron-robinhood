@@ -60,29 +60,33 @@ Chain yang dipakai: Robinhood Chain Testnet, chain ID 46630. Bukan mainnet. Fall
 
 `/demo` tidak masuk navbar dan tidak ditaut dari tutorial. Pintu di produk tetap CTA landing "Launch demo" (D-95).
 
-**Alamat kontrak (testnet 46630).** Sumber: `deployments/46630/stage-1.json` dan `deployments/46630/infra.json`. Kedua berkas itu sama persis dengan salinan di `indexer/deployments/46630/`. Tabel alamat di `DEPLOYMENTS.md` masih "pending deploy"; tabel itu **bukan** sumber alamat di sini. Manifest mencatat `verified: false` pada setiap kontrak di bawah. Jangan ditulis seolah sudah terverifikasi di explorer.
+**Alamat kontrak (testnet 46630).** Sumber alamat: `deployments/46630/stage-1.json` dan `deployments/46630/infra.json`. Kedua berkas itu sama persis dengan salinan di `indexer/deployments/46630/`. Tabel alamat di `DEPLOYMENTS.md` masih "pending deploy"; tabel itu **bukan** sumber alamat di sini. Kode sumber terbuka di repo. Alamat di tabel ini adalah checksum dari alamat yang sama. Bukan alamat baru.
 
-Explorer: https://explorer.testnet.chain.robinhood.com (Blockscout). Tautan alamat memakai path `/address/`, host yang sama dengan tautan `/tx/` yang sudah ada di dokumen.
+**HISTORICAL:** "Manifest mencatat `verified: false` pada setiap kontrak di bawah. Jangan ditulis seolah sudah terverifikasi di explorer." Manifest masih menulis `verified: false`. Itu bukan hasil cek handler.
 
-| Kontrak | Alamat | Explorer |
-|---|---|---|
-| EASGate | `0xcfb4de7949afdd92193126e8c36b732c8fc2f503` | https://explorer.testnet.chain.robinhood.com/address/0xcfb4de7949afdd92193126e8c36b732c8fc2f503 |
-| ConversionTable | `0x147fcaf30928e42496b2e25072d2856ad67d9fca` | https://explorer.testnet.chain.robinhood.com/address/0x147fcaf30928e42496b2e25072d2856ad67d9fca |
-| ProviderRegistry | `0xac3cad1fbfe4600186349ff6331947403548a948` | https://explorer.testnet.chain.robinhood.com/address/0xac3cad1fbfe4600186349ff6331947403548a948 |
-| BondVault | `0x5e4b1235263fd50227c32f6018d859de9f07361a` | https://explorer.testnet.chain.robinhood.com/address/0x5e4b1235263fd50227c32f6018d859de9f07361a |
-| CUToken | `0xeee256347a0a70b75f0da2c6a32ad8c971d17464` | https://explorer.testnet.chain.robinhood.com/address/0xeee256347a0a70b75f0da2c6a32ad8c971d17464 |
-| PrintIndex | `0xb094986c6fb21bfc22d0be672283db6b981dd120` | https://explorer.testnet.chain.robinhood.com/address/0xb094986c6fb21bfc22d0be672283db6b981dd120 |
-| SeriesFactory | `0xe7d64ff70c16d4a44f918cae9739e7450c671757` | https://explorer.testnet.chain.robinhood.com/address/0xe7d64ff70c16d4a44f918cae9739e7450c671757 |
-| PrimarySale | `0x185f854a564708e9196f956f09955bafa9466839` | https://explorer.testnet.chain.robinhood.com/address/0x185f854a564708e9196f956f09955bafa9466839 |
-| OrderBook | `0xb8b531d529bb0d7061f8c54940b6182e31e87879` | https://explorer.testnet.chain.robinhood.com/address/0xb8b531d529bb0d7061f8c54940b6182e31e87879 |
-| RedemptionManager | `0x4bdd6ab3f78933bf802d5288d1226f049fde2209` | https://explorer.testnet.chain.robinhood.com/address/0x4bdd6ab3f78933bf802d5288d1226f049fde2209 |
-| PanelArbitrator | `0x0081ad8ef69e7f6b30e29a639207861b2c065f60` | https://explorer.testnet.chain.robinhood.com/address/0x0081ad8ef69e7f6b30e29a639207861b2c065f60 |
-| TimelockController | `0xcd1e14d003d027b5c435fa0c38b796a89c1c82fe` | https://explorer.testnet.chain.robinhood.com/address/0xcd1e14d003d027b5c435fa0c38b796a89c1c82fe |
-| MockUSDC | `0x32142f5bd9674bb38f6b53c1dde429ba2f51f111` | https://explorer.testnet.chain.robinhood.com/address/0x32142f5bd9674bb38f6b53c1dde429ba2f51f111 |
-| EAS | `0x52532ddcf56e5cada383b5ba15cdbac2fe85a349` | https://explorer.testnet.chain.robinhood.com/address/0x52532ddcf56e5cada383b5ba15cdbac2fe85a349 |
-| SchemaRegistry | `0x0E9A3dd0765d4Ef84D42b8e35Cef6aED89E6E379` | https://explorer.testnet.chain.robinhood.com/address/0x0E9A3dd0765d4Ef84D42b8e35Cef6aED89E6E379 |
+Cek handler, chain 46630: **13 dari 13** kontrak (12 kontrak Paron dari `stage-1.json`, plus MockUSDC) adalah **verified on Sourcify (exact match)**. EAS dan SchemaRegistry dari `infra.json` **not verified**.
 
-Dua belas kontrak pertama dari `stage-1.json` (`label` stage-1). MockUSDC, EAS, dan SchemaRegistry dari `infra.json` (EAS `mode` self-deploy, field versi `1.4.0`). `safe` di infra adalah null, jadi tidak ada baris Safe.
+Explorer: https://explorer.testnet.chain.robinhood.com (Blockscout). Tautan alamat memakai path `/address/`, host yang sama dengan tautan `/tx/` yang sudah ada di dokumen. Per ~17:40 WIB, explorer menampilkan **NOT verified** untuk semua baris di tabel ini. Explorer belum mendukung solc 0.8.37 (versi terbaru di explorer 0.8.36). Cek ulang explorer **PENDING**. Jangan ditulis "verified on explorer".
+
+| Kontrak | Alamat | Explorer | Sourcify |
+|---|---|---|---|
+| EASGate | `0xCfB4DE7949aFDd92193126e8c36B732C8Fc2f503` | https://explorer.testnet.chain.robinhood.com/address/0xCfB4DE7949aFDd92193126e8c36B732C8Fc2f503 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0xCfB4DE7949aFDd92193126e8c36B732C8Fc2f503 |
+| ConversionTable | `0x147FcaF30928E42496B2E25072d2856Ad67D9fca` | https://explorer.testnet.chain.robinhood.com/address/0x147FcaF30928E42496B2E25072d2856Ad67D9fca | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0x147FcaF30928E42496B2E25072d2856Ad67D9fca |
+| ProviderRegistry | `0xAC3cAD1FBfE4600186349FF6331947403548a948` | https://explorer.testnet.chain.robinhood.com/address/0xAC3cAD1FBfE4600186349FF6331947403548a948 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0xAC3cAD1FBfE4600186349FF6331947403548a948 |
+| BondVault | `0x5e4b1235263FD50227C32F6018D859de9F07361a` | https://explorer.testnet.chain.robinhood.com/address/0x5e4b1235263FD50227C32F6018D859de9F07361a | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0x5e4b1235263FD50227C32F6018D859de9F07361a |
+| CUToken | `0xeeE256347A0A70B75F0DA2C6A32Ad8C971d17464` | https://explorer.testnet.chain.robinhood.com/address/0xeeE256347A0A70B75F0DA2C6A32Ad8C971d17464 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0xeeE256347A0A70B75F0DA2C6A32Ad8C971d17464 |
+| PrintIndex | `0xB094986C6FB21bfC22d0Be672283DB6b981DD120` | https://explorer.testnet.chain.robinhood.com/address/0xB094986C6FB21bfC22d0Be672283DB6b981DD120 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0xB094986C6FB21bfC22d0Be672283DB6b981DD120 |
+| SeriesFactory | `0xe7d64FF70c16D4a44F918caE9739E7450c671757` | https://explorer.testnet.chain.robinhood.com/address/0xe7d64FF70c16D4a44F918caE9739E7450c671757 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0xe7d64FF70c16D4a44F918caE9739E7450c671757 |
+| PrimarySale | `0x185f854A564708e9196f956F09955bAFA9466839` | https://explorer.testnet.chain.robinhood.com/address/0x185f854A564708e9196f956F09955bAFA9466839 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0x185f854A564708e9196f956F09955bAFA9466839 |
+| OrderBook | `0xb8b531d529Bb0d7061f8C54940b6182E31E87879` | https://explorer.testnet.chain.robinhood.com/address/0xb8b531d529Bb0d7061f8C54940b6182E31E87879 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0xb8b531d529Bb0d7061f8C54940b6182E31E87879 |
+| RedemptionManager | `0x4Bdd6Ab3f78933BF802D5288d1226f049FDE2209` | https://explorer.testnet.chain.robinhood.com/address/0x4Bdd6Ab3f78933BF802D5288d1226f049FDE2209 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0x4Bdd6Ab3f78933BF802D5288d1226f049FDE2209 |
+| PanelArbitrator | `0x0081aD8ef69e7F6B30E29a639207861B2C065f60` | https://explorer.testnet.chain.robinhood.com/address/0x0081aD8ef69e7F6B30E29a639207861B2C065f60 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0x0081aD8ef69e7F6B30E29a639207861B2C065f60 |
+| TimelockController | `0xcd1E14d003d027b5c435FA0C38b796A89c1c82fe` | https://explorer.testnet.chain.robinhood.com/address/0xcd1E14d003d027b5c435FA0C38b796A89c1c82fe | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0xcd1E14d003d027b5c435FA0C38b796A89c1c82fe |
+| MockUSDC | `0x32142f5Bd9674Bb38f6b53C1Dde429BA2F51f111` | https://explorer.testnet.chain.robinhood.com/address/0x32142f5Bd9674Bb38f6b53C1Dde429BA2F51f111 | verified on Sourcify (exact match) · https://sourcify.dev/server/v2/contract/46630/0x32142f5Bd9674Bb38f6b53C1Dde429BA2F51f111 |
+| EAS | `0x52532DdCf56e5CADa383b5ba15cdbac2fe85A349` | https://explorer.testnet.chain.robinhood.com/address/0x52532DdCf56e5CADa383b5ba15cdbac2fe85A349 | not verified · https://sourcify.dev/server/v2/contract/46630/0x52532DdCf56e5CADa383b5ba15cdbac2fe85A349 |
+| SchemaRegistry | `0x0E9A3dd0765d4Ef84D42b8e35Cef6aED89E6E379` | https://explorer.testnet.chain.robinhood.com/address/0x0E9A3dd0765d4Ef84D42b8e35Cef6aED89E6E379 | not verified · https://sourcify.dev/server/v2/contract/46630/0x0E9A3dd0765d4Ef84D42b8e35Cef6aED89E6E379 |
+
+Dua belas kontrak pertama dari `stage-1.json` (`label` stage-1), plus MockUSDC: 13 dari 13 verified on Sourcify (exact match). EAS dan SchemaRegistry dari `infra.json` (EAS `mode` self-deploy, field versi `1.4.0`) not verified. `safe` di infra adalah null, jadi tidak ada baris Safe.
 
 ---
 
