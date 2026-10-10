@@ -52,6 +52,10 @@ test("demo path states, wallet gate, and the short provider address", () => {
   assert.match(css, /min-height: 44px/);
   assert.match(css, /button\.addr-copy[\s\S]*min-height:\s*44px/);
   assert.match(css, /button\.addr-copy[\s\S]*min-width:\s*44px/);
+  assert.match(address, /aria-live="polite"/);
+  assert.match(address, /Copied/);
+  assert.match(address, /1500/);
+  assert.match(css, /button\.addr-copy \{[^}]*font-family:\s*var\(--font-mono\)/);
   assert.match(css, /addr-narrow/);
   assert.equal(shortAddress("0x3F8fBCD4b4196Ea3c1c020F09Fc9a590bB246ae9"), "0x3F8f…6ae9");
 });
