@@ -153,9 +153,10 @@ a.operator-link:hover { color: var(--color-text-primary); text-decoration: none;
   color: var(--color-text-secondary);
 }
 .nav-spacer { flex: 1; min-width: 0; }
-.nav-wallet { display: flex; align-items: center; flex: 0 1 auto; min-width: 0; max-width: 11.5rem; }
+.nav-wallet { display: flex; align-items: center; flex: 0 1 auto; min-width: 0; max-width: 11.5rem; text-transform: none; }
 .nav-wallet button,
-.nav-wallet .btn { white-space: nowrap; max-width: 11.5rem; overflow: hidden; text-overflow: ellipsis; }
+.nav-wallet .btn { white-space: nowrap; max-width: 11.5rem; overflow: hidden; text-overflow: ellipsis; text-transform: none; }
+.addr { text-transform: none; }
 .btn.menu-toggle { display: none; white-space: nowrap; }
 .nav[data-fit="pending"] .menu-toggle,
 .nav[data-fit="menu"] .menu-toggle { display: inline-flex; }
