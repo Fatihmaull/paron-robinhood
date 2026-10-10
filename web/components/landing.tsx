@@ -19,6 +19,7 @@ import {
   landingSteps,
   providerEntryPath,
 } from "@/lib/landing-copy";
+import { DemoTour } from "./landing/demo-tour";
 import { useData } from "./providers";
 
 export function Landing() {
@@ -140,6 +141,8 @@ export function Landing() {
             </ol>
           </div>
         </section>
+
+        <DemoTour />
 
         <section className="bond">
           <div className="wrap grid">
