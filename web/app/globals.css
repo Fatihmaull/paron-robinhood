@@ -352,11 +352,15 @@ button.addr-copy {
   border: 0;
   color: inherit;
   font: inherit;
+  font-family: var(--font-mono);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
   text-transform: none;
   vertical-align: middle;
 }
+button.addr-copy.copied { color: var(--color-ok); }
 button.addr-copy:hover { background: var(--color-bg-hover); text-decoration: none; }
-td:has(button.addr-copy) { height: auto; min-height: 44px; }
+td:has(button.addr-copy) { white-space: nowrap; height: auto; min-height: 44px; }
 .not-found { background: var(--color-bg-canvas); color: var(--color-text-primary); }
 .not-found .btn { min-height: 44px; min-width: 44px; }
 td.num, .stats-ribbon dd, .clock, .strip .num, .book-row .px { color: var(--color-accent); }
@@ -656,7 +660,12 @@ a.touch-link { display: inline-flex; align-items: center; justify-content: cente
   .lede .addr-wide, td .addr-wide { display: none; }
   .lede .addr-narrow, td .addr-narrow { display: inline; }
 }
+@media (max-width: 600px) {
+  td:first-child .cell-inline { flex-wrap: wrap; row-gap: 4px; }
+  th, td { padding-left: 8px; padding-right: 8px; }
+}
 @media (max-width: 860px) {
   .tabs { flex-wrap: wrap; overflow: visible; gap: var(--space-3); }
   .tabs a, .tabs button { flex: 0 0 auto; white-space: nowrap; height: auto; }
 }
+.sr-only { position: absolute; width: 1px; height: 1px; margin: -1px; padding: 0; overflow: hidden; clip: rect(0 0 0 0); white-space: nowrap; border: 0; }
