@@ -165,7 +165,7 @@
   font-size: 16px;
 }
 .landing .curtain { position: absolute; inset: 0; z-index: -1; background: #000; overflow: hidden; }
-.landing .curtain i { position: absolute; inset: -10% -4%; display: block; }
+.landing .curtain i { position: absolute; inset: -10% -4%; display: block; will-change: transform; }
 .landing .c1 {
   background: repeating-linear-gradient(90deg, rgba(217, 160, 102, 0) 0 14px, rgba(222, 150, 84, 1) 52px, rgba(217, 160, 102, 0) 104px, rgba(217, 160, 102, 0.35) 128px, rgba(217, 160, 102, 0) 168px);
   filter: blur(7px) brightness(1.1);
@@ -211,7 +211,7 @@
   pointer-events: none;
   background: linear-gradient(90deg, rgba(0, 0, 0, 0.72) 0%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0) 58%);
 }
-@keyframes landing-drift1 { from { transform: translate3d(-2%, 0, 0); } to { transform: translate3d(3%, 0, 0) scaleY(1.06); } }
+@keyframes landing-drift1 { from { transform: translate3d(-2%, 0, 0) scaleY(1); } to { transform: translate3d(3%, 0, 0) scaleY(1.06); } }
 @keyframes landing-drift2 { from { transform: translate3d(3%, 0, 0); } to { transform: translate3d(-4%, 0, 0) scaleY(1.04); } }
 @keyframes landing-drift3 { from { transform: translate3d(0, 0, 0); } to { transform: translate3d(-48px, 0, 0); } }
 
@@ -289,6 +289,7 @@
   max-width: 36ch;
 }
 .landing .cta { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 24px; }
+.landing .sample { margin-top: 16px; color: #bdbdbd; }
 
 .landing .facts { position: relative; z-index: 5; padding-bottom: 24px; width: 100%; }
 .landing .facts .mono { display: block; margin-bottom: 16px; color: #c4c4c4; }
@@ -556,6 +557,7 @@
   .landing .closing { padding-block: 80px; }
 }
 @media (prefers-reduced-motion: reduce) {
-  .landing .curtain i { animation: none; }
+  .landing .curtain i { animation: none; will-change: auto; }
   .landing .rv { opacity: 1; transform: none; transition: none; }
+  .landing .pill { transition: none; }
 }

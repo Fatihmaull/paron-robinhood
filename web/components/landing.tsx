@@ -5,20 +5,17 @@ import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 import { useAccount } from "wagmi";
 import { loadParticipant } from "@/lib/api";
-import { formatUsd } from "@/lib/format";
-import { indexQuote } from "@/lib/index-quote";
-import { useIndex } from "@/lib/hooks";
 import {
   landingAnnounce,
   landingBuyer,
   landingFacts,
   landingFooter,
   landingHow,
-  landingIndexNote,
   landingLedger,
   landingLinks,
   landingNav,
   landingProvider,
+  landingSample,
   landingSteps,
   providerEntryPath,
 } from "@/lib/landing-copy";
@@ -35,10 +32,6 @@ export function Landing() {
   });
   const verified = !isConnected ? null : participant.isError ? false : participant.data ? participant.data.data.verified : null;
   const providerHref = providerEntryPath(isConnected, verified);
-  const index = useIndex();
-  const quote = indexQuote(index.data?.data);
-  const price = quote.amount ? formatUsd(quote.amount) : null;
-  const note = quote.label === "Reference" ? landingIndexNote : "Index";
 
   useEffect(() => {
     const root = document.querySelector(".landing");
@@ -100,18 +93,15 @@ export function Landing() {
             <div className="index">
               <div className="bar" />
               <div className="row">
-                {price ? (
-                  <div className="serif num" aria-label={`${note}: ${price}`}>{price}</div>
-                ) : (
-                  <div className="fallback" role="status">{index.isFetched ? "No reference yet" : "Loading reference"}</div>
-                )}
-                <div className="mono tag">H100 index<br />{note}</div>
+                <div className="serif num" aria-label={landingSample.aria}>{landingSample.amount}</div>
+                <div className="mono tag">H100 index<br />{landingSample.tag}</div>
               </div>
               <p className="lede">A marketplace for tokenized GPU compute. One unit, one hour of H100-equivalent compute, backed by a posted bond.</p>
               <div className="cta">
                 <Link className="pill pill-solid" href={landingLinks.launch}>Launch app</Link>
                 <a className="pill pill-ghost" href={landingLinks.how}>How it works</a>
               </div>
+              <p className="mono sample">{landingSample.note}</p>
             </div>
           </div>
           <div className="wrap facts">

@@ -92,3 +92,11 @@ export const landingSteps = [
 
 export const demoDataLabel = "Demo data";
 export const landingIndexNote = demoDataLabel;
+
+/** Hero figure only. Illustrative, not a live index print. */
+export const landingSample = {
+  amount: "$2.50",
+  aria: "Sample H100 index: 2 dollars 50",
+  tag: "Demo data · sample",
+  note: "Sample value for illustration",
+} as const;
