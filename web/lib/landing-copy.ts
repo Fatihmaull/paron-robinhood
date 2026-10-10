@@ -81,13 +81,15 @@ export const landingProvider = [
   { strong: "Get paid in MockUSDC", text: "on testnet settlement." },
 ] as const;
 
-/** Real S0 loop: buy, ask, redeem, default, and claim. */
+/** Documented S0 path: buy 20 CU, ask at $3.20, redeem 8, default 10, claim, KYB approve, timelock execute. */
 export const landingSteps = [
-  { title: "Buy", detail: "Primary buy of CU, settled in MockUSDC" },
-  { title: "Ask", detail: "Place an ask on the secondary book" },
-  { title: "Redeem", detail: "Request delivery of the compute" },
-  { title: "Default", detail: "The posted bond answers if delivery fails" },
-  { title: "Claim", detail: "Anyone can claim the default for the holder" },
+  { title: "Buy", detail: "Buy 20 CU at the primary price" },
+  { title: "Ask", detail: "Ask 5 CU at $3.20" },
+  { title: "Redeem", detail: "Redeem 8 CU" },
+  { title: "Default", detail: "Default 10 CU" },
+  { title: "Claim", detail: "Claim the default from any wallet" },
+  { title: "KYB", detail: "Approve KYB on the verifier page" },
+  { title: "Timelock", detail: "Execute one timelock change" },
 ] as const;
 
 export const demoDataLabel = "Demo data";

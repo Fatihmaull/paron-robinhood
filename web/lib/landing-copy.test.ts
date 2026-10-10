@@ -60,11 +60,19 @@ test("landing links point at routes that exist", () => {
   assert.equal(landingLinks.launch, "/markets");
 });
 
-test("S0 steps are buy, ask, redeem, default, and claim", () => {
+test("S0 steps match the documented demo path", () => {
   assert.deepEqual(
     landingSteps.map((step) => step.title),
-    ["Buy", "Ask", "Redeem", "Default", "Claim"],
+    ["Buy", "Ask", "Redeem", "Default", "Claim", "KYB", "Timelock"],
   );
+  const detail = landingSteps.map((step) => step.detail).join(" ");
+  assert.match(detail, /20 CU/);
+  assert.match(detail, /\$3\.20/);
+  assert.match(detail, /8 CU/);
+  assert.match(detail, /10 CU/);
+  assert.match(detail, /Claim the default/);
+  assert.match(detail, /Approve KYB/);
+  assert.match(detail, /timelock/);
 });
 
 test("facts and the bond ledger stay testnet-accurate", () => {

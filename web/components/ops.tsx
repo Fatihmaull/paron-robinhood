@@ -9,14 +9,14 @@ import {
   easAbi,
   easGateAbi,
   mockUsdcAbi,
-  panelAbi,
   printIndexAbi,
   providerRegistryAbi,
   redemptionManagerAbi,
   seriesFactoryAbi,
   timelockAbi,
 } from "@/lib/abi";
-import { contractAddress } from "@/lib/config";
+import { ArbiterDesk } from "@/components/arbiter";
+import { contractAddress, ZERO_ADDRESS } from "@/lib/config";
 import { asBytes32 } from "@/lib/settlement";
 import { demoChecks } from "@/lib/demo";
 import { errorCopy } from "@/lib/errors";
@@ -185,6 +185,9 @@ export function VerifierPage() {
   const [role, setRole] = useState("1");
   const [country, setCountry] = useState("ID");
   const [expiry, setExpiry] = useState("1822953600");
+  const [uid, setUid] = useState("");
+  const uidOk = /^0x[0-9a-fA-F]{64}$/.test(uid);
+  const easReady = contractAddress("eas") !== ZERO_ADDRESS && asBytes32(contractAddress("easSchema")) !== ZERO32;
   const list = (apps.data?.data ?? []) as Array<{ uid: string; applicant: string; status: string; role?: { name: string } }>;
 
   return (
@@ -194,7 +197,7 @@ export function VerifierPage() {
         <h1>Verifier</h1>
         <span className="pill outline">Paron demo verifier (team-operated)</span>
       </div>
-      <p className="lede">Manual EAS attest. The signer is the verifier EOA. Revoke stays on this page once an attestation uid is known.</p>
+      <p className="lede">Manual EAS attest. The signer is the verifier EOA. Revoke calls EAS.revoke for an attestation uid.</p>
       <div className="grid two">
       <Panel title="Applications">
         {list.length === 0 ? <p className="muted">No pending applications.</p> : null}
@@ -258,8 +261,32 @@ export function VerifierPage() {
         >
           {pending === "attest" ? "Signing…" : "Issue attestation"}
         </TxButton>
-        {error ? <p className="bad">{error}</p> : null}
         <p className="help">Schema ParticipantVerified(bytes32 entityId, uint8 role, bytes2 country, uint64 expiry).</p>
+        <Field label="Attestation uid">
+          <input value={uid} onChange={(event) => setUid(event.target.value.trim())} />
+        </Field>
+        <TxButton
+          tone="danger-outline"
+          disabled={!uidOk || !easReady}
+          reason={!easReady ? "EAS is not configured." : "Enter an attestation uid."}
+          onClick={() =>
+            void send("revoke", {
+              address: contractAddress("eas"),
+              abi: easAbi,
+              functionName: "revoke",
+              args: [
+                {
+                  schema: asBytes32(contractAddress("easSchema")),
+                  data: { uid: uid as `0x${string}`, value: 0n },
+                },
+              ],
+            })
+          }
+        >
+          {pending === "revoke" ? "Revoking…" : "Revoke"}
+        </TxButton>
+        {error ? <p className="bad">{error}</p> : null}
+        <p className="help">Revoke is EAS.revoke on the ParticipantVerified schema. The verifier wallet must be the attester.</p>
       </Panel>
       </div>
     </div>
@@ -392,36 +419,11 @@ export function DemoPage() {
   );
 }
 
-export function ArbiterPage() {
-  const { send, pending } = useSend();
-  const [reqId, setReqId] = useState("2");
-  const [ruling, setRuling] = useState("1");
+export function ArbiterPage({ reqId }: { reqId?: string }) {
   return (
     <div>
       <OperatorLink />
-      <h1>Panel</h1>
-      <p className="lede">rule() is members-only. There is no arbiter role. A 2-of-3 panel collects signatures out of band; this page sends rule() when the caller is a member.</p>
-      <Panel>
-        <Field label="Request"><input value={reqId} onChange={(event) => setReqId(event.target.value)} /></Field>
-        <Field label="Ruling">
-          <select value={ruling} onChange={(event) => setRuling(event.target.value)}>
-            <option value="1">Delivered</option>
-            <option value="2">Not delivered</option>
-          </select>
-        </Field>
-        <TxButton
-          onClick={() =>
-            void send("rule", {
-              address: contractAddress("panel"),
-              abi: panelAbi,
-              functionName: "rule",
-              args: [BigInt(reqId), Number(ruling)],
-            })
-          }
-        >
-          {pending === "rule" ? "Ruling…" : "Rule"}
-        </TxButton>
-      </Panel>
+      <ArbiterDesk initialReqId={reqId} />
     </div>
   );
 }
