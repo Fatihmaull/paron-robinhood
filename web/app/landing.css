@@ -563,7 +563,7 @@
 @media (max-width: 640px) {
   .landing { --gutter: 16px; }
   .landing .hero-visual { padding-top: 128px; }
-  .landing .hero-stage-wrap { height: 360px; margin-top: 40px; }
+  .landing .hero-stage-wrap { height: 360px; margin-top: 136px; }
   .landing .win-shot { width: 190%; max-width: none; }
   .landing .win-bar { grid-template-columns: 56px 1fr 56px; height: 32px; padding: 0 10px; }
   .landing .win .dots { gap: 6px; }
@@ -572,7 +572,8 @@
   .landing .sky {
     font-size: calc(100cqi / 78);
     line-height: 1.35;
-    height: 240px;
+    height: 150px;
+    bottom: 360px;
     overflow: hidden;
     display: flex;
     align-items: flex-end;
