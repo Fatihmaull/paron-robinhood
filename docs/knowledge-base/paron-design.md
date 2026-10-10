@@ -283,7 +283,7 @@ Three ways we expand the market Ornn leads, all without a partnership:
 | Sat 06–10 | Freeze contracts at 06:00 | Freeze UI at 09:00 | Rehearse the demo ×3 |
 | Sat 10–12 | Submit by 11:30 (deadline 12:00) | — | — |
 
-**HISTORICAL, superseded by D-90.** The Saturday 06:00 contract freeze, 09:00 UI freeze, and 11:30 internal submit in the two rows above are no longer binding. The hard deadline Sat 2026-10-10 12:00 WIB stays. The rows are kept.
+**HISTORICAL, superseded by D-90.** The Saturday 06:00 contract freeze, 09:00 UI freeze, and 11:30 internal submit in the two rows above are no longer binding. The hard deadline Sat 2026-10-10 12:00 WIB stays. **That 12:00 line is HISTORICAL, superseded by D-93.** The hard deadline is Saturday 10 Oct 2026 23:59 WIB. The rows are kept.
 
 ### 7.4 Demo script (2:30), with the wow moment
 - **0:00–0:20 Hook.** "Compute is becoming a commodity. Ornn built the first benchmark from printed trades, and futures are lining up at ICE and CME. But the deliverable GPU-hour itself is still sold in private deals. We made it an open, collateral-backed onchain unit." (S1, with the reference strip visible.)

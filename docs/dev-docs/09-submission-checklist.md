@@ -33,7 +33,7 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (
 
 ## 0. Ringkasan
 
-- **Satu-satunya tenggat keras: Sab 10 Okt 2026, 12:00 WIB** (submission ditutup, notes §2). Target internal Sab 11:30 (design §7.3) adalah catatan historis dan tidak mengikat [D-90].
+- **Satu-satunya tenggat keras: Sab 10 Okt 2026, 23:59 WIB** [D-93, APPROVED Fatih 10:16 WIB]. Kalimat lama "12:00 WIB" adalah **HISTORICAL, superseded by D-93** (termasuk kalimat 12:00 pada D-90). Target internal Sab 11:30 (design §7.3) tetap catatan historis dan tidak mengikat [D-90]. Jam freeze 06:00, 09:00, dan 11:30 tetap HISTORICAL (D-90).
 - Submission lewat HackQuest ("official submission platform"); isian menurut notes §1: deskripsi proyek, problem & solution, repo GitHub, demo / aplikasi ter-deploy, tech stack, use case RWA, video demo **atau** materi presentasi, info tim. Nama field persis dan batas karakternya **tidak** ada di dokumen → [TBD T9-01].
 - **Batas durasi video tidak disebut** di dokumen kanonik → [TBD T9-02]. Rekomendasi: video submission = rekaman naskah ter-retime 2:30 (05 P5-06), maks ~3 menit [APPROVED P9-05].
 - Demo Day **Min 11 Okt 10:00–21:00 WIB** hanya untuk tim terpilih; judging berakhir 15:00 WIB; waktu pengumuman shortlist dan pemenang tidak dipublikasikan (notes §2).
@@ -51,19 +51,20 @@ Status: **APPROVED-SYNCED, spec saja.** Keputusan 07 dan P9-xx disetujui Fatih (
 |---|---|---|---|
 | Sen 5 – Rab 7 Okt | Workshop pra-hackathon | notes §2 | sudah lewat |
 | **Jum 9 Okt 09:00** | Day 1: sprint offline 12 jam dimulai; submission **dibuka** | notes §2 (submissionOpen 2026-10-09T02:00Z) | jam sprint tidak dipublikasikan (agregator: 10:00–21:00, belum dikonfirmasi) |
-| **Sab 10 Okt 12:00** | Day 2 (online): submission **ditutup** | notes §1, §2 (submissionClose 2026-10-10T05:00Z; teks "12:00 PM (WIB)") | tenggat keras |
+| **Sab 10 Okt 12:00** | Day 2 (online): submission **ditutup** menurut kutipan notes | notes §1, §2 (submissionClose 2026-10-10T05:00Z; teks "12:00 PM (WIB)") | **HISTORICAL, superseded by D-93** |
+| **Sab 10 Okt 23:59** | **Tenggat keras** hackathon | D-93, APPROVED Fatih Sab 10 Okt 2026 10:16 WIB | mengikat |
 | antara Sab 12:00 dan Min | Pengumuman shortlist Demo Day | notes §2 | **tidak dipublikasikan** [TBD T9-03] |
 | **Min 11 Okt 10:00–21:00** | Day 3: Demo Day (tim terpilih) | notes §2 (Luma) | venue: Ganara Art vs pin Luma Garuda Spark, belum dikonfirmasi (notes "Unconfirmed") |
 | Min 11 Okt 15:00 | Judging berakhir ("rewardTime") | notes §2 | jam slot demo tim = [TBD T9-04] |
 | — | Pengumuman pemenang | notes §2 | tidak dipublikasikan, kemungkinan di Demo Day |
 
-Jendela build = Jum 09:00 → Sab 12:00 = **27 jam** (notes §2). Boleh terus membangun setelah sprint 12 jam sampai tenggat Day 2 (notes §1 aturan 8 / FAQ).
+Jendela build = Jum 09:00 → Sab 12:00 = **27 jam** (notes §2). Angka 12:00 dan 27 jam itu **HISTORICAL** [D-93]. Tenggat keras = Sab 10 Okt 2026 23:59 WIB. Angka jam baru tidak dihitung ulang di dokumen ini. Boleh terus membangun setelah sprint 12 jam sampai tenggat Day 2 (notes §1 aturan 8 / FAQ).
 
 ### 1.2 Jadwal internal (design §7.3, 04 §10, 05 §4.6) + buffer
 
-**[APPROVED D-59 / D-57, Jum 9 Okt ~11:05 WIB]** Baris Jumat di tabel ini (go/no-go 10:30, blok 10:30–20:00, dst.) digantikan rencana 4 lane di 08 §1 dengan **T0 = "go" Fatih = Jum 9 Okt 11:14 WIB**: go/no-go 11:14–11:59 (gagal → langsung Arbitrum Sepolia), G2 16:14, G3 / S0 selesai 19:14, S1 selesai Sab 01:14 + buffer G4 sampai 02:00. Baris Sabtu untuk freeze 06:00, freeze UI 09:00, dan submit 11:30 adalah catatan historis [D-90] dan tidak mengikat. Tenggat 12:00 tetap.
+**[APPROVED D-59 / D-57, Jum 9 Okt ~11:05 WIB]** Baris Jumat di tabel ini (go/no-go 10:30, blok 10:30–20:00, dst.) digantikan rencana 4 lane di 08 §1 dengan **T0 = "go" Fatih = Jum 9 Okt 11:14 WIB**: go/no-go 11:14–11:59 (gagal → langsung Arbitrum Sepolia), G2 16:14, G3 / S0 selesai 19:14, S1 selesai Sab 01:14 + buffer G4 sampai 02:00. Baris Sabtu untuk freeze 06:00, freeze UI 09:00, dan submit 11:30 adalah catatan historis [D-90] dan tidak mengikat. Tenggat 12:00 **[HISTORICAL, superseded by D-93]**. Tenggat keras = Sab 10 Okt 2026 23:59 WIB.
 
-**Tim solo (Jum 9 Okt):** semua milestone di bawah dipegang Fatih. **Tenggat yang dikunci: Sab 12:00 WIB.** Jam Sab 06:00 (freeze kontrak + video backup v1), Sab 09:00 (freeze UI), dan Sab 11:30 (submit internal) tidak mengikat [D-90]. Rincian per jam, blok tidur, dan cut ladder: `08-team-tasks.md`. Yang menekan submit di HackQuest = Fatih sendiri.
+**Tim solo (Jum 9 Okt):** semua milestone di bawah dipegang Fatih. **Tenggat yang dikunci: Sab 12:00 WIB** **[HISTORICAL, superseded by D-93]**. Tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Jam Sab 06:00 (freeze kontrak + video backup v1), Sab 09:00 (freeze UI), dan Sab 11:30 (submit internal) tidak mengikat [D-90]. Rincian per jam, blok tidur, dan cut ladder: `08-team-tasks.md`. Yang menekan submit di HackQuest = Fatih sendiri.
 
 **[SUPERSEDED / CANCELLED D-90; sebelumnya PENDING, rincian 08 §7.2]** Usulan batas kode setelah freeze tidak berlaku. Tidak ada aturan freeze kontrak, tidak ada aturan freeze UI, dan tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Teks usulan dipertahankan di 08 §7.2 sebagai riwayat: setelah 06:00 tidak ada perubahan kontrak; setelah 09:00 hanya perbaikan bug yang memblokir jalur demo S0; setelah submit internal 11:30 tidak ada merge kecuali blocker yang diumumkan lebih dulu. Jam itu tidak mengikat. Izin merge saat test hijau (04 §9.2) tidak dibatalkan oleh D-90.
 
@@ -83,7 +84,7 @@ Jendela build = Jum 09:00 → Sab 12:00 = **27 jam** (notes §2). Boleh terus me
 | Sab 10:00 | Semua teks isian HackQuest final; video submission terunggah dan bisa diputar tanpa login | Fatih | usulan | [APPROVED P9-02]. Video: agen evergreen video editor yang sudah ada (§4.6) |
 | Sab 10:00–11:15 | Checklist pra-submit (§7): link, verifikasi, repo publik, tag | Fatih | usulan | |
 | **Sab 11:30** | **[HISTORIS D-90]** Submit di HackQuest; tag `submission`; simpan tangkapan layar konfirmasi. Jam 11:30 tidak mengikat. Yang menekan submit = Fatih sendiri | Fatih | design §7.3, 04 §9.2 | 30 menit buffer sampai tenggat (catatan lama) |
-| **Sab 12:00** | **Tenggat keras** (tetap mengikat) | — | notes §2 | setelah ini deployment panggung tidak disentuh, kecuali push referensi (F-5) dan cek baca (05 §4.6) |
+| **Sab 12:00** | **Tenggat keras** (tetap mengikat) **[HISTORICAL, superseded by D-93]** | — | notes §2 | tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Setelah tenggat itu deployment panggung tidak disentuh, kecuali push referensi (F-5) dan cek baca (05 §4.6) |
 | Sab sore (T−24 jam dari demo) | Checklist pra-demo T−24 | Fatih | 05 §4.7 | video backup di 2 perangkat |
 | Min 11 Okt, T−60 / T−10 menit | Checklist pra-demo T−60, T−10 | Fatih | 05 §4.7 | slot demo [TBD T9-04] |
 
@@ -340,7 +341,7 @@ Kutipan aturan dari OQR §5 dan ringkasan notes §1 ("Rules on prior work").
 
 ## 7. Checklist final pra-submit (jendela lama Sab 10:00–11:30)
 
-Jam 11:30 tidak mengikat [D-90]. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Yang menekan submit = Fatih sendiri. Verifikasi UI hanya setelah merge ke `main`; `main` terbaru belum live (04 hosting).
+Jam 11:30 tidak mengikat [D-90]. Tenggat 12:00 **[HISTORICAL, superseded by D-93]**. Tenggat keras = Sab 10 Okt 2026 23:59 WIB. Yang menekan submit = Fatih sendiri. Verifikasi UI hanya setelah merge ke `main`. Kalimat lama bahwa `main` terbaru belum live karena kuota deploy adalah **HISTORICAL** (catatan 17:01 WIB). Hosting terkini: produksi https://paron.vercel.app terhubung ke Git dan membangun otomatis hanya saat merge ke `main`. https://paron-bay.vercel.app adalah cadangan pada akun Vercel kedua, tanpa koneksi Git, deploy manual dari `main`. Nama akun tidak ditulis. Origin `https://paron.vercel.app` tetap diizinkan pada CORS API. Indexer Railway sehat; variabel env cadangan RPC pada indexer terpasang (nilai tidak ditulis).
 
 **Link (semua dibuka dari jendela private/incognito, tanpa login)**
 - [ ] URL repo GitHub https://github.com/Fatihmaull/paron-robinhood terbuka dan publik [APPROVED P9-14: publik; notes hanya mewajibkan repo "required" dan bisa diperiksa juri].
@@ -357,7 +358,9 @@ Jam 11:30 tidak mengikat [D-90]. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Y
 - [ ] `/markets/1`: series page muat satu viewport di 1280 px, tanpa celah kosong; judul tidak menampilkan "ID" kosong; pill Verified tidak wrap di tengah teks; tidak ada link biru browser (D-67).
 - [ ] Detail redemption: jumlah state 36 px mono, baris aksi tunggal, "Default paid. $45.00 sent to 0x2222...2222." teks terbesar (D-68).
 - [ ] Header: "Connect wallet" sekunder; satu aksi ember per halaman (D-69).
-- [ ] 390 px di `/`, `/markets`, `/markets/1`: `scrollWidth <= innerWidth`; tombol Menu tidak tampil di desktop (D-70).
+- [ ] 390 px di `/`, `/markets`, `/markets/1`: `scrollWidth <= innerWidth`. Kalimat lama "tombol Menu tidak tampil di desktop" (D-70, di atas 860 px) adalah **HISTORICAL** untuk header dengan wallet tersambung.
+- [ ] Header dengan wallet tersambung, di 1024, 1100, 1280, 1440, dan 390 (PRs #64): alamat tampil `0x3F8f…6ae9` (6 karakter pertama termasuk `0x`, 4 karakter terakhir); nav tidak terpotong; tombol Menu muncul saat tautan tidak muat; setiap kontrol header minimal 44 px.
+- [ ] Logo chart TradingView mati (`attributionLogo: false` di `web/components/charts.tsx`). Kredit lisensi berupa teks polos ada di `/legal/risk` (`web/app/legal/risk/page.tsx`). Larangan logo pihak ketiga dan larangan tautan pihak ketiga tetap, dengan pengecualian kredit lisensi ini saja.
 - [ ] Build produksi tidak menampilkan banner mock maupun pemilih snapshot (D-71).
 - [ ] Kontras teks ≤ 13 px ≥ 4.5:1; tidak ada teks ber-opacity (D-72).
 - [ ] Tab Provider: "Requests", "Series", "Bond", "Agent", aktif bergaris bawah ember (D-73).
@@ -390,8 +393,26 @@ Jam 11:30 tidak mengikat [D-90]. Tenggat keras tetap Sab 2026-10-10 12:00 WIB. Y
 - [ ] Semua isian §2 terisi; teks dicek ejaan; link di-paste ulang dari jendela private.
 - [ ] Info tim akurat: Fatih, solo (nama, peran; aturan ≤ 4 orang terpenuhi).
 - [ ] Track: "RWA — Build the Real World Onchain" (satu-satunya track).
-- [ ] Submit sebelum 11:30; simpan tangkapan layar konfirmasi + waktu; buat tag `submission`.
+- [ ] Submit sebelum 11:30 **[HISTORICAL D-90; jam 11:30 tidak mengikat]**. Tenggat keras = Sab 10 Okt 2026 23:59 WIB [D-93]. Simpan tangkapan layar konfirmasi + waktu. Tag `submission` disebut di rencana lama; jam 11:30 tidak mengikat.
 - [ ] Setelah submit: jangan ubah deployment panggung atau README alamat sampai Demo Day selesai (05 §4.6 butir 5).
+
+---
+
+## 7A. Estimasi status build (handler, 9 Okt 2026 21:08 WIB)
+
+Angka di bawah adalah **estimasi dari handler per 21:08 WIB 9 Okt 2026**. Tidak dihitung ulang per butir pada catatan ini. Bukan hasil audit baru.
+
+| Kelompok | Butir | A | B |
+|---|---|---|---|
+| S0 | 16 | ~100% | ~75% |
+| S1 | 9 | ~90% | ~45% |
+| S2 | 8 | ~80% | ~55% |
+
+- Never-cut: terbangun 3/3; terbukti on-chain lewat skrip 3/3; terbukti lewat klik UI di live 0/3.
+- Bot keeper dan bot trader sudah merge (CI hijau; kill switch off-chain D-42; dry-run; menolak chain selain testnet). Keduanya belum berjalan di Railway.
+- Kill switch dan G4 belum diuji.
+- `ruleWithSignatures` di `/arbiter` mungkin masih stub.
+- Tombol Revoke belum ada.
 
 ---
 

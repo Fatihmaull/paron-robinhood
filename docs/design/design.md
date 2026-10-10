@@ -121,6 +121,8 @@ Hard bans: purple or cyan accents, glassmorphism, gradient blobs or particle bac
 
 **D-91 exception (APPROVED).** Gradient and glass are allowed only on the landing `/` hero and its numbers panel. Glass there uses radius 8px, sits under text that overlays amber light, and has no box-shadow. The dashboard gets no gradient and no full glass. Purple or cyan, blobs, gradient on text (except the 1.5× number), heavy shadows, fake cards, and fake stats stay banned. Content rules are unchanged (no third-party logos, no forbidden words). Source: Designer's `/workspace/paron-landing/design.md` on Designer's computer. A review must not flag that hero as a regression against the older gradient and glass ban.
 
+**Licence-credit exception.** The no-third-party-logos and no-third-party-links rule stays. One exception: the TradingView chart logo is off via the library option `attributionLogo: false` in `web/components/charts.tsx`. The plain-text licence credit is on `/legal/risk` (`web/app/legal/risk/page.tsx`). That credit is the only exception.
+
 ## 11. Delivery checklist (run before each merge)
 
 - CI grep `affiliated|endorsed by`: cancelled (D-81). Status: APPROVED (Fatih, direct, 2026-10-09 17:01 WIB). This is not a CI check. `web/lib/copy-guard.test.ts` stays and is not that grep.

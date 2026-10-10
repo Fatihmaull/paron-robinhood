@@ -30,6 +30,9 @@ Status: **APPROVED. Fatih menyetujui semua rekomendasi pada Jum 9 Okt 2026 ~09:4
 - §20 Approval 2026-10-09 17:01 WIB (Fatih langsung): D-81 APPROVED, D-83 APPROVED, D-90 membatalkan freeze
 - §21 Hero emas dan kaca di landing (D-91, APPROVED Fatih; dicatat lewat Paron Designer dan Scout)
 - §22 Klarifikasi nama series (D-92, APPROVED Fatih 18:10 WIB, "rekomendasimu saja"): D-82 diperjelas
+- §23 Tenggat hackathon (D-93, APPROVED Fatih Sab 10 Okt 2026 10:16 WIB): 23:59 WIB menggantikan 12:00
+- §24 Daftar perbaikan pra-demo (D-94, APPROVED)
+- §25 Arsitektur informasi per aktor (D-95, APPROVED ~11:07 WIB)
 
 ---
 
@@ -984,7 +987,7 @@ Fatih memutuskan langsung pada 2026-10-09 17:01 WIB. Semua butir di bawah **APPR
 |---|---|---|
 | D-81 | **APPROVED (Fatih langsung, 2026-10-09 17:01 WIB).** Pembatalan guard CI grep `affiliated\|endorsed by` (butir terakhir D-74) dikonfirmasi. Tidak ada grep itu di CI. `copy-guard.test.ts` tidak diubah dan bukan guard ini. | 04 §9; 06 §0.6; 09 §7; approved-ui-changes; design.md; guidelines.md; docs/README.md; CONTEXT-INDEX |
 | D-83 | **APPROVED (sama).** Safe multisig = roadmap untuk mainnet nanti. Peran admin tidak berubah (D-54): tanpa EOA kedua, tanpa pindah ke Safe. | 08 §7.1; product-plan §4.10; CONTEXT-INDEX |
-| D-90 | **APPROVED (sama). Aturan freeze dihapus.** Tidak ada aturan freeze kontrak. Tidak ada aturan freeze UI. Tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. **Tenggat keras submission tetap Sab 2026-10-10 12:00 WIB.** Catatan lama di 08 §0, 08 §2, 08 §7.2, 09 §1.2, 04 §9.2, dan CONTEXT-INDEX ditandai historis atau SUPERSEDED/CANCELLED; tidak dihapus. Syarat "sebelum freeze UI 09:00" pada D-85 ikut tidak mengikat. | 08 §0, §2, §7.2; 09 §1.2; 04 §9.2; CONTEXT-INDEX |
+| D-90 | **APPROVED (sama). Aturan freeze dihapus.** Tidak ada aturan freeze kontrak. Tidak ada aturan freeze UI. Tidak ada aturan setelah freeze. Tag `freeze-contracts` dan `freeze-ui` tidak dipakai. Jam 06:00, 09:00, dan 11:30 WIB pada Sab 2026-10-10 tidak mengikat. **Tenggat keras submission tetap Sab 2026-10-10 12:00 WIB.** Kalimat 12:00 itu **[SUPERSEDED D-93, §23]**: tenggat keras sekarang Sab 10 Okt 2026 23:59 WIB. Jam 06:00, 09:00, dan 11:30 tetap HISTORICAL. Catatan lama di 08 §0, 08 §2, 08 §7.2, 09 §1.2, 04 §9.2, dan CONTEXT-INDEX ditandai historis atau SUPERSEDED/CANCELLED; tidak dihapus. Syarat "sebelum freeze UI 09:00" pada D-85 ikut tidak mengikat. | 08 §0, §2, §7.2; 09 §1.2; 04 §9.2; CONTEXT-INDEX |
 
 **Penugasan pemilik (rincian di 09 dan CONTEXT-INDEX):** video demo ditangani agen evergreen video editor yang sudah ada (tidak ada bot baru). Fatih sendiri yang menekan submit di HackQuest. Fatih sendiri yang membuat pitch deck.
 
@@ -1017,3 +1020,49 @@ Fakta live: seed series 1–3 = `CU-JKT-H100-2611`, `CU-BTM-H200-2611`, `CU-SGP-
 | ID | Keputusan | Diterapkan di |
 |---|---|---|
 | D-92 | **APPROVED (Fatih, "rekomendasimu saja", dicatat Scout 2026-10-09 18:10 WIB). Memperjelas D-82: seed = 2611, series panggung/demo = 2610 (series 4).** Rujukan yang berarti series panggung, uji S0, checklist `/demo`, atau rekaman memakai `CU-JKT-H100-2610` (series 4). Rujukan seed series 1 tetap `CU-JKT-H100-2611`. Catatan D-19/D-25 yang memakai 2610 untuk panggung bukan catatan historis. Preset wizard PR #53 masih mengisi 2611 sampai PR UI handler. Rekaman = putaran baru di series 4. | 03, 05, 06, 09; CONTEXT-INDEX; sitemap `/demo`; approved-ui-changes |
+
+---
+
+## 23. Tenggat hackathon: D-93 (APPROVED Sab 10 Okt 2026 10:16 WIB)
+
+Fatih menyetujui langsung pada Sab 10 Okt 2026, 10:16 WIB. Bukan usulan. Chain tetap testnet. Nomor dicek terhadap repo: pemakaian terakhir sebelum bagian ini adalah D-92. D-93, D-94, dan D-95 belum dipakai.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-93 | **APPROVED (Fatih, Sab 10 Okt 2026, 10:16 WIB).** Tenggat keras hackathon sekarang **Sabtu 10 Okt 2026 23:59 WIB**. Menggantikan tenggat 12:00 WIB pada D-90 dan rujukan tenggat 12:00 di 08 serta 09. Jam freeze 06:00, 09:00, dan 11:30 WIB tetap **HISTORICAL** (D-90) dan tidak dihidupkan kembali. Teks 12:00 yang lama ditandai HISTORICAL atau SUPERSEDED D-93; tidak dihapus. | 08; 09; CONTEXT-INDEX; `docs/build/STATUS.md`; PK §1.5 |
+
+---
+
+## 24. Daftar perbaikan pra-demo: D-94 (APPROVED)
+
+Fatih menyetujui daftar perbaikan pra-demo dari engineering dan design ("oke lanjut" / "masukin semua ke kerjaan"). Bukan usulan. Chain tetap testnet. Keputusan ini tidak mengubah kontrak. Apa pun yang butuh perubahan kontrak dilaporkan ke Fatih lebih dulu, sebelum dikerjakan.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-94 | **APPROVED (Fatih, "oke lanjut" / "masukin semua ke kerjaan").** Daftar ini disetujui. (1) Perbaikan header saat wallet tersambung. (2) State kosong dan state error di jalur demo: `/buy`, `/trade`, `/redemptions`. (3) Status transaksi terlihat: pending, success, failed, dengan tautan explorer. (4) Perbaikan kecil S2: skip link, tinggi input, tab yang terpotong di 390, badge Pending berwarna amber, alamat provider dipendekkan di `/markets/4`. (5) Format uang `$3,240.00` dan label seragam "Demo data". (6) Cek tautan di landing. (7) h1 di halaman provider berteks "Provider", dengan alamat di bawahnya. (8) `/arbiter`, dan tombol Revoke di `/verifier`, hanya kalau tidak perlu perubahan kontrak. Yang butuh perubahan kontrak dilaporkan ke Fatih lebih dulu. Kalimat pita "Reference price (demo data)" (D-84..D-88) tidak diganti oleh label pendek "Demo data"; D-95 mempertahankan kalimat itu sampai Fatih menyetujui pengganti. Route `/provider` tanpa alamat kemudian diatur oleh D-95. | 06; 09; approved-ui-changes; PK |
+
+---
+
+## 25. Arsitektur informasi per aktor: D-95 (APPROVED Sab 10 Okt 2026 ~11:07 WIB)
+
+Fatih menyetujui langsung ("lanjut semuanya langsung") pada Sab 10 Okt 2026, sekitar 11:07 WIB. Bukan usulan. Chain tetap testnet. D-95 lebih kemudian daripada D-94. Kalau keduanya bentrok, D-95 yang dipakai.
+
+Pengiriman produk dalam dua PR terpisah, bukan PR dokumen ini: **PR-A** untuk nav, CTA, dan isolasi demo; **PR-B** untuk dashboard per provider.
+
+| ID | Keputusan | Diterapkan di |
+|---|---|---|
+| D-95 | **APPROVED (Fatih, Sab 10 Okt 2026 ~11:07 WIB, "lanjut semuanya langsung").** Arsitektur informasi dipecah per aktor, butir 1–5 di bawah. | 06; sitemap; PK; approved-ui-changes; CONTEXT-INDEX |
+
+1. Navbar pengguna utama, yang dicapai lewat "Launch app", hanya menampilkan sisi pengguna: Markets, Buy, Trade, Portfolio, Redemptions, Faucet, Index, Data. Tidak ada tautan Provider, Operator, atau Demo di navbar itu.
+2. Provider adalah tautan terpisah di luar nav pengguna. Tiap provider punya dashboard sendiri di `/provider/[address]` (series, redemptions, agents). Aksi tulis hanya untuk wallet pemilik. Alamat lain bersifat read-only. Path lama `/provider` mengalihkan ke dashboard wallet yang tersambung, atau ke `/onboarding/kyb` kalau wallet itu belum terverifikasi KYB. Landing mendapat CTA "Launch app" (dashboard pengguna) dan "Become a provider" (dashboard provider, atau KYB).
+3. Operator (verifier, admin, ops, arbiter) adalah satu tab terpisah. Dicapai hanya lewat CTA kecil di footer atau bagian bawah landing. Tidak pernah masuk navbar mana pun. Halaman Operator berjudul "Operator tools".
+4. `/demo` tetap hidup. Satu-satunya pintu masuk adalah CTA landing "Launch demo". Tidak ada tautan dari navbar, dari footer dashboard, atau dari halaman lain.
+5. Dashboard produksi hanya memakai indexer sungguhan dan data on-chain testnet. Label yang sudah disetujui, "Reference price (demo data)" (D-84..D-88), tetap sampai Fatih menyetujui pengganti.
+
+Catatan pengelompokan dari Designer, bagian dari persetujuan yang sama: tautan pengguna di tengah. "For providers" dan "Operator" adalah tautan teks sekunder (`#a6a6a6`) di kanan. Menu mobile dikelompokkan Trade / Providers / Operators, dengan target sentuh minimal 44 px. Banner KYB di `/provider`: info netral untuk yang belum KYB dan untuk yang pending, dengan tindakan "Start KYB"; amber untuk yang sudah verified. Tombol "List capacity" nonaktif, dengan alasan tertulis "Complete KYB to list capacity".
+
+Butir 3 menempatkan Operator hanya lewat CTA kecil di footer atau bagian bawah landing. Tautan sekunder "Operator" pada catatan Designer adalah CTA itu, bukan item navbar pengguna. "For providers" adalah tautan terpisah di luar nav pengguna (butir 2), warna `#a6a6a6`.
+
+h1 "Provider" dengan alamat di bawahnya (D-94) berlaku pada dashboard `/provider/[address]`. Path `/provider` tanpa alamat tidak lagi menjadi konsol tetap; ia mengalihkan seperti butir 2.
+
+Roadmap setelah hackathon: gating nav berdasarkan peran, dibaca dari kontrak.
