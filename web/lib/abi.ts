@@ -143,6 +143,41 @@ export const timelockAbi = [
     inputs: [{ name: "id", type: "bytes32" }],
     outputs: [{ name: "", type: "bool" }],
   },
+  {
+    type: "error",
+    name: "TimelockUnexpectedOperationState",
+    inputs: [
+      { name: "operationId", type: "bytes32" },
+      { name: "expectedStates", type: "bytes32" },
+    ],
+  },
+  {
+    type: "error",
+    name: "TimelockInsufficientDelay",
+    inputs: [
+      { name: "delay", type: "uint256" },
+      { name: "minDelay", type: "uint256" },
+    ],
+  },
+  {
+    type: "error",
+    name: "TimelockInvalidOperationLength",
+    inputs: [
+      { name: "targets", type: "uint256" },
+      { name: "payloads", type: "uint256" },
+      { name: "values", type: "uint256" },
+    ],
+  },
+  {
+    type: "error",
+    name: "TimelockUnexecutedPredecessor",
+    inputs: [{ name: "predecessorId", type: "bytes32" }],
+  },
+  {
+    type: "error",
+    name: "TimelockUnauthorizedCaller",
+    inputs: [{ name: "caller", type: "address" }],
+  },
 ] as const satisfies Abi;
 
 export const agentCommandTypes = {

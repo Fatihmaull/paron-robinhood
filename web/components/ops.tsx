@@ -437,11 +437,11 @@ export function AdminPage() {
             <div key={op.operation_id}>
               <div className="row"><span>{op.target_name}.{op.decoded.function}</span><OpPill status={op.status} /></div>
               <div className="row">
-                <span>A100 factor</span>
+                <span>{op.decoded?.args?.gpu ? `${op.decoded.args.gpu} factor` : "Factor"}</span>
                 <span>{next ? formatFactor(next) : <span className="muted">Not set</span>}</span>
               </div>
               <div className="row"><span>Ready at</span><span>{formatWib(op.ready_at_ms)}</span></div>
-              <p className="help">Fixture calldata is a placeholder. Execute encodes setFactor locally. Salt {shortId(op.salt)}.</p>
+              <p className="help">Salt {shortId(op.salt)}.</p>
               {done ? null : (
                 <TxButton
                   onClick={() => {
@@ -450,11 +450,12 @@ export function AdminPage() {
                       return;
                     }
                     setFactorError(null);
+                    const callData = (op.data && op.data !== "0x" ? op.data : payload(next)) as `0x${string}`;
                     void send("execute", {
                       address: timelock,
                       abi: timelockAbi,
                       functionName: "execute",
-                      args: [op.target as `0x${string}`, 0n, payload(next), op.predecessor as `0x${string}`, op.salt as `0x${string}`],
+                      args: [op.target as `0x${string}`, 0n, callData, op.predecessor as `0x${string}`, op.salt as `0x${string}`],
                     });
                   }}
                 >
